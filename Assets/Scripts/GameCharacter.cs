@@ -6,15 +6,15 @@ using UnityEditor;
 abstract public class GameCharacter : MonoBehaviour
 {
 	protected enum Direction{
-		Right = 1,
-		Left = -1
+		Right = -1,
+		Left = 1
 	}
 	// 変数
 	[SerializeField] protected Direction dir;
 	[SerializeField] protected int HP;
-	[SerializeField] protected int ATK;
+	[SerializeField] public int ATK{get;set;}
 	[SerializeField] protected int speed;
-	protected bool isDead = true;
+	protected bool isDead = false;
 	/// <summary>
 	/// 現在ポーズされているかどうかの判定
 	/// </summary>
@@ -31,6 +31,8 @@ abstract public class GameCharacter : MonoBehaviour
 	protected void Damage(int damage){
 		HP -= damage;
 		if(HP < 0) HP = 0;
+
+		CheckDead();
 	}
 	/// <summary>
 	/// このキャラクタが死んでるかどうか
