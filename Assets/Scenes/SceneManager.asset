@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 636a76061a7e13340a7efab1402cabdb, type: 3}
+  m_Script: {fileID: 11500000, guid: 507d58c468d1f8c438330d7c189b8e10, type: 3}
   m_Name: SceneManager
   m_EditorClassIdentifier: 
-  stageList:
-  - {fileID: 0}
+  stageSceneList: []
+  titleScene: {fileID: 0}
+  resultScene: {fileID: 0}

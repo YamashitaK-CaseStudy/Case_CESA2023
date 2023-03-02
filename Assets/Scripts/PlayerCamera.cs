@@ -15,9 +15,11 @@ public class PlayerCamera : MonoBehaviour{
 		target = GameObject.Find(targetName).transform;
 	}
 
-	// Update is called once per frame
-	void LateUpdate(){
-		this.transform.position = target.TransformPoint(cameraOffset);
-		this.transform.LookAt(target);
-	}
+
+    // Update is called once per frame
+    void LateUpdate(){
+        this.transform.position = target.transform.position + cameraOffset;
+        this.transform.LookAt(target);
+    }
+
 }
