@@ -18,14 +18,14 @@ public partial class Player : MonoBehaviour{
 
 	// Update is called once per frame
 	void UpdateMove(){
-		Debug.Log(_characterController.isGrounded ? "’nã‚É‚¢‚é" : "‹ó’†‚É‚¢‚é");
+		//Debug.Log(_characterController.isGrounded ? "ï¿½nï¿½ï¿½É‚ï¿½ï¿½ï¿½" : "ï¿½ó’†‚É‚ï¿½ï¿½ï¿½");
 
 		moveVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
 		_transform.LookAt(_transform.position + new Vector3(moveVelocity.x, 0.0f, moveVelocity.z));
 
 		if ( _characterController.isGrounded ) {
 			if ( Input.GetButtonDown("Jump") ) {
-				Debug.Log("ƒWƒƒƒ“ƒv");
+				Debug.Log("ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½v");
 				moveVelocity.y = jumpPower;
 			}
 
