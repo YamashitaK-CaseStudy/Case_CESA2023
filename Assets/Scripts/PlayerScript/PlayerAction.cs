@@ -14,7 +14,8 @@ public partial class Player : MonoBehaviour{
     private Vector3[] _locusPosRJ;
 
     enum INPUT_DIRECTION {
-        UP = 0,
+        NONE = 0,
+        UP,
         DOWN,
         LEFT,
         RIGHT,
