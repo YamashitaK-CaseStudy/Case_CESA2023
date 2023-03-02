@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0ce730c693e2e47855bdf40c9cd436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 10, y: 0, z: 0}
+  cameraOffset: {x: 0, y: 2, z: -13}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,8 +530,8 @@ GameObject:
   - component: {fileID: 1860514553}
   - component: {fileID: 1860514552}
   - component: {fileID: 1860514551}
-  - component: {fileID: 1860514550}
   - component: {fileID: 1860514556}
+  - component: {fileID: 1860514557}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -539,20 +539,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1860514550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860514549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0ab18c9cbec3a94ebdcba606d7881e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
-  jumpPower: 3
 --- !u!54 &1860514551
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -666,3 +652,17 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1860514557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860514549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e714f2df11c0747a82035d783cbfa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  jumpPower: 3
