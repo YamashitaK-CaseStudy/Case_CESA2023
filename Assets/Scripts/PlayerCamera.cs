@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour{
 
-    // ƒIƒtƒZƒbƒg
-    [SerializeField] public Vector3 cameraOffset = new Vector3(0.0f,0.0f,0.0f);
+	// ï¿½Iï¿½tï¿½Zï¿½bï¿½g
+	[SerializeField] public Vector3 cameraOffset = new Vector3(0.0f,0.0f,0.0f);
 
-    private Transform target;
-    private string targetName = "Player";
+	private Transform target;
+	private string targetName = "Player";
 
-    // Start is called before the first frame update
-    void Start(){
-        target = GameObject.Find(targetName).transform;
-    }
+	// Start is called before the first frame update
+	void Start(){
+		target = GameObject.Find(targetName).transform;
+	}
+
 
     // Update is called once per frame
     void LateUpdate(){
         this.transform.position = target.transform.position + cameraOffset;
         this.transform.LookAt(target);
     }
+
 }
