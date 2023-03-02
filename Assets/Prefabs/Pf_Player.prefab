@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 2987315515623316609}
   - component: {fileID: 2987315515623316608}
   - component: {fileID: 2987315515623316623}
-  - component: {fileID: 2987315515623316622}
   - component: {fileID: 2987315515623316612}
-  - component: {fileID: 2576005489071106942}
-  - component: {fileID: -3527279691528074054}
+  - component: {fileID: 5722172543817545689}
+  - component: {fileID: 7342039276897752660}
+  - component: {fileID: 7785044841167205255}
   m_Layer: 0
   m_Name: Pf_Player
   m_TagString: Untagged
@@ -119,20 +119,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &2987315515623316622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2987315515623316621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0ab18c9cbec3a94ebdcba606d7881e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
-  jumpPower: 3
 --- !u!143 &2987315515623316612
 CharacterController:
   m_ObjectHideFlags: 0
@@ -151,7 +137,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2576005489071106942
+--- !u!114 &5722172543817545689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,11 +146,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2987315515623316621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b0ce730c693e2e47855bdf40c9cd436, type: 3}
+  m_Script: {fileID: 11500000, guid: 870b64fefbb11454a911b1f8dc3b116a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 0, y: 0, z: 0}
---- !u!114 &-3527279691528074054
+--- !u!114 &7342039276897752660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,8 +158,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2987315515623316621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752240b4840089a4fb2529f5dac0bf91, type: 3}
+  m_Script: {fileID: 11500000, guid: a3e714f2df11c0747a82035d783cbfa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseUIPrefub: {fileID: 1318824756266735087, guid: 47f1976a86421a44982fc2c95f32b9b1,
-    type: 3}
+  moveSpeed: 3
+  jumpPower: 3
+--- !u!114 &7785044841167205255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2987315515623316621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736dc9de6c458994e9945f809f131aaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
