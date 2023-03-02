@@ -35,5 +35,9 @@ public partial class Player : MonoBehaviour{
 		}
 
 		_characterController.Move(moveVelocity * Time.deltaTime);
+
+
+		// アクションの入力確認
+
 	}
 }
