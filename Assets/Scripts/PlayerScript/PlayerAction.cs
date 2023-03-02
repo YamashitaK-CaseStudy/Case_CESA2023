@@ -28,32 +28,41 @@ public partial class Player : MonoBehaviour{
 
 
     // Start is called before the first frame update
-    void StartAction()
-    {
-        
+    void StartAction(){
+        _locusPosRJ = new Vector3[_needFrameRJ];
     }
 
     // Update is called once per frame
     void UpdateAction(){
 
         if ( _isRJ ) {
-            transform.position = _locusPosRJ[_elapsedFrameRJ];
+            this.transform.position = _locusPosRJ[_elapsedFrameRJ];
             _elapsedFrameRJ++;
+
+            transform.Rotate(10f, 0.0f, 0.0f);  
+
         }
 
         if ( _elapsedFrameRJ >= _needFrameRJ ) {
+            Debug.Log("終わり！");
             _isRJ = false;
             _locusPosRJ = null;
+            _locusPosRJ = new Vector3[_needFrameRJ];
         }
     }
 
     void StartRollingJumpGround(INPUT_DIRECTION inputDir) {
         Vector3 startPos = this.transform.position;
+        Debug.Log(startPos);
         float secPerFrame = 60/_needFrameRJ;
 
         Vector3 forceRJ = Vector3.zero;
 
         switch ( inputDir ) {
+        case INPUT_DIRECTION.NONE:
+            return;
+
+
         case INPUT_DIRECTION.LEFT:
             forceRJ.x = _powerRJ * Mathf.Cos(150 * Mathf.Deg2Rad);
             forceRJ.y = _powerRJ * Mathf.Sin(150 * Mathf.Deg2Rad);
@@ -95,6 +104,8 @@ public partial class Player : MonoBehaviour{
         // ジャンプ力を入力方向に応じてベクトルに分解
         Vector3 forceRJ = Vector3.zero;
         switch ( inputDir ) {
+        case INPUT_DIRECTION.NONE:
+            return;
 
         case INPUT_DIRECTION.UP:
             forceRJ.y = _powerRJ;
@@ -145,6 +156,11 @@ public partial class Player : MonoBehaviour{
             movementAmount.x = forceRJ.x * t;
             movementAmount.y = (float)( ( forceRJ.y * t ) - ( 0.5 * 9.81 * t * t ) );
             movementAmount.z = 0.0f;
+
+            Debug.Log(movementAmount);
+            if ( movementAmount.y < 0 ) {
+                movementAmount.y = 0;
+            }
 
             _locusPosRJ[i] = movementAmount + startPos;
         }
