@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour{
+public partial class Player : MonoBehaviour{
+
 	[SerializeField] private float moveSpeed = 3.0f;
 	[SerializeField] private float jumpPower = 3.0f;
 	private CharacterController _characterController;
@@ -10,13 +11,13 @@ public class PlayerControl : MonoBehaviour{
 	private Vector3 moveVelocity;
 
 	// Start is called before the first frame update
-	void Start(){
+	void StartMove(){
 		_characterController = GetComponent<CharacterController>();
 		_transform = transform;
 	}
 
 	// Update is called once per frame
-	void Update(){
+	void UpdateMove(){
 		Debug.Log(_characterController.isGrounded ? "ínè„Ç…Ç¢ÇÈ" : "ãÛíÜÇ…Ç¢ÇÈ");
 
 		moveVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
@@ -33,8 +34,6 @@ public class PlayerControl : MonoBehaviour{
 			moveVelocity.y += Physics.gravity.y * Time.deltaTime;
 		}
 
-
 		_characterController.Move(moveVelocity * Time.deltaTime);
-
 	}
 }
