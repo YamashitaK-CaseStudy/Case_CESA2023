@@ -10,9 +10,9 @@ abstract public class EnemyBase : GameCharacter
 
 	}
 
-	protected void Dead(){
+	protected void Dead(float time = 0.0f){
 		// インスタンスの放棄
-		Destroy(this);
+		Destroy(this.gameObject,time);
 	}
 
 	protected void ChangeDir(){
