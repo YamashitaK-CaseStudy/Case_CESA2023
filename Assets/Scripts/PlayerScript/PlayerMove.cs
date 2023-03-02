@@ -20,14 +20,18 @@ public partial class Player : MonoBehaviour{
 
 	// Update is called once per frame
 	void UpdateMove(){
-		//Debug.Log(_characterController.isGrounded ? "ï¿½nï¿½ï¿½É‚ï¿½ï¿½ï¿½" : "ï¿½ó’†‚É‚ï¿½ï¿½ï¿½");
+		//Debug.Log(_characterController.isGrounded ? "E½nE½E½É‚ï¿½E½E½" : "E½ó’EÉ‚ï¿½E½E½");
+
+		if ( _isRJ ) {
+			return;
+		}
 
 		moveVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
 		_transform.LookAt(_transform.position + new Vector3(moveVelocity.x, 0.0f, moveVelocity.z));
 
 		if ( _characterController.isGrounded ) {
 			if ( Input.GetButtonDown("Jump") ) {
-				Debug.Log("ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½v");
+				//Debug.Log("ƒWƒƒƒ“ƒvƒL[‚ª‰Ÿ‚³‚ê‚½");
 				moveVelocity.y = jumpPower;
 			}
 
@@ -39,6 +43,12 @@ public partial class Player : MonoBehaviour{
 		_characterController.Move(moveVelocity * Time.deltaTime);
 
 
+		if ( _characterController.isGrounded == false && Input.GetButtonDown("Jump") ) {
+			ChaeckDirectionRJ();
+		}
+	}
+
+	void ChaeckDirectionRJ() {
 		// ƒAƒNƒVƒ‡ƒ“‚Ì“ü—ÍŠm”F
 
 		// ˆ—à–¾
@@ -46,12 +56,16 @@ public partial class Player : MonoBehaviour{
 		// c•ûŒü‚Æ‰¡•ûŒü‚»‚ê‚¼‚ê‚É•]‰¿’l‚ğ -•ûŒü:-1 “ü—Í–³‚µ:0 +•ûŒü:1 ‚ğŠ„‚è“–‚Ä‚Ü‚·
 		// ‚»‚ÌŒã,‚»‚Ì•]‰¿’l‚ğ‚à‚Æ‚É•ûŒü‚ğ”»•Ê‚µ‚Ü‚·
 
-		float inputRHorizon = Input.GetAxis("HorizontalRight");
-		float inputRVertical = Input.GetAxis("VerticalRight");
+		float inputRHorizon = Input.GetAxis("Horizontal");
+		float inputRVertical = Input.GetAxis("Vertical");
+
+		Debug.Log(inputRHorizon);
+		Debug.Log(inputRVertical);
+
 
 		INPUT_DIRECTION inputDir = INPUT_DIRECTION.NONE;
 
-		int evaluationHorizon = 0;		//¶‰E“ü—Í‚Ì•]‰¿’l
+		int evaluationHorizon = 0;      //¶‰E“ü—Í‚Ì•]‰¿’l
 		int evaluationVertical = 0;     //ã‰º“ü—Í‚Ì•]‰¿’l
 
 		if ( inputRHorizon > _deadRJ ) {
@@ -104,20 +118,20 @@ public partial class Player : MonoBehaviour{
 			inputDir = INPUT_DIRECTION.R_DOWN;
 		}
 
+		Debug.Log(inputDir);
+
+		
 		// “ü—Í’l‚É‰‚¶‚ÄŠÖ”‚ğŒÄ‚Ô
 		if ( inputDir == INPUT_DIRECTION.NONE ) {
 			return;
 		}
 
 		if ( _characterController.isGrounded ) {
-			if ( inputDir == INPUT_DIRECTION.LEFT || inputDir == INPUT_DIRECTION.RIGHT ) {
-				StartRollingJumpGround(inputDir);
-			}
+			StartRollingJumpGround(inputDir);
 		}
 		else {
 			StartRollingJumpSky(inputDir);
 		}
 		
-
 	}
 }

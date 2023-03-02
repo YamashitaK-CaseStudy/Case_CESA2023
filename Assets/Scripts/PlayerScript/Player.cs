@@ -8,6 +8,7 @@ public partial class Player : MonoBehaviour
     void Start(){
         StartMove();
         StartWarp();
+        StartAction();
     }
 
     // Update is called once per frame
@@ -15,5 +16,6 @@ public partial class Player : MonoBehaviour
     {
         UpdateMove();
         UpdateWarp();
+        UpdateAction();
     }
 }
