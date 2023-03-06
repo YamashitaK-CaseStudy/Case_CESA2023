@@ -5,44 +5,48 @@ using UnityEngine;
 public partial class Player : MonoBehaviour
 {
 	bool isWarp = false;
-	float time;
-	GameObject fade;
+	bool isFadeOut = false;
+	[SerializeField] string fadeObjName;	// フェードのオブジェクト名
+	[SerializeField] string warpEnterObjName;	// ワープ前のオブジェクト名
+	[SerializeField] string warpExitObjName;	// ワープ後のオブジェクト名
+	Fade fade;
 	GameObject flag;
 	// Start is called before the first frame update
 	void StartWarp()
 	{
-		fade = GameObject.Find("Pf_Fade");
-		flag = GameObject.Find("flagExit");
+		fade = GameObject.Find(fadeObjName).GetComponent<Fade>();
+		flag = GameObject.Find(warpExitObjName);
 	}
 
 	// Update is called once per frame
 	void UpdateWarp()
 	{
-		if(isWarp){
-			time += Time.deltaTime;
-			if(fade.GetComponent<Fade>().FinishFadeIn()){
-				Debug.Log("ワープはじめました");
-				Warp();
-				isWarp = false;
-			}
+		Debug.Log(this.gameObject.transform.position);
+		// ワープ処理に入ってないなら処理しない
+		if(!isWarp) return;
+
+		if(fade.FinishFadeOut()){
+			// ワープのフラグ削除
+			isWarp = false;
+			isFadeOut = false;
 		}
+
+		if(fade.FinishFadeIn()){
+			// フェードアウト開始
+			fade.FadeOutStart();
+			isFadeOut = true;
+		}
+
+		if(!isFadeOut) return;
+		// 座標更新
+		this.gameObject.transform.position = flag.transform.position;
 	}
 
 	private void OnControllerColliderHit(ControllerColliderHit hit) {
-		if(hit.collider.name == "flagEnter"){
-			if(flag == null){
-				Debug.Log("出口内や内科");
-				return;
-			}
-			fade.GetComponent<Fade>().FadeInStart();
-			isWarp = true;
-		}
+		if(hit.collider.name != warpEnterObjName) return;
+
+		fade.FadeInStart();
+		isWarp = true;
 	}
 
-	private void Warp(){
-		Debug.Log("Warp");
-		Vector3 tmp = flag.transform.position;
-		gameObject.transform.position = new Vector3(tmp.x,tmp.y,0.0f);
-		Debug.Log(this.transform.position);
-	}
 }
