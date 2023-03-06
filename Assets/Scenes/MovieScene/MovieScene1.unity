@@ -504,8 +504,25 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7342039276897752660, guid: 718449d6598afd44f822e42ea9d7f318,
+        type: 3}
+      propertyPath: fadeObjName
+      value: Pf_Fade
+      objectReference: {fileID: 0}
+    - target: {fileID: 7342039276897752660, guid: 718449d6598afd44f822e42ea9d7f318,
+        type: 3}
+      propertyPath: warpExitObjName
+      value: flagExit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7342039276897752660, guid: 718449d6598afd44f822e42ea9d7f318,
+        type: 3}
+      propertyPath: warpEnterObjName
+      value: flagEnter
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2576005489071106942, guid: 718449d6598afd44f822e42ea9d7f318, type: 3}
+    - {fileID: 7785044841167205255, guid: 718449d6598afd44f822e42ea9d7f318, type: 3}
+    - {fileID: 5722172543817545689, guid: 718449d6598afd44f822e42ea9d7f318, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 718449d6598afd44f822e42ea9d7f318, type: 3}
 --- !u!1 &1112213338
 GameObject:

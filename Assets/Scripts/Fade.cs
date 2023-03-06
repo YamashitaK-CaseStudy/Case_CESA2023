@@ -15,16 +15,13 @@ public class Fade : MonoBehaviour
 	{
 		fadePanel = transform.GetChild(0).gameObject;
 		if(fadePanel == null){
-			Debug.Log("読めてねぇ");
+			Debug.LogError("Fadeのオブジェクトが読めてない");
 		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if(Input.GetKeyDown("space")){
-			FadeInStart();
-		}
 		if(isRunFadeIn){
 			FadeIn();
 			return;
@@ -38,24 +35,31 @@ public class Fade : MonoBehaviour
 		isRunFadeIn = true;
 	}
 
-	public bool FinishFadeIn(){
-		return !isRunFadeIn;
-	}
-	public bool FinishFadeOut(){
-		return !isRunFadeIn;
+	public void FadeOutStart(){
+		isRunFadeOut = true;
+		Debug.Log(isRunFadeOut);
 	}
 
-	public void FadeIn(){
+	public bool FinishFadeIn(){
+		if(alpha == 1.0f) return true;
+		return false;
+	}
+
+	public bool FinishFadeOut(){
+		if(alpha == 0.0f) return true;
+		return false;
+	}
+
+	private void FadeIn(){
 		alpha += fadeInSpeed * Time.deltaTime;
 		if(alpha >= 1.0f){
 			alpha = 1.0f;
 			isRunFadeIn = false;
-			isRunFadeOut = true;
 		}
 		fadePanel.GetComponent<Image>().color = new Color(0, 0, 0, alpha);
 	}
 
-	public void FadeOut(){
+	private void FadeOut(){
 		alpha -= fadeOutSpeed * Time.deltaTime;
 		if(alpha <= 0.0f){
 			alpha = 0.0f;
