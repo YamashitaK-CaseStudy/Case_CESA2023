@@ -44,7 +44,7 @@ public partial class Player : MonoBehaviour{
         }
 
         if ( _elapsedFrameRJ >= _needFrameRJ ) {
-            Debug.Log("終わり！");
+            //Debug.Log("終わり！");
             _isRJ = false;
             _locusPosRJ = null;
             _locusPosRJ = new Vector3[_needFrameRJ];

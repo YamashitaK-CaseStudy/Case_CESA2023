@@ -9,6 +9,7 @@ public partial class Player : MonoBehaviour
         StartMove();
         StartWarp();
         StartAction();
+        StartObjectSelect();
     }
 
     // Update is called once per frame
@@ -17,5 +18,6 @@ public partial class Player : MonoBehaviour
         UpdateMove();
         UpdateWarp();
         UpdateAction();
+        UpdateObjectSelect();
     }
 }
