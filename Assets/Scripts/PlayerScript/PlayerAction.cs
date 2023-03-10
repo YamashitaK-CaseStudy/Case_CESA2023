@@ -19,7 +19,7 @@ public partial class Player : MonoBehaviour{
             }
 
             // ‰ñ“]ŠÖ”‚ğŒÄ‚Ño‚·
-            _selectGameObject.GetComponent<RotatableObject>().SpinAxisSelf();
+            _selectGameObject.GetComponent<RotatableObject>().RotateSmallAxisSelf();
    
         }
 

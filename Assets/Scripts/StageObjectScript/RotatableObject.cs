@@ -56,6 +56,7 @@ public class RotatableObject : MonoBehaviour{
         
         // 回転のクォータニオン作成
         var rotQuat = Quaternion.AngleAxis(180, _rotAxis);
+     
 
         // 円運動の位置計算
         var pos = tr.position;
@@ -84,6 +85,9 @@ public class RotatableObject : MonoBehaviour{
         // 回転のクォータニオン作成
         var rotQuat = Quaternion.AngleAxis(180, rotAxis);
 
+        var dirQuat = Quaternion.AngleAxis(180,Vector3.up);
+
+
         // 円運動の位置計算
         var pos = tr.position;
         pos -= centerPos;
@@ -93,7 +97,7 @@ public class RotatableObject : MonoBehaviour{
         tr.position = pos;
 
         // 向き更新
-        tr.rotation = tr.rotation * rotQuat;
+        tr.rotation = tr.rotation * dirQuat;
   
         CalkAxisWorldPos();
     }
