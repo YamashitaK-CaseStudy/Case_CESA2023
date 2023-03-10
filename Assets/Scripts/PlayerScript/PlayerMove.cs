@@ -10,7 +10,6 @@ public partial class Player : MonoBehaviour{
 	private Transform _transform;
 	private Vector3 moveVelocity;
 
-	[SerializeField] private float _deadRJ = 0.3f;
 
 	// Start is called before the first frame update
 	void StartMove(){
@@ -20,12 +19,6 @@ public partial class Player : MonoBehaviour{
 
 	// Update is called once per frame
 	void UpdateMove(){
-		//Debug.Log(_characterController.isGrounded ? "・ｽn・ｽ・ｽﾉゑｿｽ・ｽ・ｽ" : "・ｽ・ﾉゑｿｽ・ｽ・ｽ");
-
-		if ( _isRJ ) {
-			return;
-		}
-
 		moveVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
 		_transform.LookAt(_transform.position + new Vector3(moveVelocity.x, 0.0f, moveVelocity.z));
 
@@ -43,95 +36,5 @@ public partial class Player : MonoBehaviour{
 		_characterController.Move(moveVelocity * Time.deltaTime);
 
 
-		if ( _characterController.isGrounded == false && Input.GetButtonDown("Jump") ) {
-			ChaeckDirectionRJ();
-		}
-	}
-
-	void ChaeckDirectionRJ() {
-		// アクションの入力確認
-
-		// 処理説明
-		// 右スティックの入力値を設定されたデッドゾーンと比較して
-		// 縦方向と横方向それぞれに評価値を -方向:-1 入力無し:0 +方向:1 を割り当てます
-		// その後,その評価値をもとに方向を判別します
-
-		float inputRHorizon = Input.GetAxis("Horizontal");
-		float inputRVertical = Input.GetAxis("Vertical");
-
-		Debug.Log(inputRHorizon);
-		Debug.Log(inputRVertical);
-
-
-		INPUT_DIRECTION inputDir = INPUT_DIRECTION.NONE;
-
-		int evaluationHorizon = 0;      //左右入力の評価値
-		int evaluationVertical = 0;     //上下入力の評価値
-
-		if ( inputRHorizon > _deadRJ ) {
-			evaluationHorizon = 1;
-		}
-		else if ( inputRHorizon < -_deadRJ ) {
-			evaluationHorizon = -1;
-		}
-		else {
-			evaluationHorizon = 0;
-		}
-
-		if ( inputRVertical > _deadRJ ) {
-			evaluationVertical = 1;
-		}
-		else if ( inputRVertical < -_deadRJ ) {
-			evaluationVertical = -1;
-		}
-		else {
-			evaluationVertical = 0;
-		}
-
-
-		// 判別します
-		if ( evaluationHorizon == -1 && evaluationVertical == 0 ) {
-			inputDir = INPUT_DIRECTION.LEFT;
-		}
-		if ( evaluationHorizon == -1 && evaluationVertical == 1 ) {
-			inputDir = INPUT_DIRECTION.L_UP;
-		}
-		if ( evaluationHorizon == -1 && evaluationVertical == -1 ) {
-			inputDir = INPUT_DIRECTION.L_DOWN;
-		}
-		if ( evaluationHorizon == 0 && evaluationVertical == 0 ) {
-			inputDir = INPUT_DIRECTION.NONE;
-		}
-		if ( evaluationHorizon == 0 && evaluationVertical == 1 ) {
-			inputDir = INPUT_DIRECTION.UP;
-		}
-		if ( evaluationHorizon == 0 && evaluationVertical == -1 ) {
-			inputDir = INPUT_DIRECTION.DOWN;
-		}
-		if ( evaluationHorizon == 1 && evaluationVertical == 0 ) {
-			inputDir = INPUT_DIRECTION.RIGHT;
-		}
-		if ( evaluationHorizon == 1 && evaluationVertical == 1 ) {
-			inputDir = INPUT_DIRECTION.R_UP;
-		}
-		if ( evaluationHorizon == 1 && evaluationVertical == -1 ) {
-			inputDir = INPUT_DIRECTION.R_DOWN;
-		}
-
-		Debug.Log(inputDir);
-
-		
-		// 入力値に応じて関数を呼ぶ
-		if ( inputDir == INPUT_DIRECTION.NONE ) {
-			return;
-		}
-
-		if ( _characterController.isGrounded ) {
-			StartRollingJumpGround(inputDir);
-		}
-		else {
-			StartRollingJumpSky(inputDir);
-		}
-		
 	}
 }
