@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,54 +6,99 @@ using UnityEngine.InputSystem;
 
 public partial class Player : MonoBehaviour
 {
-    private PlayerInput _input;
-    private LineRenderer _linerenderer;
+    [SerializeField] GameObject _pf_SelectRange;
+    [SerializeField] float _RangeMagnification = 1.0f;
     public GameObject _selectGameObject { get; set; } = null;
+    private SphereCollider _collider;
+    private float _SelectRangeRadius;
+    private LineRenderer _linerendere;
 
-    private Vector3 GetRightStick() {
-        var axisx = _input.actions["AngleSelect"].ReadValue<Vector2>().x;
-        var axisy = _input.actions["AngleSelect"].ReadValue<Vector2>().y;
-        return new Vector3(axisx, axisy, 0);
-    }
-
-    [System.Obsolete]
-    private void Awake() {
-        TryGetComponent(out _input);
-        _linerenderer = gameObject.AddComponent<LineRenderer>();
-
-        _linerenderer.SetWidth(0.1f,0.1f);
-        _linerenderer.SetColors(Color.blue, Color.blue);
-        _linerenderer.material.color = Color.blue;
-    }
-
+    [Obsolete]
     void StartObjectSelect() {
+
+        // スケール設定
+        _pf_SelectRange.transform.localScale = new Vector3(0, 1, 1) * _RangeMagnification;
+
+        // 範囲の半径を取得
+        _collider = _pf_SelectRange.gameObject.GetComponent<SphereCollider>();
+        _SelectRangeRadius = _collider.radius * Mathf.Max(_pf_SelectRange.transform.lossyScale.x, _pf_SelectRange.transform.lossyScale.y, _pf_SelectRange.transform.lossyScale.z);
+
+        _linerendere = _pf_SelectRange.GetComponent<LineRenderer>();
+        _linerendere.SetWidth(0.1f, 0.1f);
     }
 
     void UpdateObjectSelect() {
+
         var pos = this.gameObject.transform.position;
 
-        Ray ray = new Ray(pos, GetRightStick() * 100.0f);
-        _linerenderer.SetPosition(0, pos);
-     
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
+        // 範囲オブジェクトをプレイヤーの座標に入れ続ける
+        _pf_SelectRange.gameObject.transform.position = new Vector3(pos.x, pos.y, 1);
 
-            _linerenderer.SetPosition(1, hit.point);
-            _selectGameObject = hit.collider.gameObject;
+        // 円の中に入ってる選択できるオブジェクトリスト
+        var inobjects = GetSelectRangeObjects(_SelectRangeRadius);
+
+        // 円の中に入っているオブジェクトから一番プレイヤーから近いオブジェクトを取得する
+        var nearobject = GetInObjectNearObject(ref inobjects);
+
+        _linerendere.SetPosition(0, pos);
+       
+        if (nearobject != null) {
+            _linerendere.SetPosition(1, nearobject.transform.position);
+            _selectGameObject = nearobject;
+            Debug.Log(nearobject.name);
         }
         else {
-            _linerenderer.SetPosition(1, pos + GetRightStick() * 100.0f);
+            _linerendere.SetPosition(1, pos);
             _selectGameObject = null;
+            Debug.Log(null);
         }
-
-        if(_selectGameObject != null) {
-            Debug.Log(_selectGameObject.name);
-        }
-        else {
-            Debug.Log("NULL");
-        }
-
-        //Debug.DrawRay(ray.origin, ray.direction * 100.0f, Color.red);
-        //Debug.Log(GetRightStick());
     }
+
+    // 円の中に入ってるオブジェクトを取得
+    private List<GameObject> GetSelectRangeObjects(float _selectrangeradius) {
+
+        // ワールド内の回転できるオブジェクトを集める
+        GameObject[] rotateobjects = GameObject.FindGameObjectsWithTag("RotateObject");
+
+        // 円の中に入ってるオブジェクトを集める
+        List<GameObject> in_Objects = new List<GameObject>();
+        foreach (var _object in rotateobjects) {
+
+            // プレイヤーとの距離を計算
+            var distance = Vector3.Distance(this.gameObject.transform.position, _object.transform.position);
+
+            if (distance <= _SelectRangeRadius) {
+                in_Objects.Add(_object);
+            }
+        }
+
+        return in_Objects;
+    }
+
+    private GameObject GetInObjectNearObject(ref List<GameObject> list) {
+
+        GameObject nearObject = null;
+        float neardistance = 0.0f;
+
+        // プレイヤーから一番近いオブジェクトを取得
+        for (int i = 0; i < list.Count; i++) {
+
+            // プレイヤーとの距離を計算
+            float distance = Vector3.Distance(this.gameObject.transform.position, list[i].transform.position);
+
+            if (i == 0) {
+                nearObject = list[i];
+                neardistance = Math.Abs(distance);
+            }
+            else {
+                if (Math.Abs(distance) < neardistance) {
+                    nearObject = list[i];
+                    neardistance = Math.Abs(distance);
+                }
+            }
+        }
+
+        return nearObject;
+    }
+
 }
