@@ -6,9 +6,9 @@ public class PlayerCamera : MonoBehaviour{
 
 	// �I�t�Z�b�g
 	[SerializeField] public Vector3 cameraOffset = new Vector3(0.0f,0.0f,0.0f);
+	[SerializeField]private string targetName = "Player";
 
 	private Transform target;
-	private string targetName = "Player";
 
 	// Start is called before the first frame update
 	void Start(){

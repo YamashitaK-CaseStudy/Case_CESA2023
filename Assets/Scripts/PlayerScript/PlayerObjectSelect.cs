@@ -13,7 +13,6 @@ public partial class Player : MonoBehaviour
     private float _SelectRangeRadius;
     private LineRenderer _linerendere;
 
-    [Obsolete]
     void StartObjectSelect() {
 
         // ƒXƒP[ƒ‹İ’è
