@@ -21,7 +21,7 @@ public partial class Player : MonoBehaviour
 	// Update is called once per frame
 	void UpdateWarp()
 	{
-		Debug.Log(this.gameObject.transform.position);
+		//Debug.Log(this.gameObject.transform.position);
 		// ワープ処理に入ってないなら処理しない
 		if(!isWarp) return;
 
