@@ -24,5 +24,6 @@ public partial class Player : MonoBehaviour
         //UpdateWarp();
         UpdateAction();
         UpdateObjectSelect();
+
     }
 }

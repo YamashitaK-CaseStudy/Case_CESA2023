@@ -22,6 +22,7 @@ public class RotatableObject : MonoBehaviour{
     // Start is called before the first frame update
     void Start(){
 
+        // 自身の回転軸の向きを正規化しとく
         _rotAxis.Normalize();
 
         // 軸の中心のワールド座標を計算
@@ -76,12 +77,12 @@ public class RotatableObject : MonoBehaviour{
     }
 
     // 外部の軸でまわす小をする
-    public void RotateSmallAxisExtern(Vector3 centerPos) {
+    public void RotateSmallAxisExtern(Vector3 centerPos,Vector3 rotAxis) {
         // 回転の中心座標と自身の座標間でベクトルをとる
         var tmpVec = centerPos - this.transform.position; 
 
         // Z軸正方向と外積を取って回転軸を求める
-        var rotAxis = Vector3.Cross(centerPos, tmpVec);
+      
 
         var tr = this.transform;
 
