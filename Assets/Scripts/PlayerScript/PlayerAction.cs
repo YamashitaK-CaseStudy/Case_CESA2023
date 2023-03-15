@@ -12,7 +12,7 @@ public partial class Player : MonoBehaviour{
     void UpdateAction(){
 
         if ( Input.GetButtonDown("RotateSelfAxis") ) {
-            Debug.Log("その場で回転させるアクション！");
+            Debug.Log("その場でまわす小アクション！");
 
             if ( _selectGameObject == null) {
                 return;
@@ -24,15 +24,13 @@ public partial class Player : MonoBehaviour{
         }
 
         if ( Input.GetButtonDown("RotateExturnAxis") ) {
-            Debug.Log("その場で回転させるアクション！");
+            Debug.Log("その場でまわす大アクション！");
 
             if ( _selectGameObject == null ) {
                 return;
             }
 
-            // 回転関数を呼び出す
-            _selectGameObject.GetComponent<RotatableObject>().RotateSmallAxisExtern(this.transform.position);
-
+          
         }
 
     }
