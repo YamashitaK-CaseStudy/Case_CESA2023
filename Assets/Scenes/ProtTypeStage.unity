@@ -2840,7 +2840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selfRotAxis: {x: 0, y: 0, z: 0}
+  _selfRotAxis: {x: 0, y: 1, z: 0}
   _axisCenterLocalPos: {x: 0, y: 0, z: 0}
   _axisLength: 10
   _rotRequirdTime: 1
