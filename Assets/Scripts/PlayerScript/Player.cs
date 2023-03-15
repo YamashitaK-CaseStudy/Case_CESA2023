@@ -26,6 +26,6 @@ public partial class Player : MonoBehaviour
         }
       
         UpdateObjectSelect();
-        UpdatePossession();
+  UpdatePossession();
     }
 }
