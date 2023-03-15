@@ -19,13 +19,13 @@ public partial class Player : MonoBehaviour
     void Update()
     {
         // œßˆË‚µ‚Ä‚È‚¢Žž
-        if (_isPossession) {
+        if (_isPossession == false) {
             UpdateMove();
             //UpdateWarp();
             UpdateAction();
         }
       
         UpdateObjectSelect();
-  UpdatePossession();
+        UpdatePossession();
     }
 }
