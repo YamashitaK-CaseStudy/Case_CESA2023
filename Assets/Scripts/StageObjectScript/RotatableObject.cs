@@ -5,16 +5,19 @@ using UnityEngine;
 // 回転できるオブジェクトのスクリプト
 public class RotatableObject : MonoBehaviour{
 
-    [SerializeField] Vector3 _rotAxis;            // 回転軸の向きベクトル
-    [SerializeField] Vector3 _axisCenterLocalPos; // 軸中心座標:ローカル座標で指定してください
-    [SerializeField] float _axisLength;
+    [SerializeField] private Vector3 _rotAxis;            // 回転軸の向きベクトル
+    [SerializeField] private Vector3 _axisCenterLocalPos; // 軸中心座標:ローカル座標で指定してください
+    [SerializeField] private float _axisLength;           // TEST：軸の長さ
+    [SerializeField] private int _rotPerSec;              // 1回転に必要な時間
+
 
     private Vector3 _axisCenterWorldPos;
 
     private Quaternion _rotQuat;  // 回転のクオータニオン
     private Quaternion _baceQuat; // 回転はじめのクオータニオン
 
-    private bool _isSpin = false; // 回転しているかフラグ
+    private bool _isRotating = false;   // 回転してるかフラグ
+    private bool _isSpin = false;       // 回転しているかフラグ
 
     // Start is called before the first frame update
     void Start(){
@@ -27,7 +30,7 @@ public class RotatableObject : MonoBehaviour{
 
     }
 
-
+    // 軸の座標を計算する
     void CalkAxisWorldPos() {
         // オブジェクト固有の軸を可視化
         // LineRendererコンポーネントを取得
@@ -102,6 +105,7 @@ public class RotatableObject : MonoBehaviour{
         CalkAxisWorldPos();
     }
 
+    // 自身の座標でまわす大をする
     public void SpinAxisSelf() {
         _isSpin = true;
 
@@ -109,6 +113,7 @@ public class RotatableObject : MonoBehaviour{
         _rotQuat = Quaternion.AngleAxis(180, _rotAxis);
     }
 
+    // 外部の軸でまわす大をする
     public void SpinAxisExturn(Vector3 spinCenterPos) {
     
     
