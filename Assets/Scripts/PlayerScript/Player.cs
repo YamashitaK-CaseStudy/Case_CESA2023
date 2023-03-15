@@ -7,23 +7,25 @@ public partial class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
 
-        //Debug.Log("start");
-
         StartMove();
         //StartWarp();
         StartAction();
         StartObjectSelect();
+        StartPossession();
 
-        //Debug.Log("end");
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateMove();
-        //UpdateWarp();
-        UpdateAction();
+        // œßˆË‚µ‚Ä‚È‚¢Žž
+        if (_isPossession == false) {
+            UpdateMove();
+            //UpdateWarp();
+            UpdateAction();
+        }
+      
         UpdateObjectSelect();
-
+        UpdatePossession();
     }
 }
