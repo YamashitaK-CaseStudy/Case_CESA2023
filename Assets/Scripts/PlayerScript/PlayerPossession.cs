@@ -33,6 +33,10 @@ public partial class Player : MonoBehaviour{
 
             // マテリアルの色を変更する
             this.GetComponent<MeshRenderer>().material.color = Color.gray;
+
+
+            _selectGameObject.GetComponent<RotatableObject>().RotateSmallAxisSelf();
+
         }
     }
 
@@ -42,11 +46,14 @@ public partial class Player : MonoBehaviour{
         // マテリアルの色を変更する
         _selectGameObject.GetComponent<MeshRenderer>().material.color = Color.gray;
         this.GetComponent<MeshRenderer>().material.color = Color.red;
+
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (transform.gameObject.name == "RArm") {
+        if (other.transform.gameObject.name == "RArm" || other.transform.gameObject.name == "LArm") {
             transform.SetParent(other.transform);
+
+            Debug.Log("のてない");
         }
     }
 
