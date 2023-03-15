@@ -44,12 +44,12 @@ public partial class Player : MonoBehaviour
         if (nearobject != null) {
             _linerendere.SetPosition(1, nearobject.transform.position);
             _selectGameObject = nearobject;
-            Debug.Log(nearobject.name);
+           // Debug.Log(nearobject.name);
         }
         else {
             _linerendere.SetPosition(1, pos);
             _selectGameObject = null;
-            Debug.Log(null);
+           // Debug.Log(null);
         }
     }
 
