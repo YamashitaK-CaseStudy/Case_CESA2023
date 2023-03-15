@@ -2840,10 +2840,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotAxis: {x: 0, y: 1, z: 0}
+  _selfRotAxis: {x: 0, y: 0, z: 0}
   _axisCenterLocalPos: {x: 0, y: 0, z: 0}
   _axisLength: 10
-  _rotPerSec: 0
+  _rotRequirdTime: 1
 --- !u!120 &395441216
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -4987,7 +4987,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955347190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6373,10 +6373,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotAxis: {x: 1, y: 0, z: 0}
+  _selfRotAxis: {x: 0, y: 0, z: 0}
   _axisCenterLocalPos: {x: 1, y: 1.5, z: 0}
   _axisLength: 5
-  _rotPerSec: 0
+  _rotRequirdTime: 1
 --- !u!120 &1231074328
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -8849,7 +8849,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632475003}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9513,10 +9513,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotAxis: {x: 0, y: 1, z: 0}
+  _selfRotAxis: {x: 0, y: 0, z: 0}
   _axisCenterLocalPos: {x: 0, y: 1.5, z: 0}
   _axisLength: 5
-  _rotPerSec: 0
+  _rotRequirdTime: 1
 --- !u!120 &1848722487
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -10928,10 +10928,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotAxis: {x: 1, y: 0, z: 0}
+  _selfRotAxis: {x: 0, y: 0, z: 0}
   _axisCenterLocalPos: {x: 0, y: -0.5, z: 0}
   _axisLength: 3
-  _rotPerSec: 0
+  _rotRequirdTime: 1
 --- !u!1 &2138708336
 GameObject:
   m_ObjectHideFlags: 0
