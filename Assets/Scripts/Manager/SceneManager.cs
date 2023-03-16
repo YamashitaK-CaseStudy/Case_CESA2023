@@ -6,7 +6,6 @@ using UnityEditor;
 
 namespace SuzumuraTomoki
 {
-    [CreateAssetMenu(fileName = "SceneManager", menuName = "SceneManager")]
     public class SceneManager : ScriptableObject
     {
         public static SceneManager Instance
@@ -21,7 +20,7 @@ namespace SuzumuraTomoki
             }
         }
 
-        static SceneManager FindInstance()
+        private static SceneManager FindInstance()
         {
             var guidArray = AssetDatabase.FindAssets("t:SceneManager");
             if (guidArray.Length == 0)
@@ -33,23 +32,42 @@ namespace SuzumuraTomoki
             var path = AssetDatabase.GUIDToAssetPath(guidArray[0]);
             return AssetDatabase.LoadAssetAtPath<SceneManager>(path);
         }
+
+        public int StageSize
+        {
+            get
+            {
+                return stageSceneList.Count;
+            }
+        }
+
+        public int CurrentStageIndex
+        {
+            get
+            {
+                return currentStageIndex;
+            }
+        }
+
+
         /**
         * 指定した番号のステージをロードします。
         * @param[in] ステージの番号。１以上。
         * @return false:０以下または存在しない番号
         */
-        public bool LoadStage(int stageID)
+        public bool LoadStage(int stageIndex)
         {
-            if (stageID < 1)
+            if (stageIndex < 1)
             {
                 return false;
             }
-            if (stageID > stageSceneList.Count)
+            if (stageIndex > stageSceneList.Count)
             {
                 return false;
             }
 
-            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSceneList[stageID - 1].name);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSceneList[stageIndex - 1].name);
+            currentStageIndex = stageIndex;
             return true;
         }
 
@@ -73,6 +91,11 @@ namespace SuzumuraTomoki
 
         [SerializeField]
         private Object resultScene;
+
+        [SerializeField]
+        private Object stageSelectScene;
+
+        private int currentStageIndex = 1;
 
     }
 }
