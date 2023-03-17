@@ -81,6 +81,11 @@ namespace SuzumuraTomoki
             UnityEngine.SceneManagement.SceneManager.LoadScene(resultScene.name);
         }
 
+        public void LoadStageSelect()
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSelectScene.name);
+        }
+
         private static SceneManager instance = null;
 
         [SerializeField]
