@@ -52,6 +52,7 @@ public partial class RotatableObject : MonoBehaviour {
 
             tr.position = pos;
 
+            // Œü‚«XV
             tr.rotation = tr.rotation * angleAxis;
         }
     }

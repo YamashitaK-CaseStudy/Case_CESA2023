@@ -60,9 +60,7 @@ public partial class RotatableObject : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         UpdateRotate();
-        UpdateSpin();
-
-      
+        UpdateSpin();      
     }
 
 

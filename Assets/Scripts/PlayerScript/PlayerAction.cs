@@ -30,7 +30,8 @@ public partial class Player : MonoBehaviour{
                 return;
             }
 
-          
+            // ‚Ü‚í‚·¬‚ğ‹N“®‚·‚éŠÖ”‚ğŒÄ‚Ño‚·
+            _selectGameObject.GetComponent<RotatableObject>().StartSpin();
         }
 
     }
