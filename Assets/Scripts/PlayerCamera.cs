@@ -6,7 +6,8 @@ public class PlayerCamera : MonoBehaviour{
 
 	// �I�t�Z�b�g
 	[SerializeField] public Vector3 cameraOffset = new Vector3(0.0f,0.0f,0.0f);
-	[SerializeField]private string targetName = "Player";
+	[SerializeField] public Vector3 targetOffset = new Vector3(0.0f,0.0f,0.0f);
+	[SerializeField] private string targetName = "Player";
 
 	private Transform target;
 
@@ -18,8 +19,14 @@ public class PlayerCamera : MonoBehaviour{
 
     // Update is called once per frame
     void LateUpdate(){
-        this.transform.position = target.transform.position + cameraOffset;
-        this.transform.LookAt(target);
+		// 注視点を計算
+		// 注視点のオフセットはプレイヤーTransformのローカル座標系
+		Vector3 lookAtPos = target.TransformPoint(targetOffset);
+
+		// 注視点を正面から見るように調整
+		this.transform.position = target.transform.position + cameraOffset + lookAtPos;
+
+        this.transform.LookAt(lookAtPos);
     }
 
 }

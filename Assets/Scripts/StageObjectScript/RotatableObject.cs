@@ -39,7 +39,7 @@ public partial class RotatableObject : MonoBehaviour{
         var lineRenderer = this.GetComponent<LineRenderer>();
 
         // 軸をワールド座標刑に変換
-        _axisCenterWorldPos = transform.TransformPoint(_axisCenterLocalPos); // 軸座標を計算
+        _axisCenterWorldPos = this.transform.TransformPoint(_axisCenterLocalPos); // 軸座標を計算
 
         var axisHalfLength = _axisLength / 2;
 
