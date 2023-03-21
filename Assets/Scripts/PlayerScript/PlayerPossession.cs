@@ -35,7 +35,7 @@ public partial class Player : MonoBehaviour{
             this.GetComponent<MeshRenderer>().material.color = Color.gray;
 
 
-            _selectGameObject.GetComponent<RotatableObject>().RotateSmallAxisSelf();
+            _selectGameObject.GetComponent<RotatableObject>().StartRotate();
 
         }
     }
