@@ -18,8 +18,8 @@ public partial class Player : MonoBehaviour{
                 return;
             }
 
-            // ‰ñ“]ŠÖ”‚ğŒÄ‚Ño‚·
-            _selectGameObject.GetComponent<RotatableObject>().RotateSmallAxisSelf();
+            // ‚Ü‚í‚·¬‚ğ‹N“®‚·‚éŠÖ”‚ğŒÄ‚Ño‚·
+            _selectGameObject.GetComponent<RotatableObject>().StartRotate();
    
         }
 
