@@ -15,7 +15,7 @@ public partial class RotatableObject : MonoBehaviour{
     private Vector3 _axisCenterWorldPos; // 回転軸の中心のワールド座標
 
 
-    private bool _isRotating = false;   // 回転してるかフラグ
+    public bool _isRotating = false;   // 回転してるかフラグ
     private bool _isSpin = false;       // 回転しているかフラグ
 
     // Start is called before the first frame update
