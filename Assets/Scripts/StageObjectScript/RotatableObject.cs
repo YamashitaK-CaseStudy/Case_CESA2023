@@ -6,7 +6,7 @@ using UnityEngine;
 public partial class RotatableObject : MonoBehaviour{
 
     [SerializeField] private Vector3 _selfRotAxis;              // 自身の回転軸ベクトル
-    [SerializeField] private Vector3 _axisCenterLocalPos;       // 軸中心座標:ローカル座標で指定してください
+    [SerializeField] public Vector3 _axisCenterLocalPos;        // 軸中心座標:ローカル座標で指定してください
     [SerializeField] private float _axisLength;                 // TEST：軸の長さ
     [SerializeField] private float _rotRequirdTime = 1.0f;      // 1回転に必要な時間(sec)
     

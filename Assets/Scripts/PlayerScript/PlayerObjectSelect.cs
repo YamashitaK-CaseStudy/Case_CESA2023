@@ -18,9 +18,8 @@ public partial class Player : MonoBehaviour
         // ƒXƒP[ƒ‹İ’è
         _pf_SelectRange.transform.localScale = new Vector3(0, 1, 1) * _RangeMagnification;
 
-        // ”ÍˆÍ‚Ì”¼Œa‚ğæ“¾
-        _collider = _pf_SelectRange.gameObject.GetComponent<SphereCollider>();
-        _SelectRangeRadius = _collider.radius * Mathf.Max(_pf_SelectRange.transform.lossyScale.x, _pf_SelectRange.transform.lossyScale.y, _pf_SelectRange.transform.lossyScale.z);
+        // ”¼Œaæ“¾
+        _SelectRangeRadius = _pf_SelectRange.transform.localScale.z;
 
         _linerendere = _pf_SelectRange.GetComponent<LineRenderer>();
         _linerendere.SetWidth(0.1f, 0.1f);
