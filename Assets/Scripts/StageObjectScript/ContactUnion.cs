@@ -5,25 +5,32 @@ using UnityEngine;
 public class ContactUnion : MonoBehaviour {
 
     private ContactObtherber _obtherber;
+    private MeshRenderer _mesh;
 
     void Start() {
 
         // オブザーバーオブジェクトを取得する
         _obtherber = GameObject.Find("ContactObtherberObj").GetComponent<ContactObtherber>();
-    }
 
-    void Update() {
+        // メッシュレンダーを取得する
+        _mesh = this.transform.parent.parent.Find("Mesh").GetComponent<MeshRenderer>();
     }
 
     private void OnTriggerEnter(Collider other) {
 
-        // 当たった回転オブジェクトの一番上の親を取得する
-        GameObject parentobject = other.transform.root.gameObject;
+        // 自身の最上位の親を取得
+        GameObject parentobj =  this.transform.root.gameObject;
 
-        if (parentobject.tag == "RotateObject") {
+        if (other.gameObject.name == "BaceCollision") {
+            if (parentobj.name != other.transform.root.name) {
 
-            other.transform.parent.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.black;
-            _obtherber.ContactCall(parentobject);
+                Debug.Log(other.name);
+
+                // 自身の色を変更する
+                _mesh.material.color = Color.black;
+
+                _obtherber.ContactCall(other.transform.root.gameObject);
+            }
         }
     }
 }

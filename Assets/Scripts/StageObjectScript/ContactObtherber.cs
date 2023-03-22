@@ -6,24 +6,28 @@ using UnityEngine;
 public class ContactObtherber : MonoBehaviour
 {
     private List<GameObject> _unionmaterials = new List<GameObject>();
-    private GameObject _selectObj;
+    Vector3 localpos = new Vector3(0, 0, 0);
+    Vector3 selectpos = new Vector3(0, 0, 0);
 
     void Start() {
     }
 
     void Update(){
 
+        var _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player._selectGameObject.GetComponent<RotatableObject>()._isRotating == false) {
+            selectpos = _player._selectGameObject.transform.position;
+            localpos = _player._selectGameObject.GetComponent<RotatableObject>()._axisCenterLocalPos;
+        }
+
         // ２つ以上合体するオブジェクトがリストの中にあれば実行する
         if (2 <= _unionmaterials.Count) {
 
-            // プレイヤーの選択していたオブジェクトを取得
-            _selectObj = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>()._selectGameObject;
-
             // 新しくオブジェクトを作成する
-            GameObject unionobj = Instantiate((GameObject)Resources.Load("Pf_UnionObj"), _selectObj.transform.position, Quaternion.identity);
+            GameObject unionobj = Instantiate((GameObject)Resources.Load("Pf_RootObj"), selectpos, Quaternion.identity);
 
             unionobj.tag = "RotateObject";
-            unionobj.transform.position = _selectObj.transform.position;
+            unionobj.transform.position = localpos + selectpos;
 
             foreach (var obj in _unionmaterials) {
 
@@ -37,9 +41,6 @@ public class ContactObtherber : MonoBehaviour
             // リストの中身を空にする
             _unionmaterials.Clear();
         }
-      
-        
-
     }
 
     public void ContactCall(in GameObject collision) {
