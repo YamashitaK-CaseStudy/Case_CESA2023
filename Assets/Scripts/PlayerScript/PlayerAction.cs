@@ -18,8 +18,8 @@ public partial class Player : MonoBehaviour{
                 return;
             }
 
-            // 回転関数を呼び出す
-            _selectGameObject.GetComponent<RotatableObject>().RotateSmallAxisSelf();
+            // まわす小を起動する関数を呼び出す
+            _selectGameObject.GetComponent<RotatableObject>().StartRotate();
    
         }
 
@@ -30,7 +30,8 @@ public partial class Player : MonoBehaviour{
                 return;
             }
 
-          
+            // まわす小を起動する関数を呼び出す
+            _selectGameObject.GetComponent<RotatableObject>().StartSpin();
         }
 
     }
