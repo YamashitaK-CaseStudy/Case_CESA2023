@@ -8,7 +8,7 @@ public partial class Player : MonoBehaviour
     void Start(){
 
         StartMove();
-        //StartWarp();
+        StartWarp();
         StartAction();
         StartObjectSelect();
         StartPossession();
@@ -21,7 +21,7 @@ public partial class Player : MonoBehaviour
         // œßˆË‚µ‚Ä‚È‚¢Žž
         if (_isPossession == false) {
             UpdateMove();
-            //UpdateWarp();
+            UpdateWarp();
             UpdateAction();
         }
       
