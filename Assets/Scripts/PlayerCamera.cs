@@ -20,13 +20,10 @@ public class PlayerCamera : MonoBehaviour{
     // Update is called once per frame
     void LateUpdate(){
 		// 注視点を計算
-		// 注視点のオフセットはプレイヤーTransformのローカル座標系
-		Vector3 lookAtPos = target.TransformPoint(targetOffset);
-
+		
 		// 注視点を正面から見るように調整
-		this.transform.position = target.transform.position + cameraOffset + lookAtPos;
+		this.transform.position = target.transform.position + cameraOffset + targetOffset;
 
-        this.transform.LookAt(lookAtPos);
     }
 
 }
