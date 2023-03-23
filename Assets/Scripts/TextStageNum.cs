@@ -4,17 +4,19 @@ using UnityEngine;
 using SuzumuraTomoki;
 using UnityEngine.UI;
 
-public class TextStageNum : MonoBehaviour
+public class TextStageNum : FadeOutCompletionReceiver
 {
-    // Start is called before the first frame update
     void Start()
     {
         currentStageIndex = SceneManager.Instance.CurrentStageIndex;
         maxStages = SceneManager.Instance.StageSize;
         text = GetComponent<Text>();
+        if (fadePanel == null)
+        {
+            print("エラー：テキスト（ステージ番号）のコンポーネント　TextStageNum　にフェードパネルが設定されていません");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -35,13 +37,19 @@ public class TextStageNum : MonoBehaviour
             }
             text.text = currentStageIndex.ToString();
         }
-        if (Input.GetKeyDown(KeyCode.Return))//KeyCode.ReturnはEnter
+        if (Input.GetKeyDown(KeyCode.Return))//KeyCode.Return は Enter
         {
-            SceneManager.Instance.LoadStage(currentStageIndex);
+            fadePanel.GetComponent<Fader>().FadeOut(this);
         }
+    }
+
+    public override void ProcessAfterFadeOut()
+    {
+        SceneManager.Instance.LoadStage(currentStageIndex);
     }
 
     private int currentStageIndex;
     private int maxStages;//private readOnly int MAX_STAGES;読み取り専用にしたかったが、コンストラクタでの初期化でエラーが起きるので普通の変数にしてstart()で設定する
     private Text text;
+    [SerializeField] private GameObject fadePanel = null;
 }
