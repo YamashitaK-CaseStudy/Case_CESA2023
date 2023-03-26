@@ -9,7 +9,7 @@ public partial class RotatableObject : MonoBehaviour {
 
 	private float _spinSpeed = 2; // 単位回転に必要な時間[sec]
 
-	void StartSettingSpin() {
+	protected void StartSettingSpin() {
 		_mesh = this.transform.Find("Mesh").gameObject;
 		_collider = this.transform.Find("Collider").gameObject;
 		
@@ -51,7 +51,7 @@ public partial class RotatableObject : MonoBehaviour {
 		//!}
 	}
 
-	void UpdateSpin() {
+	protected void UpdateSpin() {
 		if ( _isSpin ) {
 
 			// 現在フレームの回転を示す回転のクォータニオン作成
