@@ -55,7 +55,7 @@ public partial class RotatableObject : MonoBehaviour {
 		if ( _isSpin ) {
 
 			// 現在フレームの回転を示す回転のクォータニオン作成
-			var rotQuat = Quaternion.AngleAxis(360/_spinSpeed, _selfRotAxis);
+			var rotQuat = Quaternion.AngleAxis(155, _selfRotAxis);
 
 			// 円運動の位置計算
 			var tr = _mesh.transform;
