@@ -5,9 +5,9 @@ using UnityEngine;
 public class TouchCollider : MonoBehaviour
 {
 
-    GameObject _parent = null; // ���g�̐e�I�u�W�F�N�g�@
+    GameObject _parent = null; 
 
-    GameObject _touchObject = null; // �G��Ă���I�u�W�F�N�g
+    GameObject _touchObject = null; 
 
     // Start is called before the first frame update
     void Start(){
@@ -27,12 +27,12 @@ public class TouchCollider : MonoBehaviour
     void Update()
     {
         if ( _touchObject != null ) {
-            Debug.Log(_touchObject.name);
+            //Debug.Log(_touchObject.name);
         }
     }
 
     public GameObject GetTouchObject() {
-        Debug.Log("Get the object touched");
+        Debug.Log("Get the touched object ");
 
         if ( _touchObject == null ) {
             return null;
@@ -43,12 +43,12 @@ public class TouchCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider t) {
 
-        var obj  = t.gameObject.transform.parent.parent.parent.gameObject;
-
-        Debug.Log(obj.name);
+        //            This                Objrct BaceObj
+        var obj  = t.gameObject.transform.parent.parent.gameObject;
 
         if ( obj.tag == "RotateObject" ) {
             Debug.Log("Touched.");
+            Debug.Log(obj.name);
             _touchObject = obj;
         }
     }
@@ -56,8 +56,9 @@ public class TouchCollider : MonoBehaviour
 	private void OnTriggerExit(Collider t) {
 
         if ( _touchObject != null ) {
-            _touchObject = null;
             Debug.Log("leaving.");
+            Debug.Log(_touchObject.name);
+            _touchObject = null;
         }
 	}
 }

@@ -34,7 +34,7 @@ public partial class Player : MonoBehaviour{
             var inputVart = Input.GetAxis("Vertical");
 
             // Rot AxisY Bottom
-            if ( inputVart < -0.5 ) {
+            if ( inputVart < -0.3 ) {
                 if ( _touchColliderBottom == null ) {
                     Debug.Log("Bottom Touch Collider object does not exist");
                 }
@@ -45,10 +45,11 @@ public partial class Player : MonoBehaviour{
 
                 var touthObj = _touchColliderBottom.GetComponent<TouchCollider>();
 
+                // Get Target Object to Rotate
                 var targetRotObjVert = touthObj.GetTouchObject();
 
                 if ( targetRotObjVert == null ) {
-                    Debug.Log("There is no object to rotate.");
+                    Debug.Log("There is no object to rotateAxisY.");
                     return;
                 }
 
@@ -74,7 +75,7 @@ public partial class Player : MonoBehaviour{
                 var targetRotObj = a.GetTouchObject();
                             
                 if ( targetRotObj == null ) {
-                    Debug.Log("There is no object to rotate.");
+                    Debug.Log("There is no object to rotateAxisX.");
                     return;
                 }
 
@@ -104,12 +105,12 @@ public partial class Player : MonoBehaviour{
                 var targetRotObjVert = touthObj.GetTouchObject();
 
                 if ( targetRotObjVert == null ) {
-                    Debug.Log("There is no object to rotate.");
+                    Debug.Log("There is no object to SpinAxisY.");
                     return;
                 }
 
                 targetRotObjVert.GetComponent<RotatableObject>().StartSpin(_touchColliderBottom.transform.position, Vector3.up);
-                Debug.Log("Small rotation : axisY");
+                Debug.Log("Spin : axisY");
 
                 return;
 
@@ -130,12 +131,12 @@ public partial class Player : MonoBehaviour{
                 var targetRotObj = a.GetTouchObject();
 
                 if ( targetRotObj == null ) {
-                    Debug.Log("There is no object to rotate.");
+                    Debug.Log("There is no object to SpinAxisX.");
                     return;
                 }
 
                 targetRotObj.GetComponent<RotatableObject>().StartSpin(_touchColliderFront.transform.position, Vector3.right);
-                Debug.Log("Small rotation : axisX");
+                Debug.Log("Spin : axisX");
 
             }
 
