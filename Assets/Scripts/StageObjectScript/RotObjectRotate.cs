@@ -35,7 +35,7 @@ public partial class RotatableObject : MonoBehaviour {
 
 
     // まわす小の更新
-    void UpdateRotate()
+    protected void UpdateRotate()
     {
         // 回転中かフラグ
         if ( _isRotating ) {
