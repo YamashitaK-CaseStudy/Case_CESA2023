@@ -13,9 +13,9 @@ public partial class RotatableObject : MonoBehaviour{
 
 
     private float _elapsedTime = 0.0f;  // 経過時間
-    private bool _isRotating = false;   // 回転してるかフラグ
 
-    private bool _isSpin = false;       // 回転しているかフラグ
+    public bool _isRotating = false;   // 回転してるかフラグ
+    public bool _isSpin = false;       // 回転しているかフラグ
 
     // Start is called before the first frame update
     void Start(){

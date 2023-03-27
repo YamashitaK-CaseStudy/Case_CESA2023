@@ -29,7 +29,6 @@ public class TouchCollider : MonoBehaviour
         if ( _touchObject != null ) {
             Debug.Log(_touchObject.name);
         }
-
     }
 
     public GameObject GetTouchObject() {
