@@ -10,8 +10,6 @@ public partial class RotatableObject : MonoBehaviour {
 
 	protected void StartSettingSpin() {
 		_object = this.transform.Find("Object").gameObject;
-		
-
 
 	}
 

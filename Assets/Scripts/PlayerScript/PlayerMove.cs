@@ -23,7 +23,7 @@ public partial class Player : MonoBehaviour{
 		float dedzone = 0.5f;
 		var inputVarX = Input.GetAxis("Horizontal");
 		if ( -dedzone < inputVarX && inputVarX < dedzone ) {
-			Debug.Log("Dedzone");
+			//Debug.Log("Dedzone");
 			moveVelocity.x = 0.0f;
 		}
 		else {
