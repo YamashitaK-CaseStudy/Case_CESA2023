@@ -8,13 +8,13 @@ public class Bolt : RotatableObject
 	bool isGimick = false;
 	private void Start(){
 		// 自身の回転軸の向きを正規化しとく
-        _selfRotAxis.Normalize();
+		_selfRotAxis.Normalize();
 
-        // 軸の中心のワールド座標を計算
-        CalkAxisWorldPos();
+		// 軸の中心のワールド座標を計算
+		CalkAxisWorldPos();
 
-        // まわす大の設定
-        StartSettingSpin();
+		// まわす大の設定
+		StartSettingSpin();
 	}
 	private void Update() {
 		UpdateGimick();
