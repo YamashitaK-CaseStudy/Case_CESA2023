@@ -9,12 +9,10 @@ public partial class RotatableObject : MonoBehaviour{
     [SerializeField] private Vector3 _axisCenterLocalPos;       // 軸中心座標:ローカル座標で指定してください
     [SerializeField] private float _axisLength;                 // TEST：軸の長さ
     [SerializeField] private float _rotRequirdTime = 1.0f;      // 1回転に必要な時間(sec)
-    
-    private float _elapsedTime = 0.0f;  // 経過時間
-
     private Vector3 _axisCenterWorldPos; // 回転軸の中心のワールド座標
 
 
+    private float _elapsedTime = 0.0f;  // 経過時間
     private bool _isRotating = false;   // 回転してるかフラグ
     private bool _isSpin = false;       // 回転しているかフラグ
 
