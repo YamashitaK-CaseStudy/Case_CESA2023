@@ -17,6 +17,7 @@ public partial class Player : MonoBehaviour{
     // Update is called once per frame
     void UpdateAction(){
 
+        // ‚Ü‚í‚·¬‚ğ‚·‚éƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Ìˆ—
         if ( Input.GetButtonDown("RotateSelfAxis") ) {
            
 
