@@ -15,10 +15,10 @@ public partial class Player : MonoBehaviour
 
     void StartObjectSelect() {
 
-        // ƒXƒP[ƒ‹İ’è
+        // ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½İ’ï¿½
         _pf_SelectRange.transform.localScale = new Vector3(0, 1, 1) * _RangeMagnification;
 
-        // ”¼Œaæ“¾
+        // ï¿½ï¿½ï¿½aï¿½æ“¾
         _SelectRangeRadius = _pf_SelectRange.transform.localScale.z;
 
         _linerendere = _pf_SelectRange.GetComponent<LineRenderer>();
@@ -29,16 +29,16 @@ public partial class Player : MonoBehaviour
 
         var pos = this.gameObject.transform.position;
 
-        // ”ÍˆÍƒIƒuƒWƒFƒNƒg‚ğƒvƒŒƒCƒ„[‚ÌÀ•W‚É“ü‚ê‘±‚¯‚é
+        // ï¿½ÍˆÍƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½Wï¿½É“ï¿½ï¿½ê‘±ï¿½ï¿½ï¿½ï¿½
         _pf_SelectRange.gameObject.transform.position = new Vector3(pos.x, pos.y, 1);
 
-        // ‰~‚Ì’†‚É“ü‚Á‚Ä‚é‘I‘ğ‚Å‚«‚éƒIƒuƒWƒFƒNƒgƒŠƒXƒg
+        // ï¿½~ï¿½Ì’ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½Iï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½Xï¿½g
         var inobjects = GetSelectRangeObjects(_SelectRangeRadius);
 
-        // ‰~‚Ì’†‚É“ü‚Á‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚©‚çˆê”ÔƒvƒŒƒCƒ„[‚©‚ç‹ß‚¢ƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
+        // ï¿½~ï¿½Ì’ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Ôƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ß‚ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
         var nearobject = GetInObjectNearObject(ref inobjects);
 
-        _linerendere.SetPosition(0, pos);
+        //_linerendere.SetPosition(0, pos);
        
         if (nearobject != null) {
             _linerendere.SetPosition(1, nearobject.transform.position);
@@ -46,23 +46,23 @@ public partial class Player : MonoBehaviour
            // Debug.Log(nearobject.name);
         }
         else {
-            _linerendere.SetPosition(1, pos);
+//            _linerendere.SetPosition(1, pos);
             _selectGameObject = null;
            // Debug.Log(null);
         }
     }
 
-    // ‰~‚Ì’†‚É“ü‚Á‚Ä‚éƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    // ï¿½~ï¿½Ì’ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½æ“¾
     private List<GameObject> GetSelectRangeObjects(float _selectrangeradius) {
 
-        // ƒ[ƒ‹ƒh“à‚Ì‰ñ“]‚Å‚«‚éƒIƒuƒWƒFƒNƒg‚ğW‚ß‚é
+        // ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Ì‰ï¿½]ï¿½Å‚ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½Wï¿½ß‚ï¿½
         GameObject[] rotateobjects = GameObject.FindGameObjectsWithTag("RotateObject");
 
-        // ‰~‚Ì’†‚É“ü‚Á‚Ä‚éƒIƒuƒWƒFƒNƒg‚ğW‚ß‚é
+        // ï¿½~ï¿½Ì’ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½Wï¿½ß‚ï¿½
         List<GameObject> in_Objects = new List<GameObject>();
         foreach (var _object in rotateobjects) {
 
-            // ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£‚ğŒvZ
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Æ‚Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Z
             var distance = Vector3.Distance(this.gameObject.transform.position, _object.transform.position);
 
             if (distance <= _SelectRangeRadius) {
@@ -78,10 +78,10 @@ public partial class Player : MonoBehaviour
         GameObject nearObject = null;
         float neardistance = 0.0f;
 
-        // ƒvƒŒƒCƒ„[‚©‚çˆê”Ô‹ß‚¢ƒIƒuƒWƒFƒNƒg‚ğæ“¾
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ô‹ß‚ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½æ“¾
         for (int i = 0; i < list.Count; i++) {
 
-            // ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£‚ğŒvZ
+            // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Æ‚Ì‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Z
             float distance = Vector3.Distance(this.gameObject.transform.position, list[i].transform.position);
 
             if (i == 0) {

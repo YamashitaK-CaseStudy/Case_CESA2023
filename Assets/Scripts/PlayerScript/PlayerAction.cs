@@ -11,18 +11,21 @@ public partial class Player : MonoBehaviour{
     // Start is called before the first frame update
     void StartAction(){
         _touchColliderFront = this.transform.Find("FrontTouchCollider").gameObject;
+        if ( _touchColliderFront == null ) {     
+                Debug.Log("ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãªã„ã§ã™");
+        }
   
     }
 
     // Update is called once per frame
     void UpdateAction(){
 
-        // ‚Ü‚í‚·¬‚ğ‚·‚éƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Ìˆ—
+        // ï¿½Ü‚í‚·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
         if ( Input.GetButtonDown("RotateSelfAxis") ) {
            
 
             if ( _touchColliderFront == null ) {     
-                Debug.Log("‚Ü‚í‚·¬ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½");
+                Debug.Log("ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãªã„ã§ã™");
             }
             else {
                Debug.Log(_touchColliderFront.name);
@@ -34,12 +37,12 @@ public partial class Player : MonoBehaviour{
             var targetRotObj = a.GetTouchObject();
                         
             if ( targetRotObj == null ) {
-                Debug.Log("‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg‚ª‚ ‚è‚Ü‚¹‚ñ");
+                Debug.Log("å›è»¢å¯¾è±¡ãŒã‚ã‚Šã¾ã›ã‚“");
                 return;
             }
 
             targetRotObj.GetComponent<RotatableObject>().StartRotate(_touchColliderFront.transform.position,Vector3.right);
-            Debug.Log("‚Ü‚í‚·¬");
+            Debug.Log("å›ã™å°");
 
         }
 

@@ -5,21 +5,21 @@ using UnityEngine;
 public class TouchCollider : MonoBehaviour
 {
 
-    GameObject _parent = null; // ©g‚ÌeƒIƒuƒWƒFƒNƒg@
+    GameObject _parent = null; // ï¿½ï¿½ï¿½gï¿½Ìeï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½@
 
-    GameObject _touchObject = null; // G‚ê‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg
+    GameObject _touchObject = null; // ï¿½Gï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
 
     // Start is called before the first frame update
     void Start(){
-        // ©g‚Ìe‚ğæ“¾
+        // ï¿½ï¿½ï¿½gï¿½Ìeï¿½ï¿½ï¿½æ“¾
         _parent = this.transform.parent.gameObject;
 
         if ( _parent.tag != "Player" ) {
-            Debug.Log("eƒIƒuƒWƒFƒNƒg‚ª•s³‚Å‚·");
+            Debug.Log("ï¿½eï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Å‚ï¿½");
         }
 
         if ( _parent = null ) {
-            Debug.Log("eƒIƒuƒWƒFƒNƒg‚ª•s³‚Å‚·");
+            Debug.Log("ï¿½eï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Å‚ï¿½");
         }
     }
 
@@ -32,7 +32,7 @@ public class TouchCollider : MonoBehaviour
     }
 
     public GameObject GetTouchObject() {
-        Debug.Log("ŒÄ‚Î‚ê‚½");
+        Debug.Log("æ¥è§¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å–å¾—");
 
         if ( _touchObject == null ) {
             return null;
@@ -48,7 +48,7 @@ public class TouchCollider : MonoBehaviour
         Debug.Log(obj.name);
 
         if ( obj.tag == "RotateObject" ) {
-            Debug.Log("G‚ê‚½");
+            Debug.Log("è§¦ã‚ŒãŸ");
             _touchObject = obj;
         }
     }
@@ -57,7 +57,7 @@ public class TouchCollider : MonoBehaviour
 
         if ( _touchObject != null ) {
             _touchObject = null;
-            Debug.Log("—£‚ê‚½");
+            Debug.Log("é›¢ã‚ŒãŸ");
         }
 	}
 }
