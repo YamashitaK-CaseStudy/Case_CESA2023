@@ -43,7 +43,7 @@ public class TouchCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider t) {
 
-        var obj  = t.gameObject.transform.parent.transform.parent.gameObject;
+        var obj  = t.gameObject.transform.parent.parent.parent.gameObject;
 
         Debug.Log(obj.name);
 

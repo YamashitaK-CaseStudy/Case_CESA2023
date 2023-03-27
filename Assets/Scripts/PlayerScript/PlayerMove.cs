@@ -19,7 +19,18 @@ public partial class Player : MonoBehaviour{
 
 	// Update is called once per frame
 	void UpdateMove(){
-		moveVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
+
+		float dedzone = 0.5f;
+		var inputVarX = Input.GetAxis("Horizontal");
+		if ( -dedzone < inputVarX && inputVarX < dedzone ) {
+			//Debug.Log("Dedzone");
+			moveVelocity.x = 0.0f;
+		}
+		else {
+			moveVelocity.x = Input.GetAxis("Horizontal") * moveSpeed;
+		}
+
+
 		_transform.LookAt(_transform.position + new Vector3(moveVelocity.x, 0.0f, moveVelocity.z));
 
 		if ( _characterController.isGrounded ) {
