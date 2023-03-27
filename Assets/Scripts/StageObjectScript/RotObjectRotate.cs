@@ -29,8 +29,11 @@ public partial class RotatableObject : MonoBehaviour {
         // 経過時間を初期化
         _elapsedTime = 0.0f;
 
+        // 回転の中心を設定
         _axisCenterWorldPos = rotCenter;
-        _selfRotAxis = rotAxis;
+        
+        // 回転軸を設定
+        _rotAxis = rotAxis;
     }
 
 
@@ -54,7 +57,7 @@ public partial class RotatableObject : MonoBehaviour {
             }
 
             // 現在フレームの回転を示す回転のクォータニオン作成
-            var angleAxis = Quaternion.AngleAxis(90 * requiredDeltaTime, _selfRotAxis);
+            var angleAxis = Quaternion.AngleAxis(90 * requiredDeltaTime, _rotAxis);
 
             // 円運動の位置計算
             var tr = transform;

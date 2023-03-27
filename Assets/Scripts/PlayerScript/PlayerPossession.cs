@@ -24,7 +24,7 @@ public partial class Player : MonoBehaviour{
     }
 
     private void OnPossession() {
-       
+       /*
         if(_selectGameObject != null) {
             _isPossession = true;
 
@@ -38,14 +38,17 @@ public partial class Player : MonoBehaviour{
             _selectGameObject.GetComponent<RotatableObject>().StartRotate();
 
         }
+        */
     }
 
     private void OffPossession() {
+    /*
         _isPossession = false;
 
         // マテリアルの色を変更する
         _selectGameObject.GetComponent<MeshRenderer>().material.color = Color.gray;
         this.GetComponent<MeshRenderer>().material.color = Color.red;
+     */
 
     }
 

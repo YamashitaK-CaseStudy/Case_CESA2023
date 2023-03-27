@@ -10,7 +10,6 @@ public partial class Player : MonoBehaviour
         StartMove();
         //StartWarp();
         StartAction();
-        StartObjectSelect();
         StartPossession();
 
     }
@@ -24,8 +23,7 @@ public partial class Player : MonoBehaviour
             //UpdateWarp();
             UpdateAction();
         }
-      
-        UpdateObjectSelect();
+  
         UpdatePossession();
     }
 }
