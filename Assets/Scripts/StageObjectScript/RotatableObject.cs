@@ -2,44 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ‰ñ“]‚Å‚«‚éƒIƒuƒWƒFƒNƒg‚ÌƒXƒNƒŠƒvƒg
+// å›è»¢ã§ãã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 public partial class RotatableObject : MonoBehaviour{
 
-    [SerializeField] private Vector3 _selfRotAxis;              // ©g‚Ì‰ñ“]²ƒxƒNƒgƒ‹
-    [SerializeField] public Vector3 _axisCenterLocalPos;        // ²’†SÀ•W:ƒ[ƒJƒ‹À•W‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢
-    [SerializeField] private float _axisLength;                 // TESTF²‚Ì’·‚³
-    [SerializeField] private float _rotRequirdTime = 1.0f;      // 1‰ñ“]‚É•K—v‚ÈŠÔ(sec)
-    
-    private float _elapsedTime = 0.0f;  // Œo‰ßŠÔ
-
-    private Vector3 _axisCenterWorldPos; // ‰ñ“]²‚Ì’†S‚Ìƒ[ƒ‹ƒhÀ•W
+    [SerializeField] private Vector3 _selfRotAxis;              // è‡ªèº«ã®å›è»¢è»¸ãƒ™ã‚¯ãƒˆãƒ«
+    [SerializeField] public Vector3 _axisCenterLocalPos;        // è»¸ä¸­å¿ƒåº§æ¨™:ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã§æŒ‡å®šã—ã¦ãã ã•ã„
+    [SerializeField] private float _axisLength;                 // TESTï¼šè»¸ã®é•·ã•
+    [SerializeField] private float _rotRequirdTime = 1.0f;      // 1å›è»¢ã«å¿…è¦ãªæ™‚é–“(sec)
+    private Vector3 _axisCenterWorldPos; // å›è»¢è»¸ã®ä¸­å¿ƒã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
 
 
-    public bool _isRotating = false;   // ‰ñ“]‚µ‚Ä‚é‚©ƒtƒ‰ƒO
-    private bool _isSpin = false;       // ‰ñ“]‚µ‚Ä‚¢‚é‚©ƒtƒ‰ƒO
+    private float _elapsedTime = 0.0f;  // çµŒéæ™‚é–“
+    private bool _isRotating = false;   // å›è»¢ã—ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
+
+    private bool _isSpin = false;       // å›è»¢ã—ã¦ã„ã‚‹ã‹ãƒ•ãƒ©ã‚°
 
     // Start is called before the first frame update
     void Start(){
 
-        // ©g‚Ì‰ñ“]²‚ÌŒü‚«‚ğ³‹K‰»‚µ‚Æ‚­
+        // è‡ªèº«ã®å›è»¢è»¸ã®å‘ãã‚’æ­£è¦åŒ–ã—ã¨ã
         _selfRotAxis.Normalize();
 
-        // ²‚Ì’†S‚Ìƒ[ƒ‹ƒhÀ•W‚ğŒvZ
+        // è»¸ã®ä¸­å¿ƒã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’è¨ˆç®—
         CalkAxisWorldPos();
 
-        // ‚Ü‚í‚·‘å‚Ìİ’è
+        // ã¾ã‚ã™å¤§ã®è¨­å®š
         StartSettingSpin();
 
     }
 
-    // ©g‚Ì²‚Ìƒ[ƒ‹ƒhÀ•W‚ğŒvZ‚·‚é
+    // è‡ªèº«ã®è»¸ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’è¨ˆç®—ã™ã‚‹
     void CalkAxisWorldPos() {
-        // ƒIƒuƒWƒFƒNƒgŒÅ—L‚Ì²‚ğ‰Â‹‰»
-        // LineRendererƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå›ºæœ‰ã®è»¸ã‚’å¯è¦–åŒ–
+        // LineRendererã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—
         var lineRenderer = this.GetComponent<LineRenderer>();
 
-        // ²‚ğƒ[ƒ‹ƒhÀ•WŒY‚É•ÏŠ·
-        _axisCenterWorldPos = this.transform.TransformPoint(_axisCenterLocalPos); // ²À•W‚ğŒvZ
+        // è»¸ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™åˆ‘ã«å¤‰æ›
+        _axisCenterWorldPos = this.transform.TransformPoint(_axisCenterLocalPos); // è»¸åº§æ¨™ã‚’è¨ˆç®—
 
         var axisHalfLength = _axisLength / 2;
 
@@ -47,11 +46,11 @@ public partial class RotatableObject : MonoBehaviour{
         var rotAxisEndPos = _axisCenterWorldPos + ( - axisHalfLength * _selfRotAxis);
 
         var positions = new Vector3[]{
-             rotAxisStartPos, // ŠJn“_
-             rotAxisEndPos    // I—¹“_
+             rotAxisStartPos, // é–‹å§‹ç‚¹
+             rotAxisEndPos    // çµ‚äº†ç‚¹
         };
 
-        // ü‚ğˆø‚­êŠ‚ğw’è‚·‚é
+        // ç·šã‚’å¼•ãå ´æ‰€ã‚’æŒ‡å®šã™ã‚‹
         lineRenderer.SetPositions(positions);
     }
 

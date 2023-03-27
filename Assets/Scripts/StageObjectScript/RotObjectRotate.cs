@@ -17,6 +17,22 @@ public partial class RotatableObject : MonoBehaviour {
         _elapsedTime = 0.0f;
     }
 
+    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis) {
+        
+        if ( _isSpin || _isRotating ) {
+            return;
+        }
+
+        // フラグを立てる
+        _isRotating = true;
+
+        // 経過時間を初期化
+        _elapsedTime = 0.0f;
+
+        _axisCenterWorldPos = rotCenter;
+        _selfRotAxis = rotAxis;
+    }
+
 
     // まわす小の更新
     void UpdateRotate()
@@ -38,7 +54,7 @@ public partial class RotatableObject : MonoBehaviour {
             }
 
             // 現在フレームの回転を示す回転のクォータニオン作成
-            var angleAxis = Quaternion.AngleAxis(180 * requiredDeltaTime, _selfRotAxis);
+            var angleAxis = Quaternion.AngleAxis(90 * requiredDeltaTime, _selfRotAxis);
 
             // 円運動の位置計算
             var tr = transform;
