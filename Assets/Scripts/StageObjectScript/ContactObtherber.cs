@@ -13,7 +13,7 @@ public class ContactObtherber : MonoBehaviour
     }
 
     void Update(){
-
+    /*
         var _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player._selectGameObject.GetComponent<RotatableObject>()._isRotating == false) {
             selectpos = _player._selectGameObject.transform.position;
@@ -41,6 +41,7 @@ public class ContactObtherber : MonoBehaviour
             // ƒŠƒXƒg‚Ì’†g‚ğ‹ó‚É‚·‚é
             _unionmaterials.Clear();
         }
+     */
     }
 
     public void ContactCall(in GameObject collision) {

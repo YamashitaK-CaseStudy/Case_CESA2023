@@ -15,11 +15,11 @@ public class TouchCollider : MonoBehaviour
         _parent = this.transform.parent.gameObject;
 
         if ( _parent.tag != "Player" ) {
-            Debug.Log("�e�I�u�W�F�N�g���s���ł�");
+            Debug.Log("Parent object is invalid.");
         }
 
         if ( _parent = null ) {
-            Debug.Log("�e�I�u�W�F�N�g���s���ł�");
+            Debug.Log("Parent object is invalid.");
         }
     }
 
@@ -32,7 +32,7 @@ public class TouchCollider : MonoBehaviour
     }
 
     public GameObject GetTouchObject() {
-        Debug.Log("接触オブジェクトの取得");
+        Debug.Log("Get the object touched");
 
         if ( _touchObject == null ) {
             return null;
@@ -48,7 +48,7 @@ public class TouchCollider : MonoBehaviour
         Debug.Log(obj.name);
 
         if ( obj.tag == "RotateObject" ) {
-            Debug.Log("触れた");
+            Debug.Log("Touched.");
             _touchObject = obj;
         }
     }
@@ -57,7 +57,7 @@ public class TouchCollider : MonoBehaviour
 
         if ( _touchObject != null ) {
             _touchObject = null;
-            Debug.Log("離れた");
+            Debug.Log("leaving.");
         }
 	}
 }

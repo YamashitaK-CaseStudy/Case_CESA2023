@@ -5,13 +5,13 @@ using UnityEngine;
 public class Bolt : RotatableObject
 {
 	[SerializeField] float speed = 1.0f;
+	[SerializeField] Vector3 _boltAxis;
+	
 	bool isGimick = false;
+
 	private void Start(){
 		// 自身の回転軸の向きを正規化しとく
-		_selfRotAxis.Normalize();
-
-		// 軸の中心のワールド座標を計算
-		CalkAxisWorldPos();
+		_boltAxis.Normalize();
 
 		// まわす大の設定
 		StartSettingSpin();
@@ -35,7 +35,7 @@ public class Bolt : RotatableObject
 
 		if(_isRotating){
 			StartRotate();
-			Vector3 axis = _selfRotAxis;
+			Vector3 axis = _boltAxis;
 			BoltGimick(axis,isforward);
 		}
 	}

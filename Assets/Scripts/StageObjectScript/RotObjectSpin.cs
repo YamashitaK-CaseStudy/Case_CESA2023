@@ -7,8 +7,6 @@ public partial class RotatableObject : MonoBehaviour {
 	GameObject _mesh;
 	GameObject _collider;
 
-	private float _spinSpeed = 2; // 単位回転に必要な時間[sec]
-
 	protected void StartSettingSpin() {
 		_mesh = this.transform.Find("Mesh").gameObject;
 		_collider = this.transform.Find("Collider").gameObject;
@@ -30,7 +28,7 @@ public partial class RotatableObject : MonoBehaviour {
 		// 自身の回転軸で180°まわした座標が複製コリジョンの座標
 
 		// 回転移動用のクォータニオン
-		var rotQuat = Quaternion.AngleAxis(180,_selfRotAxis);
+		var rotQuat = Quaternion.AngleAxis(180,_rotAxis);
 
 		// 円運動の位置計算
 		var pretence = _collider.transform.Find("PretenceCollison").gameObject;
@@ -55,7 +53,7 @@ public partial class RotatableObject : MonoBehaviour {
 		if ( _isSpin ) {
 
 			// 現在フレームの回転を示す回転のクォータニオン作成
-			var rotQuat = Quaternion.AngleAxis(155, _selfRotAxis);
+			var rotQuat = Quaternion.AngleAxis(155, _rotAxis);
 
 			// 円運動の位置計算
 			var tr = _mesh.transform;
