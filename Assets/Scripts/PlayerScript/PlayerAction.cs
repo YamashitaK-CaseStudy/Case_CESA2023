@@ -27,7 +27,7 @@ public partial class Player : MonoBehaviour{
     void UpdateAction(){
 
         // 
-        if ( Input.GetButtonDown("RotateSelfAxis") ) {
+        if ( Input.GetButtonDown("Rotate") ) {
 
 
             // Get Input LeftStick Vertical
@@ -82,6 +82,63 @@ public partial class Player : MonoBehaviour{
                 Debug.Log("Small rotation : axisX");
 
             }
+        }
+
+        // Spim Call
+        if ( Input.GetButtonDown("Spin")){
+            // Get Input LeftStick Vertical
+            var inputVart = Input.GetAxis("Vertical");
+
+            // Rot AxisY Bottom
+            if ( inputVart < -0.5 ) {
+                if ( _touchColliderBottom == null ) {
+                    Debug.Log("Bottom Touch Collider object does not exist");
+                }
+                else {
+                    Debug.Log(_touchColliderBottom.name);
+                }
+
+
+                var touthObj = _touchColliderBottom.GetComponent<TouchCollider>();
+
+                var targetRotObjVert = touthObj.GetTouchObject();
+
+                if ( targetRotObjVert == null ) {
+                    Debug.Log("There is no object to rotate.");
+                    return;
+                }
+
+                targetRotObjVert.GetComponent<RotatableObject>().StartSpin(_touchColliderBottom.transform.position, Vector3.up);
+                Debug.Log("Small rotation : axisY");
+
+                return;
+
+            }
+            // Rot AxisX
+            else {
+
+                if ( _touchColliderFront == null ) {
+                    Debug.Log("Front Touch Collider object does not exist");
+                }
+                else {
+                    Debug.Log(_touchColliderFront.name);
+                }
+
+
+                var a = _touchColliderFront.GetComponent<TouchCollider>();
+
+                var targetRotObj = a.GetTouchObject();
+
+                if ( targetRotObj == null ) {
+                    Debug.Log("There is no object to rotate.");
+                    return;
+                }
+
+                targetRotObj.GetComponent<RotatableObject>().StartSpin(_touchColliderFront.transform.position, Vector3.right);
+                Debug.Log("Small rotation : axisX");
+
+            }
+
         }
 
     }

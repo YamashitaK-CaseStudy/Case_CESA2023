@@ -7,8 +7,6 @@ public class Bolt : RotatableObject
 	[SerializeField] float speed = 1.0f;
 	[SerializeField] Vector3 _boltAxis;
 	
-	bool isGimick = false;
-
 	private void Start(){
 		// 自身の回転軸の向きを正規化しとく
 		_boltAxis.Normalize();
@@ -24,12 +22,10 @@ public class Bolt : RotatableObject
 	private void UpdateGimick(){
 		bool isforward = true;
 		if(Input.GetKey("n")){
-			isGimick = true;
 			isforward = true;
 		}
 
 		if(Input.GetKey("m")){
-			isGimick = true;
 			isforward = false;
 		}
 
@@ -49,6 +45,5 @@ public class Bolt : RotatableObject
 		_position.y += axis.y * speed * dir * Time.deltaTime;
 
 		transform.position = _position;
-		isGimick = false;
 	}
 }
