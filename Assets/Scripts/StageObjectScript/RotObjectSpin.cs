@@ -26,6 +26,9 @@ public partial class RotatableObject : MonoBehaviour {
 		cloneObj.transform.parent = _object.transform.parent;
 		cloneObj.transform.localPosition = _object.transform.localPosition;
 		cloneObj.transform.localScale = _object.transform.localScale;
+		cloneObj.transform.rotation = _object.transform.rotation;
+
+		
 
 		var cloneMesh = cloneObj.transform.Find("Mesh");
 
@@ -38,6 +41,7 @@ public partial class RotatableObject : MonoBehaviour {
 		// 回す
 		// 自身の回転軸で180°まわした座標が複製コリジョンの座標
 
+		/*
 		// 回転移動用のクォータニオン
 		var rotQuat = Quaternion.AngleAxis(180,_rotAxis);
 
@@ -54,8 +58,9 @@ public partial class RotatableObject : MonoBehaviour {
 		tr.position = pos;
 
 		// 向き更新
-		tr.rotation = tr.rotation * rotQuat;
+		//tr.rotation =  rotQuat * tr.rotation;
 
+		 */
 
 
 
@@ -108,7 +113,7 @@ public partial class RotatableObject : MonoBehaviour {
 		cloneObj.transform.parent = _object.transform.parent;
 		cloneObj.transform.localPosition = _object.transform.localPosition;
 		cloneObj.transform.localScale = _object.transform.localScale;
-
+		cloneObj.transform.rotation = _object.transform.rotation;
 
 		// 回す
 		// 自身の回転軸で180°まわした座標が複製コリジョンの座標
@@ -129,7 +134,7 @@ public partial class RotatableObject : MonoBehaviour {
 		tr.position = pos;
 
 		// 向き更新
-		tr.rotation = tr.rotation * rotQuat;
+		tr.rotation = rotQuat * tr.rotation;
 
 
 	}
