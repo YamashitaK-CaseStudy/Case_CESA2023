@@ -4,46 +4,34 @@ using UnityEngine;
 
 public class Bolt : RotatableObject
 {
-	[SerializeField] float speed = 1.0f;
-	[SerializeField] Vector3 _boltAxis;
-	
-	private void Start(){
-		// 自身の回転軸の向きを正規化しとく
-		_boltAxis.Normalize();
+	[SerializeField] private float _translationSpeed = 1.0f;
+	[SerializeField] private float _speedMagnificationSpinning = 2.0f;
+	private float _translationSpeedSpinning;
 
+	private void Start(){
 		// まわす大の設定
 		StartSettingSpin();
+		_translationSpeedSpinning = _translationSpeed * _speedMagnificationSpinning;
 	}
 	private void Update() {
-		UpdateGimick();
-		UpdateRotate();
-		UpdateSpin();
-	}
-	private void UpdateGimick(){
-		bool isforward = true;
-		if(Input.GetKey("n")){
-			isforward = true;
-		}
-
-		if(Input.GetKey("m")){
-			isforward = false;
-		}
-
-		if(_isRotating){
-			StartRotate();
-			Vector3 axis = _boltAxis;
-			BoltGimick(axis,isforward);
+        if (_isRotating)
+        {
+			UpdateRotate();
+			UpdatePosition(_translationSpeed);
+        }
+		else if (_isSpin)
+		{
+			UpdateSpin();
+			UpdatePosition(_translationSpeedSpinning);
 		}
 	}
-	public void BoltGimick(Vector3 axis, bool isforward){
-		// 方向指定
-		int dir = 1;
-		if(!isforward) dir = -1;
+	
+	public void UpdatePosition(float speed){
 		// 座標更新
-		var _position = transform.position;
-		_position.x += axis.x * speed * dir * Time.deltaTime;
-		_position.y += axis.y * speed * dir * Time.deltaTime;
+		var position = transform.position;
+		position.x += _rotAxis.x * speed * Time.deltaTime;
+		position.y += _rotAxis.y * speed * Time.deltaTime;
 
-		transform.position = _position;
+		transform.position = position;
 	}
 }
