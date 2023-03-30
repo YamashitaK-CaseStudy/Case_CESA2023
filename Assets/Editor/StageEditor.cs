@@ -7,6 +7,7 @@ public partial class CStageEditor : EditorWindow {
 	bool isEditorInit = false;	// 初期化チェック
 	enum TABNUM{	// タブ列挙
 		PutObj = 0,
+		CreateRotateObj,
 		CreateStair,
 	}
 
@@ -19,6 +20,7 @@ public partial class CStageEditor : EditorWindow {
 	private void Initalize(){
 		isEditorInit = true;
 		CreateObjInitialize();
+		CreateRotateObjInitialize();
 		EditorInitialize();
 	}
 
@@ -26,14 +28,23 @@ public partial class CStageEditor : EditorWindow {
 	private void OnGUI() {
 		if(isEditorInit == false) Initalize();
 
-		string[] tabList = {"オブジェクト配置","階段作成"};
-		TABNUM tabnum = (TABNUM)GUILayout.Toolbar(_tabNumber, tabList, EditorStyles.toolbarButton);
+		if(EditorApplication.isPlaying){
+			EditorGUILayout.HelpBox("実行中は操作できません", MessageType.Warning);
+			return;
+		}
 
+		string[] tabList = {"オブジェクト配置","回転オブジェクト作成","階段作成"};
+		TABNUM tabnum = (TABNUM)GUILayout.Toolbar(_tabNumber, tabList, EditorStyles.toolbarButton);
+		_tabNumber = (int)tabnum;
 		switch(tabnum){
 			case TABNUM.PutObj:
 				LayoutPrefabList();
 				break;
+			case TABNUM.CreateRotateObj:
+				LayoutRotateObj();
+				break;
 			case TABNUM.CreateStair:
+				EditorGUILayout.HelpBox("現在制作中だよ", MessageType.Info);
 				break;
 			default:
 				Debug.LogError("Error");
