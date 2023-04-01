@@ -21,6 +21,7 @@ public partial class CStageEditor : EditorWindow {
 		isEditorInit = true;
 		CreateObjInitialize();
 		CreateRotateObjInitialize();
+		CreateFloorInitialize();
 		EditorInitialize();
 	}
 
@@ -33,7 +34,7 @@ public partial class CStageEditor : EditorWindow {
 			return;
 		}
 
-		string[] tabList = {"オブジェクト配置","回転オブジェクト作成","階段作成"};
+		string[] tabList = {"オブジェクト配置","回転オブジェクト作成","床作成"};
 		TABNUM tabnum = (TABNUM)GUILayout.Toolbar(_tabNumber, tabList, EditorStyles.toolbarButton);
 		_tabNumber = (int)tabnum;
 		switch(tabnum){
@@ -44,7 +45,7 @@ public partial class CStageEditor : EditorWindow {
 				LayoutRotateObj();
 				break;
 			case TABNUM.CreateStair:
-				EditorGUILayout.HelpBox("現在制作中だよ", MessageType.Info);
+				LayoutCreateFloor();
 				break;
 			default:
 				Debug.LogError("Error");
