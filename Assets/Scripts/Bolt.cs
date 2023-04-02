@@ -29,8 +29,8 @@ public class Bolt : RotatableObject
 	public void UpdatePosition(float speed){
 		// 座標更新
 		var position = transform.position;
-		position.x += _rotAxis.x * speed * Time.deltaTime;
-		position.y += _rotAxis.y * speed * Time.deltaTime;
+		position.x += -_rotAxis.x * speed * Time.deltaTime;
+		position.y += -_rotAxis.y * speed * Time.deltaTime;
 
 		transform.position = position;
 	}
