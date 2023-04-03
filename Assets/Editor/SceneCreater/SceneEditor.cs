@@ -102,12 +102,13 @@ public partial class SceneEditor : EditorWindow
 		Vector3 pos = new Vector3(0,0,0);
 
 		// プレハブからインスタンスを生成
-		Instantiate(_playerPrefab, pos, Quaternion.identity);
+		var tmpObj = Instantiate(_playerPrefab, pos, Quaternion.identity);
+		tmpObj.name = "Player";
 
 		// カメラのコンポーネントを設定
 		var tmpCamera = GameObject.Find("Main Camera");
 		var tmpCameraComp = tmpCamera.AddComponent<PlayerCamera>();
-		tmpCameraComp.targetName = "Pf_NewPlayer";
+		tmpCameraComp.targetName = tmpObj.name;
 		tmpCameraComp.cameraOffset = new Vector3(0,1.5f,-14);
 		tmpCameraComp.targetOffset = new Vector3(1.2f,0,0);
 	}
