@@ -7,19 +7,19 @@ using System.Linq;
 public partial class CStageEditor : EditorWindow
 {
 
-	private string path = "Assets/Prefabs/Stage/";	// 検索するファイル
-	private Vector2 prefabListScPos;	// プレハブの一覧用のバー座標
-	private Vector2 previewRunScPos;	// プレビュー用のバー座標
-	private GameObject prefabData;		// プレハブのデータ
-	string[] prefabList;				// プレハブの一覧
-	string[] prefabListID;				// プレハブの一覧
-	string selectPrefabPath;			// 選択されたプレハブのパス
-	string selectPrefabID;				//　選択されたプレハブのID
+	private string path = "Assets/Prefabs/Stage/";  // 検索するファイル
+	private Vector2 prefabListScPos;    // プレハブの一覧用のバー座標
+	private Vector2 previewRunScPos;    // プレビュー用のバー座標
+	private GameObject prefabData;      // プレハブのデータ
+	string[] prefabList;                // プレハブの一覧
+	string[] prefabListID;              // プレハブの一覧
+	string selectPrefabPath;            // 選択されたプレハブのパス
+	string selectPrefabID;              //　選択されたプレハブのID
 	Vector3 pos = new Vector3(0, 0, 0);
-	private bool isMultiple = false;	// 同時設置するかどうか
-	private bool isMultipleX, isMultipleY, isMultipleZ;	// 同時設置
+	private bool isMultiple = false;    // 同時設置するかどうか
+	private bool isMultipleX, isMultipleY, isMultipleZ; // 同時設置
 	private bool isFrnMultiX, isFrnMultiY, isFrnMultiZ; // 前設置
-	private bool isInvMultiX, isInvMultiY, isInvMultiZ;	// 逆設置
+	private bool isInvMultiX, isInvMultiY, isInvMultiZ; // 逆設置
 	int instNumX = 0, instNumY = 0, instNumZ = 0;
 	int instInvNumX = 0, instInvNumY = 0, instInvNumZ = 0;
 
@@ -85,15 +85,16 @@ public partial class CStageEditor : EditorWindow
 			EditorGUILayout.LabelField("座標", centerbold);
 			pos = EditorGUILayout.Vector3Field("", pos);
 			// まとめ置き
-			isMultiple = EditorGUILayout.ToggleLeft("同時設置", isMultiple);
 
-			if (isMultiple)
+			using (new GUILayout.VerticalScope("HelpBox"))
 			{
-				using (new GUILayout.VerticalScope("HelpBox"))
+				isMultiple = EditorGUILayout.ToggleLeft("同時設置", isMultiple);
+				if (isMultiple)
 				{
 					MultipleSetLayout();
 				}
 			}
+
 			// インスタンス化ボタン
 			if (GUILayout.Button("オブジェクトの設置"))
 			{
@@ -107,10 +108,10 @@ public partial class CStageEditor : EditorWindow
 
 		// 各方向の同時設置
 		// X
-		isMultipleX = EditorGUILayout.ToggleLeft("X", isMultipleX);
-		if (isMultipleX)
+		using (new GUILayout.VerticalScope("HelpBox"))
 		{
-			using (new GUILayout.VerticalScope("HelpBox"))
+			isMultipleX = EditorGUILayout.ToggleLeft("X方向", isMultipleX);
+			if (isMultipleX)
 			{
 				using (new GUILayout.HorizontalScope())
 				{
@@ -131,10 +132,10 @@ public partial class CStageEditor : EditorWindow
 			}
 		}
 		// Y
-		isMultipleY = EditorGUILayout.ToggleLeft("Y", isMultipleY);
-		if (isMultipleY)
+		using (new GUILayout.VerticalScope("HelpBox"))
 		{
-			using (new GUILayout.VerticalScope("HelpBox"))
+			isMultipleY = EditorGUILayout.ToggleLeft("Y方向", isMultipleY);
+			if (isMultipleY)
 			{
 				using (new GUILayout.HorizontalScope())
 				{
@@ -155,10 +156,10 @@ public partial class CStageEditor : EditorWindow
 			}
 		}
 		// Z
-		isMultipleZ = EditorGUILayout.ToggleLeft("Z", isMultipleZ);
-		if (isMultipleZ)
+		using (new GUILayout.VerticalScope("HelpBox"))
 		{
-			using (new GUILayout.VerticalScope("HelpBox"))
+			isMultipleZ = EditorGUILayout.ToggleLeft("Z方向", isMultipleZ);
+			if (isMultipleZ)
 			{
 				using (new GUILayout.HorizontalScope())
 				{
@@ -189,19 +190,24 @@ public partial class CStageEditor : EditorWindow
 		AddInstance(prefabData, pos);
 	}
 
-	private void AddInstance(GameObject prefabData, Vector3 pos){
+	private void AddInstance(GameObject prefabData, Vector3 pos)
+	{
 		// X
 		// 正
-		if(isFrnMultiX){
-			for(int i = 1; i < instNumX; i++){
+		if (isFrnMultiX)
+		{
+			for (int i = 1; i < instNumX; i++)
+			{
 				var tmppos = pos;
 				tmppos.x += i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
 			}
 		}
 		// 負
-		if(isInvMultiX){
-			for(int i = 1; i < instInvNumX; i++){
+		if (isInvMultiX)
+		{
+			for (int i = 1; i < instInvNumX; i++)
+			{
 				var tmppos = pos;
 				tmppos.x -= i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
@@ -209,16 +215,20 @@ public partial class CStageEditor : EditorWindow
 		}
 		// Y
 		// 正
-		if(isFrnMultiY){
-			for(int i = 1; i < instNumY; i++){
+		if (isFrnMultiY)
+		{
+			for (int i = 1; i < instNumY; i++)
+			{
 				var tmppos = pos;
 				tmppos.y += i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
 			}
 		}
 		// 負
-		if(isInvMultiY){
-			for(int i = 1; i < instInvNumY; i++){
+		if (isInvMultiY)
+		{
+			for (int i = 1; i < instInvNumY; i++)
+			{
 				var tmppos = pos;
 				tmppos.y -= i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
@@ -226,16 +236,20 @@ public partial class CStageEditor : EditorWindow
 		}
 		// Z
 		// 正
-		if(isFrnMultiZ){
-			for(int i = 1; i < instNumZ; i++){
+		if (isFrnMultiZ)
+		{
+			for (int i = 1; i < instNumZ; i++)
+			{
 				var tmppos = pos;
 				tmppos.z += i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
 			}
 		}
 		// 負
-		if(isInvMultiY){
-			for(int i = 1; i < instInvNumZ; i++){
+		if (isInvMultiY)
+		{
+			for (int i = 1; i < instInvNumZ; i++)
+			{
 				var tmppos = pos;
 				tmppos.z -= i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);

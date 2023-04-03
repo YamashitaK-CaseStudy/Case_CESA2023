@@ -7,7 +7,6 @@ public partial class CStageEditor : EditorWindow
 {
 	private Vector3 floorpos;
 	private int _floorWidth = 0;
-	private int _strairs = 0;
 	private GameObject _floorParts;
 	private GameObject _floorParents;
 	private bool isStairs = false;
@@ -22,8 +21,8 @@ public partial class CStageEditor : EditorWindow
 		RIGHT = 1,
 		LEFT = -1
 	}
-	STAIRSDIRTB _tb;    // 上下の設定
-	STAIRSDIRLR _lr;    // 左右の設定
+	STAIRSDIRTB _tb;	// 上下の設定
+	STAIRSDIRLR _lr;	// 左右の設定
 	void CreateFloorInitialize()
 	{
 		string floorpath = "Assets/Prefabs/Stage/Pf_FloarParts.prefab";
