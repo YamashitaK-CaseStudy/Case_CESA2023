@@ -14,6 +14,15 @@ public partial class RotatableObject : MonoBehaviour{
     public bool _isRotating = false;        // 回転してるかフラグ
     public bool _isSpin = false;            // 回転しているかフラグ
 
+    //プロパティ。外部からのメンバ変数へのアクセスを定義するもの。ゲッターやセッターのようなもの。
+    public float ProgressRate//進捗率という意味です。_elapsedTimeが単純に経過した時間ではなく全体時間で割った０～１の進捗率として扱われているためこの名前にしました。
+    {
+        get
+        {
+            return _elapsedTime;
+        }
+    }
+
     // Start is called before the first frame update
     void Start(){
 
