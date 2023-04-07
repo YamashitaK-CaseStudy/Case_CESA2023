@@ -19,7 +19,21 @@ public partial class CStageEditor : EditorWindow
 	bool _isBaseSettings;
 	bool _isAddChildObj;
 	bool _isChildrenSettings;
+	bool _isLineX;
+	bool _isLineY;
+	bool _isLineZ;
+	bool _isBoxZ;
 	int _selectChildID;
+	int _length;
+
+	enum CREATETYPE
+	{
+		normal,
+		line,
+		box,
+		stairs,
+	}
+	CREATETYPE _type = CREATETYPE.normal;
 	void CreateRotateObjInitialize()
 	{
 		isCreateStart = false;
@@ -87,7 +101,7 @@ public partial class CStageEditor : EditorWindow
 			EditorGUILayout.LabelField(_object.name + "　(" + childNum + ")");
 			using (new EditorGUI.IndentLevelScope())
 			{
-				if(childNum == 0) return;
+				if (childNum == 0) return;
 				for (int i = 0; i < childNum; i++)
 				{
 					var child = _object.gameObject.transform.GetChild(i);
@@ -110,13 +124,13 @@ public partial class CStageEditor : EditorWindow
 			if (Event.current.keyCode == KeyCode.UpArrow)
 			{
 				_selectChildID--;
-				if(_selectChildID == -1) _selectChildID = _object.gameObject.transform.childCount - 1;
+				if (_selectChildID == -1) _selectChildID = _object.gameObject.transform.childCount - 1;
 				Event.current.Use();
 			}
 			else if (Event.current.keyCode == KeyCode.DownArrow)
 			{
 				_selectChildID++;
-				if(_selectChildID == _object.gameObject.transform.childCount) _selectChildID = 0;
+				if (_selectChildID == _object.gameObject.transform.childCount) _selectChildID = 0;
 				Event.current.Use();
 			}
 			_selectChildObj = _object.gameObject.transform.GetChild(_selectChildID).gameObject;
@@ -216,16 +230,124 @@ public partial class CStageEditor : EditorWindow
 	{
 		_selectAddChildPrefab = EditorGUILayout.ObjectField("追加オブジェクト", _selectAddChildPrefab, typeof(GameObject), false) as GameObject;
 		_childpos = EditorGUILayout.Vector3Field("座標", _childpos);
+		_type = (CREATETYPE)EditorGUILayout.EnumPopup("生成タイプ", _type);
+
+		using (new GUILayout.VerticalScope("HelpBox"))
+		{
+			switch (_type)
+			{
+				case CREATETYPE.normal:
+					break;
+				case CREATETYPE.line:
+					_length = EditorGUILayout.IntField("長さ", _length);
+					_isLineX = EditorGUILayout.ToggleLeft("X", _isLineX);
+					_isLineY = EditorGUILayout.ToggleLeft("Y", _isLineY);
+					_isLineZ = EditorGUILayout.ToggleLeft("Z", _isLineZ);
+					break;
+				case CREATETYPE.box:
+					_length = EditorGUILayout.IntField("1辺の長さ", _length);
+					_isBoxZ = EditorGUILayout.ToggleLeft("奥行も設定するか", _isBoxZ);
+					break;
+				case CREATETYPE.stairs:
+					_length = EditorGUILayout.IntField("1辺の長さ", _length);
+					using (new GUILayout.HorizontalScope())
+					{
+						_tb = (STAIRSDIRTB)EditorGUILayout.EnumPopup("上下", _tb);
+						_lr = (STAIRSDIRLR)EditorGUILayout.EnumPopup("左右", _lr);
+					}
+					break;
+			}
+		}
 		if (GUILayout.Button("追加"))
 		{
-			var tmpObj = Instantiate(_selectAddChildPrefab, _childpos, Quaternion.identity);
-			tmpObj.gameObject.transform.parent = _object.gameObject.transform;
-			tmpObj.name = tmpObj.name.Replace("(Clone)", "");
-			_selectChildObj = tmpObj;
-			_selectChildID = _object.gameObject.transform.childCount - 1;
+			switch (_type)
+			{
+				case CREATETYPE.normal:
+					AddChildObj(_childpos);
+					break;
+				case CREATETYPE.line:
+					if (_isLineX)
+					{
+
+						for (int i = 0; i < _length; i++)
+						{
+							Vector3 pos = _childpos;
+							pos.x += i;
+							AddChildObj(pos);
+						}
+					}
+					if (_isLineY)
+					{
+						for (int i = 1; i < _length; i++)
+						{
+							Vector3 pos = _childpos;
+							pos.y += i;
+							AddChildObj(pos);
+						}
+					}
+					if (_isLineZ)
+					{
+						for (int i = 1; i < _length; i++)
+						{
+							Vector3 pos = _childpos;
+							pos.z += i;
+							AddChildObj(pos);
+						}
+					}
+					break;
+				case CREATETYPE.box:
+					for (int z = 0; z < _length; z++)
+					{
+						for (int y = 0; y < _length; y++)
+						{
+							for (int x = 0; x < _length; x++)
+							{
+								Vector3 pos = _childpos;
+								pos.x += x;
+								pos.y += y;
+								pos.z += z;
+								AddChildObj(pos);
+							}
+						}
+						if (!_isBoxZ) break;
+					}
+					break;
+				case CREATETYPE.stairs:
+					// 階段の生成プログラム
+					for (int y = 0; y < _length; y++)
+					{
+						bool isSkip = false;
+						for (int x = 0; x < _length; x++)
+						{
+							if (x == _length - y) isSkip = true;
+							if (isSkip)
+							{
+								break;
+							}
+							else
+							{
+								// 座標の設定
+								Vector3 tmppos = floorpos;
+								tmppos.x += x * (int)_lr;
+								tmppos.y += y * (int)_tb;
+								// インスタンス化行う
+								AddChildObj(tmppos);
+							}
+						}
+					}
+					break;
+			}
 		}
 	}
-
+	private void AddChildObj(Vector3 pos)
+	{
+		var tmpObj = Instantiate(_selectAddChildPrefab, pos, Quaternion.identity);
+		tmpObj.gameObject.transform.parent = _object.gameObject.transform;
+		tmpObj.name = tmpObj.name.Replace("(Clone)", "");
+		// 親子付けを設定
+		_selectChildObj = tmpObj;
+		_selectChildID = _object.gameObject.transform.childCount - 1;
+	}
 	private void LayoutChildrenSettings()
 	{
 		// スタイルの設定

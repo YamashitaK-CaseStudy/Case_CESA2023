@@ -83,7 +83,7 @@ public partial class CStageEditor : EditorWindow
 
 		if (isStairs)
 		{
-			CreateStair();	// 階段を生成する
+			CreateStair(_stairsSide);	// 階段を生成する
 		}
 		else
 		{
@@ -101,13 +101,13 @@ public partial class CStageEditor : EditorWindow
 		}
 	}
 
-	private void CreateStair()
+	private void CreateStair(int side)
 	{
 		// 階段の生成プログラム
-		for(int y = 0; y < _stairsSide; y++){
+		for(int y = 0; y < side; y++){
 			bool isSkip = false;
-			for(int x = 0; x < _stairsSide; x++){
-				if(x == _stairsSide - y) isSkip = true;
+			for(int x = 0; x < side; x++){
+				if(x == side - y) isSkip = true;
 				if(isSkip){
 					break;
 				}else{

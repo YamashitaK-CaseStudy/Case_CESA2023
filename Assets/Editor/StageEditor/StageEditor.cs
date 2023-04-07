@@ -22,7 +22,7 @@ public partial class CStageEditor : EditorWindow {
 		CreateObjInitialize();
 		CreateRotateObjInitialize();
 		CreateFloorInitialize();
-		PreviewInitialize();
+		//PreviewInitialize();
 	}
 
 	// GUI 表示
