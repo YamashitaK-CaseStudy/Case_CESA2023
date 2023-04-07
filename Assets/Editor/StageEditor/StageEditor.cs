@@ -22,7 +22,7 @@ public partial class CStageEditor : EditorWindow {
 		CreateObjInitialize();
 		CreateRotateObjInitialize();
 		CreateFloorInitialize();
-		PreviewInitialize();
+		//PreviewInitialize();
 	}
 
 	// GUI 表示
@@ -42,8 +42,8 @@ public partial class CStageEditor : EditorWindow {
 				LayoutPrefabList();
 				break;
 			case TABNUM.CreateRotateObj:
-				EditorGUILayout.HelpBox("現在制作中だよ", MessageType.Info);
-				return;
+				// EditorGUILayout.HelpBox("現在制作中だよ", MessageType.Info);
+				// return;
 				LayoutRotateObj();
 				break;
 			case TABNUM.CreateStair:
