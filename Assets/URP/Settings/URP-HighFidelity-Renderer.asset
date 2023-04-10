@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NewSGRenderFuture
   m_EditorClassIdentifier: 
   m_Active: 1
-  shadergraphMaterial: {fileID: 0}
+  shadergraphMaterial: {fileID: 2100000, guid: 778baf4eda316f84ba5cf59ef1d91d6a, type: 2}
 --- !u!114 &-1878332245247344467
 MonoBehaviour:
   m_ObjectHideFlags: 0
