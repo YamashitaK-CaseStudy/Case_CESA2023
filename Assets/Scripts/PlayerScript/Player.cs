@@ -8,22 +8,22 @@ public partial class Player : MonoBehaviour
     void Start(){
 
         StartMove();
-        //StartWarp();
         StartAction();
-        StartPossession();
+        //StartWarp();
+        //StartPossession();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        // œßˆË‚µ‚Ä‚È‚¢Žž
-        if (_isPossession == false) {
-            UpdateMove();
-            //UpdateWarp();
-            UpdateAction();
-        }
-  
-        UpdatePossession();
+        //// œßˆË‚µ‚Ä‚È‚¢Žž
+        //if (_isPossession == false) {
+          
+        //}
+        UpdateMove();
+        UpdateAction();
+        //UpdateWarp();
+        //UpdatePossession();
     }
 }
