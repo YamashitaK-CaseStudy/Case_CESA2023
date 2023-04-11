@@ -37,6 +37,8 @@ public class RotObjUnionObtherber : MonoBehaviour{
             // パーツを移し替える
             foreach (var part in parts) {
                 part.transform.SetParent(basechildObject.transform);
+                var pos = new Vector3(Mathf.Round(part.transform.localPosition.x), Mathf.Round(part.transform.localPosition.y),Mathf.Round(part.transform.localPosition.z));
+                part.transform.localPosition = pos;
             }
 
             // 空になった回転オブジェクトを削除する
