@@ -9,7 +9,18 @@ public class RotObjUnionObtherber : MonoBehaviour{
 
     void Update() {
 
-        if (_unionMaterials.Count == 0) {
+        if (_unionMaterials.Count < 2) {
+            return;
+        }
+
+        //// 合体オブジェクトの対象では無いオブジェクトを取り除く
+        //for (int i = _unionMaterials.Count - 1; i >= 0; i--) {
+        //    if (_unionMaterials[i].GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) {
+        //        _unionMaterials.RemoveAt(i);
+        //    }
+        //}
+
+        if (_unionMaterials.Count < 2) {
             return;
         }
 

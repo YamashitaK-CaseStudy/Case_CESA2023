@@ -22,11 +22,11 @@ public class RotObjHitCheck : MonoBehaviour{
 
     private void OnTriggerExit(Collider other) {
 
-        if (_rotPartsObj == null) {
+        if(_rotPartsObj == null) {
             return;
         }
 
-        if (other.name != _rotPartsObj.name) {
+        if (other.gameObject != _rotPartsObj.gameObject) {
             return;
         }
 
