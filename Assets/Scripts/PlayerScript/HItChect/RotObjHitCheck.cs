@@ -39,7 +39,6 @@ public class RotObjHitCheck : MonoBehaviour{
         _ischangeRotHit = false;
     }
 
-
     // 回転オブジェクトの取得
     private void GetRotateObject(GameObject obj) {
 
