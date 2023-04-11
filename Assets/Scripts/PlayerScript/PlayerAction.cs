@@ -53,6 +53,12 @@ public partial class Player : MonoBehaviour {
             // 左右に傾けたとき
             if (-0.5 > stick.x || 0.5 < stick.x) {
 
+                if (_bottomHitCheck.GetRotObj != null) {
+                    if (_bottomHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotating) {
+                        return;
+                    }
+                }
+
                 // 通常軸回転
                 if (_rotationButton.WasPressedThisFrame()) {
                     _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
@@ -67,6 +73,12 @@ public partial class Player : MonoBehaviour {
         // 下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
 
+            if (_frontHitCheck.GetRotObj != null) {
+                if (_frontHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotating) {
+                    return;
+                }
+            }
+
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
                 _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
@@ -76,6 +88,9 @@ public partial class Player : MonoBehaviour {
             if (_rotationSpinButton.WasPressedThisFrame()) {
                 _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
             }
+        }
+        else {
+            Debug.Log("無い");
         }
     }
 
