@@ -98,12 +98,15 @@ public partial class SceneEditor : EditorWindow
 		return false;
 	}
 	private void SceneSettings(){
+		Debug.Log("設定開始");
 		// プレイヤーの配置
-		Vector3 pos = new Vector3(0,0,0);
+		Vector3 pos = new Vector3(0,1,0);
 
+		Debug.Log("プレイヤー生成");
 		// プレハブからインスタンスを生成
 		var tmpObj = Instantiate(_playerPrefab, pos, Quaternion.identity);
 		tmpObj.name = "Player";
+		Debug.Log(tmpObj);
 
 		// カメラのコンポーネントを設定
 		var tmpCamera = GameObject.Find("Main Camera");
