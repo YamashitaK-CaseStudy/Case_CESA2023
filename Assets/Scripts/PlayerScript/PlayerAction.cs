@@ -55,11 +55,11 @@ public partial class Player : MonoBehaviour {
 
                 // í èÌé≤âÒì]
                 if (_rotationButton.WasPressedThisFrame()) {
-                    _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_frontHitCheck.GetRotPartsObj.transform.position), Vector3.right);
+                    _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
                 }
                 // çÇë¨âÒì]
                 if (_rotationSpinButton.WasPressedThisFrame()) {
-                    _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_frontHitCheck.GetRotPartsObj.transform.position), Vector3.right);
+                    _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
                 }
             }
         }
@@ -69,12 +69,12 @@ public partial class Player : MonoBehaviour {
 
             // í èÌé≤âÒì]
             if (_rotationButton.WasPressedThisFrame()) {
-                _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_bottomHitCheck.GetRotPartsObj.transform.position), Vector3.up);
+                _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
             }
 
             // çÇë¨âÒì]
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_bottomHitCheck.GetRotPartsObj.transform.position), Vector3.up);
+                _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
             }
         }
     }
