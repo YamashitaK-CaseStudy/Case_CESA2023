@@ -26,7 +26,7 @@ public class RotObjHitCheck : MonoBehaviour{
             return;
         }
 
-        if (other.name != _rotPartsObj.name) {
+        if (other.gameObject != _rotPartsObj.gameObject) {
             return;
         }
 
