@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1336056569534866079}
   - component: {fileID: 615013989502640577}
   - component: {fileID: 660974266477458190}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BottomTouchCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 739200002292087474}
   - component: {fileID: 7601197932843766763}
   - component: {fileID: 7197987162515466314}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrontTouchCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 572904001598475386}
   - component: {fileID: 5244486432606457174}
   - component: {fileID: 8374828621110445082}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: UpTouchCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
