@@ -1,10 +1,85 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public partial class Player : MonoBehaviour
-{
+public partial class Player : MonoBehaviour {
 
+    [SerializeField] private GameObject _frontColliderObj;
+    [SerializeField] private GameObject _bottomColliderObj;
+
+    private RotObjHitCheck _frontHitCheck = null;
+    private RotObjHitCheck _bottomHitCheck = null;
+    private PlayerInput _playerInput = null;
+    private InputAction _rotationButton = null;
+    private InputAction _rotationSpinButton = null;
+
+    void StartAction() {
+
+        // 当たり判定のコンポーネント取得
+        _frontHitCheck = _frontColliderObj.GetComponent<RotObjHitCheck>();
+        _bottomHitCheck = _bottomColliderObj.GetComponent<RotObjHitCheck>();
+
+        // InputSystem取得
+        _playerInput = GetComponent<PlayerInput>();
+        _rotationButton = _playerInput.actions.FindAction("Rotation");
+        _rotationSpinButton = _playerInput.actions.FindAction("RotationSpin");
+    }
+
+    void UpdateAction() {
+
+        // 左スティックのベクトルを取得する
+        var stick = _playerInput.actions["AxisSelect"].ReadValue<Vector2>();
+
+        // Front回転オブジェクトが切り替わった時
+        if (_frontHitCheck.GetIsChangeRotHit) {
+            _frontHitCheck.InitChangeRotHit();
+
+            // 切り替えタイミング
+            Debug.Log("フロント切り替えタイミング");
+        }
+
+        // Bottom回転オブジェクトが切り替わった時
+        if (_bottomHitCheck.GetIsChangeRotHit) {
+            _bottomHitCheck.InitChangeRotHit();
+
+            // 切り替えタイミング
+            Debug.Log("ボトム切り替えタイミング");
+        }
+
+        // 前に回転オブジェクトがある時
+        if (_frontHitCheck.GetIsRotHit) {
+
+            // 左右に傾けたとき
+            if (-0.5 > stick.x || 0.5 < stick.x) {
+
+                // 通常軸回転
+                if (_rotationButton.WasPressedThisFrame()) {
+                    _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_frontHitCheck.GetRotPartsObj.transform.position), Vector3.right);
+                }
+                // 高速回転
+                if (_rotationSpinButton.WasPressedThisFrame()) {
+                    _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_frontHitCheck.GetRotPartsObj.transform.position), Vector3.right);
+                }
+            }
+        }
+
+        // 下に回転オブジェクトがある時
+        if (_bottomHitCheck.GetIsRotHit) {
+
+            // 通常軸回転
+            if (_rotationButton.WasPressedThisFrame()) {
+                _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_bottomHitCheck.GetRotPartsObj.transform.position), Vector3.up);
+            }
+
+            // 高速回転
+            if (_rotationSpinButton.WasPressedThisFrame()) {
+                _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_bottomHitCheck.GetRotPartsObj.transform.position), Vector3.up);
+            }
+        }
+    }
+
+    /*
     private GameObject _touchColliderFront = null;
     private GameObject _touchColliderBottom = null;
 
@@ -166,6 +241,7 @@ public partial class Player : MonoBehaviour
         }
 
     }
+    */
 
     private Vector3 CompensateRotationAxis(in Vector3 AXIS)
     {
