@@ -8,13 +8,28 @@ public class Bolt : RotatableObject
     [SerializeField, Header("移動量の限界")] private uint _translationLimit = 1;
     [SerializeField, Header("回転時の移動量。正で抜ける方向、負で締まる方向。")] private float _amountTranslation = 1.0f;
     [SerializeField, Header("高速回転時の移動スピード")] private float _spinningTranslationSpeed = 1.0f;
+    [SerializeField, Header("連動するオブジェクトのリスト")] private List<GameObject> _interlockingObjectList;
     private float _countTranslation = 0;
     private float _countSpinTime = 0;
+    private List<Vector3> _initialPositionListOfInterlockingObjects = new List<Vector3>();//連動オブジェクトの初期位置
+    private Transform _childTransform;
 
     private void Start()
     {
         // まわす大の設定
         StartSettingSpin();
+
+        foreach (var obj in _interlockingObjectList)
+        {
+            if (obj == null)
+            {
+                _interlockingObjectList.RemoveAt(_initialPositionListOfInterlockingObjects.Count);
+                continue;
+            }
+            _initialPositionListOfInterlockingObjects.Add(obj.transform.position);
+        }
+
+        _childTransform = transform.GetChild(0);
     }
     private void Update()
     {
@@ -22,6 +37,7 @@ public class Bolt : RotatableObject
         {
             if (Mathf.Abs(_countTranslation) >= _translationLimit)
             {
+                _isRotating = _isSpin = false;
                 return;
             }
 
@@ -36,6 +52,12 @@ public class Bolt : RotatableObject
                 UpdatePositionInSpin();
             }
 
+            //連動オブジェクトの位置を更新
+            int count = _interlockingObjectList.Count;
+            for (int i = 0; i < count; ++i)
+            {
+                _interlockingObjectList[i].transform.position = _initialPositionListOfInterlockingObjects[i] + _childTransform.localPosition;
+            }
         }
     }
 
@@ -50,7 +72,7 @@ public class Bolt : RotatableObject
         }
         Vector3 localPosition = Vector3.zero;
         localPosition.y = _countTranslation + _amountTranslation * progressRate;
-        transform.GetChild(0).localPosition = localPosition;
+        _childTransform.localPosition = localPosition;
     }
 
     private void UpdatePositionInSpin()
@@ -65,7 +87,7 @@ public class Bolt : RotatableObject
             localPosition.y = _translationLimit;
             _countSpinTime = 0;
         }
-        transform.GetChild(0).localPosition = localPosition;
+        _childTransform.localPosition = localPosition;
     }
 
     private void OnValidate()
