@@ -838,6 +838,7 @@ GameObject:
   - component: {fileID: 75594570}
   - component: {fileID: 75594569}
   - component: {fileID: 75594568}
+  - component: {fileID: 75594571}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -892,6 +893,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &75594571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75594567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 0
 --- !u!1 &89353829
 GameObject:
   m_ObjectHideFlags: 0
@@ -3328,6 +3342,7 @@ GameObject:
   - component: {fileID: 395266424}
   - component: {fileID: 395266423}
   - component: {fileID: 395266422}
+  - component: {fileID: 395266425}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -3382,6 +3397,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &395266425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395266421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 1
 --- !u!1 &416681751
 GameObject:
   m_ObjectHideFlags: 0
@@ -3684,6 +3712,7 @@ GameObject:
   - component: {fileID: 458147435}
   - component: {fileID: 458147434}
   - component: {fileID: 458147433}
+  - component: {fileID: 458147436}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -3738,6 +3767,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &458147436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458147432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 1
 --- !u!1 &459071049
 GameObject:
   m_ObjectHideFlags: 0
@@ -5271,6 +5313,7 @@ GameObject:
   - component: {fileID: 609172918}
   - component: {fileID: 609172917}
   - component: {fileID: 609172916}
+  - component: {fileID: 609172919}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -5325,6 +5368,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &609172919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609172915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 1
 --- !u!1 &612620579
 GameObject:
   m_ObjectHideFlags: 0
@@ -5895,6 +5951,7 @@ GameObject:
   - component: {fileID: 688218855}
   - component: {fileID: 688218854}
   - component: {fileID: 688218853}
+  - component: {fileID: 688218856}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -5949,6 +6006,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &688218856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688218852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 1
 --- !u!1 &695114451
 GameObject:
   m_ObjectHideFlags: 0
@@ -6058,6 +6128,7 @@ GameObject:
   - component: {fileID: 704100959}
   - component: {fileID: 704100958}
   - component: {fileID: 704100957}
+  - component: {fileID: 704100960}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -6112,6 +6183,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &704100960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704100956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 1
 --- !u!1 &729540447
 GameObject:
   m_ObjectHideFlags: 0
@@ -10728,6 +10812,7 @@ GameObject:
   - component: {fileID: 1308588400}
   - component: {fileID: 1308588399}
   - component: {fileID: 1308588398}
+  - component: {fileID: 1308588401}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -10782,6 +10867,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1308588401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308588397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 1
 --- !u!1 &1325131230
 GameObject:
   m_ObjectHideFlags: 0
@@ -10988,6 +11086,7 @@ GameObject:
   - component: {fileID: 1338218261}
   - component: {fileID: 1338218260}
   - component: {fileID: 1338218259}
+  - component: {fileID: 1338218262}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -11042,6 +11141,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1338218262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338218258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 1
 --- !u!1 &1343002847
 GameObject:
   m_ObjectHideFlags: 0
@@ -12918,6 +13030,7 @@ GameObject:
   - component: {fileID: 1544983250}
   - component: {fileID: 1544983249}
   - component: {fileID: 1544983248}
+  - component: {fileID: 1544983251}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -12972,6 +13085,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1544983251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544983247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 1
 --- !u!1 &1558424136
 GameObject:
   m_ObjectHideFlags: 0
@@ -13515,6 +13641,7 @@ GameObject:
   - component: {fileID: 1598056036}
   - component: {fileID: 1598056035}
   - component: {fileID: 1598056034}
+  - component: {fileID: 1598056037}
   m_Layer: 0
   m_Name: RotatableObject
   m_TagString: RotateObject
@@ -13569,6 +13696,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1598056037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598056033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5c4cf0323d9a64896ecd42b7d768de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_RotObjKind>k__BackingField: 0
 --- !u!1 &1649203420
 GameObject:
   m_ObjectHideFlags: 0

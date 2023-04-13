@@ -10,8 +10,9 @@ public partial class CStageEditor : EditorWindow
 	GameObject _parentObject;       // 一番親のオブジェクト
 	Rigidbody _parentRigdbody;      // 親のRigidbody
 	RotatableObject _parentRotObj;  // 親のRotatableObject
+	RotObjkinds _parentObjectkind;  // 親のRotObjKinds
+	RotObjkinds.ObjectKind _kinds;
 	GameObject _object;             // 仲介のオブジェクト
-	GameObject[] _childrenObject;   // 要素のオブジェクト
 	GameObject _selectChildObj;     // 選択している子オブジェクト
 	GameObject _selectAddChildPrefab;// 選択している子オブジェクト
 	Vector3 _rotobjpos;
@@ -25,7 +26,6 @@ public partial class CStageEditor : EditorWindow
 	bool _isBoxZ;
 	int _selectChildID;
 	int _length;
-
 	enum CREATETYPE
 	{
 		normal,
@@ -72,11 +72,23 @@ public partial class CStageEditor : EditorWindow
 		}
 		else
 		{
+			_kinds = (RotObjkinds.ObjectKind)EditorGUILayout.EnumPopup("オブジェクトの種類", _kinds);
 			// オブジェクトの生成開始
 			if (GUILayout.Button("オブジェクトの生成開始"))
 			{
 				isCreateStart = true;
 				CreateBaseRotateObject();
+				string path = null;
+				if (_kinds == RotObjkinds.ObjectKind.UnionRotObject)
+				{
+					path = "Assets/Prefabs/Stage/Pf_PartsUnion.prefab";
+				}
+				else
+				{
+					path = "Assets/Prefabs/Stage/Pf_Parts.prefab";
+				}
+
+				_selectAddChildPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
 			}
 		}
 	}
@@ -174,6 +186,8 @@ public partial class CStageEditor : EditorWindow
 		if (GUILayout.Button("生成終了"))
 		{
 			isCreateStart = false;
+			_selectChildObj = null;
+			_childpos = new Vector3(0,0,0);
 		}
 	}
 
@@ -402,6 +416,9 @@ public partial class CStageEditor : EditorWindow
 		_parentRigdbody.isKinematic = true;
 		// RotatableObjectの生成
 		_parentRotObj = _parentObject.AddComponent<RotatableObject>();
+		// 種類の設定
+		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
+		_parentObjectkind._RotObjKind = _kinds;
 
 		_object = new GameObject("Object");
 		_object.gameObject.transform.parent = _parentObject.gameObject.transform;
