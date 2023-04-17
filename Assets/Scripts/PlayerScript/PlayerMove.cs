@@ -8,7 +8,9 @@ public partial class Player : MonoBehaviour{
 	[SerializeField] private float jumpPower = 3.0f;
 	private CharacterController _characterController;
 	private Transform _transform;
-	private Vector3 moveVelocity;
+	public Vector3 moveVelocity;
+
+	private Animator _playerAnimator;
 
 
 	// Start is called before the first frame update
