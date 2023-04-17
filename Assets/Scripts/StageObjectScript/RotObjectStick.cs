@@ -55,10 +55,4 @@ public partial class RotatableObject : MonoBehaviour{
 
         oldangleY = angle;
     }
-
-    public int teststick = 0;
-    public int testangle = 0;
-
-    public int teststickX = 0;
-    public int testangleX = 0;
 }
