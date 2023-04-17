@@ -12,25 +12,8 @@ namespace SuzumuraTomoki
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = FindInstance();
-                }
-                return instance;
+                return sInstance;
             }
-        }
-
-        private static SceneManager FindInstance()
-        {
-            var guidArray = AssetDatabase.FindAssets("t:SceneManager");
-            if (guidArray.Length == 0)
-            {
-                Debug.Log("SceneManagerのインスタンスが見つかりませんでした");
-                throw new System.IO.FileNotFoundException("SceneManager does not found");
-            }
-
-            var path = AssetDatabase.GUIDToAssetPath(guidArray[0]);
-            return AssetDatabase.LoadAssetAtPath<SceneManager>(path);
         }
 
         public int StageSize
@@ -86,7 +69,15 @@ namespace SuzumuraTomoki
             UnityEngine.SceneManagement.SceneManager.LoadScene(stageSelectScene.name);
         }
 
-        private static SceneManager instance = null;
+        private void OnValidate()
+        {
+            sInstance = instance;
+        }
+
+        private static SceneManager sInstance = null;
+
+        [SerializeField]
+        private SceneManager instance = null;
 
         [SerializeField]
         private List<Object> stageSceneList;
