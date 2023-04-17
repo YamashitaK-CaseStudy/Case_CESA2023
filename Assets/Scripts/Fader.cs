@@ -18,11 +18,15 @@ public class Fader : MonoBehaviour
             timeToFade = float.Epsilon;/*0割りの回避*/
         }
 
-        gameObject.SetActive(false);//フェイド中以外はUpdate()が呼ばれないようにゲームオブジェクトを無効状態にする
-
         if (fadeOut)
         {
+            gameObject.SetActive(true);
+            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1);
             FadeIn();
+        }
+        else
+        {
+            gameObject.SetActive(false);//フェイド中以外はUpdate()が呼ばれないようにゲームオブジェクトを無効状態にする
         }
     }
 

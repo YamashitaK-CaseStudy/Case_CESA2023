@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507d58c468d1f8c438330d7c189b8e10, type: 3}
   m_Name: SceneManager
   m_EditorClassIdentifier: 
+  instance: {fileID: 11400000}
   stageSceneList:
   - {fileID: 102900000, guid: 1d5ce4a0198e9634dbf9c09d6bb455b0, type: 3}
   - {fileID: 102900000, guid: 1d5ce4a0198e9634dbf9c09d6bb455b0, type: 3}
-  titleScene: {fileID: 0}
+  titleScene: {fileID: 102900000, guid: d5ef147dd6b426e4db4bf65995a91bfb, type: 3}
   resultScene: {fileID: 0}
   stageSelectScene: {fileID: 102900000, guid: 95f7339faf425ed45b833fa44c8fc3af, type: 3}
