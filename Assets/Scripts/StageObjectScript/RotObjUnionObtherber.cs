@@ -33,27 +33,23 @@ public class RotObjUnionObtherber : MonoBehaviour{
         }
 
         // 合体元の回転オブジェクトを取得する
-        var basechildObject = _unionMaterials[0].transform.GetChild(0).gameObject;
+        var basechildObject = _unionMaterials[0].transform.gameObject;
 
+        // 回転オブジェクトにぶら下がってるObjectオブジェクトを取得する
+        List<GameObject> objects = new List<GameObject>();
         for (int i = 1; i < _unionMaterials.Count; i++) {
 
-            var childObject = _unionMaterials[i].transform.GetChild(0).gameObject;
-            List<GameObject> parts = new List<GameObject>();
-
-            // パーツオブジェクトを集める
-            for (int j = 0; j < childObject.transform.childCount; j++) {
-                parts.Add(childObject.transform.GetChild(j).gameObject);
-            }
-
-            // パーツを移し替える
-            foreach (var part in parts) {
-                part.transform.SetParent(basechildObject.transform);
-                var pos = new Vector3(Mathf.Round(part.transform.localPosition.x), Mathf.Round(part.transform.localPosition.y),Mathf.Round(part.transform.localPosition.z));
-                part.transform.localPosition = pos;
+            for(int j = 0; j < _unionMaterials[i].transform.childCount; j++) {
+                objects.Add(_unionMaterials[i].transform.GetChild(j).gameObject);
             }
 
             // 空になった回転オブジェクトを削除する
-            Destroy(_unionMaterials[i].gameObject); 
+            Destroy(_unionMaterials[i].gameObject);
+        }
+
+        // 親を変更
+        foreach(var obj in objects) {
+           obj.transform.parent = basechildObject.transform;
         }
 
         _unionMaterials.Clear();
