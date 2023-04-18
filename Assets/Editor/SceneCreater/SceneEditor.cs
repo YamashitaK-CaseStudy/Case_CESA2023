@@ -26,7 +26,7 @@ public partial class SceneEditor : EditorWindow
 	private void OnEnable()
 	{
 		_searchFolder = AssetDatabase.LoadAssetAtPath<DefaultAsset>(_scenePath);
-		_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Pf_NewPlayer.prefab");
+		_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Pf_layer.prefab");
 		_UnionObthberPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/RotObjectUnionObthber.prefab");
 	}
 	private void OnGUI()
@@ -130,8 +130,8 @@ public partial class SceneEditor : EditorWindow
 		var tmpCamera = GameObject.Find("Main Camera");
 		var tmpCameraComp = tmpCamera.AddComponent<PlayerCamera>();
 		tmpCameraComp.targetName = tmpObj.name;
-		tmpCameraComp.cameraOffset = new Vector3(0, 1.5f, -14);
-		tmpCameraComp.targetOffset = new Vector3(1.2f, 0, 0);
+		tmpCameraComp.cameraOffset = new Vector3(0, 2f, -9);
+		tmpCameraComp.targetOffset = new Vector3(0, 0, 0);
 		if (_isOnUnionObj)
 		{
 			var tmp = Instantiate(_UnionObthberPrefab, pos, Quaternion.identity);
