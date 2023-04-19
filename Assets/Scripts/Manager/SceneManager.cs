@@ -14,6 +14,11 @@ namespace SuzumuraTomoki
             {
                 sInstance = instance;
             }
+
+            if (beforeSceneName == null)
+            {
+                beforeSceneName = titleScene.name;
+            }
         }
         /*インターフェイス（公開関数）*/
         public static SceneManager Instance
@@ -32,13 +37,13 @@ namespace SuzumuraTomoki
             }
         }
 
-        public int CurrentStageIndex
-        {
-            get
-            {
-                return currentStageIndex;
-            }
-        }
+        //public int CurrentStageIndex
+        //{
+        //    get
+        //    {
+        //        return currentStageIndex;
+        //    }
+        //}
 
         private ForCoroutine MonoInstance
         {
@@ -46,7 +51,7 @@ namespace SuzumuraTomoki
             {
                 if (sMonoBehaviourObject == null)
                 {
-                    sMonoBehaviourObject = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    sMonoBehaviourObject = new GameObject("CreatedByScenemManager");
                     sMonoBehaviourObject.AddComponent<ForCoroutine>();
                     return sMonoBehaviourObject.GetComponent<ForCoroutine>();//オーバーヘッド短縮できる？
                 }
@@ -71,26 +76,36 @@ namespace SuzumuraTomoki
                 return false;
             }
 
-            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSceneList[stageIndex - 1].name, LoadSceneMode.Additive);
-            currentStageIndex = stageIndex;
+            //MonoInstance.StartCoroutine(LoadSceneAsync(stageSceneList[stageIndex - 1].name));
+            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSceneList[stageIndex - 1].name);
             return true;
         }
 
         public void LoadTitle()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(titleScene.name, LoadSceneMode.Additive);
+            //MonoInstance.StartCoroutine(LoadSceneAsync(titleScene.name));
+            UnityEngine.SceneManagement.SceneManager.LoadScene(titleScene.name);
         }
 
         public void LoadResult()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(resultScene.name, LoadSceneMode.Additive);
+            //MonoInstance.StartCoroutine(LoadSceneAsync(resultScene.name));
+            UnityEngine.SceneManagement.SceneManager.LoadScene(resultScene.name);
         }
 
         public void LoadStageSelect()
         {
-            MonoInstance.StartCoroutine(LoadSceneAsync(stageSelectScene.name));
-            //UnityEngine.SceneManagement.SceneManager.LoadScene(stageSelectScene.name, LoadSceneMode.Additive);
-            
+            //MonoInstance.StartCoroutine(LoadSceneAsync(stageSelectScene.name));
+            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSelectScene.name);
+            Debug.Log("ここを通るのはロード後？");
+
+        }
+
+        public void LoadBeforeScene()
+        {
+            //MonoInstance.StartCoroutine(LoadSceneAsync(beforeSceneName));
+            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSelectScene.name);
+
         }
 
         /*内部関数*/
@@ -103,6 +118,14 @@ namespace SuzumuraTomoki
         private IEnumerator LoadSceneAsync(string sceneName)
         {
             var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            beforeSceneName = currentScene.name;
+
+            //ロード後に前のシーンの描画を停止するために取得しておく
+            var camera = GameObject.Find("Main Camera");
+            var canvas = GameObject.Find("Canvas");
+
+            //ロード
+            Debug.Log("ロード");
             var state = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             // Wait until the asynchronous scene fully loads
@@ -110,9 +133,19 @@ namespace SuzumuraTomoki
             {
                 yield return null;
             }
-            currentScene.
-            yield break;
-            state = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(currentScene);
+
+            //前のシーンの描画を停止
+            if (camera != null)
+            {
+                camera.SetActive(false);
+            }
+            if (canvas != null)
+            {
+                canvas.SetActive(false);
+            }
+
+            //アンロード
+            var state2 = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(currentScene);
             while (state.isDone == false)
             {
                 //待機。UnloadScene()が廃止されて使えないためUnloadSceneAsync()を使用しましたが、完了するまで待機します。
@@ -123,6 +156,7 @@ namespace SuzumuraTomoki
         }
 
         private static SceneManager sInstance = null;
+        private static GameObject sMonoBehaviourObject;
 
         [SerializeField]
         private SceneManager instance = null;
@@ -139,15 +173,9 @@ namespace SuzumuraTomoki
         [SerializeField]
         private Object stageSelectScene;
 
-        private int currentStageIndex = 1;
+        private string beforeSceneName;
 
-        private static GameObject sMonoBehaviourObject;
         //private static MonoBehaviour monoBehaviour;
-
-    }
-
-    class ForCoroutine : MonoBehaviour
-    {
 
     }
 

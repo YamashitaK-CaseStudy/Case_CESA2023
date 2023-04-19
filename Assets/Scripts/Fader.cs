@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class Fader : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
+        DontDestroyOnLoad(transform.parent.gameObject);
         fadeImage = gameObject.GetComponent<Image>();
         if (fadeImage == null)
         {
@@ -18,7 +19,7 @@ public class Fader : MonoBehaviour
             timeToFade = float.Epsilon;/*0割りの回避*/
         }
 
-        if (fadeOut)
+        if (fadeOuted)
         {
             gameObject.SetActive(true);
             fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1);
@@ -53,13 +54,18 @@ public class Fader : MonoBehaviour
 
     private void UpdateFadeOut()
     {
+        if (fadeOuted)
+        {
+            return;
+        }
+
         countTime += Time.deltaTime;
         if (countTime >= timeToFade)
         {
-            fadeOut = true;
+            fadeOuted = true;
             fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1);
             receiver.ProcessAfterFadeOut();
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             return;
         }
 
@@ -72,7 +78,7 @@ public class Fader : MonoBehaviour
         countTime += Time.deltaTime;
         if (countTime >= timeToFade)
         {
-            fadeOut = false;
+            fadeOuted = false;
             fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 0);
             gameObject.SetActive(false);
             return;
@@ -81,7 +87,7 @@ public class Fader : MonoBehaviour
         fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1 - countTime / timeToFade);
     }
 
-    private static bool fadeOut = false;
+    private static bool fadeOuted = false;
     [SerializeField] private float timeToFade;
     //[SerializeField]private float timeToInputInvalid;プレイヤーの入力無効時間　プレイヤー側で設定した方が良い
     private float countTime = 0;
