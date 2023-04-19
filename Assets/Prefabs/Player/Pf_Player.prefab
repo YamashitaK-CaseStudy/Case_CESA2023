@@ -138,7 +138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5999275316550154428}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: -0.3, z: 1}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -339,7 +339,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7281347172894452153}
-  - component: {fileID: 2655869494144945989}
   - component: {fileID: -3445951448924786245}
   - component: {fileID: 7809864109623896308}
   - component: {fileID: 2988160571641009085}
@@ -370,19 +369,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!65 &2655869494144945989
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8675035453432338975}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-3445951448924786245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,7 +406,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.001
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.25, z: 0}
 --- !u!114 &2988160571641009085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +476,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 41e97ccf38f47b940a7b5d6c23badd0f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.2
+      value: 2.223
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41e97ccf38f47b940a7b5d6c23badd0f,
         type: 3}

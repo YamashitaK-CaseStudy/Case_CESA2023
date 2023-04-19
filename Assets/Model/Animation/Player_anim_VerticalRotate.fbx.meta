@@ -1,27 +1,9 @@
 fileFormatVersion: 2
-guid: 41e97ccf38f47b940a7b5d6c23badd0f
+guid: a8654486f08707a42a83ccd18d5a93d4
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: aiStandardSurface3
-    second: {fileID: -1294058508819152814, guid: 809c3d67cc1a71c4197da3938a2e9d19,
-      type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blinn1
-    second: {fileID: -1294058508819152814, guid: 809c3d67cc1a71c4197da3938a2e9d19,
-      type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blinn2
-    second: {fileID: -1294058508819152814, guid: 809c3d67cc1a71c4197da3938a2e9d19,
-      type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -51,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: BasePose
+      name: Vartical_Rotation
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0

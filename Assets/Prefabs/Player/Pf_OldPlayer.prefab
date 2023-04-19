@@ -442,6 +442,7 @@ MonoBehaviour:
   _bottomColliderObj: {fileID: 2399545729279065716}
   moveSpeed: 7
   jumpPower: 5
+  moveVelocity: {x: 0, y: 0, z: 0}
   fadeObjName: 
   warpEnterObjName: 
   warpExitObjName: 
