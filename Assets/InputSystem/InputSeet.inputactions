@@ -239,6 +239,17 @@
                 },
                 {
                     "name": "",
+                    "id": "4e1bc0bc-8c2e-4778-8665-dc9361022066",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RotationSpin",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "94a10434-17d7-4105-9d89-f57c60212710",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
