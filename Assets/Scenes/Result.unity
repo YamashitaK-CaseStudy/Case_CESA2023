@@ -535,8 +535,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 3d021ecf9c1d15d4aa5b0aa12d5cd105, type: 2}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: 
+        m_TargetAssemblyTypeName: SuzumuraTomoki.SceneManager, Assembly-CSharp
+        m_MethodName: LoadBeforeScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
