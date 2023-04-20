@@ -54,9 +54,8 @@ public partial class RotatableObject : MonoBehaviour{
     //    tr.rotation = angleAxis * tr.rotation;
     //}
 
-    public Vector3 _nowRotAxisY;
-    public Vector3 _nowRotAxisX;
-
+    public Vector3 _nowRotAxis;
+   
     public void StartRotateX(Vector3 center, Vector3 axis, int angle) {
 
         if (oldangleX == angle) {
@@ -66,10 +65,10 @@ public partial class RotatableObject : MonoBehaviour{
         var offset = angle - oldangleX;
 
         if (offset > 0) {
-            _nowRotAxisX = new Vector3(0, -1, 0);
+            _nowRotAxis = new Vector3(0, -1, 0);
         }
         else {
-            _nowRotAxisX = new Vector3(0, 1, 0);
+            _nowRotAxis = new Vector3(0, 1, 0);
         }
 
         StartStickRotate(center, axis, offset);
@@ -88,10 +87,10 @@ public partial class RotatableObject : MonoBehaviour{
 
         // ŽžŒv‰ñ‚è
         if(offset > 0) {
-            _nowRotAxisY = new Vector3(0, 1, 0);
+            _nowRotAxis = new Vector3(0, 1, 0);
         }
         else {
-            _nowRotAxisY = new Vector3(0, -1, 0);
+            _nowRotAxis = new Vector3(0, -1, 0);
         }
 
         StartStickRotate(center, axis, offset);
