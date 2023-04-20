@@ -3,21 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using SuzumuraTomoki;
 
-public class TitleInput : FadeOutCompletionReceiver
+public class TitleInput : MonoBehaviour
 {
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            fadePanel.GetComponent<Fader>().FadeOut(this);
+            SceneManager.Instance.LoadStageSelect();
         }
     }
-
-    public override void ProcessAfterFadeOut()
-    {
-        SceneManager.Instance.LoadStageSelect();
-    }
-
-    [SerializeField] private GameObject fadePanel = null;
 }
