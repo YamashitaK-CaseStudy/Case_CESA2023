@@ -27,7 +27,7 @@ public partial class RotatableObject : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start(){
-
+        StartSettingOtherHit();
         // 自身の回転軸の向きを正規化しとく
         _rotAxis.Normalize();
         // まわす大の設定
