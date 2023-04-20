@@ -45,21 +45,6 @@ namespace SuzumuraTomoki
         //    }
         //}
 
-        private ForCoroutine MonoInstance
-        {
-            get
-            {
-                if (sMonoBehaviourObject == null)
-                {
-                    sMonoBehaviourObject = new GameObject("CreatedByScenemManager");
-                    sMonoBehaviourObject.AddComponent<ForCoroutine>();
-                    return sMonoBehaviourObject.GetComponent<ForCoroutine>();//オーバーヘッド短縮できる？
-                }
-
-                return sMonoBehaviourObject.GetComponent<ForCoroutine>();
-            }
-        }
-
         /**
         * 指定した番号のステージをロードします。
         * @param[in] ステージの番号。１以上。
@@ -77,34 +62,37 @@ namespace SuzumuraTomoki
             }
 
             //MonoInstance.StartCoroutine(LoadSceneAsync(stageSceneList[stageIndex - 1].name));
-            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSceneList[stageIndex - 1].name);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(stageSceneList[stageIndex - 1].name);
+            LoadScene(stageSceneList[stageIndex - 1].name);
             return true;
         }
 
         public void LoadTitle()
         {
             //MonoInstance.StartCoroutine(LoadSceneAsync(titleScene.name));
-            UnityEngine.SceneManagement.SceneManager.LoadScene(titleScene.name);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(titleScene.name);
+            LoadScene(titleScene.name);
         }
 
         public void LoadResult()
         {
             //MonoInstance.StartCoroutine(LoadSceneAsync(resultScene.name));
-            UnityEngine.SceneManagement.SceneManager.LoadScene(resultScene.name);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(resultScene.name);
+            LoadScene(resultScene.name);
         }
 
         public void LoadStageSelect()
         {
             //MonoInstance.StartCoroutine(LoadSceneAsync(stageSelectScene.name));
-            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSelectScene.name);
-            Debug.Log("ここを通るのはロード後？");
-
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(stageSelectScene.name);
+            LoadScene(stageSelectScene.name);
         }
 
         public void LoadBeforeScene()
         {
             //MonoInstance.StartCoroutine(LoadSceneAsync(beforeSceneName));
-            UnityEngine.SceneManagement.SceneManager.LoadScene(stageSelectScene.name);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(beforeSceneName);
+            LoadScene(beforeSceneName);
 
         }
 
@@ -114,6 +102,34 @@ namespace SuzumuraTomoki
         //{
         //    sInstance = instance;
         //}
+
+        private ForCoroutine MonoInstance
+        {
+            get
+            {
+                if (sMonoBehaviourObject == null)
+                {
+                    sMonoBehaviourObject = new GameObject("CreatedByScenemManager");
+                    sMonoBehaviourObject.AddComponent<ForCoroutine>();
+                    return sMonoBehaviourObject.GetComponent<ForCoroutine>();//オーバーヘッド短縮できる？
+                }
+
+                return sMonoBehaviourObject.GetComponent<ForCoroutine>();
+            }
+        }
+
+        private void LoadScene(string sceneName)
+        {
+            if (FadeCanvasInstance == null)
+            {
+                FadeCanvasInstance = Instantiate(prefabFadeCanvas);
+                DontDestroyOnLoad(FadeCanvasInstance);
+                FaderInstance = FadeCanvasInstance.transform.GetChild(0).GetComponent<Fader>();
+            }
+
+            FaderInstance.FadeOut(sceneName);
+
+        }
 
         private IEnumerator LoadSceneAsync(string sceneName)
         {
@@ -172,6 +188,11 @@ namespace SuzumuraTomoki
 
         [SerializeField]
         private Object stageSelectScene;
+
+        [SerializeField]
+        private GameObject prefabFadeCanvas;
+        private GameObject FadeCanvasInstance;
+        private Fader FaderInstance;
 
         private string beforeSceneName;
 

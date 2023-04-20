@@ -7,7 +7,6 @@ public class Fader : MonoBehaviour
 {
     private void Awake()
     {
-        DontDestroyOnLoad(transform.parent.gameObject);
         fadeImage = gameObject.GetComponent<Image>();
         if (fadeImage == null)
         {
@@ -18,28 +17,22 @@ public class Fader : MonoBehaviour
         {
             timeToFade = float.Epsilon;/*0割りの回避*/
         }
-
-        if (fadeOuted)
-        {
-            gameObject.SetActive(true);
-            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1);
-            FadeIn();
-        }
-        else
-        {
-            gameObject.SetActive(false);//フェイド中以外はUpdate()が呼ばれないようにゲームオブジェクトを無効状態にする
-        }
     }
 
     private void Update()
     {
+        if (UpdateFader == null)
+        {
+            return;
+        }
+
         UpdateFader();
     }
 
 
-    public void FadeOut(FadeOutCompletionReceiver receiver)
+    public void FadeOut(string nextSceneName)
     {
-        this.receiver = receiver;
+        this.nextSceneName = nextSceneName;
         gameObject.SetActive(true);
         UpdateFader = UpdateFadeOut;
         countTime = 0;
@@ -47,7 +40,6 @@ public class Fader : MonoBehaviour
 
     public void FadeIn()
     {
-        gameObject.SetActive(true);
         UpdateFader = UpdateFadeIn;
         countTime = 0;
     }
@@ -64,8 +56,9 @@ public class Fader : MonoBehaviour
         {
             fadeOuted = true;
             fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1);
-            receiver.ProcessAfterFadeOut();
-            //gameObject.SetActive(false);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
+
+            FadeIn();
             return;
         }
 
@@ -87,17 +80,15 @@ public class Fader : MonoBehaviour
         fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1 - countTime / timeToFade);
     }
 
-    private static bool fadeOuted = false;
-    [SerializeField] private float timeToFade;
+    //c++でいう関数オブジェクトのようなもの
+    private delegate void FadePanelUpdate();
+    private FadePanelUpdate UpdateFader;
+
+    /*変数*/
+    private static bool fadeOuted = false;//非同期ロードのため。使っていない。2023/4/20
+    [SerializeField,Header("フェード時間")] private float timeToFade;
     //[SerializeField]private float timeToInputInvalid;プレイヤーの入力無効時間　プレイヤー側で設定した方が良い
     private float countTime = 0;
-    Image fadeImage;
-    private delegate void FadePanelUpdate();
-    FadePanelUpdate UpdateFader;
-    FadeOutCompletionReceiver receiver = null;
-}
-
-public abstract class FadeOutCompletionReceiver : MonoBehaviour
-{
-    public abstract void ProcessAfterFadeOut();
+    private Image fadeImage;
+    private string nextSceneName;
 }

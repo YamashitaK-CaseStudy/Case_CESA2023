@@ -20,3 +20,5 @@ MonoBehaviour:
   titleScene: {fileID: 102900000, guid: d5ef147dd6b426e4db4bf65995a91bfb, type: 3}
   resultScene: {fileID: 102900000, guid: 7eb6cdc3186c32347ae6b12aa5a54ea8, type: 3}
   stageSelectScene: {fileID: 102900000, guid: 95f7339faf425ed45b833fa44c8fc3af, type: 3}
+  prefabFadeCanvas: {fileID: 1884075380981443535, guid: ec54c01753d3a2b40a2e974b1a4776e4,
+    type: 3}

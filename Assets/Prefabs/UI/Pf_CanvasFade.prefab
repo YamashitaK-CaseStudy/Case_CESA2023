@@ -59,7 +59,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &1884075380981443533
 MonoBehaviour:
@@ -226,22 +226,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5621570009353005702}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7265360317911238286 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3085082931541584904, guid: d58904431bd3ca346989bb7c745871d0,
-    type: 3}
-  m_PrefabInstance: {fileID: 5621570009353005702}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &554896629706130550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7265360317911238286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff8f8822a710b044689181ad4a8d400d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToFade: 0.5
