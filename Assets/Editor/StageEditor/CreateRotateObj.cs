@@ -81,7 +81,7 @@ public partial class CStageEditor : EditorWindow
 				string path = null;
 				if (_kinds == RotObjkinds.ObjectKind.UnionRotObject)
 				{
-					path = "Assets/Prefabs/Stage/Pf_PartsUnion.prefab";
+					path = "Assets/Prefabs/Stage/Pf_PartsUnionRed.prefab";
 				}
 				else
 				{
