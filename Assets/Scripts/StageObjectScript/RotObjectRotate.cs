@@ -57,7 +57,7 @@ public partial class RotatableObject : MonoBehaviour {
 
                 //Debug.Log("ï‚ä‘èIóπ");
                 _isRotating = false;
-                UpdateChilePos();
+                //UpdateChilePos();
                 requiredDeltaTime -= ( _elapsedTime - 1 ); // ï‚ê≥
             }
 
