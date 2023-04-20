@@ -55,8 +55,9 @@ public partial class RotatableObject : MonoBehaviour {
             // リクエストデルタタイムの合算値がちょうど1になるように補正をかけると総回転量は目標回転量と一致する
             if ( _elapsedTime >= 1 ) {
 
-                Debug.Log("補間終了");
+                //Debug.Log("補間終了");
                 _isRotating = false;
+                UpdateChilePos();
                 requiredDeltaTime -= ( _elapsedTime - 1 ); // 補正
             }
 
