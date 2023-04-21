@@ -635,6 +635,7 @@ MonoBehaviour:
   _bottomColliderObj: {fileID: 1128973576}
   moveSpeed: 7
   jumpPower: 5
+  moveVelocity: {x: 0, y: 0, z: 0}
   fadeObjName: 
   warpEnterObjName: 
   warpExitObjName: 
@@ -783,6 +784,8 @@ MonoBehaviour:
   _rotRequirdTime: 1
   _isRotating: 0
   _isSpin: 0
+  oldangleY: 0
+  oldangleX: 0
 --- !u!54 &408276624
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1238,6 +1241,8 @@ MonoBehaviour:
   _rotRequirdTime: 1
   _isRotating: 0
   _isSpin: 0
+  oldangleY: 0
+  oldangleX: 0
 --- !u!1 &612901614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2883,6 +2888,8 @@ MonoBehaviour:
   _rotRequirdTime: 1
   _isRotating: 0
   _isSpin: 0
+  oldangleY: 0
+  oldangleX: 0
 --- !u!4 &1197603619
 Transform:
   m_ObjectHideFlags: 0
@@ -3701,6 +3708,8 @@ MonoBehaviour:
   _rotRequirdTime: 1
   _isRotating: 0
   _isSpin: 0
+  oldangleY: 0
+  oldangleX: 0
 --- !u!4 &1478227554
 Transform:
   m_ObjectHideFlags: 0

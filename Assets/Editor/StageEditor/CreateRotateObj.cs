@@ -81,7 +81,7 @@ public partial class CStageEditor : EditorWindow
 				string path = null;
 				if (_kinds == RotObjkinds.ObjectKind.UnionRotObject)
 				{
-					path = "Assets/Prefabs/Stage/Pf_PartsUnion.prefab";
+					path = "Assets/Prefabs/Stage/Pf_PartsUnionRed.prefab";
 				}
 				else
 				{
@@ -237,6 +237,7 @@ public partial class CStageEditor : EditorWindow
 		{
 			_parentRotObj._isRotating = EditorGUILayout.ToggleLeft("isRotating", _parentRotObj._isRotating);
 			_parentRotObj._isSpin = EditorGUILayout.ToggleLeft("isSpin", _parentRotObj._isSpin);
+			_parentRotObj._rotRequirdTime = EditorGUILayout.FloatField("回転速度", _parentRotObj._rotRequirdTime);
 		}
 	}
 
