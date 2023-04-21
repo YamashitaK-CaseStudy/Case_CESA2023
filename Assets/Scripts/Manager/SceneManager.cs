@@ -8,27 +8,21 @@ namespace SuzumuraTomoki
 {
     public class SceneManager : ScriptableObject
     {
-        private void OnEnable()
-        {
-            if (sInstance == null)
-            {
-                sInstance = instance;
-            }
+        /*思うように挙動してくれない　Gitから落としてすぐに実行すると通らない*/
+        //private void OnEnable()
+        //{
+        //    if (sInstance == null)
+        //    {
+        //        sInstance = instance;
+        //    }
 
-            if (beforeSceneName == null)
-            {
-                beforeSceneName = titleScene.name;
-            }
-        }
+        //    if (beforeSceneName == null)
+        //    {
+        //        beforeSceneName = titleScene.name;
+        //    }
+        //}
+
         /*インターフェイス（公開関数）*/
-        public static SceneManager Instance
-        {
-            get
-            {
-                return sInstance;
-            }
-        }
-
         public int StageSize
         {
             get
@@ -103,21 +97,6 @@ namespace SuzumuraTomoki
         //    sInstance = instance;
         //}
 
-        private ForCoroutine MonoInstance
-        {
-            get
-            {
-                if (sMonoBehaviourObject == null)
-                {
-                    sMonoBehaviourObject = new GameObject("CreatedByScenemManager");
-                    sMonoBehaviourObject.AddComponent<ForCoroutine>();
-                    return sMonoBehaviourObject.GetComponent<ForCoroutine>();//オーバーヘッド短縮できる？
-                }
-
-                return sMonoBehaviourObject.GetComponent<ForCoroutine>();
-            }
-        }
-
         private void LoadScene(string sceneName)
         {
             if (FadeCanvasInstance == null)
@@ -171,30 +150,22 @@ namespace SuzumuraTomoki
 
         }
 
-        private static SceneManager sInstance = null;
-        private static GameObject sMonoBehaviourObject;
-
-        [SerializeField]
-        private SceneManager instance = null;
-
         [SerializeField]
         private List<Object> stageSceneList;
 
         [SerializeField]
         private Object titleScene;
-
         [SerializeField]
         private Object resultScene;
-
         [SerializeField]
         private Object stageSelectScene;
-
         [SerializeField]
         private GameObject prefabFadeCanvas;
+
         private GameObject FadeCanvasInstance;
         private Fader FaderInstance;
 
-        private string beforeSceneName;
+        private string beforeSceneName = "Title";//変数にするべきだがUnityとの兼ね合いがあるのでやむを得ずベタ打ち
 
         //private static MonoBehaviour monoBehaviour;
 

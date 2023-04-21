@@ -14,7 +14,7 @@ public class Goal : MonoBehaviour
     void Update()
     {
        if(Input.GetButtonDown("Jump")) {
-            SuzumuraTomoki.SceneManager.Instance.LoadResult();
+            sceneManager.LoadResult();
        }
     }
 
@@ -23,4 +23,5 @@ public class Goal : MonoBehaviour
         Debug.Log("へい");
     }
 
+    [SerializeField] private SuzumuraTomoki.SceneManager sceneManager;
 }

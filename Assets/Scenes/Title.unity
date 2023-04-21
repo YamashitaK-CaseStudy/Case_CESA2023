@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867ca2406ef2e6649b1f0fc90eed3c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadePanel: {fileID: 653446055}
+  sceneManager: {fileID: 11400000, guid: 3d021ecf9c1d15d4aa5b0aa12d5cd105, type: 2}
 --- !u!4 &286243060
 Transform:
   m_ObjectHideFlags: 0
@@ -286,12 +286,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &653446055 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3085082931541584904, guid: d58904431bd3ca346989bb7c745871d0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1257080638}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &674992693
 GameObject:
   m_ObjectHideFlags: 0

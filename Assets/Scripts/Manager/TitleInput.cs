@@ -10,7 +10,9 @@ public class TitleInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.Instance.LoadStageSelect();
+            sceneManager.LoadStageSelect();
         }
     }
+
+    [SerializeField] private SceneManager sceneManager;
 }
