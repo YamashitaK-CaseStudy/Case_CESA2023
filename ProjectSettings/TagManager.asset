@@ -6,16 +6,18 @@ TagManager:
   tags:
   - Wall
   - RotateObject
+  - RotObjRotate
+  - UnionObtherber
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Chain
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Union
+  - Floor
+  - PlayerRotCollider
   - 
   - 
   - 

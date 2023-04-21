@@ -2,135 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ‰ñ“]‚Å‚«‚éƒIƒuƒWƒFƒNƒg‚ÌƒXƒNƒŠƒvƒg
-public class RotatableObject : MonoBehaviour{
+// å›è»¢ã§ãã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+public partial class RotatableObject : MonoBehaviour{
 
-    [SerializeField] Vector3 _rotAxis;            // ‰ñ“]²‚ÌŒü‚«ƒxƒNƒgƒ‹
-    [SerializeField] Vector3 _axisCenterLocalPos; // ²’†SÀ•W:ƒ[ƒJƒ‹À•W‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢
-    [SerializeField] float _axisLength;
+       
+    [SerializeField] public float _rotRequirdTime = 0.5f;      // 1å›è»¢ã«å¿…è¦ãªæ™‚é–“(sec)
 
-    private Vector3 _axisCenterWorldPos;
 
-    private Quaternion _rotQuat;  // ‰ñ“]‚ÌƒNƒI[ƒ^ƒjƒIƒ“
-    private Quaternion _baceQuat; // ‰ñ“]‚Í‚¶‚ß‚ÌƒNƒI[ƒ^ƒjƒIƒ“
+    protected Vector3 _rotAxis;             // è‡ªèº«ã®å›è»¢è»¸ãƒ™ã‚¯ãƒˆãƒ«
+    private Vector3 _axisCenterWorldPos;    // å›è»¢è»¸ã®ä¸­å¿ƒã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
+    private float _elapsedTime = 0.0f;      // å›è»¢é–‹å§‹ã‹ã‚‰ã®çµŒéæ™‚é–“
+    private int _angle;                     // å›è»¢è§’åº¦
+    public bool _isRotating = false;        // å›è»¢ã—ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
+    public bool _isSpin = false;            // å›è»¢ã—ã¦ã„ã‚‹ã‹ãƒ•ãƒ©ã‚°
 
-    private bool _isSpin = false; // ‰ñ“]‚µ‚Ä‚¢‚é‚©ƒtƒ‰ƒO
+    //ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã€‚å¤–éƒ¨ã‹ã‚‰ã®ãƒ¡ãƒ³ãƒå¤‰æ•°ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’å®šç¾©ã™ã‚‹ã‚‚ã®ã€‚ã‚²ãƒƒã‚¿ãƒ¼ã‚„ã‚»ãƒƒã‚¿ãƒ¼ã®ã‚ˆã†ãªã‚‚ã®ã€‚
+    public float ProgressRate//é€²æ—ç‡ã¨ã„ã†æ„å‘³ã§ã™ã€‚_elapsedTimeãŒå˜ç´”ã«çµŒéã—ãŸæ™‚é–“ã§ã¯ãªãå…¨ä½“æ™‚é–“ã§å‰²ã£ãŸï¼ï½ï¼‘ã®é€²æ—ç‡ã¨ã—ã¦æ‰±ã‚ã‚Œã¦ã„ã‚‹ãŸã‚ã“ã®åå‰ã«ã—ã¾ã—ãŸã€‚
+    {
+        get
+        {
+            return _elapsedTime;
+        }
+    }
 
     // Start is called before the first frame update
     void Start(){
-
+        //StartSettingOtherHit();
+        // è‡ªèº«ã®å›è»¢è»¸ã®å‘ãã‚’æ­£è¦åŒ–ã—ã¨ã
         _rotAxis.Normalize();
-
-        // ²‚Ì’†S‚Ìƒ[ƒ‹ƒhÀ•W‚ğŒvZ
-        CalkAxisWorldPos();
-     
+        // ã¾ã‚ã™å¤§ã®è¨­å®š
+        StartSettingSpin();
 
     }
 
 
-    void CalkAxisWorldPos() {
-        // ƒIƒuƒWƒFƒNƒgŒÅ—L‚Ì²‚ğ‰Â‹‰»
-        // LineRendererƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾
-        var lineRenderer = this.GetComponent<LineRenderer>();
-
-        // ²‚ğƒ[ƒ‹ƒhÀ•WŒY‚É•ÏŠ·
-        _axisCenterWorldPos = transform.TransformPoint(_axisCenterLocalPos); // ²À•W‚ğŒvZ
-
-        var axisHalfLength = _axisLength / 2;
-
-        var rotAxisStartPos = _axisCenterWorldPos + ( axisHalfLength * _rotAxis);
-        var rotAxisEndPos = _axisCenterWorldPos + ( - axisHalfLength * _rotAxis);
-
-        var positions = new Vector3[]{
-             rotAxisStartPos, // ŠJn“_
-             rotAxisEndPos    // I—¹“_
-        };
-
-        // ü‚ğˆø‚­êŠ‚ğw’è‚·‚é
-        lineRenderer.SetPositions(positions);
-    }
-
-    // ©g‚Ì²‚Å‚Ü‚í‚·¬‚ğ‚·‚é
-    public void RotateSmallAxisSelf() {
-        var tr = this.transform;
-        
-        // ‰ñ“]‚ÌƒNƒH[ƒ^ƒjƒIƒ“ì¬
-        var rotQuat = Quaternion.AngleAxis(180, _rotAxis);
-     
-
-        // ‰~‰^“®‚ÌˆÊ’uŒvZ
-        var pos = tr.position;
-        pos -= _axisCenterWorldPos;
-        pos = rotQuat * pos;
-        pos += _axisCenterWorldPos;
-
-        tr.position = pos;
-
-        // Œü‚«XV
-        tr.rotation = tr.rotation * rotQuat;
-         
-        
-    }
-
-    // ŠO•”‚Ì²‚Å‚Ü‚í‚·¬‚ğ‚·‚é
-    public void RotateSmallAxisExtern(Vector3 centerPos) {
-        // ‰ñ“]‚Ì’†SÀ•W‚Æ©g‚ÌÀ•WŠÔ‚ÅƒxƒNƒgƒ‹‚ğ‚Æ‚é
-        var tmpVec = centerPos - this.transform.position; 
-
-        // Z²³•ûŒü‚ÆŠOÏ‚ğæ‚Á‚Ä‰ñ“]²‚ğ‹‚ß‚é
-        var rotAxis = Vector3.Cross(centerPos, tmpVec);
-
-        var tr = this.transform;
-
-        // ‰ñ“]‚ÌƒNƒH[ƒ^ƒjƒIƒ“ì¬
-        var rotQuat = Quaternion.AngleAxis(180, rotAxis);
-
-        var dirQuat = Quaternion.AngleAxis(180,Vector3.up);
-
-
-        // ‰~‰^“®‚ÌˆÊ’uŒvZ
-        var pos = tr.position;
-        pos -= centerPos;
-        pos = rotQuat * pos;
-        pos += centerPos;
-
-        tr.position = pos;
-
-        // Œü‚«XV
-        tr.rotation = tr.rotation * dirQuat;
-  
-        CalkAxisWorldPos();
-    }
-
-    public void SpinAxisSelf() {
-        _isSpin = true;
-
-        // ‰ñ“]‚ÌƒNƒH[ƒ^ƒjƒIƒ“ì¬
-        _rotQuat = Quaternion.AngleAxis(180, _rotAxis);
-    }
-
-    public void SpinAxisExturn(Vector3 spinCenterPos) {
-    
-    
-        
-    }
 
     // Update is called once per frame
     void Update(){
-        if ( _isSpin ) {
-            var tr = this.transform;
-
-            // ‰~‰^“®‚ÌˆÊ’uŒvZ
-            var pos = tr.position;
-            pos -= _axisCenterWorldPos;
-            pos = _rotQuat * pos;
-            pos += _axisCenterWorldPos;
-
-            tr.position = pos;
-
-            // Œü‚«XV
-            tr.rotation = tr.rotation * _rotQuat;
-        }
+        UpdateRotate();
+        UpdateSpin();      
     }
 
 
