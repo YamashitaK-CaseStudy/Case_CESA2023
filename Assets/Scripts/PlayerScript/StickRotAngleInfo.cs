@@ -70,7 +70,7 @@ public partial class StickRotAngle : MonoBehaviour {
             var parts_z = (int)Mathf.Round(objects.transform.GetChild(i).transform.position.z);
 
             // Debug.Log(parts_x);
-          
+
             // xŽ²”»’è
             if (rideObj_x != parts_x) {
 

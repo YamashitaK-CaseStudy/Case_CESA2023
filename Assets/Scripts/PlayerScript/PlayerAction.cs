@@ -94,7 +94,7 @@ public partial class Player : MonoBehaviour {
             // 右スティックの更新
             _stricRotAngle.StickRotAngleY_Update();
             _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
-          
+
             // 右スティックでの回転
             rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY);
 
