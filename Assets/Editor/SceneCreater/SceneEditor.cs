@@ -127,11 +127,14 @@ public partial class SceneEditor : EditorWindow
 		Debug.Log(tmpObj);
 
 		// カメラのコンポーネントを設定
-		var tmpCamera = GameObject.Find("Main Camera");
-		var tmpCameraComp = tmpCamera.AddComponent<PlayerCamera>();
+		// カメラのオブジェクトを検索
+		var tmpCameraObj = GameObject.Find("Main Camera");
+		// プレイヤーカメラのコンポーネントを所得
+		var tmpCameraComp = tmpCameraObj.AddComponent<PlayerCamera>();
 		tmpCameraComp.targetName = tmpObj.name;
 		tmpCameraComp.cameraOffset = new Vector3(0, 2f, -9);
 		tmpCameraComp.targetOffset = new Vector3(0, 0, 0);
+		// 磁石オブジェクト用のオブザーバーをインスタンス化する
 		if (_isOnUnionObj)
 		{
 			var tmp = Instantiate(_UnionObthberPrefab, pos, Quaternion.identity);
