@@ -9,6 +9,9 @@ public class RespawnCollider : MonoBehaviour
 	void Start()
 	{
 		_respawnPos = new Vector3(0,0,0);
+		var mesh = this.transform.GetComponent<MeshRenderer>();
+		Color newColor = new Color(0,0,0,0);
+		mesh.material.color = newColor;
 	}
 
 	public void SetRespawnPosition(Vector3 pos){
