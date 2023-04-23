@@ -17,7 +17,7 @@ public partial class RotatableObject : MonoBehaviour {
         _elapsedTime = 0.0f;
     }
 
-    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis) {
+    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis,int rotAngle) {
         
         if ( _isSpin || _isRotating ) {
             return;
@@ -34,8 +34,10 @@ public partial class RotatableObject : MonoBehaviour {
         
         // 回転軸を設定
         _rotAxis = rotAxis;
-    }
 
+        // 回転オフセット値をセット
+        _angle = rotAngle;
+    }
 
     // まわす小の更新
     protected void UpdateRotate()
@@ -52,12 +54,13 @@ public partial class RotatableObject : MonoBehaviour {
             // 目標回転量*リクエストデルタタイムでそのフレームでの回転角度を求めることができる
             // リクエストデルタタイムの合算値がちょうど1になるように補正をかけると総回転量は目標回転量と一致する
             if ( _elapsedTime >= 1 ) {
+                //Debug.Log("補間終了");
                 _isRotating = false;
                 requiredDeltaTime -= ( _elapsedTime - 1 ); // 補正
             }
 
             // 現在フレームの回転を示す回転のクォータニオン作成
-            var angleAxis = Quaternion.AngleAxis(90 * requiredDeltaTime, _rotAxis);
+            var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
 
             // 円運動の位置計算
             var tr = transform;

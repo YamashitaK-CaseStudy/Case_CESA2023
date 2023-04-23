@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instance: {fileID: 11400000}
   stageSceneList:
-  - {fileID: 102900000, guid: 1d5ce4a0198e9634dbf9c09d6bb455b0, type: 3}
-  - {fileID: 102900000, guid: 1d5ce4a0198e9634dbf9c09d6bb455b0, type: 3}
+  - {fileID: 102900000, guid: 689b536f20e919c4e8dd45a9ea154210, type: 3}
+  - {fileID: 102900000, guid: ceb3e759f1c617f46bae6fdfbabf6009, type: 3}
+  - {fileID: 102900000, guid: ba310f58c3823864c9c7e6846889eee3, type: 3}
   titleScene: {fileID: 102900000, guid: d5ef147dd6b426e4db4bf65995a91bfb, type: 3}
-  resultScene: {fileID: 0}
+  resultScene: {fileID: 102900000, guid: 7eb6cdc3186c32347ae6b12aa5a54ea8, type: 3}
   stageSelectScene: {fileID: 102900000, guid: 95f7339faf425ed45b833fa44c8fc3af, type: 3}
+  prefabFadeCanvas: {fileID: 1884075380981443535, guid: ec54c01753d3a2b40a2e974b1a4776e4,
+    type: 3}
+  prefabMonoBehaviourObject: {fileID: 6709081023788220050, guid: 0c66dcd20f5fbec4c88610b96624f044,
+    type: 3}

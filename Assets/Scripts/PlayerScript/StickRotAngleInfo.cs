@@ -15,9 +15,10 @@ public partial class StickRotAngle : MonoBehaviour {
     private int _playerLR_obj;
     private int _stickAngle_Y;
     private int _stickAngle_X;
-    private int _stickDialAngle_Y;
+    public int _stickDialAngle_Y;
     private int _stickDialAngle_X;
 
+    public bool _isStickActiv { set; get; } = false;
     
     // Getter
     public int GetStickDialAngleY {
@@ -69,7 +70,7 @@ public partial class StickRotAngle : MonoBehaviour {
             var parts_z = (int)Mathf.Round(objects.transform.GetChild(i).transform.position.z);
 
             // Debug.Log(parts_x);
-          
+
             // xŽ²”»’è
             if (rideObj_x != parts_x) {
 
