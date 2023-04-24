@@ -79,6 +79,11 @@ public class ScoreBehavior : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        _sceneManager.Score = _score;
+    }
+
     private void OnValidate()
     {
         if (_reachTime <= 0)
@@ -90,6 +95,8 @@ public class ScoreBehavior : MonoBehaviour
     /*インスペクタで値を設定*/
     [SerializeField, Header("スコアの加算開始から終了までの時間")]
     private float _reachTime;
+    [SerializeField]
+    private SuzumuraTomoki.SceneManager _sceneManager;
 
     /*start()で値を設定*/
     private TextMeshProUGUI _textMeshProU;
