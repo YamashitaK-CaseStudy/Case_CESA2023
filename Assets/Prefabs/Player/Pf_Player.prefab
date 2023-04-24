@@ -383,6 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frontColliderObj: {fileID: 5999275316550154428}
   _bottomColliderObj: {fileID: 2399545729279065716}
+  _stricRotAngle: {fileID: 0}
   moveSpeed: 7
   jumpPower: 5
   moveVelocity: {x: 0, y: 0, z: 0}
@@ -451,6 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deadzone: 0.5
+  _stickDialAngle_Y: 0
 --- !u!1001 &7354637116726159283
 PrefabInstance:
   m_ObjectHideFlags: 0
