@@ -31,6 +31,18 @@ namespace SuzumuraTomoki
             }
         }
 
+        public int Score
+        {
+            get
+            {
+                return score;
+            }
+            set
+            {
+                score = value;
+            }
+        }
+
         //public int CurrentStageIndex
         //{
         //    get
@@ -164,6 +176,7 @@ namespace SuzumuraTomoki
 
         private GameObject FadeCanvasInstance;
         private Fader FaderInstance;
+        private int score = 0;
 
         private string beforeSceneName = "Title";//•Ï”‚É‚·‚é‚×‚«‚¾‚ªUnity‚Æ‚ÌŒ“‚Ë‡‚¢‚ª‚ ‚é‚Ì‚Å‚â‚Ş‚ğ“¾‚¸ƒxƒ^‘Å‚¿
 
