@@ -10,9 +10,8 @@ public class TitleInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            sceneManager.LoadStageSelect();
+            Fader.instance.fadeTime = 0.5f;
+            SceneManager.instance.LoadStageSelect();
         }
     }
-
-    [SerializeField] private SceneManager sceneManager;
 }

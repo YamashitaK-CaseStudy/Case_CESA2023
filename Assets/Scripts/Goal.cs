@@ -6,8 +6,7 @@ public class Goal : MonoBehaviour
 {
     
 	private void OnTriggerEnter(Collider other) {
-        sceneManager.LoadResult();
+        SuzumuraTomoki.SceneManager.instance.LoadResult();
     }
 
-    [SerializeField] private SuzumuraTomoki.SceneManager sceneManager;
 }
