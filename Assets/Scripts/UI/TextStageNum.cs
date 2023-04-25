@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using SuzumuraTomoki;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class TextStageNum : MonoBehaviour
 {
+    private PlayerInput _playerInput = null;
+    private InputAction _inputAction = null;
+
     void Start()
     {
-        maxStages = SceneManager.Instance.StageSize;
+        maxStages = SceneManager.instance.stageCount;
         text = GetComponent<Text>();
+        
+        _playerInput = GetComponent<PlayerInput>();
+        _inputAction = _playerInput.actions.FindAction("Move");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (_inputAction.ReadValue<Vector2>().x == 1.0f)
         {
             ++sCurrentStageIndex;
             if (sCurrentStageIndex > maxStages)
@@ -23,7 +30,7 @@ public class TextStageNum : MonoBehaviour
             }
             text.text = sCurrentStageIndex.ToString();
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (_inputAction.ReadValue<Vector2>().x == -1.0f)
         {
             --sCurrentStageIndex;
             if (sCurrentStageIndex < 1)
@@ -34,7 +41,7 @@ public class TextStageNum : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))//KeyCode.Return ‚Í Enter
         {
-            SceneManager.Instance.LoadStage(sCurrentStageIndex);
+            SceneManager.instance.LoadStage(sCurrentStageIndex);
         }
     }
 

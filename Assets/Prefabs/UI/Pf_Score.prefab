@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _reachTime: 1.5
+  _sceneManager: {fileID: 11400000, guid: 3d021ecf9c1d15d4aa5b0aa12d5cd105, type: 2}
 --- !u!222 &7563870309334385855
 CanvasRenderer:
   m_ObjectHideFlags: 0

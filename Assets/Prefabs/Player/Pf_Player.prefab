@@ -412,10 +412,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frontColliderObj: {fileID: 5999275316550154428}
   _bottomColliderObj: {fileID: 2399545729279065716}
-  _moveSpeed: 0
-  _jumpUpPower: 0
-  _jumpDownPower: 0
-  _deadZone: 0
+  _stricRotAngle: {fileID: 0}
+  HP: 0
+  manager: {fileID: 0}
+  moveSpeed: 7
+  jumpPower: 6.5
   moveVelocity: {x: 0, y: 0, z: 0}
   fadeObjName: 
   warpEnterObjName: 
