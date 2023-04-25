@@ -103,11 +103,15 @@ public class Bolt : RotatableObject
 
     private void UpdateLength()
     {
+        if (this == null)
+        {
+            return;
+        }
         int childCount = transform.GetChild(0).childCount;
 
         for (int i = 1; i < childCount; ++i)
         {
-            DestroyImmediate(transform.GetChild(0).GetChild(childCount-i).gameObject);
+            DestroyImmediate(transform.GetChild(0).GetChild(childCount - i).gameObject);
         }
 
         for (int i = 1; i < _length; ++i)
