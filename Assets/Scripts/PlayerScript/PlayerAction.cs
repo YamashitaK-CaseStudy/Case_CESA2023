@@ -74,6 +74,7 @@ public partial class Player : MonoBehaviour {
                     _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
                 }
 
+                _stricRotAngle.StickRotAngleX_Update();
                 rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX);
                 _startrotFreamX = _stricRotAngle.GetActivStick;
 
@@ -101,10 +102,10 @@ public partial class Player : MonoBehaviour {
 
             // 右スティックでの回転
             if (rotatbleComp._isRotateEndFream) {
-                Debug.Log("更新");
                 _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
             }
 
+            _stricRotAngle.StickRotAngleY_Update();
             rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY);
             _startrotFreamY = rotatbleComp._isRotateStartFream;
 

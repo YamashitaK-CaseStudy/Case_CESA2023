@@ -52,7 +52,7 @@ public partial class Player : MonoBehaviour {
                // _rigidbody.AddForce(new Vector3(0, _jumpUpPower, 0));
                 _rigidbody.velocity += new Vector3(0, _jumpUpPower, 0);
 
-                _skAnimator.SetTrigger("StartJumo");
+                _skAnimator.SetTrigger("StartJump");
             }
         }
         else {
