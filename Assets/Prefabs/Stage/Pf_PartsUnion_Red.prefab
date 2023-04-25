@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7565067727065666242}
   - component: {fileID: 1364511710295889781}
   - component: {fileID: 9073914611019464543}
+  - component: {fileID: 6974449100603829603}
   m_Layer: 6
   m_Name: UnionCollider
   m_TagString: Untagged
@@ -46,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438f1b3ed42d3db4a8e7679ec302be7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effect: {fileID: 0}
+  _partical: {fileID: 0}
+  _StartEventName: 
 --- !u!65 &1364511710295889781
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -71,6 +75,19 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.1, y: 1.5, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6974449100603829603
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33943672650946894}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.1, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3009046966530152507
 GameObject:
