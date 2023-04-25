@@ -384,8 +384,10 @@ MonoBehaviour:
   _frontColliderObj: {fileID: 5999275316550154428}
   _bottomColliderObj: {fileID: 2399545729279065716}
   _stricRotAngle: {fileID: 0}
+  HP: 0
+  manager: {fileID: 0}
   moveSpeed: 7
-  jumpPower: 5
+  jumpPower: 6.5
   moveVelocity: {x: 0, y: 0, z: 0}
   fadeObjName: 
   warpEnterObjName: 
