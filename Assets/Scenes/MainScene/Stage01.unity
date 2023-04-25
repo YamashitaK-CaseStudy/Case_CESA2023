@@ -2151,6 +2151,8 @@ MonoBehaviour:
   _rotRequirdTime: 0.5
   _isRotating: 0
   _isSpin: 0
+  _isRotateStartFream: 0
+  _isRotateEndFream: 0
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -23555,7 +23557,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 1000, y: 540}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &316861655
 MonoBehaviour:
@@ -23577,7 +23579,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e312e3ab5ea91f548981928129fd5f58, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 44b1a89226bb0c648ab0daedf4cfeeb4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -53472,6 +53474,8 @@ MonoBehaviour:
   _rotRequirdTime: 0.5
   _isRotating: 0
   _isSpin: 0
+  _isRotateStartFream: 0
+  _isRotateEndFream: 0
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -58822,6 +58826,8 @@ MonoBehaviour:
   _rotRequirdTime: 0.5
   _isRotating: 0
   _isSpin: 0
+  _isRotateStartFream: 0
+  _isRotateEndFream: 0
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -82602,6 +82608,8 @@ MonoBehaviour:
   _rotRequirdTime: 0.5
   _isRotating: 0
   _isSpin: 0
+  _isRotateStartFream: 0
+  _isRotateEndFream: 0
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -105927,7 +105935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba225f6dee1c6eb4aa8370bb68d6f536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneManager: {fileID: 11400000, guid: 3d021ecf9c1d15d4aa5b0aa12d5cd105, type: 2}
 --- !u!4 &1527765328
 Transform:
   m_ObjectHideFlags: 0
@@ -116008,6 +116015,8 @@ MonoBehaviour:
   _rotRequirdTime: 0.5
   _isRotating: 0
   _isSpin: 0
+  _isRotateStartFream: 0
+  _isRotateEndFream: 0
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -130276,6 +130285,8 @@ MonoBehaviour:
   _rotRequirdTime: 0.5
   _isRotating: 0
   _isSpin: 0
+  _isRotateStartFream: 0
+  _isRotateEndFream: 0
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -143984,6 +143995,8 @@ MonoBehaviour:
   _rotRequirdTime: 0.5
   _isRotating: 0
   _isSpin: 0
+  _isRotateStartFream: 0
+  _isRotateEndFream: 0
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
