@@ -41,11 +41,9 @@ public class TextStageNum : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))//KeyCode.Return は Enter
         {
-            sceneManager.LoadStage(sCurrentStageIndex);
+            SceneManager.instance.LoadStage(sCurrentStageIndex);
         }
     }
-
-    [SerializeField] private SceneManager sceneManager;
 
     private static int sCurrentStageIndex = 1;
     private int maxStages;//private readOnly int MAX_STAGES;読み取り専用にしたかったが、コンストラクタでの初期化でエラーが起きるので普通の変数

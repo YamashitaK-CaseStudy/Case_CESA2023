@@ -27,7 +27,7 @@ namespace SuzumuraTomoki
                     GameObject gameObject = new GameObject("SceneManager");
                     DontDestroyOnLoad(gameObject);
                     _instance = gameObject.AddComponent<SceneManager>();
-                    _instance._stageCount = UnityEngine.SceneManagement.SceneManager.sceneCount - NON_STAGE_SCENES_COUNT;
+                    _instance._stageCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - NON_STAGE_SCENES_COUNT;
                 }
 
                 return _instance;
