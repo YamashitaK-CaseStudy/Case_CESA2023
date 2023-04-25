@@ -12,7 +12,7 @@ public class TextStageNum : MonoBehaviour
 
     void Start()
     {
-        maxStages = sceneManager.StageSize;
+        maxStages = SceneManager.instance.stageCount;
         text = GetComponent<Text>();
         
         _playerInput = GetComponent<PlayerInput>();
