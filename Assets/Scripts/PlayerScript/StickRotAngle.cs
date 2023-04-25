@@ -19,6 +19,7 @@ public partial class StickRotAngle : MonoBehaviour {
     // 回転オブジェクトのY軸処理
     public void StickRotAngleY_Update() {
 
+
             _stickDialAngle_Y = SettingDialAngle(GetAngleY());
     }
 

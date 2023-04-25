@@ -15,11 +15,11 @@ public partial class StickRotAngle : MonoBehaviour {
     private int _playerLR_obj;
     private int _stickAngle_Y;
     private int _stickAngle_X;
-    public int _stickDialAngle_Y;
+    private int _stickDialAngle_Y;
     private int _stickDialAngle_X;
 
-    public bool _isStickActiv { set; get; } = false;
-    
+    private bool _activStick = false;
+
     // Getter
     public int GetStickDialAngleY {
         get { return _stickDialAngle_Y; }
@@ -27,6 +27,10 @@ public partial class StickRotAngle : MonoBehaviour {
 
     public int GetStickDialAngleX {
         get { return _stickDialAngle_X; }
+    }
+
+    public bool GetActivStick {
+        get { return _activStick; }
     }
 
     // カメラの正面から見て右左奥手前でどっちにオブジェクトが多いか
@@ -94,13 +98,13 @@ public partial class StickRotAngle : MonoBehaviour {
             }
         }
 
-        var max = Mathf.Max(leftnum, rightnum, backnum, frontnum);
+        var max = Mathf.Max(rightnum, leftnum, backnum, frontnum);
 
-        if (max == leftnum) {
-            _lrfb_Manyobj = LeftRightFrontBack_ManyObj.Left;
-        }
-        else if (max == rightnum) {
+        if (max == rightnum) {
             _lrfb_Manyobj = LeftRightFrontBack_ManyObj.Right;
+        }
+        else if (max == leftnum) {
+            _lrfb_Manyobj = LeftRightFrontBack_ManyObj.Left;
         }
         else if (max == backnum) {
             _lrfb_Manyobj = LeftRightFrontBack_ManyObj.Back;
@@ -154,7 +158,7 @@ public partial class StickRotAngle : MonoBehaviour {
     //------------------------------------------------------------------------------------------------------//
     //------------------------------------------------------------------------------------------------------//
 
-    // Y軸回転で 右左奥手前でどっちにオブジェクトが多いか判定する
+    // X軸回転で 右左奥手前でどっちにオブジェクトが多いか判定する
     public void UDFB_Many_Jude(RotObjHitCheck _hitcheck) {
 
         // 乗ってるブロックの座標を取得する
@@ -219,6 +223,11 @@ public partial class StickRotAngle : MonoBehaviour {
             _udfb_Manyobj = UpDownFrontBack_ManyObj.Front;
         }
 
+        Debug.Log(upnum);
+        Debug.Log(downnum);
+        Debug.Log(backnum);
+        Debug.Log(frontnum);
+
         RotatableObject rotbleobj = _hitcheck.GetRotObj.GetComponent<RotatableObject>();
 
         _stickAngle_X = 0;
@@ -232,6 +241,8 @@ public partial class StickRotAngle : MonoBehaviour {
         var value = _playerInput.actions["RotaionSelect"].ReadValue<Vector2>();
 
         if ((value.x < -_deadzone || _deadzone < value.x || value.y < -_deadzone || _deadzone < value.y)) {
+
+            _activStick = true;
 
             if (_udfb_Manyobj == UpDownFrontBack_ManyObj.Up) {
 
@@ -252,6 +263,9 @@ public partial class StickRotAngle : MonoBehaviour {
             else {
                 Debug.Log("それ以外");
             }
+        }
+        else {
+            _activStick = false;
         }
 
         if (_stickAngle_X < 0) {

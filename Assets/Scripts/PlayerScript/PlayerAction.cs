@@ -11,17 +11,21 @@ public partial class Player : MonoBehaviour {
     private RotObjHitCheck _frontHitCheck = null;
     private RotObjHitCheck _bottomHitCheck = null;
     private PlayerInput _playerInput = null;
+
     private InputAction _rotationButton = null;
     private InputAction _rotationSpinButton = null;
 
-    public StickRotAngle _stricRotAngle = null;
+    private StickRotAngle _stricRotAngle = null;
 
+    public bool _startrotFreamY = false;
+    public bool _startrotFreamX = false;
+   
     void StartAction() {
 
         // 当たり判定のコンポーネント取得
         _frontHitCheck = _frontColliderObj.GetComponent<RotObjHitCheck>();
         _bottomHitCheck = _bottomColliderObj.GetComponent<RotObjHitCheck>();
-
+     
         // InputSystem取得
         _playerInput = GetComponent<PlayerInput>();
         _rotationButton = _playerInput.actions.FindAction("Rotation");
@@ -66,12 +70,16 @@ public partial class Player : MonoBehaviour {
                 var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
                 // 右スティックの更新
-                _stricRotAngle.StickRotAngleX_Update();
-                _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+                if (rotatbleComp._isRotateEndFream) {
+                    _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+                }
 
-                // 右スティックでの回転
+                _stricRotAngle.StickRotAngleX_Update();
                 rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX);
-               
+                _startrotFreamX = _stricRotAngle.GetActivStick;
+
+                //Debug.Log(_stricRotAngle.GetStickDialAngleX);
+
                 // 通常軸回転
                 if (_rotationButton.WasPressedThisFrame()) {
                     rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,90);
@@ -84,19 +92,22 @@ public partial class Player : MonoBehaviour {
         }
 
         // 移動中とジャンプ中は回転させない
-        if (0 < Mathf.Abs(moveVelocity.x) || 0 < moveVelocity.y) {
+        if (0 < Mathf.Abs(_moveVelocity.x) || 0 < _moveVelocity.y) {
             return;
         }
+
         // 下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
             var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
-            // 右スティックの更新
-            _stricRotAngle.StickRotAngleY_Update();
-            _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
-
             // 右スティックでの回転
+            if (rotatbleComp._isRotateEndFream) {
+                _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
+            }
+
+            _stricRotAngle.StickRotAngleY_Update();
             rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY);
+            _startrotFreamY = rotatbleComp._isRotateStartFream;
 
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {

@@ -19,11 +19,11 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
      
-        if(Mathf.Abs( _playerScript.moveVelocity.x) <= 0) {
-            _animator.SetBool("Walk", false);
-        }
-        else {
-            _animator.SetBool("Walk", true);
-        }
+        //if(Mathf.Abs( _playerScript.moveVelocity.x) <= 0) {
+        //    _animator.SetBool("Walk", false);
+        //}
+        //else {
+        //    _animator.SetBool("Walk", true);
+        //}
     }
 }

@@ -14,7 +14,7 @@ public partial class RotatableObject : MonoBehaviour{
         if (_isSpin || _isRotating) {
             return;
         }
-
+    
         // ƒtƒ‰ƒO‚ð—§‚Ä‚é
         _isRotating = true;
 
