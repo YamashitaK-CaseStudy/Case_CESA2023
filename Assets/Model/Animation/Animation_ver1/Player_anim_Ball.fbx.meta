@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ebec563daae3ca1458679e53c3e6c6ae
+guid: d47cd77e498a6b143b7c69174e011fa2
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle_To_Jump
+      name: Start_Ball
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 0
-      lastFrame: 52
+      firstFrame: 25
+      lastFrame: 65
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

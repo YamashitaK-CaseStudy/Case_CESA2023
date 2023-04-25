@@ -1,26 +1,9 @@
 fileFormatVersion: 2
-guid: 41e97ccf38f47b940a7b5d6c23badd0f
+guid: bf9e183bc6755d84a9624150fdf15e54
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: aiStandardSurface3
-    second: {fileID: 2100000, guid: d99eede1aa7524a40b29bb813b651b38, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blinn1
-    second: {fileID: -1294058508819152814, guid: 809c3d67cc1a71c4197da3938a2e9d19,
-      type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blinn2
-    second: {fileID: -1294058508819152814, guid: 809c3d67cc1a71c4197da3938a2e9d19,
-      type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -50,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: BasePose
+      name: Start_rotation_X
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0

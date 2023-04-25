@@ -42,9 +42,18 @@ public partial class RotatableObject : MonoBehaviour {
     // まわす小の更新
     protected void UpdateRotate()
     {
+        if (_doOnce) {
+            _isRotateStartFream = false;
+        }
+
         // 回転中かフラグ
         if ( _isRotating ) {
 
+            if (!_doOnce) {
+                _isRotateStartFream = true;
+                _doOnce = true;
+            }
+        
             // リクエストデルタタイムを求める
             // リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
             // これの合算値が1になった時,1回転に必要な時間が経過したことになる
@@ -59,6 +68,8 @@ public partial class RotatableObject : MonoBehaviour {
                 _isRotating = false;
                 UpdateChilePos();
                 requiredDeltaTime -= ( _elapsedTime - 1 ); // 補正
+
+                _isRotateEndFream = true;
             }
 
             // 現在フレームの回転を示す回転のクォータニオン作成
@@ -78,6 +89,10 @@ public partial class RotatableObject : MonoBehaviour {
 
             // 向き更新
             tr.rotation = angleAxis * tr.rotation;
+        }
+        else {
+            _doOnce = false;
+            _isRotateEndFream = false;
         }
     }
 }
