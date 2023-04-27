@@ -19,7 +19,15 @@ public class PlayerCamera : MonoBehaviour{
 
     // Update is called once per frame
     void LateUpdate(){
+
+		// プレイヤーが前向きか後ろ向きか判定
+		
+
+
+		var lookPos = target.transform.position + targetOffset; 
+
 		// 注視点を計算
+		this.transform.LookAt(lookPos,Vector3.up);
 		
 		// 注視点を正面から見るように調整
 		this.transform.position = target.transform.position + cameraOffset + targetOffset;
