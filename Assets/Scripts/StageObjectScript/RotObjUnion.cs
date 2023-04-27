@@ -19,7 +19,6 @@ public partial class RotObjUnion : MonoBehaviour{
 
         // 当たったRotateObjectを取得
         GetRotateObject(other.gameObject);
-        EffectGenerate(other.gameObject);
     }
 
     // 回転オブジェクトの取得
@@ -31,6 +30,7 @@ public partial class RotObjUnion : MonoBehaviour{
 
             // オブザーバーに素材を送る
             _obtherber.AddunionMaterial(_rotObj);
+            EffectGenerate(obj.gameObject);
         }
     }
 }
