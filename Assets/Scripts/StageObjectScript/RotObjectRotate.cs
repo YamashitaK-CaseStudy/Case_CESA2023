@@ -15,6 +15,9 @@ public partial class RotatableObject : MonoBehaviour {
 
         // 経過時間を初期化
         _elapsedTime = 0.0f;
+
+        // トレイルの起動
+        PlayPartical();
     }
 
     public void StartRotate(Vector3 rotCenter, Vector3 rotAxis,int rotAngle) {
@@ -37,6 +40,9 @@ public partial class RotatableObject : MonoBehaviour {
 
         // 回転オフセット値をセット
         _angle = rotAngle;
+
+        // トレイルの起動
+        PlayPartical();
     }
 
     // まわす小の更新
@@ -68,6 +74,7 @@ public partial class RotatableObject : MonoBehaviour {
                 requiredDeltaTime -= ( _elapsedTime - 1 ); // 補正
 
                 _isRotateEndFream = true;
+                StopPartical();
             }
 
             // 現在フレームの回転を示す回転のクォータニオン作成
