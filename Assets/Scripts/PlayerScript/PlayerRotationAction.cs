@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Player : MonoBehaviour{
-  
+
+    private StickRotAngle _stricRotAngle = null;
+
     private void PlayerRotationStart() {
+
+        // 右スティックコンポネント取得
+        _stricRotAngle = GetComponent<StickRotAngle>();
 
         // 各種ボタンの取得
         _rotationButton     = _playerInput.actions.FindAction("Rotation");
@@ -25,6 +30,14 @@ public partial class Player : MonoBehaviour{
 
             var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
+            // スティック回転Y
+            if (rotatbleComp._isRotateEndFream) {
+                _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
+            }
+
+            _stricRotAngle.StickRotAngleY_Update();
+            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY);
+
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
                 rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90);
@@ -40,6 +53,13 @@ public partial class Player : MonoBehaviour{
         else if (_frontHitCheck.GetIsRotHit) {
 
             var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
+
+            if (rotatbleComp._isRotateEndFream) {
+                _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+            }
+            // スティック回転Y
+            _stricRotAngle.StickRotAngleX_Update();
+            rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX);
 
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {

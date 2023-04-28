@@ -8,7 +8,7 @@ public partial class Player : MonoBehaviour {
     private InputAction _rotationButton = null;
     private InputAction _rotationSpinButton = null;
 
-    private StickRotAngle _stricRotAngle = null;
+    //private StickRotAngle _stricRotAngle = null;
 
     //public bool _startrotFreamY = false;
     //public bool _startrotFreamX = false;
