@@ -46,7 +46,11 @@ public partial class Player : MonoBehaviour {
 
     // ‰¡ˆÚ“®
     private void Move() {
-
+        // ‰ñ“]‚³‚¹‚Ä‚¢‚éŠÔ‚Í“®‚©‚È‚¢
+        if ( _isRotating ) {
+            return;
+        }
+        
         var value_x = Input.GetAxis("Horizontal");
 
         if (-_deadZone > value_x) {
@@ -63,32 +67,10 @@ public partial class Player : MonoBehaviour {
             transform.LookAt(transform.position + new Vector3(1, 0, 0));
         }
         else {
-
-
             // Œ¸‘¬
+            // Šµ«‚Í–³‚µ
             _speedx = 0.0f;
             
-            /*
-            _accelTime = 0.0f;
-
-            if (_speedx != 0.0) {
-
-                if (_speedx > 0) {
-                    _speedx -= 0.05f;
-
-                    if (_speedx < 0) {
-                        _speedx = 0.0f;
-                    }
-                }
-                else if (_speedx < 0) {
-                    _speedx += 0.05f;
-
-                    if (_speedx > 0) {
-                        _speedx = 0.0f;
-                    }
-                }
-            }
-             */
         }
 
         _rigidbody.velocity = new Vector3(_speedx, _rigidbody.velocity.y, 0);

@@ -14,6 +14,10 @@ public partial class RotatableObject : MonoBehaviour{
         if (_isSpin || _isRotating) {
             return;
         }
+
+        var playerComp = _playerTransform.GetComponent<Player>();
+
+        playerComp.NotificationStartRotate();
     
         // フラグを立てる
         _isRotating = true;
@@ -34,36 +38,16 @@ public partial class RotatableObject : MonoBehaviour{
 
     }
 
-
-
-    //private void RotateAxis(Vector3 center, Vector3 axis, int angle) {
-
-    //    // 現在フレームの回転を示す回転のクォータニオン作成
-    //    var angleAxis = Quaternion.AngleAxis(angle, axis);
-
-    //    // 円運動の位置計算
-    //    var tr = transform;
-    //    var pos = tr.position;
-
-    //    // クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
-    //    // _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
-    //    pos -= center;
-    //    pos = angleAxis * pos;
-    //    pos += center;
-
-    //    tr.position = pos;
-
-    //    // 向き更新
-    //    tr.rotation = angleAxis * tr.rotation;
-    //}
-
     public Vector3 _nowRotAxis;
    
-    public void StartRotateX(Vector3 center, Vector3 axis, int angle) {
+    public void StartRotateX(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
 
         if (oldangleX == angle) {
             return;
         }
+
+        // プレイヤーのトランスフォームを保持
+        _playerTransform = playerTransform;
 
         var offset = angle - oldangleX;
 
@@ -81,11 +65,18 @@ public partial class RotatableObject : MonoBehaviour{
         PlayPartical();
     }
 
-    public void StartRotateY(Vector3 center, Vector3 axis, int angle) {
+    public void StartRotateY(Vector3 center, Vector3 axis, int angle,Transform playerTransform) {
 
         if (oldangleY == angle) {
             return;
         }
+
+        // プレイヤーのトランスフォームを保持
+        _playerTransform = playerTransform;
+
+        var Pos = playerTransform.position;
+        var pPos = new Vector3(center.x,Pos.y,0);
+        playerTransform.transform.position = pPos;
 
         var offset = angle - oldangleY;
 
