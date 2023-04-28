@@ -1791,6 +1791,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -6499,6 +6500,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -8324,6 +8326,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8355983642185809206, guid: 70cc03eaea59998438e7722396af8514,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 8355983642185809206, guid: 70cc03eaea59998438e7722396af8514,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70cc03eaea59998438e7722396af8514, type: 3}
@@ -28694,6 +28706,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -32891,6 +32904,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -39274,6 +39288,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -43116,6 +43131,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -47271,6 +47287,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -58944,6 +58961,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -64443,6 +64461,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -64904,6 +64923,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}
@@ -69796,6 +69816,7 @@ MonoBehaviour:
   _isSpin: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
   _nowRotAxis: {x: 0, y: 0, z: 0}

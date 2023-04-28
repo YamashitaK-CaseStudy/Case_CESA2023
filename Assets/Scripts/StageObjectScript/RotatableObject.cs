@@ -6,7 +6,7 @@ using UnityEngine;
 public partial class RotatableObject : MonoBehaviour{
 
        
-    [SerializeField] public float _rotRequirdTime = 0.5f;      // 1回転に必要な時間(sec)
+    [SerializeField] public float _rotRequirdTime = 0.25f;      // 1回転に必要な時間(sec)
 
 
     protected Vector3 _rotAxis;             // 自身の回転軸ベクトル
