@@ -64,7 +64,11 @@ public partial class Player : MonoBehaviour {
         }
         else {
 
+
             // Œ¸‘¬
+            _speedx = 0.0f;
+            
+            /*
             _accelTime = 0.0f;
 
             if (_speedx != 0.0) {
@@ -84,6 +88,7 @@ public partial class Player : MonoBehaviour {
                     }
                 }
             }
+             */
         }
 
         _rigidbody.velocity = new Vector3(_speedx, _rigidbody.velocity.y, 0);
