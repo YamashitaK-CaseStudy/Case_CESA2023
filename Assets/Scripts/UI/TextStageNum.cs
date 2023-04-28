@@ -8,7 +8,11 @@ using UnityEngine.InputSystem;
 public class TextStageNum : MonoBehaviour
 {
     private PlayerInput _playerInput = null;
-    private InputAction _inputAction = null;
+    //private InputAction _inputAction = null;
+
+    private InputAction _selectL;
+    private InputAction _selectR;
+    private InputAction _selectEntor;
 
     void Start()
     {
@@ -16,12 +20,17 @@ public class TextStageNum : MonoBehaviour
         text = GetComponent<Text>();
         
         _playerInput = GetComponent<PlayerInput>();
-        _inputAction = _playerInput.actions.FindAction("Move");
+        //_inputAction = _playerInput.actions.FindAction("Move");
+
+        // ŠeŽíƒ{ƒ^ƒ“‚ÌŽæ“¾
+        _selectL = _playerInput.actions.FindAction("StageSelectL");
+        _selectR = _playerInput.actions.FindAction("StageSelectR");
+        _selectEntor = _playerInput.actions.FindAction("StageSelectEnter");  
     }
 
     void Update()
     {
-        if (_inputAction.ReadValue<Vector2>().x == 1.0f)
+        if (_selectR.WasPressedThisFrame())
         {
             ++sCurrentStageIndex;
             if (sCurrentStageIndex > maxStages)
@@ -30,7 +39,7 @@ public class TextStageNum : MonoBehaviour
             }
             text.text = sCurrentStageIndex.ToString();
         }
-        if (_inputAction.ReadValue<Vector2>().x == -1.0f)
+        if (_selectL.WasPressedThisFrame())
         {
             --sCurrentStageIndex;
             if (sCurrentStageIndex < 1)
@@ -39,7 +48,7 @@ public class TextStageNum : MonoBehaviour
             }
             text.text = sCurrentStageIndex.ToString();
         }
-        if (Input.GetKeyDown(KeyCode.Return))//KeyCode.Return ‚Í Enter
+        if (_selectEntor.WasPressedThisFrame())//KeyCode.Return ‚Í Enter
         {
             SceneManager.instance.LoadStage(sCurrentStageIndex);
         }
