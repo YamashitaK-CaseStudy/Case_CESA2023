@@ -35,6 +35,7 @@ public partial class Player : MonoBehaviour{
 
             // 切り替えタイミング
             Debug.Log("フロント切り替えタイミング");
+            _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
         }
 
         // Bottom回転オブジェクトが切り替わった時
@@ -43,6 +44,7 @@ public partial class Player : MonoBehaviour{
 
             // 切り替えタイミング
             Debug.Log("ボトム切り替えタイミング");
+            _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
         }
     }
 }

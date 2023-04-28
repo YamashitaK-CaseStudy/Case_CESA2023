@@ -7,7 +7,7 @@ public partial class Player : MonoBehaviour{
 
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private TimeMeasurement _timeMeasurement;
-  
+      
     // Start is called before the first frame update
     void Start(){
 
