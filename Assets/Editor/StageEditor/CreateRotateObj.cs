@@ -408,8 +408,9 @@ public partial class CStageEditor : EditorWindow
 	{
 		// オブジェクトの生成
 		_parentObject = new GameObject("RotatableObject");
-		// タグの設定
+		// タグ・レイヤーの設定
 		_parentObject.tag = "RotateObject";
+		_parentObject.layer = 13;
 		// 必要コンポーネントのアタッチ
 		// Rigidbodyの生成　初期設定
 		_parentRigdbody = _parentObject.AddComponent<Rigidbody>();
