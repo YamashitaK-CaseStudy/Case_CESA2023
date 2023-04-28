@@ -29,6 +29,9 @@ public partial class RotatableObject : MonoBehaviour{
 
         // 回転オフセット値をセット
         _angle = rotAngle;
+
+        PlayPartical();
+
     }
 
 
@@ -75,6 +78,7 @@ public partial class RotatableObject : MonoBehaviour{
        // RotateAxis(center, axis, offset);
 
         oldangleX = angle;
+        PlayPartical();
     }
 
     public void StartRotateY(Vector3 center, Vector3 axis, int angle) {
@@ -97,5 +101,6 @@ public partial class RotatableObject : MonoBehaviour{
         //RotateAxis(center, axis, offset);
 
         oldangleY = angle;
+        PlayPartical();
     }
 }

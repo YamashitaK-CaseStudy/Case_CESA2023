@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Bolt : RotatableObject
 {
-    [SerializeField, Header("棒状部分の長さ")] private uint _threadLength = 1;
-    [SerializeField, Header("移動量の限界")] private uint _translationLimit = 1;
+    [SerializeField, Header("ネジ部のモデル")] private GameObject _threadObject;//インスペクタで設定
+    [SerializeField, Header("ボルトの長さ")] private uint _length = 1;
+    [SerializeField, Header("最大移動量")] private uint _translationLimit = 1;
     [SerializeField, Header("回転時の移動量。正で抜ける方向、負で締まる方向。")] private float _amountTranslation = 1.0f;
     [SerializeField, Header("高速回転時の移動スピード")] private float _spinningTranslationSpeed = 1.0f;
     [SerializeField, Header("連動するオブジェクトのリスト")] private List<GameObject> _interlockingObjectList;
@@ -92,14 +93,34 @@ public class Bolt : RotatableObject
 
     private void OnValidate()
     {
-        if (_threadLength == 0)
+        if (_length == 0)
         {
-            _threadLength = 1;
+            _length = 1;
         }
-        var threadTransform = transform.GetChild(0).GetChild(1);
-        float y_localPos = (_threadLength - 1) * -0.5f;
-        float y_localScale = _threadLength * -0.5f;//シリンダーメッシュはスケール１で２の長さがある
-        threadTransform.localPosition = new Vector3(0, y_localPos, 0);
-        threadTransform.localScale = new Vector3(threadTransform.localScale.x, y_localScale, threadTransform.localScale.z);
+
+        UnityEditor.EditorApplication.delayCall += () => UpdateLength();
+    }
+
+    private void UpdateLength()
+    {
+        if (this == null)
+        {
+            return;
+        }
+        int childCount = transform.GetChild(0).childCount;
+
+        for (int i = 1; i < childCount; ++i)
+        {
+            DestroyImmediate(transform.GetChild(0).GetChild(childCount - i).gameObject);
+        }
+
+        for (int i = 1; i < _length; ++i)
+        {
+            var threadTransform = Instantiate(_threadObject, transform.GetChild(0)).transform;
+
+            threadTransform.name = "Thread";
+            threadTransform.localPosition = new Vector3(0, -i, 0);
+        }
+
     }
 }

@@ -60,16 +60,16 @@ public partial class RotObjUnion : MonoBehaviour
 			break;
 			default:
 				Debug.LogError("Error");
-				return;
+			return;
 		}
-
+		generatePos.z = -0.5f;
 		// 最終的な角度と座標を格納する
-		// _effect.transform.position = generatePos + this.transform.position;
-		// _effect.transform.eulerAngles = generateAngle;
-		// _effect.SendEvent(_StartEventName);
+		_effect.transform.position = generatePos + this.transform.position;
+		_effect.transform.eulerAngles = generateAngle;
+		_effect.SendEvent(_StartEventName);
 
-		_partical.gameObject.transform.position = generatePos + this.transform.position;
-		_partical.gameObject.transform.eulerAngles = generateAngle;
-		_partical.Play();
+		// _partical.gameObject.transform.position = generatePos + this.transform.position;
+		// _partical.gameObject.transform.eulerAngles = generateAngle;
+		// _partical.Play();
 	}
 }

@@ -342,7 +342,7 @@ public partial class CStageEditor : EditorWindow
 							else
 							{
 								// 座標の設定
-								Vector3 tmppos = floorpos;
+								Vector3 tmppos = _childpos;
 								tmppos.x += x * (int)_lr;
 								tmppos.y += y * (int)_tb;
 								// インスタンス化行う
