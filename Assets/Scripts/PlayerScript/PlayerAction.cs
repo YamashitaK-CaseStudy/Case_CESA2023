@@ -5,20 +5,13 @@ using UnityEngine.InputSystem;
 
 public partial class Player : MonoBehaviour {
 
-    [SerializeField] private GameObject _frontColliderObj;
-    [SerializeField] private GameObject _bottomColliderObj;
-
-    private RotObjHitCheck _frontHitCheck = null;
-    private RotObjHitCheck _bottomHitCheck = null;
-    private PlayerInput _playerInput = null;
-
     private InputAction _rotationButton = null;
     private InputAction _rotationSpinButton = null;
 
     private StickRotAngle _stricRotAngle = null;
 
-    public bool _startrotFreamY = false;
-    public bool _startrotFreamX = false;
+    //public bool _startrotFreamY = false;
+    //public bool _startrotFreamX = false;
    
     void StartAction() {
 
@@ -76,7 +69,7 @@ public partial class Player : MonoBehaviour {
 
                 _stricRotAngle.StickRotAngleX_Update();
                 rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX);
-                _startrotFreamX = _stricRotAngle.GetActivStick;
+                //_startrotFreamX = _stricRotAngle.GetActivStick;
 
                 //Debug.Log(_stricRotAngle.GetStickDialAngleX);
 
@@ -91,10 +84,10 @@ public partial class Player : MonoBehaviour {
             }
         }
 
-        // 移動中とジャンプ中は回転させない
-        if (0 < Mathf.Abs(_moveVelocity.x) || 0 < _moveVelocity.y) {
-            return;
-        }
+        //// 移動中とジャンプ中は回転させない
+        //if (0 < Mathf.Abs(_moveVelocity.x) || 0 < _moveVelocity.y) {
+        //    return;
+        //}
 
         // 下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
@@ -107,7 +100,7 @@ public partial class Player : MonoBehaviour {
 
             _stricRotAngle.StickRotAngleY_Update();
             rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY);
-            _startrotFreamY = rotatbleComp._isRotateStartFream;
+            //_startrotFreamY = rotatbleComp._isRotateStartFream;
 
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {

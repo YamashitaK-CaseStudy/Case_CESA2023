@@ -4,144 +4,133 @@ using UnityEngine;
 
 public partial class Player : MonoBehaviour {
 
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _jumpUpPower;
-    [SerializeField] private float _jumpDownPower;
     [SerializeField] private float _deadZone;
-
-    [SerializeField] private Vector3 _rayoffset;
-    [SerializeField] private float _raydistance;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private AnimationCurve _accelerationMoveCurve;
+    [SerializeField] private float _gravity;
+    [SerializeField] private float _jumpSpeed;
+    [SerializeField] private float _normalIdle_To_JumpWaitTime;
 
     private Rigidbody _rigidbody;
-    private Vector3 _moveVelocity;
-    public bool _startJump = false;
 
-    // getter
-    public Vector3 GetMoveVelocity {
-        get { return _moveVelocity; }
-        set { _moveVelocity = value; }
+    private float _accelTime = 0.0f;
+    private float _speedx = 0.0f;
+    private float _speedy = 0.0f;
+    private bool _isBall_To_Jump = false;
+    private bool _isnormalIdle_To_Jump = false;
+    private TimeMeasurement.Alarm _normalIdle_To_JumpAlarm;
+
+    public float Speed_x {
+        get { return _speedx; }
     }
 
-    void StartMove() {
-        Application.targetFrameRate = 120; //60FPSに設定
+    public float Speed_y {
+        get { return _speedy; }
+    }
 
-        _rigidbody = GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(0, _jumpDownPower, 0);
+
+    void StartMove() {
+
+        TryGetComponent(out _rigidbody);
+
+        // 通常アイドル状態からのジャンプの待ち時間計測の追加
+        _normalIdle_To_JumpAlarm = _timeMeasurement.AddArarm("NormalIdle_To_Jump", _normalIdle_To_JumpWaitTime);
     }
 
     // Update is called once per frame
     void UpdateMove() {
 
-        // 平行移動
+        Move();
+        Jump();
+    }
+
+    // 横移動
+    private void Move() {
+
         var value_x = Input.GetAxis("Horizontal");
 
-        if (-_deadZone > value_x || value_x > _deadZone) {
-            _moveVelocity.x = value_x * _moveSpeed;
+        if (-_deadZone > value_x) {
+
+            _accelTime += Time.deltaTime;
+            _speedx = -_moveSpeed * _accelerationMoveCurve.Evaluate(_accelTime);
+            transform.LookAt(transform.position + new Vector3(-1, 0, 0));
+
+        }
+        else if (value_x > _deadZone) {
+
+            _accelTime += Time.deltaTime;
+            _speedx = _moveSpeed * _accelerationMoveCurve.Evaluate(_accelTime);
+            transform.LookAt(transform.position + new Vector3(1, 0, 0));
         }
         else {
-            _moveVelocity.x = 0.0f;
-        }
 
-        // 向き変更
-        transform.LookAt(transform.position + new Vector3(_moveVelocity.x, 0, 0));
-        _rigidbody.velocity = new Vector3(_moveVelocity.x, _rigidbody.velocity.y, 0);
+            // 減速
+            _accelTime = 0.0f;
 
-        // ジャンプ
-        if (IsGround()) {
-            if (Input.GetButtonDown("Jump")) {
-               // _rigidbody.AddForce(new Vector3(0, _jumpUpPower, 0));
-                _rigidbody.velocity += new Vector3(0, _jumpUpPower, 0);
+            if (_speedx != 0.0) {
 
-                _skAnimator.SetTrigger("StartJump");
-            }
-        }
-        else {
-            Debug.Log("飛べない");
-        }
+                if (_speedx > 0) {
+                    _speedx -= 0.05f;
 
-        IsFrontBlock();
-       // Debug.Log(IsUpBlock());
-    }
-
-    // 前方にブロックがあるか確認
-    public bool IsFrontBlock() {
-
-        bool isfront = false;
-
-        bool isHit = false;
-        RaycastHit hitInfo;
-
-        // Rayのスタート位置を設定
-        Vector3 rayPosition = transform.position + new Vector3(0, -0.25f, 0);
-        Ray ray = new Ray(rayPosition, new Vector3(_moveVelocity.x, 0, 0).normalized * 0.4f);
-        isHit = Physics.Raycast(ray, out hitInfo, 0.8f);
-        Debug.DrawRay(rayPosition, new Vector3(_moveVelocity.x, 0, 0).normalized * 0.4f, Color.red);
-
-        if (isHit) {
-            if (hitInfo.collider.gameObject.layer != 8) {
-                isfront = true;
-
-                var moveVec = new Vector3(_moveVelocity.x, 0, 0);
-
-                var dot = Vector3.Dot(moveVec.normalized, hitInfo.normal.normalized);
-
-                Debug.Log(dot);
-
-                if (dot == -1) {
-                    _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
+                    if (_speedx < 0) {
+                        _speedx = 0.0f;
+                    }
                 }
+                else if (_speedx < 0) {
+                    _speedx += 0.05f;
 
-                // Debug.Log(hitInfo.collider.gameObject.name);
+                    if (_speedx > 0) {
+                        _speedx = 0.0f;
+                    }
+                }
             }
         }
-        return isfront;
+
+        _rigidbody.velocity = new Vector3(_speedx, _rigidbody.velocity.y, 0);
+
+        // 前方のRayが壁に当たっていたらxベクトルを零にする
+        if (_frontrayCheck.IsFrontHit) {
+            _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
+        }
+
     }
 
-    // 地面の確認
-    public bool IsGround() {
+    private void Jump() {
 
-        bool isground = false;
+        Physics.gravity = new Vector3(0, _gravity, 0);
 
-        bool isHit = false;
-        RaycastHit hitInfo;
+        if (_groundCheck.IsGround) {
 
-        // Rayのスタート位置を設定
-        Vector3 rayPosition = transform.position;
-        Ray ray = new Ray(rayPosition, Vector3.down);
-        isHit = Physics.Raycast(ray, out hitInfo, 1.2f);
-        Debug.DrawRay(rayPosition, Vector3.down * 1.2f, Color.red);
+            if (Input.GetButtonDown("Jump")) {
 
-        if (isHit) {
-            if (hitInfo.collider.gameObject.layer != 8 && hitInfo.collider.transform.root.tag != "Player") {
-                isground = true;
 
-              // Debug.Log(hitInfo.collider.gameObject.name);
+                Debug.Log("akaka");
+
+
+                // 頭上にブロックがあればジャンプしない
+                if (!_upperrayCheck.IsUpperHit) {
+
+                    // 通常アイドル状態からのジャンプ
+                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Idle")) {
+                        _isnormalIdle_To_Jump = true;
+                        _normalIdle_To_JumpAlarm.TimeStart = true;
+                    }
+
+                    // ボール状態からのジャンプ
+                    else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Run_Ball")) {
+                       
+                        _isBall_To_Jump = true;
+                        _rigidbody.AddForce(_jumpSpeed * Vector3.up, ForceMode.Impulse);
+                    }
+                }
             }
         }
-        return isground;
-    }
 
-    // 真上にブロックがあるか確認
-    public bool IsUpBlock() {
-
-        bool isUp = false;
-
-        bool isHit = false;
-        RaycastHit hitInfo;
-
-        // Rayのスタート位置を設定
-        Vector3 rayPosition = transform.position;
-        Ray ray = new Ray(rayPosition, Vector3.up);
-        isHit = Physics.Raycast(ray, out hitInfo, 0.5f);
-        Debug.DrawRay(rayPosition, Vector3.up * 0.5f, Color.red);
-
-        if (isHit) {
-            if (hitInfo.collider.transform.root.tag != "Player") {
-                isUp = true;
-
-                // Debug.Log(hitInfo.collider.gameObject.name);
-            }
+        // 通常アイドル状態からのアニメーションジャンプの待ち時間
+        if (_normalIdle_To_JumpAlarm.TimeEnd) {
+            _normalIdle_To_JumpAlarm.TimeStart = false;
+            _normalIdle_To_JumpAlarm.ResetTime();
+            _rigidbody.AddForce(_jumpSpeed * Vector3.up, ForceMode.Impulse);
         }
-        return isUp;
     }
 }

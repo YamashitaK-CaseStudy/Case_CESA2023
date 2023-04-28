@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7b956784f517f914da3e8c963120ae54
+guid: feb06386d883ee744b866c4ccb61c1c4
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -15,7 +15,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
-    motionNodeName: <Root Transform>
+    motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -37,7 +37,7 @@ ModelImporter:
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 49
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
