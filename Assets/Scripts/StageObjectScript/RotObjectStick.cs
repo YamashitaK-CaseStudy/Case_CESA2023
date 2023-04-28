@@ -74,11 +74,10 @@ public partial class RotatableObject : MonoBehaviour{
             _nowRotAxis = new Vector3(0, 1, 0);
         }
 
-        StartStickRotate(center, axis, offset);
+        StartRotate(center, axis, offset);
        // RotateAxis(center, axis, offset);
 
         oldangleX = angle;
-        PlayPartical();
     }
 
     public void StartRotateY(Vector3 center, Vector3 axis, int angle) {
@@ -97,7 +96,8 @@ public partial class RotatableObject : MonoBehaviour{
             _nowRotAxis = new Vector3(0, -1, 0);
         }
 
-        StartStickRotate(center, axis, offset);
+        StartRotate(center, axis, offset);
+        //StartStickRotate(center, axis, offset);
         //RotateAxis(center, axis, offset);
 
         oldangleY = angle;

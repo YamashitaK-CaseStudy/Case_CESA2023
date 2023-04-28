@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public partial class RotatableObject : MonoBehaviour {
 
@@ -31,6 +32,13 @@ public partial class RotatableObject : MonoBehaviour {
 
         // Œo‰ßŠÔ‚ğ‰Šú‰»
         _elapsedTime = 0.0f;
+
+        // Œë·‚ğC³‚·‚é
+        var pos = new Vector3(0,0,0);
+        pos.x = (float)Math.Round(this.transform.position.x, 0, MidpointRounding.AwayFromZero);
+        pos.y = (float)Math.Round(this.transform.position.y, 0, MidpointRounding.AwayFromZero);
+        pos.z = (float)Math.Round(this.transform.position.z, 0, MidpointRounding.AwayFromZero);
+        this.transform.position = pos;
 
         // ‰ñ“]‚Ì’†S‚ğİ’è
         _axisCenterWorldPos = rotCenter;
@@ -100,4 +108,6 @@ public partial class RotatableObject : MonoBehaviour {
             _isRotateEndFream = false;
         }
     }
+
+
 }
