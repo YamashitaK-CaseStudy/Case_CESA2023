@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: SilhouetteDraw
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: SilhouetteDraw
     Event: 500
@@ -95,9 +95,9 @@ MonoBehaviour:
   - {fileID: -1878332245247344467}
   - {fileID: -5797862511182051160}
   - {fileID: -7263758860883609191}
-  - {fileID: 4355041338404629072}
   - {fileID: 4969190258237222459}
-  m_RendererFeatureMap: adc0de57c6d2eee5a88870b4c3da89af99b9ef12cdf1319b50eabff50537703c3bae8f43361cf644
+  - {fileID: 4355041338404629072}
+  m_RendererFeatureMap: adc0de57c6d2eee5a88870b4c3da89af99b9ef12cdf1319b3bae8f43361cf64450eabff50537703c
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: Player Draw
-    Event: 550
+    Event: 500
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: DrawOutline
-    Event: 300
+    Event: 500
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -201,8 +201,8 @@ MonoBehaviour:
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 6d02cc145afff03468c866c5df5875c4, type: 2}
     overrideMaterialPassIndex: 0
-    overrideDepthState: 0
-    depthCompareFunction: 4
+    overrideDepthState: 1
+    depthCompareFunction: 5
     enableWrite: 0
     stencilSettings:
       overrideStencilState: 0
