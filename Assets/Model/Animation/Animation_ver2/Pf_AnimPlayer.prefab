@@ -52,7 +52,7 @@ MonoBehaviour:
     distance: 0.7
   - offsetPos: {x: 0.25, y: 0, z: 0}
     distance: 0.7
-  _IsdebugRay: 1
+  _IsdebugRay: 0
 --- !u!1 &471363414108438688
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +328,7 @@ MonoBehaviour:
     distance: 0.5
   - offsetPos: {x: 0, y: -0.5, z: 0}
     distance: 0.5
-  _IsdebugRay: 1
+  _IsdebugRay: 0
 --- !u!1 &6903599754775083799
 GameObject:
   m_ObjectHideFlags: 0
