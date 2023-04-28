@@ -1,31 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-[DefaultExecutionOrder(-100)]
 public partial class Player : MonoBehaviour{
 
-    [SerializeField] private Animator _skAnimator;
-
+    [SerializeField] private PlayerInput _playerInput;
+    [SerializeField] private TimeMeasurement _timeMeasurement;
+  
     // Start is called before the first frame update
     void Start(){
 
         StartMove();
-        StartAction();
-        //StartWarp();
-        //StartPossession();
+        PlayerBlockColliderStart();
+        PlayerRotationStart();
+        PlayerSkAnimationStart();
 
+        //StartAction();
+        //StartWarp();
     }
 
     void Update(){
 
-        //// œßˆË‚µ‚Ä‚È‚¢Žž
-        //if (_isPossession == false) {
-          
-        //}
         UpdateMove();
-        UpdateAction();
+        PlayerBlockColliderUpdate();
+        PlayerRotationUpdate();
+        PlayerSkAnimationUpdate();
+
+        //UpdateAction();
         //UpdateWarp();
-        //UpdatePossession();
     }
 }
