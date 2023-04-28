@@ -68,7 +68,7 @@ public partial class Player : MonoBehaviour {
                 }
 
                 _stricRotAngle.StickRotAngleX_Update();
-                rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX);
+                rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX,this.transform);
                 //_startrotFreamX = _stricRotAngle.GetActivStick;
 
                 //Debug.Log(_stricRotAngle.GetStickDialAngleX);
@@ -99,7 +99,7 @@ public partial class Player : MonoBehaviour {
             }
 
             _stricRotAngle.StickRotAngleY_Update();
-            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY);
+            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
             //_startrotFreamY = rotatbleComp._isRotateStartFream;
 
             // í èÌé≤âÒì]

@@ -6,6 +6,8 @@ public partial class Player : MonoBehaviour{
 
     private StickRotAngle _stricRotAngle = null;
 
+    private bool _isRotating = false; // 回している最中かを判定するフラグ
+
     private void PlayerRotationStart() {
 
         // 右スティックコンポネント取得
@@ -27,7 +29,7 @@ public partial class Player : MonoBehaviour{
         
         // 真下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
-
+            
             var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
             // スティック回転Y
@@ -36,11 +38,11 @@ public partial class Player : MonoBehaviour{
             }
 
             _stricRotAngle.StickRotAngleY_Update();
-            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY);
-
+            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
+           
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
-                rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90);
+                rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90, this.transform);
             }
 
             // 高速回転
@@ -59,11 +61,11 @@ public partial class Player : MonoBehaviour{
             }
             // スティック回転Y
             _stricRotAngle.StickRotAngleX_Update();
-            rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX);
+            rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX, this.transform);
 
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
-                rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, 90);
+                rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, 90,this.transform);
             }
 
             // 高速回転
@@ -71,5 +73,13 @@ public partial class Player : MonoBehaviour{
                 rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
             }
         }
+    }
+
+    public void NotificationStartRotate() {
+        _isRotating = true;
+    }
+
+    public void NotificationEndRotate() {
+        _isRotating = false;
     }
 }

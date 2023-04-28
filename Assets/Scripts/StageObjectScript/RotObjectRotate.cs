@@ -5,6 +5,8 @@ using System;
 
 public partial class RotatableObject : MonoBehaviour {
 
+    private Transform _playerTransform = null;// プレイヤーのトランスフォーム
+
     // 自身の軸でまわす小を開始
     public void StartRotate() {
         if ( _isSpin || _isRotating ) {
@@ -21,11 +23,40 @@ public partial class RotatableObject : MonoBehaviour {
         PlayPartical();
     }
 
-    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis,int rotAngle) {
+    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle) {
+
+        if ( _isSpin || _isRotating ) {
+            return;
+        }
+
+        // フラグを立てる
+        _isRotating = true;
+
+        // 経過時間を初期化
+        _elapsedTime = 0.0f;
+
+        // 回転の中心を設定
+        _axisCenterWorldPos = rotCenter;
+
+        // 回転軸を設定
+        _rotAxis = rotAxis;
+
+        // 回転オフセット値をセット
+        _angle = rotAngle;
+
+        // トレイルの起動
+        PlayPartical();
+    }
+
+   
+    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis,int rotAngle,Transform playerTransform) {
         
         if ( _isSpin || _isRotating ) {
             return;
         }
+
+        // トランスフォームを格納
+        _playerTransform = playerTransform;
 
         // フラグを立てる
         _isRotating = true;
@@ -83,6 +114,21 @@ public partial class RotatableObject : MonoBehaviour {
 
                 _isRotateEndFream = true;
                 StopPartical();
+
+                // プレイヤー起因の回転かを判定
+                if ( _playerTransform != null ) {
+                    var playerComp = _playerTransform.GetComponent<Player>();
+                    if ( playerComp != null ) {
+                        Debug.Log("ありえない話");
+                    }
+
+                    // プレイヤーに回転終了通知を飛ばす
+                    playerComp.NotificationEndRotate();
+
+                    // バグ防止
+                    _playerTransform = null;
+                }
+
             }
 
             // 現在フレームの回転を示す回転のクォータニオン作成
