@@ -12,6 +12,7 @@ public partial class RotObjUnion : MonoBehaviour
 		if(_effect == null && _partical == null) return;
 		if(contactObj.transform.root.gameObject.tag != "RotateObject") return;
 		if(this.transform.root.gameObject == contactObj.transform.root.gameObject) return;
+		if(contactObj.name == "Pf_Parts") return;
 		SetGeneratePosition(contactObj);
 	}
 

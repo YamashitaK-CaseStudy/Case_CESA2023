@@ -345,7 +345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 10517674}
   - component: {fileID: 10517675}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HeadShape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1408,7 +1408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 99271098}
   - component: {fileID: 99271099}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2185,7 +2185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 161930376}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigNeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2373,7 +2373,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 189039843}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigLeftEar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2598,7 +2598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 201414884}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2812,7 +2812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223261658}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2902,7 +2902,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230090928}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LeftDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4599,7 +4599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 333904469}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigRightDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4968,7 +4968,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 352914486}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4999,7 +4999,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 354844244}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigRightEar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5743,7 +5743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 422984519}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6438,7 +6438,7 @@ GameObject:
   - component: {fileID: 474524878}
   - component: {fileID: 474524877}
   - component: {fileID: 474524876}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: 'FrontTouchCollider '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7580,7 +7580,7 @@ GameObject:
   - component: {fileID: 579997807}
   - component: {fileID: 579997806}
   - component: {fileID: 579997805}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: BottomTouchCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8744,7 +8744,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 628230989}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LeftEar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9151,7 +9151,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 665481097}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RightNat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9641,7 +9641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 707143283}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10780,7 +10780,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 794099463}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigLeftNat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11593,7 +11593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 850596845}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigLeftDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11930,7 +11930,7 @@ GameObject:
   - component: {fileID: 873208791}
   - component: {fileID: 873208790}
   - component: {fileID: 873208789}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -11962,20 +11962,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3e714f2df11c0747a82035d783cbfa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skAnimator: {fileID: 1091534204}
+  _playerInput: {fileID: 0}
+  _timeMeasurement: {fileID: 0}
   _frontColliderObj: {fileID: 474524875}
   _bottomColliderObj: {fileID: 579997804}
-  _startrotFreamY: 0
-  _startrotFreamX: 0
+  _groundColliderObj: {fileID: 0}
+  _frontrayColliderObj: {fileID: 0}
+  _upperrayColliderObj: {fileID: 0}
   HP: 0
   manager: {fileID: 0}
-  _moveSpeed: 10
-  _jumpUpPower: 13
-  _jumpDownPower: -30
   _deadZone: 0.5
-  _rayoffset: {x: 0, y: 0, z: 0}
-  _raydistance: 0
-  _startJump: 0
+  _moveSpeed: 10
+  _accelerationMoveCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _gravity: 0
+  _jumpSpeed: 0
+  _normalIdle_To_JumpWaitTime: 0
+  _skeletalObj: {fileID: 0}
+  _idleCheneTime: 0
 --- !u!114 &873208791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12457,7 +12465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 910703197}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12729,7 +12737,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 966528248}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14752,7 +14760,7 @@ GameObject:
   - component: {fileID: 1091534206}
   - component: {fileID: 1091534204}
   - component: {fileID: 1091534205}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SkekletalMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15300,7 +15308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1141108568}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RightDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15677,7 +15685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1189583416}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16453,7 +16461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1283733633}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigRightNat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21837,7 +21845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1686878383}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RigRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23682,7 +23690,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1830080968}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26217,7 +26225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2022229792}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: aiSkyDomeLight1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27526,7 +27534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2120065347}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RightEar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27557,7 +27565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2127575703}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LeftNat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
