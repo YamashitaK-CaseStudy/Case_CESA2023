@@ -247,10 +247,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _gravity: -30
-  _jumpSpeed: 13
-  _normalIdle_To_JumpWait: 0
+  _jumpSpeed: 570
+  _normalIdle_To_JumpWaitTime: 0.3
   _skeletalObj: {fileID: 8320782514289540871}
-  _idleCheneTime: 200
+  _idleCheneTime: 3
 --- !u!114 &7508143827200873855
 MonoBehaviour:
   m_ObjectHideFlags: 0

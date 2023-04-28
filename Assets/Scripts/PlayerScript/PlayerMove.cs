@@ -13,7 +13,6 @@ public partial class Player : MonoBehaviour {
 
     private Rigidbody _rigidbody;
 
-    private bool _IsDirRight = false;
     private float _accelTime = 0.0f;
     private float _speedx = 0.0f;
     private float _speedy = 0.0f;
@@ -52,7 +51,6 @@ public partial class Player : MonoBehaviour {
 
         if (-_deadZone > value_x) {
 
-            _IsDirRight = false;
             _accelTime += Time.deltaTime;
             _speedx = -_moveSpeed * _accelerationMoveCurve.Evaluate(_accelTime);
             transform.LookAt(transform.position + new Vector3(-1, 0, 0));
@@ -60,7 +58,6 @@ public partial class Player : MonoBehaviour {
         }
         else if (value_x > _deadZone) {
 
-            _IsDirRight = true;
             _accelTime += Time.deltaTime;
             _speedx = _moveSpeed * _accelerationMoveCurve.Evaluate(_accelTime);
             transform.LookAt(transform.position + new Vector3(1, 0, 0));
@@ -106,6 +103,10 @@ public partial class Player : MonoBehaviour {
 
             if (Input.GetButtonDown("Jump")) {
 
+
+                Debug.Log("akaka");
+
+
                 // 頭上にブロックがあればジャンプしない
                 if (!_upperrayCheck.IsUpperHit) {
 
@@ -117,6 +118,7 @@ public partial class Player : MonoBehaviour {
 
                     // ボール状態からのジャンプ
                     else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Run_Ball")) {
+                       
                         _isBall_To_Jump = true;
                         _rigidbody.AddForce(_jumpSpeed * Vector3.up, ForceMode.Impulse);
                     }

@@ -51,7 +51,7 @@ public partial class Player : MonoBehaviour{
             _isBall_To_Jump = false;
 
             Debug.Log("ƒWƒƒƒ“ƒvˆ—");
-            _animator.SetTrigger("StartJumo");
+            _animator.SetTrigger("StartJump");
         }
     }
 }
