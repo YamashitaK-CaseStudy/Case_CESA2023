@@ -18,6 +18,7 @@ public partial class SceneEditor : EditorWindow
 	bool _isOnUnionObj = false;
 	GameObject _UnionObthberPrefab;
 	GameObject _BackGroundPrefab;
+	GameObject _GrobalVolmePrefab;
 
 	[MenuItem("Editor/シーンエディター")]
 	private static void ShowWindow()
@@ -30,6 +31,7 @@ public partial class SceneEditor : EditorWindow
 		_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Pf_Player.prefab");
 		_BackGroundPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_BackGroundCanvas.prefab");
 		_UnionObthberPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/RotObjectUnionObthber.prefab");
+		//_GrobalVolmePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_GlobalVolume.prefab");
 	}
 	private void OnGUI()
 	{
@@ -148,6 +150,10 @@ public partial class SceneEditor : EditorWindow
 		var tmpBGComp = tmpBG.GetComponent<Canvas>();
 		tmpBGComp.worldCamera = tmpCameraObj.GetComponent<Camera>();
 		tmpBGComp.planeDistance = 99;
+
+		// グローバルボリュームの生成
+		//var tmpGV = Instantiate(_GrobalVolmePrefab, new Vector3(0,0,0), Quaternion.identity);
+
 		// 磁石オブジェクト用のオブザーバーをインスタンス化する
 		if (_isOnUnionObj)
 		{
