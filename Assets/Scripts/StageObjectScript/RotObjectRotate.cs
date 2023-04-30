@@ -8,7 +8,7 @@ public partial class RotatableObject : MonoBehaviour
 
 	private Transform _playerTransform = null;// プレイヤーのトランスフォーム
 
-	private bool _isReservation;    // 予約フラグ
+	public bool _isReservation = false;// 予約フラグ
     private Vector3 _resePos;   // 予約座標
 	private Vector3 _reseAxis;  // 予約軸
 	private int _reseAngle;     // 予約回転
@@ -83,12 +83,15 @@ public partial class RotatableObject : MonoBehaviour
 
 		// 回転の中心を設定
 		_axisCenterWorldPos = rotCenter;
+		_resePos = rotCenter;
 
 		// 回転軸を設定
 		_rotAxis = rotAxis;
+		_reseAxis = rotAxis;
 
 		// 回転オフセット値をセット
 		_angle = rotAngle;
+		_reseAngle = rotAngle;
 
 		// トレイルの起動
 		PlayPartical();
@@ -144,6 +147,14 @@ public partial class RotatableObject : MonoBehaviour
 					// バグ防止
 					_playerTransform = null;
 				}
+
+				// 予約があるか確認する
+				if (_isReservation)
+				{
+                	 Debug.Log("予約起動や！");
+                	_isReservation = false;
+                	StartRotate(_resePos, _reseAxis, _reseAngle);
+				}
 			}
 
 			// 現在フレームの回転を示す回転のクォータニオン作成
@@ -168,22 +179,6 @@ public partial class RotatableObject : MonoBehaviour
 		{
 			_doOnce = false;
 			_isRotateEndFream = false;
-			// 予約があるか確認する
-			if (_isReservation)
-			{
-                 Debug.Log("予約起動や！");
-                _isReservation = false;
-                StartRotate(_resePos, _reseAxis, _reseAngle);
-			}
 		}
-	}
-
-	public void SetReservation(Vector3 pos, Vector3 axis, int angle)
-	{
-        Debug.Log("予約");
-		_isReservation = true;
-        _resePos = pos;
-		_reseAxis = axis;
-		_reseAngle = angle;
 	}
 }

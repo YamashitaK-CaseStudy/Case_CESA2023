@@ -29,6 +29,6 @@ public class RotHitFloar : MonoBehaviour
 		Debug.Log(pos);
 		Debug.Log(axis);
 		Debug.Log(angle);
-		_parentRotComp.SetReservation(pos,-axis,-angle);
+		_parentRotComp._isReservation = true;
 	}
 }
