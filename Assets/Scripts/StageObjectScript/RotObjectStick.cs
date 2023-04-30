@@ -8,7 +8,6 @@ public partial class RotatableObject : MonoBehaviour{
     public int oldangleY = 0;
     public int oldangleX = 0;
 
-
     public void StartStickRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle) {
 
         if (_isSpin || _isRotating) {
@@ -41,7 +40,6 @@ public partial class RotatableObject : MonoBehaviour{
     public Vector3 _nowRotAxis;
    
     public void StartRotateX(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
-
         if (oldangleX == angle) {
             return;
         }
@@ -65,7 +63,6 @@ public partial class RotatableObject : MonoBehaviour{
     }
 
     public void StartRotateY(Vector3 center, Vector3 axis, int angle,Transform playerTransform) {
-
         if (oldangleY == angle) {
             return;
         }

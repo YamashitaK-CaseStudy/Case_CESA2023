@@ -156,12 +156,7 @@ public partial class RotatableObject : MonoBehaviour {
 			var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
 			childChineColliderBoxCollider.enabled = false;
 		}
-
-
-
 	}
-
-
 
 	protected void UpdateSpin() {
 		if ( _isSpin ) {
