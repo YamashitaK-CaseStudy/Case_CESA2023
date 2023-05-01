@@ -25,10 +25,8 @@ public class RotHitFloar : MonoBehaviour
 	}
 
 	public void ChecktoRotate(Vector3 pos, Vector3 axis, int angle){
-		Debug.Log("コライダー回る");
 		_hitCheckCollider.SetActive(true);
 		_hitCheckCollider.transform.RotateAround(pos, axis, angle);
-		Debug.Log("コライダー回る2");
 	}
 
 	public void InitCheckCollider(){
@@ -39,10 +37,6 @@ public class RotHitFloar : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other) {
 		if(other.transform.root.gameObject.name != "Floor") return;
-		Debug.Log(this.name);
-		Debug.LogError("aaaaaaaaaaaaaaaaa");
-		Debug.Log("これ床と当たってるやんけ");
-
-		_parentRotComp._isReservation = true;
+		_parentRotComp.ForcedStopRotate();
 	}
 }
