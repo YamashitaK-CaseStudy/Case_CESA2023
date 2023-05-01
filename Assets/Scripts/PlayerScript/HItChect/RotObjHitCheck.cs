@@ -15,7 +15,10 @@ public class RotObjHitCheck : MonoBehaviour{
     private bool _ischangeRotHit = false;
 
     private void OnTriggerEnter(Collider other) {
-
+        if (other.transform.parent.parent == null)//対処療法的でよくない
+        {
+            return;//床などは無視
+        }
         // 回転オブジェクトの取得
         GetRotateObject(other.gameObject);
     }
@@ -42,12 +45,12 @@ public class RotObjHitCheck : MonoBehaviour{
     // 回転オブジェクトの取得
     private void GetRotateObject(GameObject obj) {
 
-        if (obj.transform.root.gameObject.tag == "RotateObject") {
+        if (obj.transform.parent.parent.gameObject.tag == "RotateObject") {
 
             _isRotHit = true;
             _ischangeRotHit = true;
 
-            _rotObj = obj.transform.root.gameObject;
+            _rotObj = obj.transform.parent.parent.gameObject;
             _rotPartsObj = obj;
         }
         else {
