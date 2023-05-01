@@ -36,6 +36,7 @@ public partial class RotatableObject : MonoBehaviour{
         _rotAxis.Normalize();
         // まわす大の設定
         StartSettingSpin();
+        StartSettingRot();
 
     }
 

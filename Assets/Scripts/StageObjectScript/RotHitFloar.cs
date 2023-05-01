@@ -6,29 +6,43 @@ public class RotHitFloar : MonoBehaviour
 {
 	GameObject _parentObj;
 	RotatableObject _parentRotComp;
+	GameObject _hitCheckCollider;
 	// Start is called before the first frame update
 	void Start()
 	{
 		_parentObj = this.transform.root.gameObject;
 		_parentRotComp = _parentObj.transform.GetComponent<RotatableObject>();
+		// コライダーを用意する
+		for(int i = 0; i < this.transform.childCount; i++){
+			var tmpObj = this.transform.GetChild(i);
+			if(tmpObj.name == "HitCheckCollider"){
+				_hitCheckCollider = tmpObj.gameObject;
+				break;
+			}
+		}
+		_hitCheckCollider.SetActive(false);
 		Debug.Log(_parentRotComp);
 	}
 
+	public void ChecktoRotate(Vector3 pos, Vector3 axis, int angle){
+		Debug.Log("コライダー回る");
+		_hitCheckCollider.SetActive(true);
+		_hitCheckCollider.transform.RotateAround(pos, axis, angle);
+		Debug.Log("コライダー回る2");
+	}
+
+	public void InitCheckCollider(){
+		_hitCheckCollider.transform.position = this.transform.position;
+		_hitCheckCollider.transform.eulerAngles = this.transform.eulerAngles;
+		_hitCheckCollider.SetActive(false);
+	}
+
 	private void OnTriggerEnter(Collider other) {
-		if(other.gameObject.transform.root.name != "Floor") return;
+		if(other.transform.root.gameObject.name != "Floor") return;
+		Debug.Log(this.name);
+		Debug.LogError("aaaaaaaaaaaaaaaaa");
 		Debug.Log("これ床と当たってるやんけ");
 
-		Vector3 pos = _parentRotComp._axisCenterWorldPos;
-		Vector3 axis = _parentRotComp._nowRotAxis;
-		int angle = 0;
-		if(_parentRotComp.oldangleX != 0){
-			angle = _parentRotComp.oldangleX;
-		}else if(_parentRotComp.oldangleY != 0){
-			angle = _parentRotComp.oldangleY;
-		}
-		Debug.Log(pos);
-		Debug.Log(axis);
-		Debug.Log(angle);
 		_parentRotComp._isReservation = true;
 	}
 }
