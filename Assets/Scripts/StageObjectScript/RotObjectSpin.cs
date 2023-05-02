@@ -155,6 +155,12 @@ public partial class RotatableObject : MonoBehaviour {
 			var childChineCollider = childTransform.Find("ChainCollider");
 			var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
 			childChineColliderBoxCollider.enabled = false;
+
+			// ƒŒƒ“ƒ_ƒ‰[‚ğ–³Œø‚É‚·‚é
+			var childMesh = childTransform.Find("P_RotateObject");
+			var childMeshRenderer = childMesh.GetComponent<MeshRenderer>();
+			childMeshRenderer.enabled = false;
+
 		}
 
 
