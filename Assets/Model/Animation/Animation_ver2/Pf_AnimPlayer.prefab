@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 803480382255787882}
   - component: {fileID: 8650257453718846405}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UpperRayCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 6287670289985052832}
   - component: {fileID: 751135251565634308}
   - component: {fileID: 4979491747652977152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,8 @@ GameObject:
   - component: {fileID: 1750225579074150439}
   - component: {fileID: 7508143827200873855}
   - component: {fileID: 6894760810590162927}
-  m_Layer: 0
+  - component: {fileID: -9148174943718276190}
+  m_Layer: 10
   m_Name: Pf_AnimPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -277,6 +278,102 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deadzone: 0.5
+--- !u!82 &-9148174943718276190
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2507138598649004092}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6069264933920637730
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +384,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4260179835429538091}
   - component: {fileID: 5573837623126539117}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FrontRayCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +439,7 @@ GameObject:
   - component: {fileID: 5404362961189466612}
   - component: {fileID: 1406870813194041523}
   - component: {fileID: 5639377010905503491}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: 'FrontTouchCollider '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +549,7 @@ GameObject:
   - component: {fileID: 6920531177433544389}
   - component: {fileID: 304413853717232308}
   - component: {fileID: 4966530964234355970}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: BottomTouchCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,6 +653,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2165951582517849405}
     m_Modifications:
+    - target: {fileID: -8931983005307121203, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fb0cb4231d9acff46a145417987966a9,
         type: 3}
       propertyPath: m_RootOrder
@@ -611,15 +713,145 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4799912553261668461, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4535693485555203016, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4301476900937817581, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -2129199031577394398, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -1304084941729493309, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -1067150952502105657, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -736694346015634735, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 845042839506431180, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fb0cb4231d9acff46a145417987966a9,
         type: 3}
       propertyPath: m_Name
       value: SkekletalMesh
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031191247693194843, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255594254116244649, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2352420947777778311, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2383581641936930959, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306512618393000541, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3388549186867869639, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3979760659706261232, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207273236483204238, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4349788450919003874, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4713398128840103328, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332809968238436118, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5719269884692563410, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5930525161584493022, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6947371354971083593, guid: fb0cb4231d9acff46a145417987966a9,
         type: 3}
       propertyPath: m_UpdateWhenOffscreen
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7351535712968229550, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858838810484868529, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948205825774012317, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8565263612344278335, guid: fb0cb4231d9acff46a145417987966a9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb0cb4231d9acff46a145417987966a9, type: 3}
