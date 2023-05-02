@@ -14,7 +14,6 @@ public class Test : MonoBehaviour
 	void Update()
 	{
 		if(Time.timeScale == 0) return;
-
 		Vector3 pos = transform.position;
 		transform.position = new Vector3(pos.x + 0.5f, pos.y, pos.z);
 	}
