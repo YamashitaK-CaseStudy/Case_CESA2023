@@ -15,6 +15,10 @@ public class RotObjHitCheck : MonoBehaviour{
     private bool _ischangeRotHit = false;
 
     private void OnTriggerEnter(Collider other) {
+        if(other.transform.parent == null)//対処療法的でよくない
+        {
+            return;//床などは無視
+        }
         if (other.transform.parent.parent == null)//対処療法的でよくない
         {
             return;//床などは無視
