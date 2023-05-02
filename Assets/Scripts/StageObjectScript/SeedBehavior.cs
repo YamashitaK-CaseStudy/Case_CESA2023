@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class SeedBehavior : MonoBehaviour
 {
+    private void Awake()
+    {
+        UiSeedBehavior.IncreaseTotal();
+    }
+
+    private void OnDestroy()
+    {
+        UiSeedBehavior.ObtaineSeed();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.root.CompareTag("Player"))
