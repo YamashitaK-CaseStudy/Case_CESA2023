@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotObjUnion : MonoBehaviour{
+public partial class RotObjUnion : MonoBehaviour{
 
     static bool _isStartDoOnce = false;
     static RotObjUnionObtherber _obtherber = null;
@@ -30,6 +30,7 @@ public class RotObjUnion : MonoBehaviour{
 
             // オブザーバーに素材を送る
             _obtherber.AddunionMaterial(_rotObj);
+            EffectGenerate(obj.gameObject);
         }
     }
 }

@@ -5,23 +5,20 @@ using UnityEngine.InputSystem;
 
 public partial class Player : MonoBehaviour {
 
-    [SerializeField] private GameObject _frontColliderObj;
-    [SerializeField] private GameObject _bottomColliderObj;
-
-    private RotObjHitCheck _frontHitCheck = null;
-    private RotObjHitCheck _bottomHitCheck = null;
-    private PlayerInput _playerInput = null;
     private InputAction _rotationButton = null;
     private InputAction _rotationSpinButton = null;
 
-    private StickRotAngle _stricRotAngle = null;
+    //private StickRotAngle _stricRotAngle = null;
 
+    //public bool _startrotFreamY = false;
+    //public bool _startrotFreamX = false;
+   
     void StartAction() {
 
         // 当たり判定のコンポーネント取得
         _frontHitCheck = _frontColliderObj.GetComponent<RotObjHitCheck>();
         _bottomHitCheck = _bottomColliderObj.GetComponent<RotObjHitCheck>();
-
+     
         // InputSystem取得
         _playerInput = GetComponent<PlayerInput>();
         _rotationButton = _playerInput.actions.FindAction("Rotation");
@@ -63,46 +60,56 @@ public partial class Player : MonoBehaviour {
             // 左右に傾けたとき
             if (-0.5 > stick.x || 0.5 < stick.x) {
 
-                // 右スティックの更新
-                _stricRotAngle.StickRotAngleX_Update();
+                var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
-                // 右スティックでの回転
-                _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX);
-               
+                // 右スティックの更新
+                if (rotatbleComp._isRotateEndFream) {
+                    _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+                }
+
+                _stricRotAngle.StickRotAngleX_Update();
+                rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX,this.transform);
+                //_startrotFreamX = _stricRotAngle.GetActivStick;
+
+                //Debug.Log(_stricRotAngle.GetStickDialAngleX);
+
                 // 通常軸回転
                 if (_rotationButton.WasPressedThisFrame()) {
-                    _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+                    rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,90);
                 }
                 // 高速回転
                 if (_rotationSpinButton.WasPressedThisFrame()) {
-                    _frontHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+                    rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
                 }
             }
         }
 
-        // 移動中とジャンプ中は回転させない
-        if (0 < Mathf.Abs(moveVelocity.x) || 0 < moveVelocity.y) {
-            return;
-        }
+        //// 移動中とジャンプ中は回転させない
+        //if (0 < Mathf.Abs(_moveVelocity.x) || 0 < _moveVelocity.y) {
+        //    return;
+        //}
+
         // 下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
-
-            //Debug.Log( _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().oldangleY);
-
-            // 右スティックの更新
-            _stricRotAngle.StickRotAngleY_Update();
+            var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
             // 右スティックでの回転
-            _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY);
+            if (rotatbleComp._isRotateEndFream) {
+                _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
+            }
+
+            _stricRotAngle.StickRotAngleY_Update();
+            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
+            //_startrotFreamY = rotatbleComp._isRotateStartFream;
 
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
-                _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+                rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90);
             }
 
             // 高速回転
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+                rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
             }
         }
     }
@@ -110,8 +117,6 @@ public partial class Player : MonoBehaviour {
     /*
     private GameObject _touchColliderFront = null;
     private GameObject _touchColliderBottom = null;
-
-
 
     // Start is called before the first frame update
     void StartAction()

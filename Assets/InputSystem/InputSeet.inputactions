@@ -58,6 +58,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "StageSelectL",
+                    "type": "Button",
+                    "id": "494892f5-3602-4fe4-b1a2-fbd81da73fb1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StageSelectR",
+                    "type": "Button",
+                    "id": "a5c34911-f275-4f1a-a00e-ad7f9a128d65",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StageSelectEnter",
+                    "type": "Button",
+                    "id": "95343e4c-eb9f-4a1d-a2de-70ed2b2c03b0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TitleEnter",
+                    "type": "Button",
+                    "id": "e5bfb8f4-cf68-43fe-b71d-c9948434acb7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -239,12 +275,78 @@
                 },
                 {
                     "name": "",
+                    "id": "4e1bc0bc-8c2e-4778-8665-dc9361022066",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RotationSpin",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "94a10434-17d7-4105-9d89-f57c60212710",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "RotaionSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "56374cf9-4975-4f3b-8d80-0cc746ed5d58",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StageSelectL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78feb832-b38d-489a-a56e-507f212f0c4e",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StageSelectR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2679abe-c51e-43df-a38d-5c42020127d6",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StageSelectEnter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01bf94d0-e1c8-4175-bcfd-e9f01721b891",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "StageSelectEnter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ce94383d-430b-4f1c-bcaa-eb7c986584fc",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TitleEnter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

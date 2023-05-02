@@ -12,6 +12,7 @@ public partial class CStageEditor : EditorWindow
 	RotatableObject _parentRotObj;  // 親のRotatableObject
 	RotObjkinds _parentObjectkind;  // 親のRotObjKinds
 	RotObjkinds.ObjectKind _kinds;
+	AudioSource _parentAudioSource;	// 親のAudioSource
 	GameObject _object;             // 仲介のオブジェクト
 	GameObject _selectChildObj;     // 選択している子オブジェクト
 	GameObject _selectAddChildPrefab;// 選択している子オブジェクト
@@ -81,7 +82,7 @@ public partial class CStageEditor : EditorWindow
 				string path = null;
 				if (_kinds == RotObjkinds.ObjectKind.UnionRotObject)
 				{
-					path = "Assets/Prefabs/Stage/Pf_PartsUnion.prefab";
+					path = "Assets/Prefabs/Stage/Pf_PartsUnionRed.prefab";
 				}
 				else
 				{
@@ -237,6 +238,7 @@ public partial class CStageEditor : EditorWindow
 		{
 			_parentRotObj._isRotating = EditorGUILayout.ToggleLeft("isRotating", _parentRotObj._isRotating);
 			_parentRotObj._isSpin = EditorGUILayout.ToggleLeft("isSpin", _parentRotObj._isSpin);
+			_parentRotObj._rotRequirdTime = EditorGUILayout.FloatField("回転速度", _parentRotObj._rotRequirdTime);
 		}
 	}
 
@@ -341,7 +343,7 @@ public partial class CStageEditor : EditorWindow
 							else
 							{
 								// 座標の設定
-								Vector3 tmppos = floorpos;
+								Vector3 tmppos = _childpos;
 								tmppos.x += x * (int)_lr;
 								tmppos.y += y * (int)_tb;
 								// インスタンス化行う
@@ -407,8 +409,9 @@ public partial class CStageEditor : EditorWindow
 	{
 		// オブジェクトの生成
 		_parentObject = new GameObject("RotatableObject");
-		// タグの設定
+		// タグ・レイヤーの設定
 		_parentObject.tag = "RotateObject";
+		_parentObject.layer = 13;
 		// 必要コンポーネントのアタッチ
 		// Rigidbodyの生成　初期設定
 		_parentRigdbody = _parentObject.AddComponent<Rigidbody>();
@@ -419,6 +422,10 @@ public partial class CStageEditor : EditorWindow
 		// 種類の設定
 		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
 		_parentObjectkind._RotObjKind = _kinds;
+
+		// AudioSourceの追加
+		_parentAudioSource = _parentObject.AddComponent<AudioSource>();
+		_parentAudioSource.playOnAwake = false;
 
 		_object = new GameObject("Object");
 		_object.gameObject.transform.parent = _parentObject.gameObject.transform;

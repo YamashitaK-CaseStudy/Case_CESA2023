@@ -5,28 +5,74 @@ using UnityEngine.UI;
 
 public class Fader : MonoBehaviour
 {
-    private void Start()
+
+    static public Fader instance
     {
-        fadeImage = gameObject.GetComponent<Image>();
-        if (fadeImage == null)
+        get
         {
-            print("エラー：フェードパネルにコンポーネント Image が付いていません");
-        }
+            if (_instance == null)
+            {
+                /*キャンバスとフェードパネルを生成*/
+                GameObject fadeCanvus = new GameObject("FadeCanvus");
+                DontDestroyOnLoad(fadeCanvus);
+                Canvas canvas = fadeCanvus.AddComponent<Canvas>();
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                canvas.sortingOrder = 2;//大きいほど手前に表示される
 
-        if (timeToFade <= 0)
-        {
-            timeToFade = float.Epsilon;/*0割りの回避*/
-        }
+                fadeCanvus.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
-        if (fadeOut)
-        {
-            gameObject.SetActive(true);
-            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1);
-            FadeIn();
+                GameObject fadePanel = new GameObject("FadePanel");
+                fadePanel.transform.parent = fadeCanvus.transform;
+                fadePanel.transform.localPosition = new Vector3(0, 0, 0);
+
+                _instance = fadePanel.AddComponent<Fader>();
+                _instance._fadeImage = fadePanel.AddComponent<Image>();
+
+                _instance._fadeImage.color = new Color(1, 1, 1, 0);
+
+                RectTransform rectTransform = fadePanel.GetComponent<RectTransform>();
+                rectTransform.anchorMin = new Vector2(0, 0);
+                rectTransform.anchorMax = new Vector2(1, 1);
+                rectTransform.sizeDelta = new Vector2(0, 0);
+            }
+
+            return _instance;
         }
-        else
+    }
+
+    public float fadeTime
+    {
+        get
         {
-            gameObject.SetActive(false);//フェイド中以外はUpdate()が呼ばれないようにゲームオブジェクトを無効状態にする
+            return _fadeTime;
+        }
+        set
+        {
+            _fadeTime = value;
+            if (_fadeTime <= 0)
+            {
+                _fadeTime = float.Epsilon;
+            }
+        }
+    }
+
+    public Color color
+    {
+        get
+        {
+            return _fadeImage.color;
+        }
+        set
+        {
+            _fadeImage.color = new Color(value.r, value.g, value.b, color.a);
+        }
+    }
+
+    public Sprite texure
+    {
+        set
+        {
+            _fadeImage.sprite = value;
         }
     }
 
@@ -36,62 +82,72 @@ public class Fader : MonoBehaviour
     }
 
 
-    public void FadeOut(FadeOutCompletionReceiver receiver)
+    public void FadeOut(int loadSceneNumber)
     {
-        this.receiver = receiver;
+        this._loadSceneNumber = loadSceneNumber;
+        this.fadeTime = fadeTime;
+        if (this.fadeTime == 0) this.fadeTime = float.Epsilon;
+
         gameObject.SetActive(true);
         UpdateFader = UpdateFadeOut;
-        countTime = 0;
+        _countTime = 0;
     }
 
     public void FadeIn()
     {
         gameObject.SetActive(true);
         UpdateFader = UpdateFadeIn;
-        countTime = 0;
+        _countTime = 0;
     }
 
     private void UpdateFadeOut()
     {
-        countTime += Time.deltaTime;
-        if (countTime >= timeToFade)
+
+        if (_fadeOuted)
         {
-            fadeOut = true;
-            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1);
-            receiver.ProcessAfterFadeOut();
-            gameObject.SetActive(false);
             return;
         }
 
-        fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, countTime / timeToFade);
+        _countTime += Time.deltaTime;
+        if (_countTime >= fadeTime)
+        {
+            _fadeOuted = true;
+            _fadeImage.color = new Color(color.r, color.g, color.b, 1);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(_loadSceneNumber);
+
+            FadeIn();
+            return;
+        }
+
+        _fadeImage.color = new Color(color.r, color.g, color.b, _countTime / fadeTime);
 
     }
 
     private void UpdateFadeIn()
     {
-        countTime += Time.deltaTime;
-        if (countTime >= timeToFade)
+        _countTime += Time.deltaTime;
+        if (_countTime >= fadeTime)
         {
-            fadeOut = false;
-            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 0);
+
+            _fadeOuted = false;
+            _fadeImage.color = new Color(color.r, color.g, color.b, 0);
             gameObject.SetActive(false);
             return;
         }
 
-        fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 1 - countTime / timeToFade);
+        _fadeImage.color = new Color(color.r, color.g, color.b, 1 - _countTime / fadeTime);
     }
 
-    private static bool fadeOut = false;
-    [SerializeField] private float timeToFade;
-    //[SerializeField]private float timeToInputInvalid;プレイヤーの入力無効時間　プレイヤー側で設定した方が良い
-    private float countTime = 0;
-    Image fadeImage;
-    private delegate void FadePanelUpdate();
-    FadePanelUpdate UpdateFader;
-    FadeOutCompletionReceiver receiver = null;
-}
 
-public abstract class FadeOutCompletionReceiver : MonoBehaviour
-{
-    public abstract void ProcessAfterFadeOut();
+    //c++でいう関数オブジェクトのようなもの
+    private delegate void FadePanelUpdate();
+    private FadePanelUpdate UpdateFader;
+
+    /*変数*/
+    private static Fader _instance = null;
+    private bool _fadeOuted = false;//非同期ロードのため。使っていない。2023/4/20
+    private float _countTime = 0;
+    private Image _fadeImage;
+    private int _loadSceneNumber = 0;
+    private float _fadeTime = 0.5f;//0にすると0割が発生します
 }

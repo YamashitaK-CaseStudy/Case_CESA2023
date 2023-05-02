@@ -127,6 +127,7 @@ public partial class CStageEditor : EditorWindow
 	private void CheckFloorParent(){
 		if(_floorParents == null){
 			_floorParents = new GameObject("Floor");
+			_floorParents.layer = 13;
 		}
 	}
 }

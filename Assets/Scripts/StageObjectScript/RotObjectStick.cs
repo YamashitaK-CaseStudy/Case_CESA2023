@@ -4,55 +4,94 @@ using UnityEngine;
 
 public partial class RotatableObject : MonoBehaviour{
 
-    private void RotateAxis(Vector3 center, Vector3 axis, int angle) {
-
-        // 現在フレームの回転を示す回転のクォータニオン作成
-        var angleAxis = Quaternion.AngleAxis(angle, axis);
-
-        // 円運動の位置計算
-        var tr = transform;
-        var pos = tr.position;
-
-        // クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
-        // _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
-        pos -= center;
-        pos = angleAxis * pos;
-        pos += center;
-
-        tr.position = pos;
-
-        // 向き更新
-        tr.rotation = angleAxis * tr.rotation;
-    }
-
-
     // 前回の回転
     public int oldangleY = 0;
     public int oldangleX = 0;
 
-    public void StartRotateX(Vector3 center, Vector3 axis, int angle) {
+
+    public void StartStickRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle) {
+
+        if (_isSpin || _isRotating) {
+            return;
+        }
+
+        var playerComp = _playerTransform.GetComponent<Player>();
+
+        playerComp.NotificationStartRotate();
+    
+        // フラグを立てる
+        _isRotating = true;
+
+        // 経過時間を初期化
+        _elapsedTime = 0.0f;
+
+        // 回転の中心を設定
+        _axisCenterWorldPos = rotCenter;
+
+        // 回転軸を設定
+        _rotAxis = rotAxis;
+
+        // 回転オフセット値をセット
+        _angle = rotAngle;
+
+        PlayPartical();
+
+    }
+
+    public Vector3 _nowRotAxis;
+   
+    public void StartRotateX(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
 
         if (oldangleX == angle) {
             return;
         }
 
+        // プレイヤーのトランスフォームを保持
+        _playerTransform = playerTransform;
+
         var offset = angle - oldangleX;
 
-        RotateAxis(center, axis, offset);
+        if (offset > 0) {
+            _nowRotAxis = new Vector3(0, -1, 0);
+        }
+        else {
+            _nowRotAxis = new Vector3(0, 1, 0);
+        }
+
+        StartRotate(center, axis, offset);
+       // RotateAxis(center, axis, offset);
 
         oldangleX = angle;
     }
 
-    public void StartRotateY(Vector3 center, Vector3 axis, int angle) {
+    public void StartRotateY(Vector3 center, Vector3 axis, int angle,Transform playerTransform) {
 
         if (oldangleY == angle) {
             return;
         }
 
+        // プレイヤーのトランスフォームを保持
+        _playerTransform = playerTransform;
+
+        var Pos = playerTransform.position;
+        var pPos = new Vector3(center.x,Pos.y,0);
+        playerTransform.transform.position = pPos;
+
         var offset = angle - oldangleY;
 
-        RotateAxis(center, axis, offset);
+        // 時計回り
+        if(offset > 0) {
+            _nowRotAxis = new Vector3(0, 1, 0);
+        }
+        else {
+            _nowRotAxis = new Vector3(0, -1, 0);
+        }
+
+        StartRotate(center, axis, offset);
+        //StartStickRotate(center, axis, offset);
+        //RotateAxis(center, axis, offset);
 
         oldangleY = angle;
+        PlayPartical();
     }
 }

@@ -19,12 +19,14 @@ public partial class StickRotAngle : MonoBehaviour {
     // 回転オブジェクトのY軸処理
     public void StickRotAngleY_Update() {
 
-        _stickDialAngle_Y = SettingDialAngle(GetAngleY());
+
+            _stickDialAngle_Y = SettingDialAngle(GetAngleY());
     }
 
     // 回転オブジェクトのX軸処理
     public void StickRotAngleX_Update() {
 
-        _stickDialAngle_X = SettingDialAngle(GetAngleX());
+       
+            _stickDialAngle_X = SettingDialAngle(GetAngleX());
     }
 }

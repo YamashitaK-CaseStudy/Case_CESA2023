@@ -12,17 +12,17 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Chain
   - Water
   - UI
   - Union
   - Floor
   - PlayerRotCollider
-  - Post Processing
+  - PlayerRay
+  - Player
+  - Obj
   - 
-  - 
-  - 
-  - 
+  - Block
   - 
   - 
   - 

@@ -17,6 +17,8 @@ public partial class SceneEditor : EditorWindow
 	bool _isGetSameName = false;
 	bool _isOnUnionObj = false;
 	GameObject _UnionObthberPrefab;
+	GameObject _BackGroundPrefab;
+	GameObject _GrobalVolmePrefab;
 
 	[MenuItem("Editor/シーンエディター")]
 	private static void ShowWindow()
@@ -26,8 +28,10 @@ public partial class SceneEditor : EditorWindow
 	private void OnEnable()
 	{
 		_searchFolder = AssetDatabase.LoadAssetAtPath<DefaultAsset>(_scenePath);
-		_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Pf_layer.prefab");
+		_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Pf_Player.prefab");
+		_BackGroundPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_BackGroundCanvas.prefab");
 		_UnionObthberPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/RotObjectUnionObthber.prefab");
+		//_GrobalVolmePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_GlobalVolume.prefab");
 	}
 	private void OnGUI()
 	{
@@ -72,6 +76,12 @@ public partial class SceneEditor : EditorWindow
 		if (_isGetSameName)
 		{
 			EditorGUILayout.HelpBox("同名のシーンが存在します", MessageType.Error);
+		}
+
+		EditorGUILayout.HelpBox("稀に必要オブジェクトが生成されないことがあるので\nその場合は以下のボタンを押してください", MessageType.Info);
+		if (GUILayout.Button("再生成"))
+		{
+			SceneSettings();
 		}
 	}
 	private void CreateScene()
@@ -127,11 +137,24 @@ public partial class SceneEditor : EditorWindow
 		Debug.Log(tmpObj);
 
 		// カメラのコンポーネントを設定
-		var tmpCamera = GameObject.Find("Main Camera");
-		var tmpCameraComp = tmpCamera.AddComponent<PlayerCamera>();
+		// カメラのオブジェクトを検索
+		var tmpCameraObj = GameObject.Find("Main Camera");
+		// プレイヤーカメラのコンポーネントを所得
+		var tmpCameraComp = tmpCameraObj.AddComponent<PlayerCamera>();
 		tmpCameraComp.targetName = tmpObj.name;
 		tmpCameraComp.cameraOffset = new Vector3(0, 2f, -9);
 		tmpCameraComp.targetOffset = new Vector3(0, 0, 0);
+
+		// 背景のインスタンスを生成
+		var tmpBG = Instantiate(_BackGroundPrefab, new Vector3(0,0,0), Quaternion.identity);
+		var tmpBGComp = tmpBG.GetComponent<Canvas>();
+		tmpBGComp.worldCamera = tmpCameraObj.GetComponent<Camera>();
+		tmpBGComp.planeDistance = 99;
+
+		// グローバルボリュームの生成
+		//var tmpGV = Instantiate(_GrobalVolmePrefab, new Vector3(0,0,0), Quaternion.identity);
+
+		// 磁石オブジェクト用のオブザーバーをインスタンス化する
 		if (_isOnUnionObj)
 		{
 			var tmp = Instantiate(_UnionObthberPrefab, pos, Quaternion.identity);
