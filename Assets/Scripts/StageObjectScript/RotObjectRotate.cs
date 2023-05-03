@@ -117,8 +117,11 @@ public partial class RotatableObject : MonoBehaviour {
 
                 // プレイヤー起因の回転かを判定
                 if ( _playerTransform != null ) {
+                    Debug.Log(_playerTransform.gameObject);
+                
                     var playerComp = _playerTransform.GetComponent<Player>();
-                    if ( playerComp != null ) {
+
+                    if ( playerComp == null ) {
                         Debug.Log("ありえない話");
                     }
 
