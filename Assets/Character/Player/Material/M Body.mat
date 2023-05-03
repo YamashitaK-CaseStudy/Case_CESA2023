@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2866534560227084157
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -7,15 +20,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M Body
-  m_Shader: {fileID: -6465566751694194690, guid: f8827243c5247ff42a1a986d77439ec1,
+  m_Name: M body
+  m_Shader: {fileID: -6465566751694194690, guid: 66cf4e44e0d3a304987c3faf2579121e,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2450
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -61,24 +74,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_1c02af8b26a244f6af1bdf36350d19cd_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 3fe8a6d35fadcd5418564813cf0f19d1, type: 3}
+    - _SampleTexture2D_4046f3647b804e40b0157d61f5156217_Texture_1:
+        m_Texture: {fileID: 2800000, guid: c58789f620b81a241aa22d1bb7225ca4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_248b432742fc4984969743cd91c87039_Texture_1:
-        m_Texture: {fileID: 2800000, guid: dfacd64cc6ae2754bbb6d12f3c356433, type: 3}
+    - _SampleTexture2D_434cc9d1ab7a433a8699ab2e97fdf6cd_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b8e371d35e781154ea466f29ceefb243, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_8ad66bd6c3cc4b528825ab297d67f7f9_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 16cb752db6ef1b54a9ba2947aa91d26f, type: 3}
+    - _SampleTexture2D_75189cfb300340878a1b8c70151f6b22_Texture_1:
+        m_Texture: {fileID: 2800000, guid: caa2e92c68701514d86be68e5b7fee9f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_915697d85445430ca467ef0745da3d78_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 84e17a1dc718f4043ad5fab9d3f6aa8b, type: 3}
+    - _SampleTexture2D_7be1f41d1bec4cf28795f9388acf49ad_Texture_1:
+        m_Texture: {fileID: 2800000, guid: c8587ee2091a8bb4891a6aff3f54e54c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_db11a9af5f694c9c96370e3d377bea08_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 8edd80bba8340b24e89c4aa42f0536bd, type: 3}
+    - _SampleTexture2D_a5936dba8dce452e84a801ca672f0187_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 94fc7074f150cb54eb12e13b3372836c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_dbc8d96c585c4711ae9b2382952a67d4_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 9120479249f0b5947914338452eca2bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -102,6 +119,7 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
+    - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -125,23 +143,12 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &4771001492089424721
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
