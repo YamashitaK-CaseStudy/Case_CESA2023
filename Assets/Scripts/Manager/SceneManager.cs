@@ -83,6 +83,10 @@ namespace SuzumuraTomoki {
 
 		}
 
+		public void LoadCurrentScene(){
+			LoadScene(currentSceneNumber);
+		}
+
 		public int stageCount {
 			get {
 				return _stageCount;
