@@ -44,6 +44,7 @@ public class SelectFilmBehavior : MonoBehaviour
         for (int i = 0; i < MAX_STAGE; ++i)
         {
             Instantiate(_pf_textNumber, transform).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
+            Instantiate(_pf_textNumber, transform).GetComponent<UnityEngine.UI.Text>().text = "-";
             Instantiate(_pf_textNumber, transform).GetComponent<UnityEngine.UI.Text>().text = (i + 1).ToString();
         }
 
@@ -52,15 +53,21 @@ public class SelectFilmBehavior : MonoBehaviour
 
     private void Init()
     {
-        GetComponent<RectTransform>().localPosition = new Vector3(_scrollAmount * 2 + _numberDistance / 2, 0, 0);
+        _stageNumber = 1;
+
+        GetComponent<RectTransform>().localPosition = new Vector3(_scrollAmount * 2, 0, 0);
 
         int childCount = transform.childCount;
         Transform childTransform = null;
         for (int i = 0; i < childCount; ++i)
         {
             childTransform = transform.GetChild(i);
-            float offset = _scrollAmount * (i / 2);
+            float offset = _scrollAmount * (i / 3);
             childTransform.position = new Vector3(_numberOffset.x + offset, _numberOffset.y, 0) + transform.position;
+            childTransform.localScale = new Vector3(_numberScale, _numberScale, 0);
+
+            childTransform = transform.GetChild(++i);
+            childTransform.position = new Vector3(_numberOffset.x + offset + _numberDistance / 2, _numberOffset.y + _numberScale * 30/*ハイフンのフォントが低い位置になるため微調整*/, 0) + transform.position;
             childTransform.localScale = new Vector3(_numberScale, _numberScale, 0);
 
             childTransform = transform.GetChild(++i);
