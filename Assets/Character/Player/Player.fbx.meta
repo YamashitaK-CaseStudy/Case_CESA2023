@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3b461ff6ccf1c87499901d5168ef857b
+guid: 14bee170f471fe54899459acc5c17163
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -8,12 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: M_body
-    second: {fileID: 2100000, guid: 787b7ef897f4df740a658add23fd1d00, type: 2}
+    second: {fileID: 2100000, guid: f046d3eb666d9c14f9cb33ca8e925549, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: M_face_shield
-    second: {fileID: 2100000, guid: 9e19620e335f4fe46b9529cb802fe9ae, type: 2}
+    second: {fileID: 2100000, guid: b6fa65748fe06cf40938c8dcd44cc304, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
