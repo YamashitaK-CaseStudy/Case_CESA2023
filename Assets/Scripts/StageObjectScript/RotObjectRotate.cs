@@ -42,10 +42,6 @@ public partial class RotatableObject : MonoBehaviour
         // 回転オフセット値をセット
         _angle = rotAngle;
         _reseAngle = rotAngle;
-        for (int i = 0; i < _childComp.Length; i++)
-        {
-            _childComp[i].ChecktoRotate(_resePos, _reseAxis, _reseAngle);
-        }
         // フラグを立てる
         _isRotating = true;
 
@@ -75,11 +71,6 @@ public partial class RotatableObject : MonoBehaviour
         // 回転オフセット値をセット
         _angle = rotAngle;
         _reseAngle = rotAngle;
-
-        for (int i = 0; i < _childComp.Length; i++)
-        {
-            _childComp[i].ChecktoRotate(_resePos, _reseAxis, _reseAngle);
-        }
 
         // トランスフォームを格納
         _playerTransform = playerTransform;
@@ -114,16 +105,16 @@ public partial class RotatableObject : MonoBehaviour
             // リクエストデルタタイムを求める
             // リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
             // これの合算値が1になった時,1回転に必要な時間が経過したことになる
-            float requiredDeltaTime = Time.deltaTime / _rotRequirdTime * _angle;
-			Debug.Log(">>>>>");
-			Debug.Log(_angle);
+            float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * MathF.Abs(_angle / 90));
             _elapsedTime += requiredDeltaTime;
 
             // 目標回転量*リクエストデルタタイムでそのフレームでの回転角度を求めることができる
             // リクエストデルタタイムの合算値がちょうど1になるように補正をかけると総回転量は目標回転量と一致する
+            bool isFinish = false;
             if (_elapsedTime >= 1)
             {
                 _isRotating = false;
+                _isRotateEndFream = true;
                 requiredDeltaTime -= (_elapsedTime - 1); // 補正
 
                 _isRotateEndFream = true;
@@ -140,10 +131,7 @@ public partial class RotatableObject : MonoBehaviour
                     // バグ防止
                     _playerTransform = null;
                 }
-                for (int i = 0; i < _childComp.Length; i++)
-                {
-                    _childComp[i].InitCheckCollider();
-                }
+                isFinish = true;
             }
 
             // 現在フレームの回転を示す回転のクォータニオン作成
@@ -163,6 +151,17 @@ public partial class RotatableObject : MonoBehaviour
             tr.rotation = angleAxis * tr.rotation;
 
             _oldAngle = _elapsedTime * _angle;
+
+            if(isFinish){
+                // 誤差を修正する
+                var tmppos = new Vector3(0, 0, 0);
+                tmppos.x = (float)Math.Round(this.transform.position.x, 0, MidpointRounding.AwayFromZero);
+                tmppos.y = (float)Math.Round(this.transform.position.y, 0, MidpointRounding.AwayFromZero);
+                tmppos.z = (float)Math.Round(this.transform.position.z, 0, MidpointRounding.AwayFromZero);
+                this.transform.position = tmppos;
+
+                CheckHitNotMoveObj();
+            }
         }
         else
         {
@@ -171,16 +170,12 @@ public partial class RotatableObject : MonoBehaviour
         }
     }
 
-    // 回転を強制終了
-    public void ForcedStopRotate()
+    private void CheckHitNotMoveObj()
     {
-        _isRotating = false;
-        _elapsedTime = 0.0f;
-
-        _isRotateEndFream = true;
-        Debug.Log(_resePos);
-        Debug.Log(-_reseAxis);
-        Debug.Log(_oldAngle);
-        StartRotate(_resePos, -_reseAxis, Math.Abs((int)_oldAngle));
+        if (!_isReservation) return;
+        Debug.Log("反射");
+        _isReservation = false;
+        Debug.Log(_reseAngle);
+        StartRotate(_resePos, -_reseAxis, _reseAngle);
     }
 }
