@@ -65,7 +65,6 @@ public partial class RotatableObject : MonoBehaviour {
 		/*
 		_cloneObj = new GameObject[3];
 		for (int i = 0; i < 3; i++){
-			
 			_cloneObj[i] = Instantiate(_object) as GameObject;
 			_cloneObj[i].transform.parent = _object.transform.parent;
 			_cloneObj[i].transform.localPosition = _object.transform.localPosition;
@@ -91,16 +90,13 @@ public partial class RotatableObject : MonoBehaviour {
 			// 向き更新
 			tr.rotation = rotQuat * tr.rotation;
 
-			
-			 
 		}
 		 */
 
 		// オブジェクトを複製する
 		// 3Dの位置関係的に90°・180°・270°の3つの複製が必要
 		for ( int i = 0 ; i < _cloneNum ; i++ ) {
-			
-				
+
 			for ( int j = 0 ; j < 3 ; j++ ) {
 				_cloneObjs[i,j] = Instantiate(_cloneBaceObjs[i]) as GameObject;
 				_cloneObjs[i,j].transform.parent			= _cloneBaceObjs[i].transform.parent;
@@ -129,7 +125,6 @@ public partial class RotatableObject : MonoBehaviour {
 			}
 		}
 
-		
 		_toSpinCloneObjs = new GameObject[_cloneNum];
 
 		for ( int i = 0 ; i < _cloneNum ; i++ ) {
@@ -159,7 +154,6 @@ public partial class RotatableObject : MonoBehaviour {
 
 			}
 		}
-		 
 
 		/*
 		// 回転する用のコピーを生成
@@ -185,23 +179,16 @@ public partial class RotatableObject : MonoBehaviour {
 			var childChineCollider = childTransform.Find("ChainCollider");
 			var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
 			childChineColliderBoxCollider.enabled = false;
-				
 		}
 		 */
-
-
-
 	}
-
-
 
 	protected void UpdateSpin() {
 		if ( _isSpin ) {
-			
 			// 現在フレームの回転を示す回転のクォータニオン作成
 			var rotQuat = Quaternion.AngleAxis(_rotSpeed, _rotAxis);
 
-			Debug.Log(_cloneNum);	
+			Debug.Log(_cloneNum);
 			for ( int i = 0 ; i < _cloneNum ; i++ ) {
 				// 円運動の位置計算
 				var tr = _toSpinCloneObjs[i].transform;
@@ -221,5 +208,4 @@ public partial class RotatableObject : MonoBehaviour {
 			}
 		}
 	}
-   
 }

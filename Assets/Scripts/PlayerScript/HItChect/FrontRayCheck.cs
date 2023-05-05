@@ -42,7 +42,7 @@ public class FrontRayCheck : MonoBehaviour{
 
                     _isfrontHit = true;
 
-                    Debug.Log(hitInfo.collider.name);
+//                    Debug.Log(hitInfo.collider.name);
                     return;
                 }
             }
