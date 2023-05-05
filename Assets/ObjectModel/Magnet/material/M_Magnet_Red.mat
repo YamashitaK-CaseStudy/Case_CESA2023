@@ -39,11 +39,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Float: 30
+    - _Float: 100
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _blue_emissive: {r: 1, g: 0.008963005, b: 0, a: 0}
+    - _blue_emissive: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4453141566602950547
 MonoBehaviour:
