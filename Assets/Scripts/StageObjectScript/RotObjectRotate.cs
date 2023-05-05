@@ -14,6 +14,7 @@ public partial class RotatableObject : MonoBehaviour
     public int _reseAngle { get; set; }     // 予約回転
     private float _oldAngle = 0.0f;
     private RotHitFloar[] _childComp;
+    private float _polatAngle = 0.0f;
     private void StartSettingRot()
     {
         var child = this.transform.GetChild(0).gameObject;
@@ -44,6 +45,10 @@ public partial class RotatableObject : MonoBehaviour
         _reseAngle = rotAngle;
         // フラグを立てる
         _isRotating = true;
+
+        // 角度による補正値を計算する
+        _polatAngle = _angle / 90;
+        Debug.Log(_polatAngle);
 
         // 経過時間を初期化
         _elapsedTime = 0.0f;
@@ -81,6 +86,10 @@ public partial class RotatableObject : MonoBehaviour
         // 経過時間を初期化
         _elapsedTime = 0.0f;
 
+        // 角度による補正値を計算する
+        _polatAngle = _angle / 90;
+        Debug.Log(_polatAngle);
+
         // トレイルの起動
         PlayPartical();
     }
@@ -105,7 +114,7 @@ public partial class RotatableObject : MonoBehaviour
             // リクエストデルタタイムを求める
             // リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
             // これの合算値が1になった時,1回転に必要な時間が経過したことになる
-            float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * MathF.Abs(_angle / 90));
+            float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle));
             _elapsedTime += requiredDeltaTime;
 
             // 目標回転量*リクエストデルタタイムでそのフレームでの回転角度を求めることができる
@@ -117,7 +126,6 @@ public partial class RotatableObject : MonoBehaviour
                 _isRotateEndFream = true;
                 requiredDeltaTime -= (_elapsedTime - 1); // 補正
 
-                _isRotateEndFream = true;
                 StopPartical();
 
                 // プレイヤー起因の回転かを判定
@@ -151,6 +159,25 @@ public partial class RotatableObject : MonoBehaviour
             tr.rotation = angleAxis * tr.rotation;
 
             _oldAngle = _elapsedTime * _angle;
+            // 90度進むごとに確認当たってるかどうかを確認する
+            if(Math.Abs(_polatAngle) > 1){    // 90度が1になるのでそれ以上かどうか確認
+                if(_elapsedTime >= 1 / Math.Abs(_polatAngle)){
+                    Debug.Log(_elapsedTime);
+                    Debug.Log("90度経過");
+                    isFinish = true;
+                    _isRotating = false;
+
+                    // 緊急停止しているので角度に補正を書けないと誤差が出る
+                    var tmpAngle = this.transform.eulerAngles;
+                    // if(_rotAxis.x != 0){
+                    //     tmpAngle.x = _polatAngle * 90;
+                    // }else if(_rotAxis.y != 0){
+                    //     tmpAngle.y = _polatAngle * 90;
+                    // }
+                    this.transform.eulerAngles = tmpAngle;
+                    _polatAngle = 0.0f;
+                }
+            }
 
             if(isFinish){
                 // 誤差を修正する
@@ -159,6 +186,10 @@ public partial class RotatableObject : MonoBehaviour
                 tmppos.y = (float)Math.Round(this.transform.position.y, 0, MidpointRounding.AwayFromZero);
                 tmppos.z = (float)Math.Round(this.transform.position.z, 0, MidpointRounding.AwayFromZero);
                 this.transform.position = tmppos;
+
+                _isRotating = false;
+                _elapsedTime = 0.0f;
+                _isRotateEndFream = true;
 
                 CheckHitNotMoveObj();
             }
@@ -173,9 +204,7 @@ public partial class RotatableObject : MonoBehaviour
     private void CheckHitNotMoveObj()
     {
         if (!_isReservation) return;
-        Debug.Log("反射");
         _isReservation = false;
-        Debug.Log(_reseAngle);
         StartRotate(_resePos, -_reseAxis, _reseAngle);
     }
 }
