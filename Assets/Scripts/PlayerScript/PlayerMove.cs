@@ -46,6 +46,10 @@ public partial class Player : MonoBehaviour {
     // Update is called once per frame
     void UpdateMove() {
 
+        if (_stricRotAngle.GetIsActicStick) {
+            return;
+        }
+
         if (_groundCheck.IsGround && _isJumpButton) {
 
             if (!_isLandingStiffness) {
@@ -68,7 +72,7 @@ public partial class Player : MonoBehaviour {
             _isLandingStiffness = false;
             landingStiffnessTime.TimeStart = false;
             landingStiffnessTime.ResetTime();
-            Debug.Log("”ò‚ñ‚Å‚é”»’è");
+            //Debug.Log("”ò‚ñ‚Å‚é”»’è");
         }
 
         Move();
