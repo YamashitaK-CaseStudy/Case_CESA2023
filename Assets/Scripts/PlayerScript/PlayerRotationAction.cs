@@ -53,6 +53,7 @@ public partial class Player : MonoBehaviour{
 
             // çÇë¨âÒì]
             if (_rotationSpinButton.WasPressedThisFrame()) {
+                Debug.Log(_bottomHitCheck.GetRotObj);
                 rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
             }
         }
@@ -63,6 +64,8 @@ public partial class Player : MonoBehaviour{
             _priortyAxis = priorityAxis.xAxisRot;
 
             var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
+            Debug.Log(_frontHitCheck.GetRotObj);
+
 
             if (rotatbleComp._isRotateEndFream) {
                 _stricRotAngle.xAxisManyObjJude(_frontHitCheck);

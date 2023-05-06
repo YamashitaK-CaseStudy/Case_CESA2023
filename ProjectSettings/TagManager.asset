@@ -9,6 +9,7 @@ TagManager:
   - RotObjRotate
   - UnionObtherber
   - DamiObject
+  - Floar
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - PlayerRay
   - Player
   - Obj
-  - 
+  - AcalaChecker
   - Block
   - 
   - 

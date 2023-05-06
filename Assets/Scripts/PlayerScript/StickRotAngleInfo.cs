@@ -609,10 +609,10 @@ public partial class StickRotAngle : MonoBehaviour {
             _udfb_Manyobj = UpDownFrontBack_ManyObj.Front;
         }
 
-        Debug.Log(upnum);
-        Debug.Log(downnum);
-        Debug.Log(backnum);
-        Debug.Log(frontnum);
+        // Debug.Log(upnum);
+        // Debug.Log(downnum);
+        // Debug.Log(backnum);
+        // Debug.Log(frontnum);
 
         RotatableObject rotbleobj = _hitcheck.GetRotObj.GetComponent<RotatableObject>();
 

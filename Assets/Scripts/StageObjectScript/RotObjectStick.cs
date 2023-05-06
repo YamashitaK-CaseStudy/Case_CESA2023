@@ -8,39 +8,36 @@ public partial class RotatableObject : MonoBehaviour{
     public int oldangleY = 0;
     public int oldangleX = 0;
 
-    public void StartStickRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle) {
+    //     if (_isSpin || _isRotating) {
+    //         return;
+    //     }
 
-        if (_isSpin || _isRotating) {
-            return;
-        }
+    //     var playerComp = _playerTransform.GetComponent<Player>();
 
-        var playerComp = _playerTransform.GetComponent<Player>();
-
-        playerComp.NotificationStartRotate();
+    //     playerComp.NotificationStartRotate();
     
-        // フラグを立てる
-        _isRotating = true;
+    //     // フラグを立てる
+    //     _isRotating = true;
 
-        // 経過時間を初期化
-        _elapsedTime = 0.0f;
+    //     // 経過時間を初期化
+    //     _elapsedTime = 0.0f;
 
-        // 回転の中心を設定
-        _axisCenterWorldPos = rotCenter;
+    //     // 回転の中心を設定
+    //     _axisCenterWorldPos = rotCenter;
 
-        // 回転軸を設定
-        _rotAxis = rotAxis;
+    //     // 回転軸を設定
+    //     _rotAxis = rotAxis;
 
-        // 回転オフセット値をセット
-        _angle = rotAngle;
+    //     // 回転オフセット値をセット
+    //     _angle = rotAngle;
 
-        PlayPartical();
+    //     PlayPartical();
 
-    }
+    // }
 
     public Vector3 _nowRotAxis;
    
     public void StartRotateX(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
-
         if (oldangleX == angle) {
             return;
         }
@@ -57,20 +54,18 @@ public partial class RotatableObject : MonoBehaviour{
             _nowRotAxis = new Vector3(0, 1, 0);
         }
 
-        StartRotate(center, axis, offset);
+        StartRotate(center, axis, offset, playerTransform);
        // RotateAxis(center, axis, offset);
 
         oldangleX = angle;
     }
 
     public void StartRotateY(Vector3 center, Vector3 axis, int angle,Transform playerTransform) {
-
         if (oldangleY == angle) {
 
             _isRotateStartFream = false;
             return;
         }
-
         _isRotateStartFream = true;
 
         // プレイヤーのトランスフォームを保持
@@ -90,7 +85,7 @@ public partial class RotatableObject : MonoBehaviour{
             _nowRotAxis = new Vector3(0, -1, 0);
         }
 
-        StartRotate(center, axis, offset);
+        StartRotate(center, axis, offset, playerTransform);
         //StartStickRotate(center, axis, offset);
         //RotateAxis(center, axis, offset);
 

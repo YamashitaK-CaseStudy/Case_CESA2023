@@ -10,4 +10,11 @@ public class Goal : MonoBehaviour
         SuzumuraTomoki.SceneManager.instance.LoadResult();
     }
 
+	public void Update(){
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			SuzumuraTomoki.SceneManager.instance.LoadCurrentScene();
+		}
+    }
+
 }

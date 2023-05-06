@@ -12,6 +12,7 @@ public partial class CStageEditor : EditorWindow
 	RotatableObject _parentRotObj;  // 親のRotatableObject
 	RotObjkinds _parentObjectkind;  // 親のRotObjKinds
 	RotObjkinds.ObjectKind _kinds;
+	AudioSource _parentAudioSource;	// 親のAudioSource
 	GameObject _object;             // 仲介のオブジェクト
 	GameObject _selectChildObj;     // 選択している子オブジェクト
 	GameObject _selectAddChildPrefab;// 選択している子オブジェクト
@@ -421,6 +422,10 @@ public partial class CStageEditor : EditorWindow
 		// 種類の設定
 		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
 		_parentObjectkind._RotObjKind = _kinds;
+
+		// AudioSourceの追加
+		_parentAudioSource = _parentObject.AddComponent<AudioSource>();
+		_parentAudioSource.playOnAwake = false;
 
 		_object = new GameObject("Object");
 		_object.gameObject.transform.parent = _parentObject.gameObject.transform;
