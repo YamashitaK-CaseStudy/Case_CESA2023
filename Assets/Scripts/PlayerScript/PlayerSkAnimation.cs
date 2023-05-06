@@ -9,6 +9,7 @@ public partial class Player : MonoBehaviour{
 
     private Animator _animator;
     private TimeMeasurement.Alarm _idleChangeTimer;
+    private TimeMeasurement.Alarm _xAxisRotWaitTimer;
 
     private void PlayerSkAnimationStart() {
 
@@ -16,10 +17,12 @@ public partial class Player : MonoBehaviour{
        
          _idleChangeTimer = _timeMeasurement.AddArarm("IdleChange", _idleCheneTime);
         _idleChangeTimer.TimeStart = true;
+
+        _xAxisRotWaitTimer = _timeMeasurement.AddArarm("xRotWait", 1.5f);
     }
 
     private void PlayerSkAnimationUpdate() {
-       
+
         // 速度が0以上
         var absMove = Mathf.Abs(Speed_x);
         if (absMove > 0) {
@@ -38,7 +41,7 @@ public partial class Player : MonoBehaviour{
                     _animator.SetBool("RunState", false);
                     _animator.SetBool("UpBlock", false);
                 }
-                else if(_upperrayCheck.IsUpperHit) {
+                else if (_upperrayCheck.IsUpperHit) {
                     _animator.SetBool("RunState", false);
                     _animator.SetBool("UpBlock", true);
                 }
@@ -52,6 +55,34 @@ public partial class Player : MonoBehaviour{
 
             Debug.Log("ジャンプ処理");
             _animator.SetTrigger("StartJump");
+        }
+
+        // y軸回転時のアニメーション
+        if (_priortyAxis == priorityAxis.yAxisRot) {
+            if (_bottomHitCheck.GetIsRotHit) {
+                if (_bottomHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotateStartFream) {
+                    _animator.SetTrigger("StartRot_Y");
+                }
+            }
+        }
+
+        // x軸回転時のアニメーション
+        if (_priortyAxis == priorityAxis.xAxisRot) {
+            if (_stricRotAngle.GetIsActicStick) {
+
+                _animator.SetBool("StartRot_X", true);
+                _xAxisRotWaitTimer.TimeStart = true;
+
+                if (_xAxisRotWaitTimer.TimeEnd) {
+                    _stricRotAngle._isActicDial_X = true;
+                }
+            }
+            else {
+                _animator.SetBool("StartRot_X", false);
+                _xAxisRotWaitTimer.ResetTime();
+                _xAxisRotWaitTimer.TimeStart = false;
+                _stricRotAngle._isActicDial_X = false;
+            }
         }
     }
 }

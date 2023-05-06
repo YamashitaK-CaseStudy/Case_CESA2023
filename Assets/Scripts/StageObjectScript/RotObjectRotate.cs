@@ -119,7 +119,7 @@ public partial class RotatableObject : MonoBehaviour {
                 if ( _playerTransform != null ) {
                     var playerComp = _playerTransform.GetComponent<Player>();
                     if ( playerComp != null ) {
-                        Debug.Log("ありえない話");
+                        //Debug.Log("ありえない話");
                     }
 
                     // プレイヤーに回転終了通知を飛ばす

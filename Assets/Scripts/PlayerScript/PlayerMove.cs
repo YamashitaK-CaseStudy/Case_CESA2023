@@ -19,6 +19,9 @@ public partial class Player : MonoBehaviour {
     private bool _isBall_To_Jump = false;
     private bool _isnormalIdle_To_Jump = false;
     private TimeMeasurement.Alarm _normalIdle_To_JumpAlarm;
+    private TimeMeasurement.Alarm landingStiffnessTime;
+    private bool _isLandingStiffness = false;
+    private bool _isJumpButton = false;
 
     public float Speed_x {
         get { return _speedx; }
@@ -35,10 +38,38 @@ public partial class Player : MonoBehaviour {
 
         // 通常アイドル状態からのジャンプの待ち時間計測の追加
         _normalIdle_To_JumpAlarm = _timeMeasurement.AddArarm("NormalIdle_To_Jump", _normalIdle_To_JumpWaitTime);
+
+        // 着地時の硬直時間計測
+        landingStiffnessTime = _timeMeasurement.AddArarm("LandingStiffness", 0.1f);
     }
 
     // Update is called once per frame
     void UpdateMove() {
+
+        if (_groundCheck.IsGround && _isJumpButton) {
+
+            if (!_isLandingStiffness) {
+
+                _isLandingStiffness = true;
+                landingStiffnessTime.TimeStart = true;
+                Debug.Log("校長");
+            }
+
+            if (!landingStiffnessTime.TimeEnd) {
+                _speedx = 0.0f;
+                return;
+            }
+
+            _isJumpButton = false;
+
+        }
+        else {
+
+            _isLandingStiffness = false;
+            landingStiffnessTime.TimeStart = false;
+            landingStiffnessTime.ResetTime();
+            Debug.Log("飛んでる判定");
+        }
 
         Move();
         Jump();
@@ -46,6 +77,7 @@ public partial class Player : MonoBehaviour {
 
     // 横移動
     private void Move() {
+
         // 回転させている間は動かない
         if ( _isRotating ) {
             return;
@@ -90,10 +122,6 @@ public partial class Player : MonoBehaviour {
 
             if (Input.GetButtonDown("Jump")) {
 
-
-                Debug.Log("akaka");
-
-
                 // 頭上にブロックがあればジャンプしない
                 if (!_upperrayCheck.IsUpperHit) {
 
@@ -105,13 +133,15 @@ public partial class Player : MonoBehaviour {
 
                     // ボール状態からのジャンプ
                     else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Run_Ball")) {
-                       
+
+                        _isJumpButton = true;
                         _isBall_To_Jump = true;
                         _rigidbody.AddForce(_jumpSpeed * Vector3.up, ForceMode.Impulse);
                     }
                 }
             }
         }
+        
 
         // 通常アイドル状態からのアニメーションジャンプの待ち時間
         if (_normalIdle_To_JumpAlarm.TimeEnd) {
