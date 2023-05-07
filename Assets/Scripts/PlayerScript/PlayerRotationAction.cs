@@ -73,7 +73,12 @@ public partial class Player : MonoBehaviour{
 
             // çÇë¨âÒì]
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+                if (rotatbleComp._isSpining){
+                    rotatbleComp.EndSpin();
+                }
+				else{
+                    rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+				}
             }
         }
     }

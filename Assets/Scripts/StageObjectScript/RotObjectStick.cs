@@ -11,7 +11,7 @@ public partial class RotatableObject : MonoBehaviour{
 
     public void StartStickRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle) {
 
-        if (_isSpin || _isRotating) {
+        if (_isSpining || _isRotating) {
             return;
         }
 

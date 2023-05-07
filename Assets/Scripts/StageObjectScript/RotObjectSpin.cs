@@ -2,49 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class RotatableObject : MonoBehaviour {
+public partial class RotatableObject : MonoBehaviour
+{
 
 	[SerializeField] int _rotSpeed = 15;
 
-	/*
-	GameObject _object;
-	GameObject[] _cloneObj;
-	GameObject _toSpinCloneObj;
-	 */
+	private GameObject[] _cloneBaceObjs;        // Clone元のオブジェクトの配列
+	private GameObject[,] _cloneObjs;           // Cloneしたオブジェクトの配列
+	private GameObject[] _toSpinCloneObjs;  // 回す用のクローンの配列
 
-	GameObject[] _cloneBaceObjs;	// Clone元のオブジェクトを格納しておく配列
-	GameObject[,] _cloneObjs;		// Cloneしたオブジェクトの配列
-	GameObject[] _toSpinCloneObjs;  // 回す用のクローン
+	private List<GameObject> _originObjList;    // クローン元のオブジェクトリスト
 
-	int _cloneNum = 0;
+	private int _originNum = 0;
+	private int _listLength = 0;
 
-	protected void StartSettingSpin() {
-		//_object = this.transform.Find("Object").gameObject;
+	public void StartFunc(){
+		_originObjList = new List<GameObject>();
 	}
 
-	public void StartSpin() {
-		if ( _isSpin || _isRotating ) {
+	public void StartSpin()
+	{
+		if (_isSpining || _isRotating)
+		{
 			return;
 		}
 
 		// フラグを立てる
-		_isSpin = true;
+		_isSpining = true;
 
 	}
 
-	public void StartSpin(Vector3 rotCenter, Vector3 rotAxis) {
-		if ( _isSpin || _isRotating ) {
+	public void StartSpin(Vector3 rotCenter, Vector3 rotAxis)
+	{
+		if (_isSpining || _isRotating)
+		{
 			return;
 		}
 
-		// RotableObjの子オブジェクトであるObject = Clone元をすべて取得
-		var childNum = this.transform.childCount;
-		_cloneBaceObjs = new GameObject[childNum];
-		int itr = 0;
-		foreach ( Transform childTransform in this.transform ) {
-			_cloneBaceObjs[itr++] = childTransform.gameObject;
-		}
-		Debug.Log(itr);
+		AddCloneOriginToList();
 
 		// 回転の中心を設定
 		_axisCenterWorldPos = rotCenter;
@@ -53,156 +48,55 @@ public partial class RotatableObject : MonoBehaviour {
 		_rotAxis = rotAxis;
 
 		// フラグを立てる
-		_isSpin = true;
+		_isSpining = true;
 
+		// クローン用のGameObjectを確保
+		// クローン1つに対して,90°・180°・270°用の3つ必要
+		_cloneObjs = new GameObject[_originNum, 3];
 
-		_cloneNum = _cloneBaceObjs.Length;
+		//Debug.Log(_cloneBaceObjs.Length);
 
-		_cloneObjs = new GameObject[_cloneNum,3];
+		CreateClone();
 
-		Debug.Log(_cloneBaceObjs.Length);
-
-		/*
-		_cloneObj = new GameObject[3];
-		for (int i = 0; i < 3; i++){
-			
-			_cloneObj[i] = Instantiate(_object) as GameObject;
-			_cloneObj[i].transform.parent = _object.transform.parent;
-			_cloneObj[i].transform.localPosition = _object.transform.localPosition;
-			_cloneObj[i].transform.localScale = _object.transform.localScale;
-			_cloneObj[i].transform.rotation = _object.transform.rotation;
-
-			// 回す
-			// 回転移動用のクォータニオン
-			var rotQuat = Quaternion.AngleAxis(90 * (i + 1), _rotAxis);
-
-			// 円運動の位置計算
-			var tr = _cloneObj[i].transform;
-			var pos = tr.position;
-
-			// クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
-			// _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
-			pos -= _axisCenterWorldPos;
-			pos = rotQuat * pos;
-			pos += _axisCenterWorldPos;
-
-			tr.position = pos;
-
-			// 向き更新
-			tr.rotation = rotQuat * tr.rotation;
-
-			
-			 
-		}
-		 */
-
-		// オブジェクトを複製する
-		// 3Dの位置関係的に90°・180°・270°の3つの複製が必要
-		for ( int i = 0 ; i < _cloneNum ; i++ ) {
-			
-				
-			for ( int j = 0 ; j < 3 ; j++ ) {
-				_cloneObjs[i,j] = Instantiate(_cloneBaceObjs[i]) as GameObject;
-				_cloneObjs[i,j].transform.parent			= _cloneBaceObjs[i].transform.parent;
-				_cloneObjs[i,j].transform.localPosition	= _cloneBaceObjs[i].transform.localPosition;
-				_cloneObjs[i,j].transform.localScale		= _cloneBaceObjs[i].transform.localScale;
-				_cloneObjs[i,j].transform.rotation			= _cloneBaceObjs[i].transform.rotation;
-
-				// 回す
-				// 回転移動用のクォータニオン
-				var rotQuat = Quaternion.AngleAxis(90 * (j + 1), _rotAxis);
-
-				// 円運動の位置計算
-				var tr = _cloneObjs[i,j].transform;
-				var pos = tr.position;
-
-				// クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
-				// _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
-				pos -= _axisCenterWorldPos;
-				pos = rotQuat * pos;
-				pos += _axisCenterWorldPos;
-
-				tr.position = pos;
-
-				// 向き更新
-				tr.rotation = rotQuat * tr.rotation;
-			}
-		}
-
-		
-		_toSpinCloneObjs = new GameObject[_cloneNum];
-
-		for ( int i = 0 ; i < _cloneNum ; i++ ) {
-			// 回転する用のコピーを生成
-			_toSpinCloneObjs[i] = Instantiate(_cloneBaceObjs[i]) as GameObject;
-			_toSpinCloneObjs[i].transform.parent =			_cloneBaceObjs[i].transform.parent;
-			_toSpinCloneObjs[i].transform.localPosition =	_cloneBaceObjs[i].transform.localPosition;
-			_toSpinCloneObjs[i].transform.localScale =		_cloneBaceObjs[i].transform.localScale;
-			_toSpinCloneObjs[i].transform.rotation =		_cloneBaceObjs[i].transform.rotation;
-
-			// コリジョンを無効にする
-			var cloneParentTransform = _toSpinCloneObjs[i].transform;
-
-			// 子オブジェクト単位の処理
-			// Cloneの子オブジェクトはPf_Partsが複数存在
-			// Pf_PartについているBoxColliderとPf_Partの子オブジェクトの内のChainColliderを無効化する必要がある
-			foreach ( Transform childTransform in cloneParentTransform ) {
-
-				// ボックスコライダーを無効化する
-				var childBoxCollider = childTransform.gameObject.GetComponent<BoxCollider>();
-				childBoxCollider.enabled = false;
-
-				// チェインコライダーのボックスコライダーを無効化する
-				var childChineCollider = childTransform.Find("ChainCollider");
-				var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
-				childChineColliderBoxCollider.enabled = false;
-
-			}
-		}
-		 
-
-		/*
-		// 回転する用のコピーを生成
-		_toSpinCloneObj = Instantiate(_object) as GameObject;
-		_toSpinCloneObj.transform.parent = _object.transform.parent;
-		_toSpinCloneObj.transform.localPosition = _object.transform.localPosition;
-		_toSpinCloneObj.transform.localScale = _object.transform.localScale;
-		_toSpinCloneObj.transform.rotation = _object.transform.rotation;
-
-		// コリジョンを無効にする
-		var parentTransform = _toSpinCloneObj.transform;
-
-		// 子オブジェクト単位の処理
-		// Cloneの子オブジェクトはPf_Partsが複数存在
-		// Pf_PartについているBoxColliderとPf_Partの子オブジェクトの内のChainColliderを無効化する必要がある
-		foreach (Transform childTransform in parentTransform){
-
-			// ボックスコライダーを無効化する
-			var childBoxCollider = childTransform.gameObject.GetComponent<BoxCollider>();
-			childBoxCollider.enabled = false;
-
-			// チェインコライダーのボックスコライダーを無効化する
-			var childChineCollider = childTransform.Find("ChainCollider");
-			var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
-			childChineColliderBoxCollider.enabled = false;
-				
-		}
-		 */
-
-
-
+		CreateCloneToSpin();
 	}
 
 
+	// 高速回転を終了
+	public void EndSpin()
+	{
+		if (_isSpining == false || _isRotating == true)
+		{
+			return;
+		}
 
-	protected void UpdateSpin() {
-		if ( _isSpin ) {
-			
+		_isSpining = false;
+
+
+		foreach (GameObject cloneObj in _cloneObjs)
+		{
+			Destroy(cloneObj);
+		}
+
+		foreach (GameObject toSpinCloneObj in _toSpinCloneObjs)
+		{
+			Destroy(toSpinCloneObj);
+		}
+
+	}
+
+	// 高速回転の更新処理
+	protected void UpdateSpin()
+	{
+		if (_isSpining)
+		{
+
 			// 現在フレームの回転を示す回転のクォータニオン作成
 			var rotQuat = Quaternion.AngleAxis(_rotSpeed, _rotAxis);
 
-			Debug.Log(_cloneNum);	
-			for ( int i = 0 ; i < _cloneNum ; i++ ) {
+			Debug.Log(_originNum);
+			for (int i = 0; i < _originNum; i++)
+			{
 				// 円運動の位置計算
 				var tr = _toSpinCloneObjs[i].transform;
 				var pos = tr.position;
@@ -221,5 +115,127 @@ public partial class RotatableObject : MonoBehaviour {
 			}
 		}
 	}
-   
+
+
+	// Clone元をすべて取得して配列に格納する処理
+	// すでに追加済みの場合はスキップ
+	// MEMO：磁石ギミックの兼ね合いで増(減)に対応
+	protected void AddCloneOriginToList(){
+
+		_originNum = this.transform.childCount; // 実際のクローン元の数
+		_listLength = _originObjList.Count;  // 現時点のクローン元を格納している配列の長さを取得しとく
+
+		Debug.Log(_listLength);
+
+		// クローンの数に変更がなければ処理をスキップ
+		if (_listLength == this.transform.childCount)
+		{
+			return;
+		}
+		// 始めて呼ばれた時
+		else if (_listLength == 0)
+		{
+			foreach (Transform childTransform in this.transform)
+			{
+				_originObjList.Add(childTransform.gameObject);
+			}
+		}
+		// クローンの数に変更があった場合
+		// 数の減少については想定上起こりえないため考慮しない
+		else if (_listLength > 0)
+		{
+			// 追加する数を計算
+			var addObjNum = this.transform.childCount - _listLength;
+
+			for (int itr = _originNum - addObjNum; itr < _originNum; itr++)
+			{
+				_originObjList.Add(this.transform.GetChild(itr).gameObject);
+			}
+		}
+		else
+		{
+			Debug.Log("未定義の条件分岐：クローン元の数が前回の高速回転から減少しています");
+		}
+
+		return;
+
+	}
+
+	// クローン生成処理
+	protected void CreateClone()
+	{
+		// クローン用のGameObjectを確保
+		// クローン1つに対して,90°・180°・270°用の3つ必要
+		_cloneObjs = new GameObject[_originNum, 3];
+
+		// オブジェクトを複製する
+		// 3Dの位置関係的に90°・180°・270°の3つの複製が必要
+		for (int i = 0; i < _originNum; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				
+
+				_cloneObjs[i, j] = Instantiate(_originObjList[i]) as GameObject;
+				_cloneObjs[i, j].transform.parent = _originObjList[i].transform.parent;
+				_cloneObjs[i, j].transform.localPosition = _originObjList[i].transform.localPosition;
+				_cloneObjs[i, j].transform.localScale = _originObjList[i].transform.localScale;
+				_cloneObjs[i, j].transform.rotation = _originObjList[i].transform.rotation;
+
+				// 回す
+				// 回転移動用のクォータニオン
+				var rotQuat = Quaternion.AngleAxis(90 * (j + 1), _rotAxis);
+
+				// 円運動の位置計算
+				var tr = _cloneObjs[i, j].transform;
+				var pos = tr.position;
+
+				// クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
+				// _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
+				pos -= _axisCenterWorldPos;
+				pos = rotQuat * pos;
+				pos += _axisCenterWorldPos;
+
+				tr.position = pos;
+
+				// 向き更新
+				tr.rotation = rotQuat * tr.rotation;
+			}
+		}
+	}
+
+	// 回転用のクローンを生成
+	private void CreateCloneToSpin()
+	{
+		// まわす用のクローンを追加で生成
+		_toSpinCloneObjs = new GameObject[_originNum];
+
+		for (int i = 0; i < _originNum; i++)
+		{
+			// 回転する用のコピーを生成
+			_toSpinCloneObjs[i] = Instantiate(_originObjList[i]) as GameObject;
+			_toSpinCloneObjs[i].transform.parent = _originObjList[i].transform.parent;
+			_toSpinCloneObjs[i].transform.localPosition = _originObjList[i].transform.localPosition;
+			_toSpinCloneObjs[i].transform.localScale = _originObjList[i].transform.localScale;
+			_toSpinCloneObjs[i].transform.rotation = _originObjList[i].transform.rotation;
+
+
+			// コリジョンを無効にする処理
+			// Cloneの子オブジェクトはPf_Partsが複数存在
+			// Pf_PartについているBoxColliderとPf_Partの子オブジェクトの内のChainColliderを無効化する必要がある
+			foreach (Transform childTransform in _toSpinCloneObjs[i].transform)
+			{
+
+				// ボックスコライダーを無効化する
+				var childBoxCollider = childTransform.gameObject.GetComponent<BoxCollider>();
+				childBoxCollider.enabled = false;
+
+				// チェインコライダーのボックスコライダーを無効化する
+				var childChineCollider = childTransform.Find("ChainCollider");
+				var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
+				childChineColliderBoxCollider.enabled = false;
+
+			}
+		}
+	}
 }

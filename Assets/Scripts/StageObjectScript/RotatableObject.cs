@@ -14,7 +14,7 @@ public partial class RotatableObject : MonoBehaviour{
     private float _elapsedTime = 0.0f;      // 回転開始からの経過時間
     private int _angle;                     // 回転角度
     public bool _isRotating = false;        // 回転してるかフラグ
-    public bool _isSpin = false;            // 回転しているかフラグ
+    public bool _isSpining = false;         // 回転しているかフラグ
 
     public bool _isRotateStartFream = false;  // 回転し始めた1フレームを教えるフラグ
     public bool _isRotateEndFream = false;    // 回転が終了した1フレームを教えるフラグ
@@ -31,12 +31,11 @@ public partial class RotatableObject : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start(){
+        StartFunc();
         //StartSettingOtherHit();
         // 自身の回転軸の向きを正規化しとく
         _rotAxis.Normalize();
-        // まわす大の設定
-        StartSettingSpin();
-
+        
     }
 
 

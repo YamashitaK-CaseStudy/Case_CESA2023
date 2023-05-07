@@ -9,7 +9,7 @@ public partial class RotatableObject : MonoBehaviour {
 
     // é©êgÇÃé≤Ç≈Ç‹ÇÌÇ∑è¨ÇäJén
     public void StartRotate() {
-        if ( _isSpin || _isRotating ) {
+        if ( _isSpining || _isRotating ) {
             return;
         }
 
@@ -25,7 +25,7 @@ public partial class RotatableObject : MonoBehaviour {
 
     public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle) {
 
-        if ( _isSpin || _isRotating ) {
+        if ( _isSpining || _isRotating ) {
             return;
         }
 
@@ -51,7 +51,7 @@ public partial class RotatableObject : MonoBehaviour {
    
     public void StartRotate(Vector3 rotCenter, Vector3 rotAxis,int rotAngle,Transform playerTransform) {
         
-        if ( _isSpin || _isRotating ) {
+        if ( _isSpining || _isRotating ) {
             return;
         }
 
@@ -158,5 +158,13 @@ public partial class RotatableObject : MonoBehaviour {
         }
     }
 
+
+    public bool IsRotating(){
+        return _isRotating;
+    }
+
+    public bool IsSpining(){
+        return _isSpining;
+	}
 
 }
