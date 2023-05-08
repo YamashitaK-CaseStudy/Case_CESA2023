@@ -5,8 +5,12 @@ using UnityEngine;
 public partial class Player : MonoBehaviour{
 
     private StickRotAngle _stricRotAngle = null;
+    private bool _isRotating = false;            // 回している最中かを判定するフラグ
+    private priorityAxis _priortyAxis;
 
-    private bool _isRotating = false; // 回している最中かを判定するフラグ
+    private enum priorityAxis {
+        yAxisRot, xAxisRot,None
+    }
 
     private void PlayerRotationStart() {
 
@@ -29,12 +33,14 @@ public partial class Player : MonoBehaviour{
         
         // 真下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
-            
+            Debug.Log(_bottomHitCheck.GetRotObj.name);
+            _priortyAxis = priorityAxis.yAxisRot;
+
             var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
             // スティック回転Y
             if (rotatbleComp._isRotateEndFream) {
-                _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
+                _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
             }
 
             _stricRotAngle.StickRotAngleY_Update();
@@ -47,6 +53,7 @@ public partial class Player : MonoBehaviour{
 
             // 高速回転
             if (_rotationSpinButton.WasPressedThisFrame()) {
+                Debug.Log(_bottomHitCheck.GetRotObj);
                 rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
             }
         }
@@ -54,12 +61,17 @@ public partial class Player : MonoBehaviour{
         // 前方に回転オブジェクトがある時
         else if (_frontHitCheck.GetIsRotHit) {
 
+            _priortyAxis = priorityAxis.xAxisRot;
+
             var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
+            Debug.Log(_frontHitCheck.GetRotObj);
+
 
             if (rotatbleComp._isRotateEndFream) {
-                _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+                _stricRotAngle.xAxisManyObjJude(_frontHitCheck);
             }
-            // スティック回転Y
+
+            // スティック回転X
             _stricRotAngle.StickRotAngleX_Update();
             rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX, this.transform);
 
@@ -72,6 +84,9 @@ public partial class Player : MonoBehaviour{
             if (_rotationSpinButton.WasPressedThisFrame()) {
                 rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
             }
+        }
+        else {
+            _priortyAxis = priorityAxis.None;
         }
     }
 
