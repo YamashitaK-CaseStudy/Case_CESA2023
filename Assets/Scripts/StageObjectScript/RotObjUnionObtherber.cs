@@ -32,15 +32,18 @@ public class RotObjUnionObtherber : MonoBehaviour{
             }
         }
 
-        // 合体元の回転オブジェクトを取得する
-        var basechildObject = _unionMaterials[0].transform.gameObject;
+        // 合体元の回転オブジェクトの子供(Objects)を取得する
+        var basechildObjects = _unionMaterials[0].transform.GetChild(0).gameObject;
 
         // 回転オブジェクトにぶら下がってるObjectオブジェクトを取得する
         List<GameObject> objects = new List<GameObject>();
         for (int i = 1; i < _unionMaterials.Count; i++) {
 
             for(int j = 0; j < _unionMaterials[i].transform.childCount; j++) {
-                objects.Add(_unionMaterials[i].transform.GetChild(j).gameObject);
+
+                for (int k = 0; k < _unionMaterials[i].transform.GetChild(j).childCount; k++) {
+                    objects.Add(_unionMaterials[i].transform.GetChild(j).GetChild(k).gameObject);
+                }
             }
 
             // 空になった回転オブジェクトを削除する
@@ -49,7 +52,7 @@ public class RotObjUnionObtherber : MonoBehaviour{
 
         // 親を変更
         foreach(var obj in objects) {
-           obj.transform.parent = basechildObject.transform;
+           obj.transform.parent = basechildObjects.transform;
         }
 
         _unionMaterials.Clear();

@@ -3,168 +3,217 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public partial class RotatableObject : MonoBehaviour {
 
-    private Transform _playerTransform = null;// ƒvƒŒƒCƒ„[‚Ìƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+public partial class RotatableObject : MonoBehaviour
+{
 
-    // ©g‚Ì²‚Å‚Ü‚í‚·¬‚ğŠJn
-    public void StartRotate() {
-        if ( _isSpining || _isRotating ) {
-            return;
-        }
+	private Transform _playerTransform = null;// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
 
-        // ƒtƒ‰ƒO‚ğ—§‚Ä‚é
-        _isRotating = true;
+	public bool _isReservation = false;// äºˆç´„ãƒ•ãƒ©ã‚°
+	public Vector3 _resePos { get; set; }   // äºˆç´„åº§æ¨™
+	public Vector3 _reseAxis { get; set; }  // äºˆç´„è»¸
+	public int _reseAngle { get; set; }     // äºˆç´„å›è»¢
+	private float _oldAngle = 0.0f;
+	private Vector3 _oldRotAngle;
+	private RotHitFloar[] _childComp;
+	private float _polatAngle = 0.0f;
+	private void StartSettingRot()
+	{
+		var child = this.transform.GetChild(0).gameObject;
+		_childComp = new RotHitFloar[child.transform.childCount];
+		for (int i = 0; i < child.transform.childCount; i++)
+		{
+			_childComp[i] = child.transform.GetChild(i).GetComponent<RotHitFloar>();
+		}
+	}
 
-        // Œo‰ßŠÔ‚ğ‰Šú‰»
-        _elapsedTime = 0.0f;
+	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
+	{
 
-        // ƒgƒŒƒCƒ‹‚Ì‹N“®
-        PlayPartical();
-    }
+		if (_isSpin || _isRotating)
+		{
+			return;
+		}
+		// å›è»¢ã®ä¸­å¿ƒã‚’è¨­å®š
+		_axisCenterWorldPos = rotCenter;
+		_resePos = rotCenter;
 
-    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle) {
+		// å›è»¢è»¸ã‚’è¨­å®š
+		_rotAxis = rotAxis;
+		_reseAxis = rotAxis;
 
-        if ( _isSpining || _isRotating ) {
-            return;
-        }
+		// å›è»¢ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ã‚’ã‚»ãƒƒãƒˆ
+		_angle = rotAngle;
+		_reseAngle = rotAngle;
+		// ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+		_isRotating = true;
 
-        // ƒtƒ‰ƒO‚ğ—§‚Ä‚é
-        _isRotating = true;
+		// è§’åº¦ã«ã‚ˆã‚‹è£œæ­£å€¤ã‚’è¨ˆç®—ã™ã‚‹
+		_polatAngle = _angle / 90;
+		Debug.Log(_polatAngle);
 
-        // Œo‰ßŠÔ‚ğ‰Šú‰»
-        _elapsedTime = 0.0f;
+		_oldRotAngle = this.transform.eulerAngles;
+		Debug.Log(_oldRotAngle);
 
-        // ‰ñ“]‚Ì’†S‚ğİ’è
-        _axisCenterWorldPos = rotCenter;
-
-        // ‰ñ“]²‚ğİ’è
-        _rotAxis = rotAxis;
-
-        // ‰ñ“]ƒIƒtƒZƒbƒg’l‚ğƒZƒbƒg
-        _angle = rotAngle;
-
-        // ƒgƒŒƒCƒ‹‚Ì‹N“®
-        PlayPartical();
-    }
-
-   
-    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis,int rotAngle,Transform playerTransform) {
-        
-        if ( _isSpining || _isRotating ) {
-            return;
-        }
-
-        // ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ğŠi”[
-        _playerTransform = playerTransform;
-
-        // ƒtƒ‰ƒO‚ğ—§‚Ä‚é
-        _isRotating = true;
-
-        // Œo‰ßŠÔ‚ğ‰Šú‰»
-        _elapsedTime = 0.0f;
-
-        // Œë·‚ğC³‚·‚é
-        var pos = new Vector3(0,0,0);
-        pos.x = (float)Math.Round(this.transform.position.x, 0, MidpointRounding.AwayFromZero);
-        pos.y = (float)Math.Round(this.transform.position.y, 0, MidpointRounding.AwayFromZero);
-        pos.z = (float)Math.Round(this.transform.position.z, 0, MidpointRounding.AwayFromZero);
-        this.transform.position = pos;
-
-        // ‰ñ“]‚Ì’†S‚ğİ’è
-        _axisCenterWorldPos = rotCenter;
-        
-        // ‰ñ“]²‚ğİ’è
-        _rotAxis = rotAxis;
-
-        // ‰ñ“]ƒIƒtƒZƒbƒg’l‚ğƒZƒbƒg
-        _angle = rotAngle;
-
-        // ƒgƒŒƒCƒ‹‚Ì‹N“®
-        PlayPartical();
-    }
-
-    // ‚Ü‚í‚·¬‚ÌXV
-    protected void UpdateRotate()
-    {
-        if (_doOnce) {
-            _isRotateStartFream = false;
-        }
-
-        // ‰ñ“]’†‚©ƒtƒ‰ƒO
-        if ( _isRotating ) {
-
-            if (!_doOnce) {
-                _isRotateStartFream = true;
-                _doOnce = true;
-            }
-        
-            // ƒŠƒNƒGƒXƒgƒfƒ‹ƒ^ƒ^ƒCƒ€‚ğ‹‚ß‚é
-            // ƒŠƒNƒGƒXƒgƒfƒ‹ƒ^ƒ^ƒCƒ€Fƒfƒ‹ƒ^ƒ^ƒCƒ€‚ğ1‰ñ“]‚É•K—v‚ÈŠÔ‚ÅŠ„‚Á‚½’l
-            // ‚±‚ê‚Ì‡Z’l‚ª1‚É‚È‚Á‚½,1‰ñ“]‚É•K—v‚ÈŠÔ‚ªŒo‰ß‚µ‚½‚±‚Æ‚É‚È‚é
-            float requiredDeltaTime = Time.deltaTime/_rotRequirdTime;
-            _elapsedTime += requiredDeltaTime;
-
-            // –Ú•W‰ñ“]—Ê*ƒŠƒNƒGƒXƒgƒfƒ‹ƒ^ƒ^ƒCƒ€‚Å‚»‚ÌƒtƒŒ[ƒ€‚Å‚Ì‰ñ“]Šp“x‚ğ‹‚ß‚é‚±‚Æ‚ª‚Å‚«‚é
-            // ƒŠƒNƒGƒXƒgƒfƒ‹ƒ^ƒ^ƒCƒ€‚Ì‡Z’l‚ª‚¿‚å‚¤‚Ç1‚É‚È‚é‚æ‚¤‚É•â³‚ğ‚©‚¯‚é‚Æ‘‰ñ“]—Ê‚Í–Ú•W‰ñ“]—Ê‚Æˆê’v‚·‚é
-            if ( _elapsedTime >= 1 ) {
-                //Debug.Log("•âŠÔI—¹");
-                _isRotating = false;
-                requiredDeltaTime -= ( _elapsedTime - 1 ); // •â³
-
-                _isRotateEndFream = true;
-                StopPartical();
-
-                // ƒvƒŒƒCƒ„[‹Nˆö‚Ì‰ñ“]‚©‚ğ”»’è
-                if ( _playerTransform != null ) {
-                    Debug.Log(_playerTransform.gameObject);
-                
-                    var playerComp = _playerTransform.GetComponent<Player>();
-
-                    if ( playerComp == null ) {
-                        Debug.Log("‚ ‚è‚¦‚È‚¢˜b");
-                    }
-
-                    // ƒvƒŒƒCƒ„[‚É‰ñ“]I—¹’Ê’m‚ğ”ò‚Î‚·
-                    playerComp.NotificationEndRotate();
-
-                    // ƒoƒO–h~
-                    _playerTransform = null;
-                }
-
-            }
-
-            // Œ»İƒtƒŒ[ƒ€‚Ì‰ñ“]‚ğ¦‚·‰ñ“]‚ÌƒNƒH[ƒ^ƒjƒIƒ“ì¬
-            var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
-
-            // ‰~‰^“®‚ÌˆÊ’uŒvZ
-            var tr = transform;
-            var pos = tr.position;
-            
-            // ƒNƒH[ƒ^ƒjƒIƒ“‚ğ—p‚¢‚½‰ñ“]‚ÍŒ´“_‚©‚ç‚ÌƒIƒtƒZƒbƒg‚ğ—p‚¢‚é•K—v‚ª‚ ‚é
-            // _axisCenterWorldPos‚ğ”CˆÓ²‚ÌÀ•W‚É•ÏX‚·‚ê‚Î”CˆÓ²‚Ì‰ñ“]‚ª‚Å‚«‚é
-            pos -= _axisCenterWorldPos;
-            pos = angleAxis * pos;
-            pos += _axisCenterWorldPos;
-
-            tr.position = pos;
-
-            // Œü‚«XV
-            tr.rotation = angleAxis * tr.rotation;
-        }
-        else {
-            _doOnce = false;
-            _isRotateEndFream = false;
-        }
-    }
+		// çµŒéæ™‚é–“ã‚’åˆæœŸåŒ–
+		_elapsedTime = 0.0f;
+		// ãƒˆãƒ¬ã‚¤ãƒ«ã®èµ·å‹•
+		PlayPartical();
+	}
 
 
-    public bool IsRotating(){
-        return _isRotating;
-    }
+	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle, Transform playerTransform)
+	{
 
-    public bool IsSpining(){
-        return _isSpining;
+		if (_isSpin || _isRotating)
+		{
+			return;
+		}
+
+		// å›è»¢ã®ä¸­å¿ƒã‚’è¨­å®š
+		_axisCenterWorldPos = rotCenter;
+		_resePos = rotCenter;
+
+		// å›è»¢è»¸ã‚’è¨­å®š
+		_rotAxis = rotAxis;
+		_reseAxis = rotAxis;
+
+		// å›è»¢ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ã‚’ã‚»ãƒƒãƒˆ
+		_angle = rotAngle;
+		_reseAngle = rotAngle;
+
+		// ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã‚’æ ¼ç´
+		_playerTransform = playerTransform;
+
+		// ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+		_isRotating = true;
+
+		// çµŒéæ™‚é–“ã‚’åˆæœŸåŒ–
+		_elapsedTime = 0.0f;
+
+		// è§’åº¦ã«ã‚ˆã‚‹è£œæ­£å€¤ã‚’è¨ˆç®—ã™ã‚‹
+		_polatAngle = _angle / 90;
+		Debug.Log(_polatAngle);
+
+		_oldRotAngle = this.transform.eulerAngles;
+		Debug.Log(_oldRotAngle);
+
+		// ãƒˆãƒ¬ã‚¤ãƒ«ã®èµ·å‹•
+		PlayPartical();
+	}
+
+	// ã¾ã‚ã™å°ã®æ›´æ–°
+	protected void UpdateRotate()
+	{
+		if (_doOnce)
+		{
+			_isRotateStartFream = false;
+		}
+
+		// å›è»¢ä¸­ã‹ãƒ•ãƒ©ã‚°
+		if (_isRotating)
+		{
+			if (!_doOnce)
+			{
+				_isRotateStartFream = true;
+				_doOnce = true;
+			}
+
+			// ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ã‚’æ±‚ã‚ã‚‹
+			// ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ï¼šãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ã‚’1å›è»¢ã«å¿…è¦ãªæ™‚é–“ã§å‰²ã£ãŸå€¤
+			// ã“ã‚Œã®åˆç®—å€¤ãŒ1ã«ãªã£ãŸæ™‚,1å›è»¢ã«å¿…è¦ãªæ™‚é–“ãŒçµŒéã—ãŸã“ã¨ã«ãªã‚‹
+			float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle));
+			_elapsedTime += requiredDeltaTime;
+
+			// ç›®æ¨™å›è»¢é‡*ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ã§ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã®å›è»¢è§’åº¦ã‚’æ±‚ã‚ã‚‹ã“ã¨ãŒã§ãã‚‹
+			// ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ã®åˆç®—å€¤ãŒã¡ã‚‡ã†ã©1ã«ãªã‚‹ã‚ˆã†ã«è£œæ­£ã‚’ã‹ã‘ã‚‹ã¨ç·å›è»¢é‡ã¯ç›®æ¨™å›è»¢é‡ã¨ä¸€è‡´ã™ã‚‹
+			bool isFinish = false;
+			if (_elapsedTime >= 1)
+			{
+				_isRotating = false;
+				_isRotateEndFream = true;
+				requiredDeltaTime -= (_elapsedTime - 1); // è£œæ­£
+                       // Debug.Log("ã‚ã‚Šãˆãªã„è©±");
+
+				StopPartical();
+
+				// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼èµ·å› ã®å›è»¢ã‹ã‚’åˆ¤å®š
+				if (_playerTransform != null)
+				{
+					var playerComp = _playerTransform.GetComponent<Player>();
+
+					// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å›è»¢çµ‚äº†é€šçŸ¥ã‚’é£›ã°ã™
+					playerComp.NotificationEndRotate();
+
+					// ãƒã‚°é˜²æ­¢
+					_playerTransform = null;
+				}
+				isFinish = true;
+			}
+
+			// ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ ã®å›è»¢ã‚’ç¤ºã™å›è»¢ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ä½œæˆ
+			var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
+
+			// å††é‹å‹•ã®ä½ç½®è¨ˆç®—
+			var tr = transform;
+			var pos = tr.position;
+			// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ç”¨ã„ãŸå›è»¢ã¯åŸç‚¹ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’ç”¨ã„ã‚‹å¿…è¦ãŒã‚ã‚‹
+			// _axisCenterWorldPosã‚’ä»»æ„è»¸ã®åº§æ¨™ã«å¤‰æ›´ã™ã‚Œã°ä»»æ„è»¸ã®å›è»¢ãŒã§ãã‚‹
+			pos -= _axisCenterWorldPos;
+			pos = angleAxis * pos;
+			pos += _axisCenterWorldPos;
+			tr.position = pos;
+
+			// å‘ãæ›´æ–°
+			tr.rotation = angleAxis * tr.rotation;
+
+			_oldAngle = _elapsedTime * _angle;
+			// 90åº¦é€²ã‚€ã”ã¨ã«ç¢ºèªå½“ãŸã£ã¦ã‚‹ã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹
+			if (Math.Abs(_polatAngle) > 1)
+			{	// 90åº¦ãŒ1ã«ãªã‚‹ã®ã§ãã‚Œä»¥ä¸Šã‹ã©ã†ã‹ç¢ºèª
+				if (_elapsedTime >= 1 / Math.Abs(_polatAngle))
+				{
+					if (!_isReservation) return;
+					// å½“ãŸã£ã¦ã„ãŸå ´åˆã®å‡¦ç†
+					_isRotating = false;
+					_isRotateEndFream = true;
+
+					// ç·Šæ€¥åœæ­¢ã—ã¦ã„ã‚‹ã®ã§è§’åº¦ã«è£œæ­£ã‚’æ›¸ã‘ãªã„ã¨èª¤å·®ãŒå‡ºã‚‹
+					this.transform.eulerAngles = _oldRotAngle;
+					_isReservation = false;
+					isFinish = false;
+				}
+			}
+
+			if (isFinish)
+			{
+				// èª¤å·®ã‚’ä¿®æ­£ã™ã‚‹
+				var tmppos = new Vector3(0, 0, 0);
+				tmppos.x = (float)Math.Round(this.transform.position.x, 0, MidpointRounding.AwayFromZero);
+				tmppos.y = (float)Math.Round(this.transform.position.y, 0, MidpointRounding.AwayFromZero);
+				tmppos.z = (float)Math.Round(this.transform.position.z, 0, MidpointRounding.AwayFromZero);
+				this.transform.position = tmppos;
+
+				_isRotating = false;
+				_elapsedTime = 0.0f;
+				_isRotateEndFream = true;
+
+				CheckHitNotMoveObj();
+			}
+		}
+		else
+		{
+			_doOnce = false;
+			_isRotateEndFream = false;
+		}
+	}
+
+	private void CheckHitNotMoveObj()
+	{
+		if (!_isReservation) return;
+		Debug.Log("ã‚ãŸã£ã¦ã‚‹");
+		_isReservation = false;
+		StartRotate(_resePos, -_reseAxis, _reseAngle);
 	}
 
 }

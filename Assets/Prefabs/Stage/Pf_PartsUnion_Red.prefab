@@ -101,7 +101,9 @@ GameObject:
   - component: {fileID: 4670686866241804211}
   - component: {fileID: 1157510098750740394}
   - component: {fileID: 7022060644981600646}
+  - component: {fileID: 6066204529970748255}
   - component: {fileID: 3877778253390627183}
+  - component: {fileID: 2077839063330206321}
   m_Layer: 0
   m_Name: Pf_PartsUnion_Red
   m_TagString: Untagged
@@ -191,6 +193,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6066204529970748255
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3009046966530152507}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3877778253390627183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +220,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _particle: {fileID: 4239640712281065258, guid: a8ec626082f8f224cb8c5c158c70cfbd,
     type: 3}
+--- !u!114 &2077839063330206321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3009046966530152507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7db79d250a0f6e4fa2e7fe33c193e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4320263918415377887
 GameObject:
   m_ObjectHideFlags: 0

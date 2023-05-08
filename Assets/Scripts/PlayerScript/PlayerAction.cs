@@ -40,7 +40,7 @@ public partial class Player : MonoBehaviour {
             // 切り替えタイミング
             Debug.Log("フロント切り替えタイミング");
 
-            _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+            //_stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
         }
 
         // Bottom回転オブジェクトが切り替わった時
@@ -50,7 +50,7 @@ public partial class Player : MonoBehaviour {
             // 切り替えタイミング
             Debug.Log("ボトム切り替えタイミング");
 
-            _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
+            //_stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
         }
 
        
@@ -64,11 +64,11 @@ public partial class Player : MonoBehaviour {
 
                 // 右スティックの更新
                 if (rotatbleComp._isRotateEndFream) {
-                    _stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+                    //_stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
                 }
 
-                _stricRotAngle.StickRotAngleX_Update();
-                rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX,this.transform);
+               // _stricRotAngle.StickRotAngleX_Update();
+              //  rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX,this.transform);
                 //_startrotFreamX = _stricRotAngle.GetActivStick;
 
                 //Debug.Log(_stricRotAngle.GetStickDialAngleX);
@@ -102,11 +102,11 @@ public partial class Player : MonoBehaviour {
 
             // 右スティックでの回転
             if (rotatbleComp._isRotateEndFream) {
-                _stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
+                //_stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
             }
 
-            _stricRotAngle.StickRotAngleY_Update();
-            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
+            //_stricRotAngle.StickRotAngleY_Update();
+           // rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
             //_startrotFreamY = rotatbleComp._isRotateStartFream;
 
             // 通常軸回転

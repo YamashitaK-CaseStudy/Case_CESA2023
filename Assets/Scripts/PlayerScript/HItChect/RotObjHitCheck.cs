@@ -49,7 +49,7 @@ public class RotObjHitCheck : MonoBehaviour{
     // 回転オブジェクトの取得
     private void GetRotateObject(GameObject obj) {
 
-        if (obj.transform.root.tag == "RotateObject") {
+        if (obj.transform.parent.parent.gameObject.tag == "RotateObject") {
 
             _isRotHit = true;
             _ischangeRotHit = true;
@@ -59,7 +59,7 @@ public class RotObjHitCheck : MonoBehaviour{
         }
         else {
 
-            _isRotHit = false;
+            //_isRotHit = false;
         }
     }
 
