@@ -62,8 +62,6 @@ public partial class Player : MonoBehaviour{
         // 前方に回転オブジェクトがある時
         else if (_frontHitCheck.GetIsRotHit) {
 
-            Debug.Log("左右とってます");
-
             _priortyAxis = priorityAxis.xAxisRot;
 
             var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();

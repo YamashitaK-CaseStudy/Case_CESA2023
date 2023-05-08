@@ -18,7 +18,7 @@ public partial class Player : MonoBehaviour{
          _idleChangeTimer = _timeMeasurement.AddArarm("IdleChange", _idleCheneTime);
         _idleChangeTimer.TimeStart = true;
 
-        _xAxisRotWaitTimer = _timeMeasurement.AddArarm("xRotWait", 1.5f);
+        _xAxisRotWaitTimer = _timeMeasurement.AddArarm("xRotWait", 1.0f);
     }
 
     private void PlayerSkAnimationUpdate() {

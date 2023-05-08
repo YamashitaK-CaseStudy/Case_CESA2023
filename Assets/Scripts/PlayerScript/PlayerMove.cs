@@ -46,6 +46,11 @@ public partial class Player : MonoBehaviour {
     // Update is called once per frame
     void UpdateMove() {
 
+        // x軸アニメーション中は動けないようにする
+        if (_animator.GetBool("StartRot_X")) {
+            return;
+        }
+
         Move();
         Jump();
     }
