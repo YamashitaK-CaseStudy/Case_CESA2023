@@ -67,10 +67,9 @@ public partial class Player : MonoBehaviour {
                     //_stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
                 }
 
-               // _stricRotAngle.StickRotAngleX_Update();
-              //  rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX,this.transform);
+                // _stricRotAngle.StickRotAngleX_Update();
+                //  rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX,this.transform);
                 //_startrotFreamX = _stricRotAngle.GetActivStick;
-
                 //Debug.Log(_stricRotAngle.GetStickDialAngleX);
 
                 // í èÌé≤âÒì]
@@ -79,7 +78,7 @@ public partial class Player : MonoBehaviour {
                 }
                 // çÇë¨âÒì]
                 if (_rotationSpinButton.WasPressedThisFrame()) {
-                    if (rotatbleComp.IsSpining()){
+                    if (rotatbleComp._isSpining){
                         rotatbleComp.EndSpin();
                     }
 					else{

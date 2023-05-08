@@ -17,6 +17,8 @@ public partial class RotatableObject : MonoBehaviour
 	private Vector3 _oldRotAngle;
 	private RotHitFloar[] _childComp;
 	private float _polatAngle = 0.0f;
+	private bool _isSpin;
+
 	private void StartSettingRot()
 	{
 		var child = this.transform.GetChild(0).gameObject;
