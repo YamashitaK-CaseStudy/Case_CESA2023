@@ -61,6 +61,7 @@ public partial class Player : MonoBehaviour{
         if (_priortyAxis == priorityAxis.yAxisRot) {
             if (_bottomHitCheck.GetIsRotHit) {
                 if (_bottomHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotateStartFream) {
+                    _animator.SetBool("RunState", false);
                     _animator.SetTrigger("StartRot_Y");
                 }
             }

@@ -46,35 +46,6 @@ public partial class Player : MonoBehaviour {
     // Update is called once per frame
     void UpdateMove() {
 
-        if (_stricRotAngle.GetIsActicStick) {
-            return;
-        }
-
-        if (_groundCheck.IsGround && _isJumpButton) {
-
-            if (!_isLandingStiffness) {
-
-                _isLandingStiffness = true;
-                landingStiffnessTime.TimeStart = true;
-                Debug.Log("çZí∑");
-            }
-
-            if (!landingStiffnessTime.TimeEnd) {
-                _speedx = 0.0f;
-                return;
-            }
-
-            _isJumpButton = false;
-
-        }
-        else {
-
-            _isLandingStiffness = false;
-            landingStiffnessTime.TimeStart = false;
-            landingStiffnessTime.ResetTime();
-            //Debug.Log("îÚÇÒÇ≈ÇÈîªíË");
-        }
-
         Move();
         Jump();
     }
@@ -84,7 +55,7 @@ public partial class Player : MonoBehaviour {
 
         // âÒì]Ç≥ÇπÇƒÇ¢ÇÈä‘ÇÕìÆÇ©Ç»Ç¢
         if ( _isRotating ) {
-            return;
+            //return;
         }
         
         var value_x = Input.GetAxis("Horizontal");

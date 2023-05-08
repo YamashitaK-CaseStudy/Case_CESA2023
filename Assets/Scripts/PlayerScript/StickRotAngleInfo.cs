@@ -18,7 +18,7 @@ public partial class StickRotAngle : MonoBehaviour {
     public bool _isDamiObjCreate = false;
     public GameObject _damiObject;
 
-    private bool _isActicStick;
+    public bool _isActicStick;
     public bool _isActicDial_X { get; set; }
     public bool _isActicDial_Y { get; set; }
 

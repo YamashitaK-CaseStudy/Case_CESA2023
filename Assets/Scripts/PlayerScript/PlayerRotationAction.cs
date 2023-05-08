@@ -33,6 +33,7 @@ public partial class Player : MonoBehaviour{
         
         // 真下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
+
             Debug.Log(_bottomHitCheck.GetRotObj.name);
             _priortyAxis = priorityAxis.yAxisRot;
 
@@ -40,7 +41,7 @@ public partial class Player : MonoBehaviour{
 
             // スティック回転Y
             if (rotatbleComp._isRotateEndFream) {
-                _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
+               _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
             }
 
             _stricRotAngle.StickRotAngleY_Update();
@@ -57,9 +58,11 @@ public partial class Player : MonoBehaviour{
                 rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
             }
         }
-
+       
         // 前方に回転オブジェクトがある時
         else if (_frontHitCheck.GetIsRotHit) {
+
+            Debug.Log("左右とってます");
 
             _priortyAxis = priorityAxis.xAxisRot;
 
