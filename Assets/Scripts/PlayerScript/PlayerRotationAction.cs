@@ -54,8 +54,13 @@ public partial class Player : MonoBehaviour{
 
             // çÇë¨âÒì]
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                Debug.Log(_bottomHitCheck.GetRotObj);
-                rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+                if ( rotatbleComp._isSpining ) {
+                    Debug.Log("çÇë¨âÒì]èIóπ");
+                    rotatbleComp.EndSpin();
+                }
+                else {
+                    rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+                }
             }
         }
        
@@ -83,7 +88,13 @@ public partial class Player : MonoBehaviour{
 
             // çÇë¨âÒì]
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+                if (rotatbleComp._isSpining){
+                    Debug.Log("çÇë¨âÒì]èIóπ");    
+                    rotatbleComp.EndSpin();
+                }
+				else{
+                    rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+				}
             }
         }
         else {

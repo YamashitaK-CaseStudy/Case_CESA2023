@@ -164,9 +164,6 @@ public partial class StickRotAngle : MonoBehaviour {
         return _stickAngle_Y;
     }
 
-    //--------------------------------------------------------------------------------------------//
-    //--------------------------------------------------------------------------------------------//
-
     public void xAxisManyObjJude(RotObjHitCheck _hitcheck) {
 
         // NULL‰ñ”ð
@@ -359,7 +356,6 @@ public partial class StickRotAngle : MonoBehaviour {
 
         var damiobj = new GameObject("stickDamiObj");
         damiobj.tag = "DamiObject";
-
         switch (dir) {
             case UpDownFrontBack_ManyObj.Up:
                 damiobj.transform.position = CompensateRotationAxis(ridePos + Vector3.up);

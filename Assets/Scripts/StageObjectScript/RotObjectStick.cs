@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class RotatableObject : MonoBehaviour{
 
-    // ‘O‰ñ‚Ì‰ñ“]
+    // å‰å›ã®å›è»¢
     public int oldangleY = 0;
     public int oldangleX = 0;
 
@@ -15,20 +15,21 @@ public partial class RotatableObject : MonoBehaviour{
     //     var playerComp = _playerTransform.GetComponent<Player>();
 
     //     playerComp.NotificationStartRotate();
+
     
-    //     // ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+    //     // ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
     //     _isRotating = true;
 
-    //     // Œo‰ßŠÔ‚ğ‰Šú‰»
+    //     // çµŒéæ™‚é–“ã‚’åˆæœŸåŒ–
     //     _elapsedTime = 0.0f;
 
-    //     // ‰ñ“]‚Ì’†S‚ğİ’è
+    //     // å›è»¢ã®ä¸­å¿ƒã‚’è¨­å®š
     //     _axisCenterWorldPos = rotCenter;
 
-    //     // ‰ñ“]²‚ğİ’è
+    //     // å›è»¢è»¸ã‚’è¨­å®š
     //     _rotAxis = rotAxis;
 
-    //     // ‰ñ“]ƒIƒtƒZƒbƒg’l‚ğƒZƒbƒg
+    //     // å›è»¢ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ã‚’ã‚»ãƒƒãƒˆ
     //     _angle = rotAngle;
 
     //     PlayPartical();
@@ -42,7 +43,7 @@ public partial class RotatableObject : MonoBehaviour{
             return;
         }
 
-        // ƒvƒŒƒCƒ„[‚Ìƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ğ•Û
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã‚’ä¿æŒ
         _playerTransform = playerTransform;
 
         var offset = angle - oldangleX;
@@ -68,7 +69,7 @@ public partial class RotatableObject : MonoBehaviour{
         }
         _isRotateStartFream = true;
 
-        // ƒvƒŒƒCƒ„[‚Ìƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ğ•Û
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã‚’ä¿æŒ
         _playerTransform = playerTransform;
 
         var Pos = playerTransform.position;
@@ -77,7 +78,7 @@ public partial class RotatableObject : MonoBehaviour{
 
         var offset = angle - oldangleY;
 
-        // Œv‰ñ‚è
+        // æ™‚è¨ˆå›ã‚Š
         if(offset > 0) {
             _nowRotAxis = new Vector3(0, 1, 0);
         }
