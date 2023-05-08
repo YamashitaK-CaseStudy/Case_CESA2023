@@ -9,7 +9,7 @@ public partial class RotatableObject : MonoBehaviour
 
 	private GameObject[] _cloneBaceObjs;        // Clone元のオブジェクトの配列
 	private GameObject[,] _cloneObjs;           // Cloneしたオブジェクトの配列
-	private GameObject[] _toSpinCloneObjs;  // 回す用のクローンの配列
+	private GameObject[] _toSpinCloneObjs;		// 回す用のクローンの配列
 
 	private List<GameObject> _originObjList;    // クローン元のオブジェクトリスト
 
@@ -227,6 +227,12 @@ public partial class RotatableObject : MonoBehaviour
 			// Pf_PartについているBoxColliderとPf_Partの子オブジェクトの内のChainColliderを無効化する必要がある
 			foreach (Transform childTransform in _toSpinCloneObjs[i].transform)
 			{
+				// ダミーオブジェクトは参照しない
+				if ( "DamiObject" == childTransform.gameObject.tag ) {
+					break;
+				}	
+
+				Debug.Log(childTransform.gameObject);
 
 				// ボックスコライダーを無効化する
 				var childBoxCollider = childTransform.gameObject.GetComponent<BoxCollider>();
