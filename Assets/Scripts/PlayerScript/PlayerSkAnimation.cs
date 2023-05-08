@@ -18,7 +18,7 @@ public partial class Player : MonoBehaviour{
          _idleChangeTimer = _timeMeasurement.AddArarm("IdleChange", _idleCheneTime);
         _idleChangeTimer.TimeStart = true;
 
-        _xAxisRotWaitTimer = _timeMeasurement.AddArarm("xRotWait", 1.5f);
+        _xAxisRotWaitTimer = _timeMeasurement.AddArarm("xRotWait", 1.0f);
     }
 
     private void PlayerSkAnimationUpdate() {
@@ -61,6 +61,7 @@ public partial class Player : MonoBehaviour{
         if (_priortyAxis == priorityAxis.yAxisRot) {
             if (_bottomHitCheck.GetIsRotHit) {
                 if (_bottomHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotateStartFream) {
+                    _animator.SetBool("RunState", false);
                     _animator.SetTrigger("StartRot_Y");
                 }
             }
