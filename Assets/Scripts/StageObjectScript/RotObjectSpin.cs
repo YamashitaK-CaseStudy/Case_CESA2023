@@ -2,208 +2,240 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class RotatableObject : MonoBehaviour {
+public partial class RotatableObject : MonoBehaviour
+{
 
 	[SerializeField] int _rotSpeed = 15;
 
-	/*
-	GameObject _object;
-	GameObject[] _cloneObj;
-	GameObject _toSpinCloneObj;
-	 */
+	private GameObject[] _cloneBaceObjs;        // Cloneå…ƒã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…åˆ—
+	private GameObject[,] _cloneObjs;           // Cloneã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…åˆ—
+	private GameObject[] _toSpinCloneObjs;  // å›ã™ç”¨ã®ã‚¯ãƒ­ãƒ¼ãƒ³ã®é…åˆ—
 
-	GameObject[] _cloneBaceObjs;	// CloneŒ³‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[‚µ‚Ä‚¨‚­”z—ñ
-	GameObject[,] _cloneObjs;		// Clone‚µ‚½ƒIƒuƒWƒFƒNƒg‚Ì”z—ñ
-	GameObject[] _toSpinCloneObjs;  // ‰ñ‚·—p‚ÌƒNƒ[ƒ“
+	private List<GameObject> _originObjList;    // ã‚¯ãƒ­ãƒ¼ãƒ³å…ƒã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒªã‚¹ãƒˆ
 
-	int _cloneNum = 0;
+	private int _originNum = 0;
+	private int _listLength = 0;
 
-	protected void StartSettingSpin() {
-		//_object = this.transform.Find("Object").gameObject;
+	public void StartFunc(){
+		_originObjList = new List<GameObject>();
 	}
 
-	public void StartSpin() {
-		if ( _isSpin || _isRotating ) {
+	public void StartSpin()
+	{
+		if (_isSpining || _isRotating)
+		{
 			return;
 		}
 
-		// ƒtƒ‰ƒO‚ğ—§‚Ä‚é
-		_isSpin = true;
+		// ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+		_isSpining = true;
 
 	}
 
-	public void StartSpin(Vector3 rotCenter, Vector3 rotAxis) {
-		if ( _isSpin || _isRotating ) {
+	public void StartSpin(Vector3 rotCenter, Vector3 rotAxis)
+	{
+		if (_isSpining || _isRotating)
+		{
 			return;
 		}
 
-		// RotableObj‚ÌqƒIƒuƒWƒFƒNƒg‚Å‚ ‚éObject = CloneŒ³‚ğ‚·‚×‚Äæ“¾
-		var childNum = this.transform.childCount;
-		_cloneBaceObjs = new GameObject[childNum];
-		int itr = 0;
-		foreach ( Transform childTransform in this.transform ) {
-			_cloneBaceObjs[itr++] = childTransform.gameObject;
-		}
-		Debug.Log(itr);
+		AddCloneOriginToList();
 
-		// ‰ñ“]‚Ì’†S‚ğİ’è
+		// å›è»¢ã®ä¸­å¿ƒã‚’è¨­å®š
 		_axisCenterWorldPos = rotCenter;
 
-		// ‰ñ“]²‚ğİ’è
+		// å›è»¢è»¸ã‚’è¨­å®š
 		_rotAxis = rotAxis;
 
-		// ƒtƒ‰ƒO‚ğ—§‚Ä‚é
-		_isSpin = true;
+		// ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+		_isSpining = true;
 
+		// ã‚¯ãƒ­ãƒ¼ãƒ³ç”¨ã®GameObjectã‚’ç¢ºä¿
+		// ã‚¯ãƒ­ãƒ¼ãƒ³1ã¤ã«å¯¾ã—ã¦,90Â°ãƒ»180Â°ãƒ»270Â°ç”¨ã®3ã¤å¿…è¦
+		_cloneObjs = new GameObject[_originNum, 3];
 
-		_cloneNum = _cloneBaceObjs.Length;
+		//Debug.Log(_cloneBaceObjs.Length);
 
-		_cloneObjs = new GameObject[_cloneNum,3];
+		CreateClone();
 
-		Debug.Log(_cloneBaceObjs.Length);
-
-		/*
-		_cloneObj = new GameObject[3];
-		for (int i = 0; i < 3; i++){
-			_cloneObj[i] = Instantiate(_object) as GameObject;
-			_cloneObj[i].transform.parent = _object.transform.parent;
-			_cloneObj[i].transform.localPosition = _object.transform.localPosition;
-			_cloneObj[i].transform.localScale = _object.transform.localScale;
-			_cloneObj[i].transform.rotation = _object.transform.rotation;
-
-			// ‰ñ‚·
-			// ‰ñ“]ˆÚ“®—p‚ÌƒNƒH[ƒ^ƒjƒIƒ“
-			var rotQuat = Quaternion.AngleAxis(90 * (i + 1), _rotAxis);
-
-			// ‰~‰^“®‚ÌˆÊ’uŒvZ
-			var tr = _cloneObj[i].transform;
-			var pos = tr.position;
-
-			// ƒNƒH[ƒ^ƒjƒIƒ“‚ğ—p‚¢‚½‰ñ“]‚ÍŒ´“_‚©‚ç‚ÌƒIƒtƒZƒbƒg‚ğ—p‚¢‚é•K—v‚ª‚ ‚é
-			// _axisCenterWorldPos‚ğ”CˆÓ²‚ÌÀ•W‚É•ÏX‚·‚ê‚Î”CˆÓ²‚Ì‰ñ“]‚ª‚Å‚«‚é
-			pos -= _axisCenterWorldPos;
-			pos = rotQuat * pos;
-			pos += _axisCenterWorldPos;
-
-			tr.position = pos;
-
-			// Œü‚«XV
-			tr.rotation = rotQuat * tr.rotation;
-
-		}
-		 */
-
-		// ƒIƒuƒWƒFƒNƒg‚ğ•¡»‚·‚é
-		// 3D‚ÌˆÊ’uŠÖŒW“I‚É90‹E180‹E270‹‚Ì3‚Â‚Ì•¡»‚ª•K—v
-		for ( int i = 0 ; i < _cloneNum ; i++ ) {
-
-			for ( int j = 0 ; j < 3 ; j++ ) {
-				_cloneObjs[i,j] = Instantiate(_cloneBaceObjs[i]) as GameObject;
-				_cloneObjs[i,j].transform.parent			= _cloneBaceObjs[i].transform.parent;
-				_cloneObjs[i,j].transform.localPosition	= _cloneBaceObjs[i].transform.localPosition;
-				_cloneObjs[i,j].transform.localScale		= _cloneBaceObjs[i].transform.localScale;
-				_cloneObjs[i,j].transform.rotation			= _cloneBaceObjs[i].transform.rotation;
-
-				// ‰ñ‚·
-				// ‰ñ“]ˆÚ“®—p‚ÌƒNƒH[ƒ^ƒjƒIƒ“
-				var rotQuat = Quaternion.AngleAxis(90 * (j + 1), _rotAxis);
-
-				// ‰~‰^“®‚ÌˆÊ’uŒvZ
-				var tr = _cloneObjs[i,j].transform;
-				var pos = tr.position;
-
-				// ƒNƒH[ƒ^ƒjƒIƒ“‚ğ—p‚¢‚½‰ñ“]‚ÍŒ´“_‚©‚ç‚ÌƒIƒtƒZƒbƒg‚ğ—p‚¢‚é•K—v‚ª‚ ‚é
-				// _axisCenterWorldPos‚ğ”CˆÓ²‚ÌÀ•W‚É•ÏX‚·‚ê‚Î”CˆÓ²‚Ì‰ñ“]‚ª‚Å‚«‚é
-				pos -= _axisCenterWorldPos;
-				pos = rotQuat * pos;
-				pos += _axisCenterWorldPos;
-
-				tr.position = pos;
-
-				// Œü‚«XV
-				tr.rotation = rotQuat * tr.rotation;
-			}
-		}
-
-		_toSpinCloneObjs = new GameObject[_cloneNum];
-
-		for ( int i = 0 ; i < _cloneNum ; i++ ) {
-			// ‰ñ“]‚·‚é—p‚ÌƒRƒs[‚ğ¶¬
-			_toSpinCloneObjs[i] = Instantiate(_cloneBaceObjs[i]) as GameObject;
-			_toSpinCloneObjs[i].transform.parent =			_cloneBaceObjs[i].transform.parent;
-			_toSpinCloneObjs[i].transform.localPosition =	_cloneBaceObjs[i].transform.localPosition;
-			_toSpinCloneObjs[i].transform.localScale =		_cloneBaceObjs[i].transform.localScale;
-			_toSpinCloneObjs[i].transform.rotation =		_cloneBaceObjs[i].transform.rotation;
-
-			// ƒRƒŠƒWƒ‡ƒ“‚ğ–³Œø‚É‚·‚é
-			var cloneParentTransform = _toSpinCloneObjs[i].transform;
-
-			// qƒIƒuƒWƒFƒNƒg’PˆÊ‚Ìˆ—
-			// Clone‚ÌqƒIƒuƒWƒFƒNƒg‚ÍPf_Parts‚ª•¡”‘¶İ
-			// Pf_Part‚É‚Â‚¢‚Ä‚¢‚éBoxCollider‚ÆPf_Part‚ÌqƒIƒuƒWƒFƒNƒg‚Ì“à‚ÌChainCollider‚ğ–³Œø‰»‚·‚é•K—v‚ª‚ ‚é
-			foreach ( Transform childTransform in cloneParentTransform ) {
-
-				// ƒ{ƒbƒNƒXƒRƒ‰ƒCƒ_[‚ğ–³Œø‰»‚·‚é
-				var childBoxCollider = childTransform.gameObject.GetComponent<BoxCollider>();
-				childBoxCollider.enabled = false;
-
-				// ƒ`ƒFƒCƒ“ƒRƒ‰ƒCƒ_[‚Ìƒ{ƒbƒNƒXƒRƒ‰ƒCƒ_[‚ğ–³Œø‰»‚·‚é
-				var childChineCollider = childTransform.Find("ChainCollider");
-				var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
-				childChineColliderBoxCollider.enabled = false;
-
-			}
-		}
-
-		/*
-		// ‰ñ“]‚·‚é—p‚ÌƒRƒs[‚ğ¶¬
-		_toSpinCloneObj = Instantiate(_object) as GameObject;
-		_toSpinCloneObj.transform.parent = _object.transform.parent;
-		_toSpinCloneObj.transform.localPosition = _object.transform.localPosition;
-		_toSpinCloneObj.transform.localScale = _object.transform.localScale;
-		_toSpinCloneObj.transform.rotation = _object.transform.rotation;
-
-		// ƒRƒŠƒWƒ‡ƒ“‚ğ–³Œø‚É‚·‚é
-		var parentTransform = _toSpinCloneObj.transform;
-
-		// qƒIƒuƒWƒFƒNƒg’PˆÊ‚Ìˆ—
-		// Clone‚ÌqƒIƒuƒWƒFƒNƒg‚ÍPf_Parts‚ª•¡”‘¶İ
-		// Pf_Part‚É‚Â‚¢‚Ä‚¢‚éBoxCollider‚ÆPf_Part‚ÌqƒIƒuƒWƒFƒNƒg‚Ì“à‚ÌChainCollider‚ğ–³Œø‰»‚·‚é•K—v‚ª‚ ‚é
-		foreach (Transform childTransform in parentTransform){
-
-			// ƒ{ƒbƒNƒXƒRƒ‰ƒCƒ_[‚ğ–³Œø‰»‚·‚é
-			var childBoxCollider = childTransform.gameObject.GetComponent<BoxCollider>();
-			childBoxCollider.enabled = false;
-
-			// ƒ`ƒFƒCƒ“ƒRƒ‰ƒCƒ_[‚Ìƒ{ƒbƒNƒXƒRƒ‰ƒCƒ_[‚ğ–³Œø‰»‚·‚é
-			var childChineCollider = childTransform.Find("ChainCollider");
-			var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
-			childChineColliderBoxCollider.enabled = false;
-		}
-		 */
+		CreateCloneToSpin();
 	}
 
-	protected void UpdateSpin() {
-		if ( _isSpin ) {
-			// Œ»İƒtƒŒ[ƒ€‚Ì‰ñ“]‚ğ¦‚·‰ñ“]‚ÌƒNƒH[ƒ^ƒjƒIƒ“ì¬
+
+
+	// é«˜é€Ÿå›è»¢ã‚’çµ‚äº†
+	public void EndSpin()
+	{
+		if (_isSpining == false || _isRotating == true)
+		{
+			return;
+		}
+
+		_isSpining = false;
+
+
+		foreach (GameObject cloneObj in _cloneObjs)
+		{
+			Destroy(cloneObj);
+		}
+
+
+		foreach (GameObject toSpinCloneObj in _toSpinCloneObjs)
+		{
+			Destroy(toSpinCloneObj);
+		}
+	}
+
+	// é«˜é€Ÿå›è»¢ã®æ›´æ–°å‡¦ç†
+	protected void UpdateSpin()
+	{
+		if (_isSpining)
+		{
+
+			// ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ ã®å›è»¢ã‚’ç¤ºã™å›è»¢ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ä½œæˆ
 			var rotQuat = Quaternion.AngleAxis(_rotSpeed, _rotAxis);
 
-			Debug.Log(_cloneNum);
-			for ( int i = 0 ; i < _cloneNum ; i++ ) {
-				// ‰~‰^“®‚ÌˆÊ’uŒvZ
+			Debug.Log(_originNum);
+			for (int i = 0; i < _originNum; i++)
+			{
+				// å††é‹å‹•ã®ä½ç½®è¨ˆç®—
 				var tr = _toSpinCloneObjs[i].transform;
 				var pos = tr.position;
 
-				// ƒNƒH[ƒ^ƒjƒIƒ“‚ğ—p‚¢‚½‰ñ“]‚ÍŒ´“_‚©‚ç‚ÌƒIƒtƒZƒbƒg‚ğ—p‚¢‚é•K—v‚ª‚ ‚é
-				// _axisCenterWorldPos‚ğ”CˆÓ²‚ÌÀ•W‚É•ÏX‚·‚ê‚Î”CˆÓ²‚Ì‰ñ“]‚ª‚Å‚«‚é
+				// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ç”¨ã„ãŸå›è»¢ã¯åŸç‚¹ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’ç”¨ã„ã‚‹å¿…è¦ãŒã‚ã‚‹
+				// _axisCenterWorldPosã‚’ä»»æ„è»¸ã®åº§æ¨™ã«å¤‰æ›´ã™ã‚Œã°ä»»æ„è»¸ã®å›è»¢ãŒã§ãã‚‹
 				pos -= _axisCenterWorldPos;
 				pos = rotQuat * pos;
 				pos += _axisCenterWorldPos;
 
 				tr.position = pos;
 
-				// Œü‚«XV
+				// å‘ãæ›´æ–°
 				tr.rotation = rotQuat * tr.rotation;
+
+			}
+		}
+	}
+  
+	// Cloneå…ƒã‚’ã™ã¹ã¦å–å¾—ã—ã¦é…åˆ—ã«æ ¼ç´ã™ã‚‹å‡¦ç†
+	// ã™ã§ã«è¿½åŠ æ¸ˆã¿ã®å ´åˆã¯ã‚¹ã‚­ãƒƒãƒ—
+	// MEMOï¼šç£çŸ³ã‚®ãƒŸãƒƒã‚¯ã®å…¼ã­åˆã„ã§å¢—(æ¸›)ã«å¯¾å¿œ
+	protected void AddCloneOriginToList(){
+
+		_originNum = this.transform.childCount; // å®Ÿéš›ã®ã‚¯ãƒ­ãƒ¼ãƒ³å…ƒã®æ•°
+		_listLength = _originObjList.Count;  // ç¾æ™‚ç‚¹ã®ã‚¯ãƒ­ãƒ¼ãƒ³å…ƒã‚’æ ¼ç´ã—ã¦ã„ã‚‹é…åˆ—ã®é•·ã•ã‚’å–å¾—ã—ã¨ã
+
+		Debug.Log(_listLength);
+
+		// ã‚¯ãƒ­ãƒ¼ãƒ³ã®æ•°ã«å¤‰æ›´ãŒãªã‘ã‚Œã°å‡¦ç†ã‚’ã‚¹ã‚­ãƒƒãƒ—
+		if (_listLength == this.transform.childCount)
+		{
+			return;
+		}
+		// å§‹ã‚ã¦å‘¼ã°ã‚ŒãŸæ™‚
+		else if (_listLength == 0)
+		{
+			foreach (Transform childTransform in this.transform)
+			{
+				_originObjList.Add(childTransform.gameObject);
+			}
+		}
+
+		// ã‚¯ãƒ­ãƒ¼ãƒ³ã®æ•°ã«å¤‰æ›´ãŒã‚ã£ãŸå ´åˆ
+		// æ•°ã®æ¸›å°‘ã«ã¤ã„ã¦ã¯æƒ³å®šä¸Šèµ·ã“ã‚Šãˆãªã„ãŸã‚è€ƒæ…®ã—ãªã„
+		else if (_listLength > 0)
+		{
+			// è¿½åŠ ã™ã‚‹æ•°ã‚’è¨ˆç®—
+			var addObjNum = this.transform.childCount - _listLength;
+
+			for (int itr = _originNum - addObjNum; itr < _originNum; itr++)
+			{
+				_originObjList.Add(this.transform.GetChild(itr).gameObject);
+			}
+		}
+		else
+		{
+			Debug.Log("æœªå®šç¾©ã®æ¡ä»¶åˆ†å²ï¼šã‚¯ãƒ­ãƒ¼ãƒ³å…ƒã®æ•°ãŒå‰å›ã®é«˜é€Ÿå›è»¢ã‹ã‚‰æ¸›å°‘ã—ã¦ã„ã¾ã™");
+		}
+
+		return;
+
+	}
+
+	// ã‚¯ãƒ­ãƒ¼ãƒ³ç”Ÿæˆå‡¦ç†
+	protected void CreateClone()
+	{
+		// ã‚¯ãƒ­ãƒ¼ãƒ³ç”¨ã®GameObjectã‚’ç¢ºä¿
+		// ã‚¯ãƒ­ãƒ¼ãƒ³1ã¤ã«å¯¾ã—ã¦,90Â°ãƒ»180Â°ãƒ»270Â°ç”¨ã®3ã¤å¿…è¦
+		_cloneObjs = new GameObject[_originNum, 3];
+
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¤‡è£½ã™ã‚‹
+		// 3Dã®ä½ç½®é–¢ä¿‚çš„ã«90Â°ãƒ»180Â°ãƒ»270Â°ã®3ã¤ã®è¤‡è£½ãŒå¿…è¦
+		for (int i = 0; i < _originNum; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				
+
+				_cloneObjs[i, j] = Instantiate(_originObjList[i]) as GameObject;
+				_cloneObjs[i, j].transform.parent = _originObjList[i].transform.parent;
+				_cloneObjs[i, j].transform.localPosition = _originObjList[i].transform.localPosition;
+				_cloneObjs[i, j].transform.localScale = _originObjList[i].transform.localScale;
+				_cloneObjs[i, j].transform.rotation = _originObjList[i].transform.rotation;
+
+				// å›ã™
+				// å›è»¢ç§»å‹•ç”¨ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
+				var rotQuat = Quaternion.AngleAxis(90 * (j + 1), _rotAxis);
+
+
+				// å††é‹å‹•ã®ä½ç½®è¨ˆç®—
+				var tr = _cloneObjs[i, j].transform;
+				var pos = tr.position;
+
+				// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ç”¨ã„ãŸå›è»¢ã¯åŸç‚¹ã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’ç”¨ã„ã‚‹å¿…è¦ãŒã‚ã‚‹
+				// _axisCenterWorldPosã‚’ä»»æ„è»¸ã®åº§æ¨™ã«å¤‰æ›´ã™ã‚Œã°ä»»æ„è»¸ã®å›è»¢ãŒã§ãã‚‹
+				pos -= _axisCenterWorldPos;
+				pos = rotQuat * pos;
+				pos += _axisCenterWorldPos;
+
+				tr.position = pos;
+
+				// å‘ãæ›´æ–°
+				tr.rotation = rotQuat * tr.rotation;
+			}
+		}
+	}
+
+	// å›è»¢ç”¨ã®ã‚¯ãƒ­ãƒ¼ãƒ³ã‚’ç”Ÿæˆ
+	private void CreateCloneToSpin()
+	{
+		// ã¾ã‚ã™ç”¨ã®ã‚¯ãƒ­ãƒ¼ãƒ³ã‚’è¿½åŠ ã§ç”Ÿæˆ
+		_toSpinCloneObjs = new GameObject[_originNum];
+
+		for (int i = 0; i < _originNum; i++)
+		{
+			// å›è»¢ã™ã‚‹ç”¨ã®ã‚³ãƒ”ãƒ¼ã‚’ç”Ÿæˆ
+			_toSpinCloneObjs[i] = Instantiate(_originObjList[i]) as GameObject;
+			_toSpinCloneObjs[i].transform.parent = _originObjList[i].transform.parent;
+			_toSpinCloneObjs[i].transform.localPosition = _originObjList[i].transform.localPosition;
+			_toSpinCloneObjs[i].transform.localScale = _originObjList[i].transform.localScale;
+			_toSpinCloneObjs[i].transform.rotation = _originObjList[i].transform.rotation;
+
+
+			// ã‚³ãƒªã‚¸ãƒ§ãƒ³ã‚’ç„¡åŠ¹ã«ã™ã‚‹å‡¦ç†
+			// Cloneã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯Pf_PartsãŒè¤‡æ•°å­˜åœ¨
+			// Pf_Partã«ã¤ã„ã¦ã„ã‚‹BoxColliderã¨Pf_Partã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å†…ã®ChainColliderã‚’ç„¡åŠ¹åŒ–ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
+			foreach (Transform childTransform in _toSpinCloneObjs[i].transform)
+			{
+
+				// ãƒœãƒƒã‚¯ã‚¹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹
+				var childBoxCollider = childTransform.gameObject.GetComponent<BoxCollider>();
+				childBoxCollider.enabled = false;
+
+				// ãƒã‚§ã‚¤ãƒ³ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒœãƒƒã‚¯ã‚¹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹
+				var childChineCollider = childTransform.Find("ChainCollider");
+				var childChineColliderBoxCollider = childChineCollider.gameObject.GetComponent<BoxCollider>();
+				childChineColliderBoxCollider.enabled = false;
 
 			}
 		}
