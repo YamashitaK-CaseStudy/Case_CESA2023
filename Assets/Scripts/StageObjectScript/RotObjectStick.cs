@@ -8,8 +8,6 @@ public partial class RotatableObject : MonoBehaviour{
     public int oldangleY = 0;
     public int oldangleX = 0;
 
-    // public void StartStickRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle) {
-
     //     if (_isSpin || _isRotating) {
     //         return;
     //     }
@@ -64,8 +62,12 @@ public partial class RotatableObject : MonoBehaviour{
 
     public void StartRotateY(Vector3 center, Vector3 axis, int angle,Transform playerTransform) {
         if (oldangleY == angle) {
+
+            _isRotateStartFream = false;
             return;
         }
+        _isRotateStartFream = true;
+
         // プレイヤーのトランスフォームを保持
         _playerTransform = playerTransform;
 

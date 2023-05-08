@@ -26,7 +26,9 @@ public partial class RotObjUnion : MonoBehaviour{
 
         if (obj.transform.root.gameObject.tag == "RotateObject") {
 
-             var _rotObj = obj.transform.root.gameObject;
+            var rotcomp = obj.transform.root.gameObject.GetComponent<RotatableObject>();
+
+            var _rotObj = obj.transform.root.gameObject;
 
             // オブザーバーに素材を送る
             _obtherber.AddunionMaterial(_rotObj);

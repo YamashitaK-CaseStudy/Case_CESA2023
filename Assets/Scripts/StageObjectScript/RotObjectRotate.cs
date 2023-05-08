@@ -132,6 +132,7 @@ public partial class RotatableObject : MonoBehaviour
 				_isRotating = false;
 				_isRotateEndFream = true;
 				requiredDeltaTime -= (_elapsedTime - 1); // ï‚ê≥
+                       // Debug.Log("Ç†ÇËÇ¶Ç»Ç¢òb");
 
 				StopPartical();
 
