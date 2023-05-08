@@ -175,30 +175,11 @@ public partial class RotatableObject : MonoBehaviour
 					// 当たっていた場合の処理
 					_isRotating = false;
 					_isRotateEndFream = true;
-					// 緊急停止のときの予約角度を変更する必要ある
-					// Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-					// Debug.Log(_elapsedTime);
-					// var ttt = 1 / _elapsedTime;
-					// Debug.Log(ttt);
-					// Debug.Log(Math.Round(ttt, 0, MidpointRounding.AwayFromZero));
-					//
-
-					// 回転
-					//　あたる
-					//　その場でその角度を補正する
-					//　そのあとの回転する角度を変更して元にもどす
-
-
 
 					// 緊急停止しているので角度に補正を書けないと誤差が出る
-					Debug.Log(_oldRotAngle);
 					this.transform.eulerAngles = _oldRotAngle;
-					Debug.Log(this.transform.eulerAngles);
-					_polatAngle = 0.0f;
-					Debug.LogError("");
-
 					_isReservation = false;
-					StartRotate(_resePos, -_reseAxis, _reseAngle);
+					isFinish = false;
 				}
 			}
 
