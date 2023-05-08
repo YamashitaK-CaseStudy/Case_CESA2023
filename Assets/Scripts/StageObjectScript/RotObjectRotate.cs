@@ -6,206 +6,212 @@ using System;
 public partial class RotatableObject : MonoBehaviour
 {
 
-    private Transform _playerTransform = null;// プレイヤーのトランスフォーム
+	private Transform _playerTransform = null;// プレイヤーのトランスフォーム
 
-    public bool _isReservation = false;// 予約フラグ
-    public Vector3 _resePos { get; set; }   // 予約座標
-    public Vector3 _reseAxis { get; set; }  // 予約軸
-    public int _reseAngle { get; set; }     // 予約回転
-    private float _oldAngle = 0.0f;
-    private RotHitFloar[] _childComp;
-    private float _polatAngle = 0.0f;
-    private void StartSettingRot()
-    {
-        var child = this.transform.GetChild(0).gameObject;
-        _childComp = new RotHitFloar[child.transform.childCount];
-        for (int i = 0; i < child.transform.childCount; i++)
-        {
-            _childComp[i] = child.transform.GetChild(i).GetComponent<RotHitFloar>();
-        }
-    }
+	public bool _isReservation = false;// 予約フラグ
+	public Vector3 _resePos { get; set; }   // 予約座標
+	public Vector3 _reseAxis { get; set; }  // 予約軸
+	public int _reseAngle { get; set; }     // 予約回転
+	private float _oldAngle = 0.0f;
+	private Vector3 _oldRotAngle;
+	private RotHitFloar[] _childComp;
+	private float _polatAngle = 0.0f;
+	private void StartSettingRot()
+	{
+		var child = this.transform.GetChild(0).gameObject;
+		_childComp = new RotHitFloar[child.transform.childCount];
+		for (int i = 0; i < child.transform.childCount; i++)
+		{
+			_childComp[i] = child.transform.GetChild(i).GetComponent<RotHitFloar>();
+		}
+	}
 
-    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
-    {
+	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
+	{
 
-        if (_isSpin || _isRotating)
-        {
-            return;
-        }
-        // 回転の中心を設定
-        _axisCenterWorldPos = rotCenter;
-        _resePos = rotCenter;
+		if (_isSpin || _isRotating)
+		{
+			return;
+		}
+		// 回転の中心を設定
+		_axisCenterWorldPos = rotCenter;
+		_resePos = rotCenter;
 
-        // 回転軸を設定
-        _rotAxis = rotAxis;
-        _reseAxis = rotAxis;
+		// 回転軸を設定
+		_rotAxis = rotAxis;
+		_reseAxis = rotAxis;
 
-        // 回転オフセット値をセット
-        _angle = rotAngle;
-        _reseAngle = rotAngle;
-        // フラグを立てる
-        _isRotating = true;
+		// 回転オフセット値をセット
+		_angle = rotAngle;
+		_reseAngle = rotAngle;
+		// フラグを立てる
+		_isRotating = true;
 
-        // 角度による補正値を計算する
-        _polatAngle = _angle / 90;
-        Debug.Log(_polatAngle);
+		// 角度による補正値を計算する
+		_polatAngle = _angle / 90;
+		Debug.Log(_polatAngle);
 
-        // 経過時間を初期化
-        _elapsedTime = 0.0f;
-        // トレイルの起動
-        PlayPartical();
-    }
+		_oldRotAngle = this.transform.eulerAngles;
+		Debug.Log(_oldRotAngle);
+
+		// 経過時間を初期化
+		_elapsedTime = 0.0f;
+		// トレイルの起動
+		PlayPartical();
+	}
 
 
-    public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle, Transform playerTransform)
-    {
+	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle, Transform playerTransform)
+	{
 
-        if (_isSpin || _isRotating)
-        {
-            return;
-        }
+		if (_isSpin || _isRotating)
+		{
+			return;
+		}
 
-        // 回転の中心を設定
-        _axisCenterWorldPos = rotCenter;
-        _resePos = rotCenter;
+		// 回転の中心を設定
+		_axisCenterWorldPos = rotCenter;
+		_resePos = rotCenter;
 
-        // 回転軸を設定
-        _rotAxis = rotAxis;
-        _reseAxis = rotAxis;
+		// 回転軸を設定
+		_rotAxis = rotAxis;
+		_reseAxis = rotAxis;
 
-        // 回転オフセット値をセット
-        _angle = rotAngle;
-        _reseAngle = rotAngle;
+		// 回転オフセット値をセット
+		_angle = rotAngle;
+		_reseAngle = rotAngle;
 
-        // トランスフォームを格納
-        _playerTransform = playerTransform;
+		// トランスフォームを格納
+		_playerTransform = playerTransform;
 
-        // フラグを立てる
-        _isRotating = true;
+		// フラグを立てる
+		_isRotating = true;
 
-        // 経過時間を初期化
-        _elapsedTime = 0.0f;
+		// 経過時間を初期化
+		_elapsedTime = 0.0f;
 
-        // 角度による補正値を計算する
-        _polatAngle = _angle / 90;
-        Debug.Log(_polatAngle);
+		// 角度による補正値を計算する
+		_polatAngle = _angle / 90;
+		Debug.Log(_polatAngle);
 
-        // トレイルの起動
-        PlayPartical();
-    }
+		_oldRotAngle = this.transform.eulerAngles;
+		Debug.Log(_oldRotAngle);
 
-    // まわす小の更新
-    protected void UpdateRotate()
-    {
-        if (_doOnce)
-        {
-            _isRotateStartFream = false;
-        }
+		// トレイルの起動
+		PlayPartical();
+	}
 
-        // 回転中かフラグ
-        if (_isRotating)
-        {
-            if (!_doOnce)
-            {
-                _isRotateStartFream = true;
-                _doOnce = true;
-            }
+	// まわす小の更新
+	protected void UpdateRotate()
+	{
+		if (_doOnce)
+		{
+			_isRotateStartFream = false;
+		}
 
-            // リクエストデルタタイムを求める
-            // リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
-            // これの合算値が1になった時,1回転に必要な時間が経過したことになる
-            float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle));
-            _elapsedTime += requiredDeltaTime;
+		// 回転中かフラグ
+		if (_isRotating)
+		{
+			if (!_doOnce)
+			{
+				_isRotateStartFream = true;
+				_doOnce = true;
+			}
 
-            // 目標回転量*リクエストデルタタイムでそのフレームでの回転角度を求めることができる
-            // リクエストデルタタイムの合算値がちょうど1になるように補正をかけると総回転量は目標回転量と一致する
-            bool isFinish = false;
-            if (_elapsedTime >= 1)
-            {
-                _isRotating = false;
-                _isRotateEndFream = true;
-                requiredDeltaTime -= (_elapsedTime - 1); // 補正
+			// リクエストデルタタイムを求める
+			// リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
+			// これの合算値が1になった時,1回転に必要な時間が経過したことになる
+			float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle));
+			_elapsedTime += requiredDeltaTime;
 
-                StopPartical();
-
-                // プレイヤー起因の回転かを判定
-                if (_playerTransform != null)
-                {
-                    var playerComp = _playerTransform.GetComponent<Player>();
+			// 目標回転量*リクエストデルタタイムでそのフレームでの回転角度を求めることができる
+			// リクエストデルタタイムの合算値がちょうど1になるように補正をかけると総回転量は目標回転量と一致する
+			bool isFinish = false;
+			if (_elapsedTime >= 1)
+			{
+				_isRotating = false;
+				_isRotateEndFream = true;
+				requiredDeltaTime -= (_elapsedTime - 1); // 補正
                        // Debug.Log("ありえない話");
 
-                    // プレイヤーに回転終了通知を飛ばす
-                    playerComp.NotificationEndRotate();
+				StopPartical();
 
-                    // バグ防止
-                    _playerTransform = null;
-                }
-                isFinish = true;
-            }
+				// プレイヤー起因の回転かを判定
+				if (_playerTransform != null)
+				{
+					var playerComp = _playerTransform.GetComponent<Player>();
 
-            // 現在フレームの回転を示す回転のクォータニオン作成
-            var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
+					// プレイヤーに回転終了通知を飛ばす
+					playerComp.NotificationEndRotate();
 
-            // 円運動の位置計算
-            var tr = transform;
-            var pos = tr.position;
-            // クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
-            // _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
-            pos -= _axisCenterWorldPos;
-            pos = angleAxis * pos;
-            pos += _axisCenterWorldPos;
-            tr.position = pos;
+					// バグ防止
+					_playerTransform = null;
+				}
+				isFinish = true;
+			}
 
-            // 向き更新
-            tr.rotation = angleAxis * tr.rotation;
+			// 現在フレームの回転を示す回転のクォータニオン作成
+			var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
 
-            _oldAngle = _elapsedTime * _angle;
-            // 90度進むごとに確認当たってるかどうかを確認する
-            if(Math.Abs(_polatAngle) > 1){    // 90度が1になるのでそれ以上かどうか確認
-                if(_elapsedTime >= 1 / Math.Abs(_polatAngle)){
-                    Debug.Log(_elapsedTime);
-                    Debug.Log("90度経過");
-                    isFinish = true;
-                    _isRotating = false;
+			// 円運動の位置計算
+			var tr = transform;
+			var pos = tr.position;
+			// クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
+			// _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
+			pos -= _axisCenterWorldPos;
+			pos = angleAxis * pos;
+			pos += _axisCenterWorldPos;
+			tr.position = pos;
 
-                    // 緊急停止しているので角度に補正を書けないと誤差が出る
-                    var tmpAngle = this.transform.eulerAngles;
-                    // if(_rotAxis.x != 0){
-                    //     tmpAngle.x = _polatAngle * 90;
-                    // }else if(_rotAxis.y != 0){
-                    //     tmpAngle.y = _polatAngle * 90;
-                    // }
-                    this.transform.eulerAngles = tmpAngle;
-                    _polatAngle = 0.0f;
-                }
-            }
+			// 向き更新
+			tr.rotation = angleAxis * tr.rotation;
 
-            if(isFinish){
-                // 誤差を修正する
-                var tmppos = new Vector3(0, 0, 0);
-                tmppos.x = (float)Math.Round(this.transform.position.x, 0, MidpointRounding.AwayFromZero);
-                tmppos.y = (float)Math.Round(this.transform.position.y, 0, MidpointRounding.AwayFromZero);
-                tmppos.z = (float)Math.Round(this.transform.position.z, 0, MidpointRounding.AwayFromZero);
-                this.transform.position = tmppos;
+			_oldAngle = _elapsedTime * _angle;
+			// 90度進むごとに確認当たってるかどうかを確認する
+			if (Math.Abs(_polatAngle) > 1)
+			{	// 90度が1になるのでそれ以上かどうか確認
+				if (_elapsedTime >= 1 / Math.Abs(_polatAngle))
+				{
+					if (!_isReservation) return;
+					// 当たっていた場合の処理
+					_isRotating = false;
+					_isRotateEndFream = true;
 
-                _isRotating = false;
-                _elapsedTime = 0.0f;
-                _isRotateEndFream = true;
+					// 緊急停止しているので角度に補正を書けないと誤差が出る
+					this.transform.eulerAngles = _oldRotAngle;
+					_isReservation = false;
+					isFinish = false;
+				}
+			}
 
-                CheckHitNotMoveObj();
-            }
-        }
-        else
-        {
-            _doOnce = false;
-            _isRotateEndFream = false;
-        }
-    }
+			if (isFinish)
+			{
+				// 誤差を修正する
+				var tmppos = new Vector3(0, 0, 0);
+				tmppos.x = (float)Math.Round(this.transform.position.x, 0, MidpointRounding.AwayFromZero);
+				tmppos.y = (float)Math.Round(this.transform.position.y, 0, MidpointRounding.AwayFromZero);
+				tmppos.z = (float)Math.Round(this.transform.position.z, 0, MidpointRounding.AwayFromZero);
+				this.transform.position = tmppos;
 
-    private void CheckHitNotMoveObj()
-    {
-        if (!_isReservation) return;
-        _isReservation = false;
-        StartRotate(_resePos, -_reseAxis, _reseAngle);
-    }
+				_isRotating = false;
+				_elapsedTime = 0.0f;
+				_isRotateEndFream = true;
+
+				CheckHitNotMoveObj();
+			}
+		}
+		else
+		{
+			_doOnce = false;
+			_isRotateEndFream = false;
+		}
+	}
+
+	private void CheckHitNotMoveObj()
+	{
+		if (!_isReservation) return;
+		Debug.Log("あたってる");
+		_isReservation = false;
+		StartRotate(_resePos, -_reseAxis, _reseAngle);
+	}
 }
