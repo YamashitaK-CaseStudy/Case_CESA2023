@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 5395227295040046322}
   - component: {fileID: 5395227295040046333}
   m_Layer: 5
-  m_Name: Image_SELECT_FILM
+  m_Name: StageFilm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -407,13 +407,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a54f56d5eac7140a4c2b05fa1e365e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pf_textNumber: {fileID: 2868387772954951971, guid: 92f4af5151a78514a90cb7d637c0c50c,
+  _pfTextNumber: {fileID: 2868387772954951971, guid: 92f4af5151a78514a90cb7d637c0c50c,
     type: 3}
   _scrollAmount: 165
   _scrollSpeed: 1
   _numberScale: 0.15
   _numberOffset: {x: -370, y: 0}
   _numberDistance: 77
+  _seedIconOffset: {x: -350, y: -30}
+  _seedIconScale: 0.05
+  _seedScoreOffset: {x: -300, y: -30}
+  _seedScoreScale: 0.05
+  _seedData: {fileID: 11400000, guid: 84e90fd0d401f014792017c4a14e4ba4, type: 2}
 --- !u!114 &5395227295040046333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,7 +563,7 @@ GameObject:
   - component: {fileID: 5395227295717731497}
   - component: {fileID: 5395227295717731498}
   m_Layer: 5
-  m_Name: Mask
+  m_Name: FilmMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
