@@ -23,8 +23,7 @@ public class Bolt : RotatableObject
 
     private void Start()
     {
-        StartSettingSpin();
-
+      
         if (transform.parent == null)
         {
             UpdateBolt = UpdateWhenRoot;
@@ -55,11 +54,11 @@ public class Bolt : RotatableObject
 
     private void UpdateWhenRoot()
     {
-        if (_isRotating || _isSpin)
+        if (_isRotating || _isSpining)
         {
             if (Mathf.Abs(_countTranslation) >= _translationLimit)
             {
-                _isRotating = _isSpin = false;
+                _isRotating = _isSpining = false;
                 return;
             }
 
@@ -85,14 +84,14 @@ public class Bolt : RotatableObject
 
     private void UpdateWhenChild()
     {
-        if (_isRotating == false && _isSpin == false)
+        if (_isRotating == false && _isSpining == false)
         {
             return;
         }
 
         if (Mathf.Abs(_countTranslation) >= _translationLimit)
         {
-            _isRotating = _isSpin = false;
+            _isRotating = _isSpining = false;
             return;
         }
 
@@ -138,7 +137,7 @@ public class Bolt : RotatableObject
 
         if (Mathf.Abs(localPosition.y) >= _translationLimit)
         {
-            _isSpin = false;
+            _isSpining = false;
             localPosition.y = _translationLimit;
             _countSpinTime = 0;
         }
@@ -187,7 +186,7 @@ public class Bolt : RotatableObject
 
         if (Mathf.Abs(translated) >= _translationLimit)
         {
-            _isSpin = false;
+            _isSpining = false;
             _wasCalculateRootSpaceVec = false;
 
             _countSpinTime = 0;

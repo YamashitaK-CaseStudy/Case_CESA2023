@@ -46,33 +46,9 @@ public partial class Player : MonoBehaviour {
     // Update is called once per frame
     void UpdateMove() {
 
-        if (_stricRotAngle.GetIsActicStick) {
+        // x軸アニメーション中は動けないようにする
+        if (_animator.GetBool("StartRot_X")) {
             return;
-        }
-
-        if (_groundCheck.IsGround && _isJumpButton) {
-
-            if (!_isLandingStiffness) {
-
-                _isLandingStiffness = true;
-                landingStiffnessTime.TimeStart = true;
-                Debug.Log("校長");
-            }
-
-            if (!landingStiffnessTime.TimeEnd) {
-                _speedx = 0.0f;
-                return;
-            }
-
-            _isJumpButton = false;
-
-        }
-        else {
-
-            _isLandingStiffness = false;
-            landingStiffnessTime.TimeStart = false;
-            landingStiffnessTime.ResetTime();
-            //Debug.Log("飛んでる判定");
         }
 
         Move();
@@ -84,7 +60,7 @@ public partial class Player : MonoBehaviour {
 
         // 回転させている間は動かない
         if ( _isRotating ) {
-            return;
+            //return;
         }
         
         var value_x = Input.GetAxis("Horizontal");

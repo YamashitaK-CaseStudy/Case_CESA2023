@@ -16,8 +16,6 @@ public partial class Player : MonoBehaviour{
         PlayerRotationStart();
         PlayerSkAnimationStart();
 
-        //StartAction();
-        //StartWarp();
     }
 
     void Update(){
@@ -27,7 +25,5 @@ public partial class Player : MonoBehaviour{
         PlayerRotationUpdate();
         PlayerSkAnimationUpdate();
 
-        //UpdateAction();
-        //UpdateWarp();
     }
 }

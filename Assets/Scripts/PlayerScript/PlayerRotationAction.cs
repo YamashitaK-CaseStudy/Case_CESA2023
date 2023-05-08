@@ -33,6 +33,7 @@ public partial class Player : MonoBehaviour{
         
         // 真下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
+
             Debug.Log(_bottomHitCheck.GetRotObj.name);
             _priortyAxis = priorityAxis.yAxisRot;
 
@@ -40,7 +41,7 @@ public partial class Player : MonoBehaviour{
 
             // スティック回転Y
             if (rotatbleComp._isRotateEndFream) {
-                _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
+               _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
             }
 
             _stricRotAngle.StickRotAngleY_Update();
@@ -53,11 +54,16 @@ public partial class Player : MonoBehaviour{
 
             // 高速回転
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                Debug.Log(_bottomHitCheck.GetRotObj);
-                rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+                if ( rotatbleComp._isSpining ) {
+                    Debug.Log("高速回転終了");
+                    rotatbleComp.EndSpin();
+                }
+                else {
+                    rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+                }
             }
         }
-
+       
         // 前方に回転オブジェクトがある時
         else if (_frontHitCheck.GetIsRotHit) {
 
@@ -82,7 +88,13 @@ public partial class Player : MonoBehaviour{
 
             // 高速回転
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+                if (rotatbleComp._isSpining){
+                    Debug.Log("高速回転終了");    
+                    rotatbleComp.EndSpin();
+                }
+				else{
+                    rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+				}
             }
         }
         else {

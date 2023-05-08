@@ -20,6 +20,14 @@ public class UiSeedBehavior : MonoBehaviour
         _instance.Obtaine();
     }
 
+    static public int totalSeeds
+    {
+        get
+        {
+            return _totalSeeds;
+        }
+    }
+
     static private int _totalSeeds = 0;
     static private UiSeedBehavior _instance = null;
 
@@ -28,22 +36,6 @@ public class UiSeedBehavior : MonoBehaviour
 
 
     /*“à•”ŽÀ‘•*/
-
-    private void Obtaine()
-    {
-        if (_countObtained >= _totalSeeds)
-        {
-            return;
-        }
-
-        transform.GetChild(_countObtained).GetComponent<UnityEngine.UI.Text>().text = "Q";
-        ++_countObtained;
-    }
-
-    private void OnDestroy()
-    {
-        _totalSeeds = 0;
-    }
 
     private void Start()
     {
@@ -55,6 +47,30 @@ public class UiSeedBehavior : MonoBehaviour
             var rectTrans = Instantiate(_iconEmpty, transform).GetComponent<RectTransform>();
             rectTrans.anchoredPosition = new Vector2(rectTrans.rect.width / 2 - canvusRect.width / 2 + _offsetFromUpperLeft.x + (i * (rectTrans.rect.width + _iconDistance)), canvusRect.height / 2 - rectTrans.rect.height / 2 - _offsetFromUpperLeft.y);
         }
+
+        int alreadyObtained = SelectFilmBehavior.obtainedCount;
+
+        for (int i = 0; i < alreadyObtained; ++i)
+        {
+            Obtaine();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        _totalSeeds = 0;
+        SelectFilmBehavior.obtainedCount = _countObtained;
+    }
+
+    private void Obtaine()
+    {
+        if (_countObtained >= _totalSeeds)
+        {
+            return;
+        }
+
+        transform.GetChild(_countObtained).GetComponent<UnityEngine.UI.Text>().text = "X";
+        ++_countObtained;
     }
 
     [SerializeField] private GameObject _iconSeed;

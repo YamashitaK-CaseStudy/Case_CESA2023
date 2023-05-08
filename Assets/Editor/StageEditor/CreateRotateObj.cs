@@ -237,7 +237,7 @@ public partial class CStageEditor : EditorWindow
 		using (new EditorGUI.IndentLevelScope())
 		{
 			_parentRotObj._isRotating = EditorGUILayout.ToggleLeft("isRotating", _parentRotObj._isRotating);
-			_parentRotObj._isSpin = EditorGUILayout.ToggleLeft("isSpin", _parentRotObj._isSpin);
+			_parentRotObj._isSpining = EditorGUILayout.ToggleLeft("isSpin", _parentRotObj._isSpining);
 			_parentRotObj._rotRequirdTime = EditorGUILayout.FloatField("回転速度", _parentRotObj._rotRequirdTime);
 		}
 	}
