@@ -5,13 +5,45 @@ using UnityEngine.InputSystem;
 
 public class SelectFilmBehavior : MonoBehaviour
 {
-    const int MAX_STAGE = 5;
+    const int _MAX_STAGE = 5;
     const int MAX_WORLD = 4;
 
-    static int _currentWorldNum = 1;
+    static public int obtainedCount
+    {
+        get
+        {
+            return _obtainedCountList[currentStageIndex];
+        }
+        set
+        {
+            _obtainedCountList[currentStageIndex] = value;
+        }
+    }
+
+    static public int MAX_STAGE
+    {
+        get
+        {
+            return _MAX_STAGE;
+        }
+    }
+
+    static private int currentStageIndex
+    {
+        get
+        {
+            return _stageNumber - 1 + _MAX_STAGE * (_currentWorldNum - 1);
+        }
+    }
+
+    static private int _currentWorldNum = 1;
+    static private int _stageNumber = 1;
+    static private List<int> _obtainedCountList = new List<int>(new int[_MAX_STAGE * MAX_WORLD]);
 
     void Start()
     {
+        /*テキスト生成・初期化*/
+
         _actionMove = GetComponent<PlayerInput>().actions.FindAction("Move");
 
         if (_actionMove == null)
@@ -41,10 +73,23 @@ public class SelectFilmBehavior : MonoBehaviour
         }
 
 
-        for (int i = 0; i < MAX_STAGE; ++i)
+        for (int i = 1; i <= _MAX_STAGE; ++i)
         {
-            Instantiate(_pf_textNumber, transform).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
-            Instantiate(_pf_textNumber, transform).GetComponent<UnityEngine.UI.Text>().text = (i + 1).ToString();
+            //注意　１ループで生成する数（１ステージごとの数）をInit()のfloat offset = _scrollAmount * (i / １ステージごとの数);に反映してください 検索ワード：マジックナンバー 単語単位の検索を解除しないと出ない(vs2022)
+
+            /*ステージ番号*/
+            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
+            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = "-";
+            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = (i).ToString();
+
+            /*種スコア*/
+            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = "たね";
+            int totalSeeds = UiSeedBehavior.totalSeeds;
+            if (totalSeeds == 0)
+            {
+                totalSeeds = _seedData.GetDefaultTotalCount(_currentWorldNum, i);
+            }
+            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = _obtainedCountList[i - 1].ToString() + "/" + totalSeeds.ToString();
         }
 
         Init();
@@ -52,20 +97,37 @@ public class SelectFilmBehavior : MonoBehaviour
 
     private void Init()
     {
-        GetComponent<RectTransform>().localPosition = new Vector3(_scrollAmount * 2 + _numberDistance / 2, 0, 0);
+        _stageNumber = 1;
+
+        GetComponent<RectTransform>().localPosition = new Vector3(_scrollAmount * 2, 0, 0);
 
         int childCount = transform.childCount;
         Transform childTransform = null;
         for (int i = 0; i < childCount; ++i)
         {
             childTransform = transform.GetChild(i);
-            float offset = _scrollAmount * (i / 2);
+            float offset = _scrollAmount * (i / 5);//マジックナンバー
+
+            /*ステージ番号*/
             childTransform.position = new Vector3(_numberOffset.x + offset, _numberOffset.y, 0) + transform.position;
+            childTransform.localScale = new Vector3(_numberScale, _numberScale, 0);
+
+            childTransform = transform.GetChild(++i);
+            childTransform.position = new Vector3(_numberOffset.x + offset + _numberDistance / 2, _numberOffset.y + _numberScale * 30/*ハイフンのフォントが低い位置になるため微調整*/, 0) + transform.position;
             childTransform.localScale = new Vector3(_numberScale, _numberScale, 0);
 
             childTransform = transform.GetChild(++i);
             childTransform.position = new Vector3(_numberOffset.x + offset + _numberDistance, _numberOffset.y, 0) + transform.position;
             childTransform.localScale = new Vector3(_numberScale, _numberScale, 0);
+
+            /*たねスコア*/
+            childTransform = transform.GetChild(++i);
+            childTransform.position = new Vector3(_seedIconOffset.x + offset, _seedIconOffset.y, 0) + transform.position;
+            childTransform.localScale = new Vector3(_seedIconScale, _seedIconScale, 0);
+
+            childTransform = transform.GetChild(++i);
+            childTransform.position = new Vector3(_seedScoreOffset.x + offset, _seedScoreOffset.y, 0) + transform.position;
+            childTransform.localScale = new Vector3(_seedScoreScale, _seedScoreScale, 0);
         }
 
     }
@@ -85,7 +147,7 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         if (_actionDecision.triggered)
         {
-            bool success = SuzumuraTomoki.SceneManager.instance.LoadStage(_stageNumber + (_currentWorldNum - 1) * MAX_STAGE);
+            bool success = SuzumuraTomoki.SceneManager.instance.LoadStage(_stageNumber + (_currentWorldNum - 1) * _MAX_STAGE);
             if (!success)
             {
                 print("ステージセレクト「そんなステージはありません」");
@@ -104,7 +166,7 @@ public class SelectFilmBehavior : MonoBehaviour
         }
         else if (x > 0)
         {
-            if (_stageNumber >= MAX_STAGE)
+            if (_stageNumber >= _MAX_STAGE)
             {
                 return;
             }
@@ -172,17 +234,23 @@ public class SelectFilmBehavior : MonoBehaviour
         Init();
     }
 
-    [SerializeField, Header("Textオブジェクト。フォントが完成次第入れ替えます。")] private GameObject _pf_textNumber;
+    [SerializeField, Header("Textオブジェクト。フォントが完成次第入れ替えます。")] private GameObject _pfTextNumber;
+    [Header("ステージ番号設定")]
     //[SerializeField] private Sprite _numberFont;
     [SerializeField] private float _scrollAmount = 300;
     [SerializeField] private float _scrollSpeed = 1;
     [SerializeField] private float _numberScale = .15f;
     [SerializeField] private Vector2 _numberOffset = new Vector2(-700, 0);
     [SerializeField] private float _numberDistance = 100;
+    [Header("種スコア設定")]
+    [SerializeField] private Vector2 _seedIconOffset = new Vector2(-650, -30);
+    [SerializeField] private float _seedIconScale = .05f;
+    [SerializeField] private Vector2 _seedScoreOffset = new Vector2(-550, -30);
+    [SerializeField] private float _seedScoreScale = .05f;
+    [SerializeField] private SeedData _seedData;
     private InputAction _actionMove = null;
     private InputAction _actionDecision = null;
     private InputAction _actionStageSelectL = null;
     private InputAction _actionStageSelectR = null;
     private bool _stopInput = false;
-    private int _stageNumber = 1;
 }
