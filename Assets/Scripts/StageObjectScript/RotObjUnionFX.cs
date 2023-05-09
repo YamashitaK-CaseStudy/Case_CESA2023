@@ -68,9 +68,5 @@ public partial class RotObjUnion : MonoBehaviour
 		_effect.transform.position = generatePos + this.transform.position;
 		_effect.transform.eulerAngles = generateAngle;
 		_effect.SendEvent(_StartEventName);
-
-		// _partical.gameObject.transform.position = generatePos + this.transform.position;
-		// _partical.gameObject.transform.eulerAngles = generateAngle;
-		// _partical.Play();
 	}
 }
