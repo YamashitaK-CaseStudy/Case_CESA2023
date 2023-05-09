@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2076198888681737343}
   - component: {fileID: 7383438208080157572}
   - component: {fileID: 4645714707797382381}
+  - component: {fileID: 580892800148382214}
   m_Layer: 5
   m_Name: Pf_BackGroundCanvas
   m_TagString: Untagged
@@ -101,6 +102,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &580892800148382214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4199099814888447363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec79a6397a1fec4ca4aded9676a9acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settingFps: 60
 --- !u!1 &8743129050831034137
 GameObject:
   m_ObjectHideFlags: 0
