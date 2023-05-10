@@ -11,7 +11,6 @@ public class RotHitFloar : MonoBehaviour
 	{
 		_parentObj = this.transform.root.gameObject;
 		_parentRotComp = _parentObj.transform.GetComponent<RotatableObject>();
-		Debug.Log(_parentRotComp);
 	}
 
 	private void OnTriggerEnter(Collider other) {

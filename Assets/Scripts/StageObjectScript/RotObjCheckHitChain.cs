@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotObjHitChain : MonoBehaviour
+public class RotObjCheckHitChain : MonoBehaviour
 {
 	private GameObject _parentObj;
 	private RotatableObject _parentRotObj;
-	private GameObject[] _broObj { get; set; }  // 兄弟オブジェクト
+	private GameObject[] _broObj { get; set; } 	// 兄弟オブジェクト
 	private int _childNum = 0;
+	public bool _isCheckHit { get; set; } 		// 当たり判定を判定するかどうか
+
 	[SerializeField] private int _HitChainAngle = 180;
 	private void Start()
 	{
@@ -16,7 +18,7 @@ public class RotObjHitChain : MonoBehaviour
 		_parentRotObj = _parentObj.GetComponent<RotatableObject>();
 		_childNum = _parentObj.transform.GetChild(0).childCount;
 		_broObj = new GameObject[_childNum];
-
+		_isCheckHit = false;
 		for (int i = 0; i < _childNum; i++)
 		{
 			_broObj[i] = _parentObj.transform.GetChild(0).GetChild(i).gameObject;
@@ -25,24 +27,23 @@ public class RotObjHitChain : MonoBehaviour
 	// オブジェクトが当たったとき
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.layer != 3) return;
-		// 回転してるオブジェクトのときのみ処理
-		if (!_parentRotObj._isRotating) return;
+		if(!_isCheckHit) return;
 		// RotateObjectのみと当たり判定を取る
-		Debug.Log(other.gameObject);
-		// コンポーネントを確認
 		var comp = other.transform.root.GetComponent<RotatableObject>();
-		GameObject chainObj = null;
-		chainObj = other.gameObject;
-		var compChain = chainObj.transform.GetComponent<RotObjHitChain>();
-		if (compChain == null) return;
+		// 自分の親に知らせる
+		_parentRotObj.SetisHitChain(other.gameObject, comp, other.transform.position);
+		// GameObject chainObj = null;
+		// chainObj = other.gameObject;
+		// var compChain = chainObj.transform.GetComponent<RotObjCheckHitChain>();
+		// if (compChain == null) return;
+
 
 		// 必要な軸と中心座標を確保
 		// 相手の軸を自分の軸の逆方向を渡す
-		comp._nowRotAxis = -_parentRotObj._nowRotAxis;
-		var centerPos = compChain.MostFarObjPos(comp._nowRotAxis, other.transform.position);
-		// 回転処理
-		comp.StartRotate(centerPos, comp._nowRotAxis, _HitChainAngle);
+		// comp._nowRotAxis = -_parentRotObj._nowRotAxis;
+		// var centerPos = compChain.MostFarObjPos(comp._nowRotAxis, other.transform.position);
+		// // 回転処理
+		// comp.StartRotate(centerPos, comp._nowRotAxis, _HitChainAngle);
 	}
 
 	public Vector3 MostFarObjPos(Vector3 axis, Vector3 mypos)
