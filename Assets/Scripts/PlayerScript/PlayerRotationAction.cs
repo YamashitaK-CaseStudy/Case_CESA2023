@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public partial class Player : MonoBehaviour{
 
     private StickRotAngle _stricRotAngle = null;
     private bool _isRotating = false;            // 回している最中かを判定するフラグ
-    private priorityAxis _priortyAxis;
-
-    private enum priorityAxis {
-        yAxisRot, xAxisRot,None
-    }
+    
+    private InputAction _blocklockButton = null;
+    private InputAction _rotationButton = null;
+    private InputAction _rotationSpinButton = null;
 
     private void PlayerRotationStart() {
 
@@ -18,6 +18,7 @@ public partial class Player : MonoBehaviour{
         _stricRotAngle = GetComponent<StickRotAngle>();
 
         // 各種ボタンの取得
+        _blocklockButton    = _playerInput.actions.FindAction("BlockLock");
         _rotationButton     = _playerInput.actions.FindAction("Rotation");
         _rotationSpinButton = _playerInput.actions.FindAction("RotationSpin");
     }
@@ -25,27 +26,49 @@ public partial class Player : MonoBehaviour{
     private void PlayerRotationUpdate() {
 
         // 移動中、ジャンプ中は回転させない
-        if(Mathf.Abs( _rigidbody.velocity.x) > 0 || !_groundCheck.IsGround) {
+        if (Mathf.Abs(_rigidbody.velocity.x) > 0 || !_groundCheck.IsGround) {
             return;
         }
 
-        // 下に回転オブジェクトがある場合無条件で優先
-        
-        // 真下に回転オブジェクトがある時
-        if (_bottomHitCheck.GetIsRotHit) {
+        // ブロックのロック
+        if (_blocklockButton.IsPressed()) {
 
-            Debug.Log(_bottomHitCheck.GetRotObj.name);
-            _priortyAxis = priorityAxis.yAxisRot;
+            _speedx = 0.0f;
+
+            // 下に回転オブジェクトがある場合無条件で優先
+            if (_bottomHitCheck.GetRotObj != null) {
+                _yBlockLock = true;
+            }
+            else if (_frontHitCheck.GetRotObj != null) {
+                _xBlockLock = true;
+            }
+            else {
+                _yBlockLock = true;
+            }
+        }
+        else {
+            _yBlockLock = false;
+            _xBlockLock = false;
+            _animCallBack.RotationInValid();
+        }
+
+        // 真下に回転オブジェクトがある時
+        if(_animCallBack.GetIsRotationValid && _yBlockLock) {
+
+            if(_bottomHitCheck.GetRotObj == null) {
+                return;
+            }
 
             var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
             // スティック回転Y
-            if (rotatbleComp._isRotateEndFream) {
-               _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
+            if (!rotatbleComp._isRotating) {
+                _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
             }
 
             _stricRotAngle.StickRotAngleY_Update();
-            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
+            rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY, this.transform);
+
            
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
@@ -54,7 +77,7 @@ public partial class Player : MonoBehaviour{
 
             // 高速回転
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                if ( rotatbleComp._isSpining ) {
+                if (rotatbleComp._isSpining) {
                     Debug.Log("高速回転終了");
                     rotatbleComp.EndSpin();
                 }
@@ -63,19 +86,21 @@ public partial class Player : MonoBehaviour{
                 }
             }
         }
-       
+
         // 前方に回転オブジェクトがある時
-        else if (_frontHitCheck.GetIsRotHit) {
+        else if (_animCallBack.GetIsRotationValid && _xBlockLock) {
 
-            _priortyAxis = priorityAxis.xAxisRot;
-
+            if (_frontHitCheck.GetRotObj == null) {
+                return;
+            }
             var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
-            Debug.Log(_frontHitCheck.GetRotObj);
 
-
-            if (rotatbleComp._isRotateEndFream) {
+            if (!rotatbleComp._isRotating) {
                 _stricRotAngle.xAxisManyObjJude(_frontHitCheck);
             }
+
+            Debug.Log(rotatbleComp._isRotateStartFream);
+
 
             // スティック回転X
             _stricRotAngle.StickRotAngleX_Update();
@@ -83,24 +108,94 @@ public partial class Player : MonoBehaviour{
 
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
-                rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, 90,this.transform);
+                rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, 90, this.transform);
             }
 
             // 高速回転
             if (_rotationSpinButton.WasPressedThisFrame()) {
-                if (rotatbleComp._isSpining){
-                    Debug.Log("高速回転終了");    
+                if (rotatbleComp._isSpining) {
+                    Debug.Log("高速回転終了");
                     rotatbleComp.EndSpin();
                 }
-				else{
+                else {
                     rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
-				}
+                }
             }
         }
-        else {
-            _priortyAxis = priorityAxis.None;
-        }
     }
+
+        /*
+
+       // 移動中、ジャンプ中は回転させない
+       if(Mathf.Abs( _rigidbody.velocity.x) > 0 || !_groundCheck.IsGround) {
+           return;
+       }
+
+
+
+       // 下に回転オブジェクトがある場合無条件で優先
+
+       // 真下に回転オブジェクトがある時
+       if (_bottomHitCheck.GetIsRotHit) {
+
+           var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
+
+           // スティック回転Y
+           if (rotatbleComp._isRotateEndFream) {
+              _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
+           }
+
+           _stricRotAngle.StickRotAngleY_Update();
+           rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
+
+           // 通常軸回転
+           if (_rotationButton.WasPressedThisFrame()) {
+               rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90, this.transform);
+           }
+
+           // 高速回転
+           if (_rotationSpinButton.WasPressedThisFrame()) {
+               if ( rotatbleComp._isSpining ) {
+                   Debug.Log("高速回転終了");
+                   rotatbleComp.EndSpin();
+               }
+               else {
+                   rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+               }
+           }
+       }
+
+       // 前方に回転オブジェクトがある時
+       else if (_frontHitCheck.GetIsRotHit) {
+
+           var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
+
+           //if (rotatbleComp._isRotateEndFream) {
+           //    _stricRotAngle.xAxisManyObjJude(_frontHitCheck);
+           //}
+
+           //// スティック回転X
+           //_stricRotAngle.StickRotAngleX_Update();
+           //rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX, this.transform);
+
+           // 通常軸回転
+           if (_rotationButton.WasPressedThisFrame()) {
+               rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, 90,this.transform);
+           }
+
+           // 高速回転
+           if (_rotationSpinButton.WasPressedThisFrame()) {
+               if (rotatbleComp._isSpining){
+                   Debug.Log("高速回転終了");    
+                   rotatbleComp.EndSpin();
+               }
+               else{
+                   rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+               }
+           }
+       }
+        */
+    
 
     public void NotificationStartRotate() {
         _isRotating = true;

@@ -34,7 +34,7 @@ public class FrontRayCheck : MonoBehaviour{
         // Rayのスタート位置を設定
         foreach (var myray in _oneRays) {
 
-            Ray ray = new Ray(transform.position + myray.offsetPos, new Vector3(_player.Speed_x, 0, 0).normalized * myray.distance);
+            Ray ray = new Ray(transform.position + myray.offsetPos, new Vector3(_player.GetSpeedx, 0, 0).normalized * myray.distance);
 
             if (Physics.Raycast(ray, out hitInfo, myray.distance,13)) {
 
@@ -51,7 +51,7 @@ public class FrontRayCheck : MonoBehaviour{
             }
 
             if (_IsdebugRay) {
-                Debug.DrawRay(transform.position + myray.offsetPos, new Vector3(_player.Speed_x, 0, 0).normalized * myray.distance, Color.red);
+                Debug.DrawRay(transform.position + myray.offsetPos, new Vector3(_player.GetSpeedx, 0, 0).normalized * myray.distance, Color.red);
             }
         }
     }
