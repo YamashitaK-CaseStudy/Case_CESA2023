@@ -20,15 +20,22 @@ public class RespawnCollider : MonoBehaviour
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if(other.gameObject.tag != "Player") return;
+		if(other.gameObject.transform.root.tag != "Player") return;
+		Debug.Log("リスポーン");
 		// 今のリスポーンポイントに飛ばす
 		var Comp = other.gameObject.GetComponent<CharacterController>();
 		// キャラクターコントローラーを一度切る
-		Comp.enabled = false;
+		if(Comp != null){
+			Comp.enabled = false;
+		}
+		// 飛ばす
 		other.transform.root.gameObject.transform.position = _respawnPos;
 		// キャラクターコントローラーを起動する
-		other.gameObject.GetComponent<CharacterController>().enabled = true;
+		if(Comp != null){
+			other.gameObject.GetComponent<CharacterController>().enabled = true;
+		}
+
 		// ダメージ処理
-		other.transform.GetComponent<Player>().Damage();
+		other.transform.root.GetComponent<Player>().Damage();
 	}
 }
