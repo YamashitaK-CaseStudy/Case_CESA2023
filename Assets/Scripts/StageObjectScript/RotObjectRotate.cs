@@ -57,6 +57,8 @@ public partial class RotatableObject : MonoBehaviour
 		_oldRotAngle = this.transform.eulerAngles;
 		Debug.Log(_oldRotAngle);
 
+		SetChildHitCheckFlg(true);
+
 		// 経過時間を初期化
 		_elapsedTime = 0.0f;
 		// トレイルの起動
@@ -95,10 +97,10 @@ public partial class RotatableObject : MonoBehaviour
 
 		// 角度による補正値を計算する
 		_polatAngle = _angle / 90;
-		Debug.Log(_polatAngle);
 
 		_oldRotAngle = this.transform.eulerAngles;
-		Debug.Log(_oldRotAngle);
+
+		SetChildHitCheckFlg(true);
 
 		// トレイルの起動
 		PlayPartical();
@@ -135,7 +137,7 @@ public partial class RotatableObject : MonoBehaviour
 				_isRotating = false;
 				_isRotateEndFream = true;
 				requiredDeltaTime -= (_elapsedTime - 1); // 補正
-                       // Debug.Log("ありえない話");
+														 // Debug.Log("ありえない話");
 
 				StopPartical();
 
@@ -172,18 +174,20 @@ public partial class RotatableObject : MonoBehaviour
 			_oldAngle = _elapsedTime * _angle;
 			// 90度進むごとに確認当たってるかどうかを確認する
 			if (Math.Abs(_polatAngle) > 1)
-			{	// 90度が1になるのでそれ以上かどうか確認
+			{   // 90度が1になるのでそれ以上かどうか確認
 				if (_elapsedTime >= 1 / Math.Abs(_polatAngle))
 				{
-					if (!_isReservation) return;
-					// 当たっていた場合の処理
-					_isRotating = false;
-					_isRotateEndFream = true;
+					if (_isReservation)
+					{
+						// 当たっていた場合の処理
+						_isRotating = false;
+						_isRotateEndFream = true;
 
-					// 緊急停止しているので角度に補正を書けないと誤差が出る
-					this.transform.eulerAngles = _oldRotAngle;
-					_isReservation = false;
-					isFinish = false;
+						// 緊急停止しているので角度に補正を書けないと誤差が出る
+						this.transform.eulerAngles = _oldRotAngle;
+						_isReservation = false;
+						isFinish = false;
+					}
 				}
 			}
 
@@ -207,6 +211,7 @@ public partial class RotatableObject : MonoBehaviour
 		{
 			_doOnce = false;
 			_isRotateEndFream = false;
+			SetChildHitCheckFlg(false);
 		}
 	}
 

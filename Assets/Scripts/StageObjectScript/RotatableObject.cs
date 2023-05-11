@@ -35,7 +35,7 @@ public partial class RotatableObject : MonoBehaviour{
         //StartSettingOtherHit();
         // 自身の回転軸の向きを正規化しとく
         _rotAxis.Normalize();
-
+        ChainSettingStart();
         StartSettingRot();
 
     }
@@ -44,8 +44,9 @@ public partial class RotatableObject : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
+        HitChainUpdate();
         UpdateRotate();
-        UpdateSpin();      
+        UpdateSpin();
     }
 
 

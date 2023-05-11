@@ -12,7 +12,9 @@ public class RespawnPoint : MonoBehaviour
 		mesh.material.color = newColor;
 	}
 	private void OnTriggerEnter(Collider other) {
-		if(other.gameObject.tag != "Player") return;
+		Debug.Log("あたり");
+		if(other.gameObject.transform.root.tag != "Player") return;
+		Debug.Log("リスポーン設定");
 		colliderObj.SetRespawnPosition(_respawnPos);
 	}
 }
