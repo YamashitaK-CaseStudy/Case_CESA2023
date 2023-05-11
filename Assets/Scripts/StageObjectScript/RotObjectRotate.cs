@@ -8,56 +8,45 @@ public partial class RotatableObject : MonoBehaviour
 {
 
 	private Transform _playerTransform = null;// プレイヤーのトランスフォーム
-
-	public bool _isReservation = false;// 予約フラグ
-	public Vector3 _resePos { get; set; }   // 予約座標
-	public Vector3 _reseAxis { get; set; }  // 予約軸
-	public int _reseAngle { get; set; }     // 予約回転
 	private float _oldAngle = 0.0f;
-	private Vector3 _oldRotAngle;
-	private RotHitFloar[] _childComp;
 	private float _polatAngle = 0.0f;
 	private bool _isSpin;
+	private Quaternion _oldRotAngle;
+	private Vector3 _oldPos;
 
 	private void StartSettingRot()
 	{
-		var child = this.transform.GetChild(0).gameObject;
-		_childComp = new RotHitFloar[child.transform.childCount];
-		for (int i = 0; i < child.transform.childCount; i++)
-		{
-			_childComp[i] = child.transform.GetChild(i).GetComponent<RotHitFloar>();
-		}
+
 	}
 
 	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
 	{
-
+		Debug.Log("回転");
 		if (_isSpin || _isRotating)
 		{
 			return;
 		}
 		// 回転の中心を設定
 		_axisCenterWorldPos = rotCenter;
-		_resePos = rotCenter;
-
 		// 回転軸を設定
 		_rotAxis = rotAxis;
-		_reseAxis = rotAxis;
-
+		Debug.Log(_rotAxis);
 		// 回転オフセット値をセット
 		_angle = rotAngle;
-		_reseAngle = rotAngle;
+		Debug.Log(_angle);
 		// フラグを立てる
 		_isRotating = true;
 
 		// 角度による補正値を計算する
 		_polatAngle = _angle / 90;
-		Debug.Log(_polatAngle);
 
-		_oldRotAngle = this.transform.eulerAngles;
-		Debug.Log(_oldRotAngle);
+		// 回転前の角度を持っておく
+		_oldRotAngle = this.transform.rotation;
+		_oldPos = this.transform.position;
 
-		SetChildHitCheckFlg(true);
+		// 床と連鎖の当たり判定を行う
+		SetChildHitCheckFloorFlg(true);
+		SetChildHitCheckChainFlg(true);
 
 		// 経過時間を初期化
 		_elapsedTime = 0.0f;
@@ -68,42 +57,25 @@ public partial class RotatableObject : MonoBehaviour
 
 	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle, Transform playerTransform)
 	{
-
 		if (_isSpin || _isRotating)
 		{
 			return;
 		}
-
-		// 回転の中心を設定
-		_axisCenterWorldPos = rotCenter;
-		_resePos = rotCenter;
-
-		// 回転軸を設定
-		_rotAxis = rotAxis;
-		_reseAxis = rotAxis;
-
-		// 回転オフセット値をセット
-		_angle = rotAngle;
-		_reseAngle = rotAngle;
-
+		Debug.Log("プレイヤー回転");
+		StartRotate(rotCenter, rotAxis, rotAngle);
 		// トランスフォームを格納
 		_playerTransform = playerTransform;
+	}
 
-		// フラグを立てる
-		_isRotating = true;
-
-		// 経過時間を初期化
-		_elapsedTime = 0.0f;
-
-		// 角度による補正値を計算する
-		_polatAngle = _angle / 90;
-
-		_oldRotAngle = this.transform.eulerAngles;
-
-		SetChildHitCheckFlg(true);
-
-		// トレイルの起動
-		PlayPartical();
+	public void StartRotateReflect(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
+	{
+		if (_isSpin || _isRotating)
+		{
+			return;
+		}
+		Debug.Log("反射回転");
+		StartRotate(rotCenter, rotAxis, rotAngle);
+		SetChildHitCheckFloorFlg(false);
 	}
 
 	// まわす小の更新
@@ -122,7 +94,7 @@ public partial class RotatableObject : MonoBehaviour
 				_isRotateStartFream = true;
 				_doOnce = true;
 			}
-
+			Debug.Log("kaitenja");
 			// リクエストデルタタイムを求める
 			// リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
 			// これの合算値が1になった時,1回転に必要な時間が経過したことになる
@@ -133,26 +105,20 @@ public partial class RotatableObject : MonoBehaviour
 			// リクエストデルタタイムの合算値がちょうど1になるように補正をかけると総回転量は目標回転量と一致する
 			bool isFinish = false;
 			if (_elapsedTime >= 1)
-			{
-				_isRotating = false;
-				_isRotateEndFream = true;
+			{   // 修了確認
 				requiredDeltaTime -= (_elapsedTime - 1); // 補正
-														 // Debug.Log("ありえない話");
-
-				StopPartical();
-
-				// プレイヤー起因の回転かを判定
-				if (_playerTransform != null)
-				{
-					var playerComp = _playerTransform.GetComponent<Player>();
-
-					// プレイヤーに回転終了通知を飛ばす
-					playerComp.NotificationEndRotate();
-
-					// バグ防止
-					_playerTransform = null;
-				}
 				isFinish = true;
+				Debug.Log("終了１");
+			}   // 90度進むごとに確認当たってるかどうかを確認する
+			else if (_elapsedTime >= 1 / Math.Abs(_polatAngle))
+			{
+				SetChildHitCheckFloorFlg(true);
+				if (_isHitFloor)
+				{
+					requiredDeltaTime -= (_elapsedTime - 1); // 補正
+					isFinish = true;
+					Debug.Log("終了2");
+				}
 			}
 
 			// 現在フレームの回転を示す回転のクォータニオン作成
@@ -172,55 +138,71 @@ public partial class RotatableObject : MonoBehaviour
 			tr.rotation = angleAxis * tr.rotation;
 
 			_oldAngle = _elapsedTime * _angle;
-			// 90度進むごとに確認当たってるかどうかを確認する
-			if (Math.Abs(_polatAngle) > 1)
-			{   // 90度が1になるのでそれ以上かどうか確認
-				if (_elapsedTime >= 1 / Math.Abs(_polatAngle))
-				{
-					if (_isReservation)
-					{
-						// 当たっていた場合の処理
-						_isRotating = false;
-						_isRotateEndFream = true;
 
-						// 緊急停止しているので角度に補正を書けないと誤差が出る
-						this.transform.eulerAngles = _oldRotAngle;
-						_isReservation = false;
-						isFinish = false;
-					}
-				}
-			}
+			// ** 終了時処理
+			if (!isFinish) return;
 
-			if (isFinish)
+			// 終了時に変更するフラグを変更
+			_isRotating = false;        // 回転処理の終了
+			_isRotateEndFream = true;   // 回転が終わったFを通知
+
+			// 最終的に回転した量
+			var finishAngle = _angle;
+
+			// 床に当たってた時の処理
+			if (_isHitFloor)
 			{
-				// 誤差を修正する
-				var tmppos = new Vector3(0, 0, 0);
-				tmppos.x = (float)Math.Round(this.transform.position.x, 0, MidpointRounding.AwayFromZero);
-				tmppos.y = (float)Math.Round(this.transform.position.y, 0, MidpointRounding.AwayFromZero);
-				tmppos.z = (float)Math.Round(this.transform.position.z, 0, MidpointRounding.AwayFromZero);
-				this.transform.position = tmppos;
-
-				_isRotating = false;
-				_elapsedTime = 0.0f;
-				_isRotateEndFream = true;
-
-				CheckHitNotMoveObj();
+				Debug.Log("反射すんで");
+				// 経過時間と補間用数値を用いて現在進んだ角度から一番近い90単位の角度を算出
+				finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, MidpointRounding.AwayFromZero) * 90;
+				SetReflect(_axisCenterWorldPos, _rotAxis, finishAngle);
 			}
+
+			// 最終的に回転した量を考慮して最終補正をクオータニオンで計算する
+			// 現在フレームの回転を示す回転のクォータニオン作成
+			var qtAngleAxis = Quaternion.AngleAxis(finishAngle, _rotAxis);
+			// 円運動の位置計算
+			var tmpPos = _oldPos;
+			// クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
+			// _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
+			tmpPos -= _axisCenterWorldPos;
+			tmpPos = qtAngleAxis * tmpPos;
+			tmpPos += _axisCenterWorldPos;
+			// 最新のやつ変更
+			this.transform.position = tmpPos;
+			// 向き更新
+			this.transform.rotation = qtAngleAxis * _oldRotAngle;
+
+			Debug.LogError("補正いれたで");
+
+			// プレイヤー起因の回転かを判定
+			if (_playerTransform != null)
+			{
+				var playerComp = _playerTransform.GetComponent<Player>();
+				// プレイヤーに回転終了通知を飛ばす
+				playerComp.NotificationEndRotate();
+				// バグ防止
+				_playerTransform = null;
+			}
+			StopPartical();
 		}
 		else
 		{
+			if(_isRotateEndFream)Debug.Log("てててて");
 			_doOnce = false;
 			_isRotateEndFream = false;
-			SetChildHitCheckFlg(false);
+			// 普段は当たり判定の処理を切っておく
+			SetChildHitCheckFloorFlg(false);
+			SetChildHitCheckChainFlg(false);
 		}
 	}
 
-	private void CheckHitNotMoveObj()
-	{
-		if (!_isReservation) return;
-		Debug.Log("あたってる");
-		_isReservation = false;
-		StartRotate(_resePos, -_reseAxis, _reseAngle);
-	}
+	// private void CheckHitNotMoveObj()
+	// {
+	// 	if (!_isReservation) return;
+	// 	Debug.Log("あたってる");
+	// 	_isReservation = false;
+	// 	StartRotate(_resePos, -_reseAxis, _reseAngle);
+	// }
 
 }

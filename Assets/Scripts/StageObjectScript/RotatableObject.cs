@@ -37,7 +37,7 @@ public partial class RotatableObject : MonoBehaviour{
         _rotAxis.Normalize();
         ChainSettingStart();
         StartSettingRot();
-
+        StaHitCheckFloorSettingStartrt();
     }
 
 
@@ -47,6 +47,7 @@ public partial class RotatableObject : MonoBehaviour{
         HitChainUpdate();
         UpdateRotate();
         UpdateSpin();
+        HitFloorUpdate();
     }
 
 
