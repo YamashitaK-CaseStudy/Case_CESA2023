@@ -10,7 +10,7 @@ public partial class Player : MonoBehaviour{
     private Animator _animator;
 
     // アニメーション側で使う変数
-    private bool _yBlockLock = false, _xBlockLock = false;
+    private bool _yBlockLock = false, _yBlockUpperLock = false, _xBlockLock = false;
    
     private void PlayerSkAnimationStart() {
 
@@ -22,8 +22,12 @@ public partial class Player : MonoBehaviour{
         // y軸回転開始アニメーション
         if (_yBlockLock) {
             transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
-            Debug.Log("正面");
             _animator.SetBool("StartRot_Y", true);
+        }
+        // 頭上にブロックがある時の回転開始アニメーション
+        else if (_yBlockUpperLock) {
+            transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
+            _animator.SetBool("StartRotUpper_Y", true);
         }
         // x軸回転開始アニメーション
         else if (_xBlockLock) {
@@ -32,6 +36,7 @@ public partial class Player : MonoBehaviour{
         else {
             _animator.SetBool("StartRot_Y", false);
             _animator.SetBool("StartRot_X", false);
+            _animator.SetBool("StartRotUpper_Y", false);
         }
 
         // 速度が0以上
