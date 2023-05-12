@@ -5,10 +5,14 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: 
+      assembly: 
+      name: 
+    second: {instanceID: 0}
+  - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: M_body
-
     second: {fileID: 2100000, guid: 1e5860e6fa54131448d093601a23884c, type: 2}
   - first:
       type: UnityEngine:Material
