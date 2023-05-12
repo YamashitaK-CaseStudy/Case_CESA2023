@@ -9,7 +9,7 @@ public partial class RotatableObject : MonoBehaviour
 	RotatableObject _chainObjComp;	// 回転させるオブジェクト
 	RotObjCheckHitChain[] _childObjChainComp;
 	float otherObjLength = 0;
-	public bool _isHitChain {get;set;}
+	private bool _isHitChain {get;set;}
 	Vector3 _rotPosOther;
 	[SerializeField] private int _HitChainAngle = 180;
 	void ChainSettingStart(){
@@ -30,16 +30,20 @@ public partial class RotatableObject : MonoBehaviour
 				}
 			}
 		}
+
+		_isHitChain = false;
 	}
 
 	void HitChainUpdate(){
 		if(!_isHitChain) return;
-		_isHitChain = false;
 
+		_isHitChain = false;
 		otherObjLength = 0;
 
+		// 相手のオブジェクト基準で位置を計測
 		var centPos = _chainObjComp.MostFarObjPos(_nowRotAxis, _rotPosOther);
-		_chainObjComp.StartRotate(centPos, _chainObjComp._nowRotAxis, _HitChainAngle);
+		// 相手のオブジェクトを回転させる
+		_chainObjComp.StartRotateChain(centPos, _chainObjComp._nowRotAxis, _HitChainAngle);
  	}
 
 	public void SetisHitChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
@@ -89,7 +93,7 @@ public partial class RotatableObject : MonoBehaviour
 		return _childObj[farnum].transform.position;
 	}
 
-	private void SetChildHitCheckFlg(bool flg){
+	private void SetChildHitCheckChainFlg(bool flg){
 		for(int i = 0; i < _childObjChainComp.Length; i++){
 			_childObjChainComp[i]._isCheckHit = flg;
 		}

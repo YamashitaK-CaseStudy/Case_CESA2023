@@ -54,7 +54,6 @@ public partial class RotatableObject : MonoBehaviour{
         else {
             _nowRotAxis = new Vector3(0, 1, 0);
         }
-
         StartRotate(center, axis, offset, playerTransform);
        // RotateAxis(center, axis, offset);
 

@@ -34,7 +34,7 @@ public partial class Player : MonoBehaviour{
         // 真下に回転オブジェクトがある時
         if (_bottomHitCheck.GetIsRotHit) {
 
-            Debug.Log(_bottomHitCheck.GetRotObj.name);
+//            Debug.Log(_bottomHitCheck.GetRotObj.name);
             _priortyAxis = priorityAxis.yAxisRot;
 
             var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
@@ -70,7 +70,7 @@ public partial class Player : MonoBehaviour{
             _priortyAxis = priorityAxis.xAxisRot;
 
             var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
-            Debug.Log(_frontHitCheck.GetRotObj);
+            //Debug.Log(_frontHitCheck.GetRotObj);
 
 
             if (rotatbleComp._isRotateEndFream) {
