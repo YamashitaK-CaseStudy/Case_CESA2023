@@ -62,6 +62,8 @@ public partial class RotatableObject : MonoBehaviour
 
 		//Debug.Log(_cloneBaceObjs.Length);
 
+		CreateClone();
+
 		CreateCloneToSpin();
 		
 	}
@@ -122,7 +124,7 @@ public partial class RotatableObject : MonoBehaviour
 				tr.rotation = rotQuat * tr.rotation;
 
 			}
-
+			/*
 			// 回転量を加算
 			_totalSpinedAngle = _rotSpeed;
 			if ( _totalSpinedAngle <= 270 ) {
@@ -131,6 +133,7 @@ public partial class RotatableObject : MonoBehaviour
 					CreateClone(_totalSpinedAngle / 90);
 				}
 			}
+			 */
 
 		}
 	}
