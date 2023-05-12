@@ -1,53 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Player : MonoBehaviour {
 
-    [SerializeField] private float _deadZone;
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private AnimationCurve _accelerationMoveCurve;
-    [SerializeField] private float _gravity;
-    [SerializeField] private float _jumpSpeed;
-    [SerializeField] private float _normalIdle_To_JumpWaitTime;
-
+    [SerializeField, Header("左スティックのデッドゾーン")] private float _deadZone;
+    [SerializeField, Header("移動速度")] private float _moveSpeed;
+    [SerializeField, Header("重力")] private float _gravity;
+    [SerializeField, Header("ジャンプ力")] private float _jumpPower;
+   
     private Rigidbody _rigidbody;
+    private float _speedx;
 
-    private float _accelTime = 0.0f;
-    private float _speedx = 0.0f;
-    private float _speedy = 0.0f;
-    private bool _isBall_To_Jump = false;
-    private bool _isnormalIdle_To_Jump = false;
-    private TimeMeasurement.Alarm _normalIdle_To_JumpAlarm;
-    private TimeMeasurement.Alarm landingStiffnessTime;
-    private bool _isLandingStiffness = false;
-    private bool _isJumpButton = false;
-
-    public float Speed_x {
+ 
+    public float GetSpeedx {
         get { return _speedx; }
     }
-
-    public float Speed_y {
-        get { return _speedy; }
-    }
-
 
     void StartMove() {
 
         TryGetComponent(out _rigidbody);
-
-        // 通常アイドル状態からのジャンプの待ち時間計測の追加
-        _normalIdle_To_JumpAlarm = _timeMeasurement.AddArarm("NormalIdle_To_Jump", _normalIdle_To_JumpWaitTime);
-
-        // 着地時の硬直時間計測
-        landingStiffnessTime = _timeMeasurement.AddArarm("LandingStiffness", 0.1f);
     }
 
     // Update is called once per frame
     void UpdateMove() {
 
-        // x軸アニメーション中は動けないようにする
-        if (_animator.GetBool("StartRot_X")) {
+        // スティック入力入れてるかつ回転アニメーションが再生されてる間は動けない
+        if (_xBlockLock || _yBlockLock || _animCallBack.GetIsRotationAnimPlay) {
             return;
         }
 
@@ -58,40 +35,22 @@ public partial class Player : MonoBehaviour {
     // 横移動
     private void Move() {
 
-        // 回転させている間は動かない
-        if ( _isRotating ) {
-            //return;
-        }
-        
+       
         var value_x = Input.GetAxis("Horizontal");
+        var valueCeil = Mathf.Ceil(value_x);
 
-        if (-_deadZone > value_x) {
+        if (-_deadZone < value_x && value_x < _deadZone) {
 
-            _accelTime += Time.deltaTime;
-            _speedx = -_moveSpeed * _accelerationMoveCurve.Evaluate(_accelTime);
-            transform.LookAt(transform.position + new Vector3(-1, 0, 0));
-
-        }
-        else if (value_x > _deadZone) {
-
-            _accelTime += Time.deltaTime;
-            _speedx = _moveSpeed * _accelerationMoveCurve.Evaluate(_accelTime);
-            transform.LookAt(transform.position + new Vector3(1, 0, 0));
+            _speedx = 0.0f;
         }
         else {
-            // 減速
-            // 慣性は無し
-            _speedx = 0.0f;
-            
-        }
 
+            _speedx = valueCeil * _moveSpeed;
+            transform.LookAt(new Vector3(transform.position.x + valueCeil, transform.position.y, 0), Vector3.up);
+        }
+     
+        // 速度適応
         _rigidbody.velocity = new Vector3(_speedx, _rigidbody.velocity.y, 0);
-
-        // 前方のRayが壁に当たっていたらxベクトルを零にする
-        if (_frontrayCheck.IsFrontHit) {
-            _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
-        }
-
     }
 
     private void Jump() {
@@ -102,32 +61,15 @@ public partial class Player : MonoBehaviour {
 
             if (Input.GetButtonDown("Jump")) {
 
-                // 頭上にブロックがあればジャンプしない
+                _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
+                _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
+
+                // 頭上にブロックがあればジャンプアニメーションしない
                 if (!_upperrayCheck.IsUpperHit) {
 
-                    // 通常アイドル状態からのジャンプ
-                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Idle")) {
-                        _isnormalIdle_To_Jump = true;
-                        _normalIdle_To_JumpAlarm.TimeStart = true;
-                    }
-
-                    // ボール状態からのジャンプ
-                    else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Run_Ball")) {
-
-                        _isJumpButton = true;
-                        _isBall_To_Jump = true;
-                        _rigidbody.AddForce(_jumpSpeed * Vector3.up, ForceMode.Impulse);
-                    }
+                    _animator.SetTrigger("StartJump");
                 }
             }
-        }
-        
-
-        // 通常アイドル状態からのアニメーションジャンプの待ち時間
-        if (_normalIdle_To_JumpAlarm.TimeEnd) {
-            _normalIdle_To_JumpAlarm.TimeStart = false;
-            _normalIdle_To_JumpAlarm.ResetTime();
-            _rigidbody.AddForce(_jumpSpeed * Vector3.up, ForceMode.Impulse);
         }
     }
 }

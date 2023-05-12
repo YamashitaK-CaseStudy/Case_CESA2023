@@ -48,7 +48,7 @@ public partial class Player : MonoBehaviour{
             // 切り替えタイミング
             Debug.Log("ボトム切り替えタイミング");
             _stricRotAngle._isDamiObjCreate = false;
-             Destroy(_stricRotAngle._damiObject);
+            Destroy(_stricRotAngle._damiObject);
 
             _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
         }
