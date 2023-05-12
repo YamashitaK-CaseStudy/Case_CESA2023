@@ -48,8 +48,9 @@ public class SoundManager : MonoBehaviour {
 public class BGMSoundData {
     public enum BGM {
         Title,
-        Dungeon,
-        Hoge, // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
+        StageSelect,
+        Result,
+         // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
     }
 
     public BGM bgm;
