@@ -39,6 +39,15 @@ public partial class Player : MonoBehaviour{
             _animator.SetBool("StartRotUpper_Y", false);
         }
 
+        // y軸回転時のアニメーション
+        if (_bottomHitCheck.GetRotObj != null) {
+
+            if (_bottomHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotateStartFream) {
+                _animator.SetTrigger("Rotation_Y");
+            }
+        }
+
+
         // 速度が0以上
         var absMove = Mathf.Abs(_speedx);
         if (absMove > 0) {
@@ -52,32 +61,10 @@ public partial class Player : MonoBehaviour{
             _animator.SetFloat("RunSpeed", 0);
         }
 
-        // y軸回転時のアニメーション
-        if (_bottomHitCheck.GetRotObj != null) {
-
-            if (_bottomHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotateStartFream) {
-                _animator.SetTrigger("Rotation_Y");
-            }
+       
+        // ジャンプ中に頭にブロックが当たったらボール状態にする
+        if(!_groundCheck.IsGround && _upperrayCheck.IsUpperHit) {
+            _animator.SetTrigger("UpperHit");
         }
-
-        //// x軸回転時のアニメーション
-        //if (_priortyAxis == priorityAxis.xAxisRot) {
-        //    if (_stricRotAngle.GetIsActicStick) {
-
-        //        _animator.SetBool("StartRot_X", true);
-        //        _xAxisRotWaitTimer.TimeStart = true;
-
-        //        if (_xAxisRotWaitTimer.TimeEnd) {
-        //            _stricRotAngle._isActicDial_X = true;
-        //        }
-        //    }
-        //    else {
-        //        _animator.SetBool("StartRot_X", false);
-        //        _xAxisRotWaitTimer.ResetTime();
-        //        _xAxisRotWaitTimer.TimeStart = false;
-        //        _stricRotAngle._isActicDial_X = false;
-        //    }
-        //}
     }
-
 }
