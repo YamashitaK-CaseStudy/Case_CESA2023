@@ -46,11 +46,12 @@ public class SoundManager : MonoBehaviour {
 
 [System.Serializable]
 public class BGMSoundData {
+         
+    // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
     public enum BGM {
         Title,
         StageSelect,
         Result,
-         // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
     }
 
     public BGM bgm;
@@ -63,8 +64,6 @@ public class BGMSoundData {
 public class SESoundData {
     // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
     public enum SE {
-        Attack,
-        Damage,
         Hoge, 
     }
 
