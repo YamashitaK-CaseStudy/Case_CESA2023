@@ -16,6 +16,9 @@ public partial class RotatableObject : MonoBehaviour
 	private int _originNum = 0;
 	private int _listLength = 0;
 
+	private bool _isPerformance = false;        // 回転の演出中かどうか
+	private int _totalSpinedAngle = 0;
+
 	public void StartFunc(){
 		_originObjList = new List<GameObject>();
 	}
@@ -26,6 +29,8 @@ public partial class RotatableObject : MonoBehaviour
 		{
 			return;
 		}
+
+		_isPerformance = true;
 
 		// フラグを立てる
 		_isSpining = true;
@@ -49,6 +54,7 @@ public partial class RotatableObject : MonoBehaviour
 
 		// フラグを立てる
 		_isSpining = true;
+		_isPerformance = true;
 
 		// クローン用のGameObjectを確保
 		// クローン1つに対して,90°・180°・270°用の3つ必要
@@ -56,9 +62,8 @@ public partial class RotatableObject : MonoBehaviour
 
 		//Debug.Log(_cloneBaceObjs.Length);
 
-		CreateClone();
-
 		CreateCloneToSpin();
+		
 	}
 
 
@@ -72,6 +77,7 @@ public partial class RotatableObject : MonoBehaviour
 		}
 
 		_isSpining = false;
+		_isPerformance = true;
 
 
 		foreach (GameObject cloneObj in _cloneObjs)
@@ -91,11 +97,13 @@ public partial class RotatableObject : MonoBehaviour
 	{
 		if (_isSpining)
 		{
-
 			// 現在フレームの回転を示す回転のクォータニオン作成
 			var rotQuat = Quaternion.AngleAxis(_rotSpeed, _rotAxis);
 
-			Debug.Log(_originNum);
+
+
+			//Debug.Log(_originNum);
+			
 			for (int i = 0; i < _originNum; i++)
 			{
 				// 円運動の位置計算
@@ -114,6 +122,16 @@ public partial class RotatableObject : MonoBehaviour
 				tr.rotation = rotQuat * tr.rotation;
 
 			}
+
+			// 回転量を加算
+			_totalSpinedAngle = _rotSpeed;
+			if ( _totalSpinedAngle <= 270 ) {
+				// 前回の複製から90度回転していたら
+				if ( _totalSpinedAngle % 90 == 0 ) {
+					CreateClone(_totalSpinedAngle / 90);
+				}
+			}
+
 		}
 	}
   
@@ -165,18 +183,12 @@ public partial class RotatableObject : MonoBehaviour
 	// クローン生成処理
 	protected void CreateClone()
 	{
-		// クローン用のGameObjectを確保
-		// クローン1つに対して,90°・180°・270°用の3つ必要
-		_cloneObjs = new GameObject[_originNum, 3];
-
 		// オブジェクトを複製する
 		// 3Dの位置関係的に90°・180°・270°の3つの複製が必要
 		for (int i = 0; i < _originNum; i++)
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				
-
 				_cloneObjs[i, j] = Instantiate(_originObjList[i]) as GameObject;
 				_cloneObjs[i, j].transform.parent = _originObjList[i].transform.parent;
 				_cloneObjs[i, j].transform.localPosition = _originObjList[i].transform.localPosition;
@@ -203,6 +215,44 @@ public partial class RotatableObject : MonoBehaviour
 				// 向き更新
 				tr.rotation = rotQuat * tr.rotation;
 			}
+		}
+	}
+
+	protected void CreateClone(int cloneCnt) {
+		
+		if ( cloneCnt > 3 ) {
+			Debug.Log("不正な値です");
+			return;
+		}
+
+		var cloneIndex = cloneCnt　-　1; // 配列のインデックス
+
+		for ( int i = 0 ; i < _originNum ; i++ ) {
+			_cloneObjs[i, cloneIndex] = Instantiate(_originObjList[i]) as GameObject;
+			_cloneObjs[i, cloneIndex].transform.parent = _originObjList[i].transform.parent;
+			_cloneObjs[i, cloneIndex].transform.localPosition = _originObjList[i].transform.localPosition;
+			_cloneObjs[i, cloneIndex].transform.localScale = _originObjList[i].transform.localScale;
+			_cloneObjs[i, cloneIndex].transform.rotation = _originObjList[i].transform.rotation;
+
+			// 回す
+			// 回転移動用のクォータニオン
+			var rotQuat = Quaternion.AngleAxis(90 *　cloneCnt, _rotAxis);
+
+			// 円運動の位置計算
+			var tr = _cloneObjs[i, cloneIndex].transform;
+			var pos = tr.position;
+
+			// クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
+			// _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
+			pos -= _axisCenterWorldPos;
+			pos = rotQuat * pos;
+			pos += _axisCenterWorldPos;
+
+			tr.position = pos;
+
+			// 向き更新
+			tr.rotation = rotQuat * tr.rotation;
+			
 		}
 	}
 
