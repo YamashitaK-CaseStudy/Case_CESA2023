@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028525, g: 0.22571665, b: 0.30692345, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -659,7 +659,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &24437959
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1986,7 +1985,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82544630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 13, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2696,7 +2695,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &108204409
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4069,7 +4067,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &154783676
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5597,7 +5594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &220791538
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5786,7 +5782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &238395222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6499,7 +6494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &266913320
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6757,7 +6751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &275944005
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6816,7 +6809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &277751101
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7052,7 +7044,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &284661349
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7654,7 +7645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &310309804
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7969,7 +7959,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &324634235
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8342,7 +8331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &351716374
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9170,14 +9158,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 371943855}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.29831418, y: 0.641974, z: -0.29935732, w: 0.63973695}
+  m_LocalPosition: {x: 0.32, y: 4.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 90.2, z: 0}
 --- !u!1 &373387760
 GameObject:
   m_ObjectHideFlags: 0
@@ -9661,7 +9649,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &388446400
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10420,7 +10407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &436097370
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11655,7 +11641,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &543542317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11808,7 +11793,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &557156093
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11867,7 +11851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &558712020
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12321,7 +12304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &573964015
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16542,7 +16524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &719794441
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17051,7 +17032,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &747278782
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18509,7 +18489,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &808295603
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20138,7 +20117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &858039137
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21093,7 +21071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &884808127
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21831,7 +21808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &901550812
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23013,7 +22989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &954855338
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25312,7 +25287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1049973049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27964,7 +27938,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177170638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 15.08, y: 1, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -31602,7 +31576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1356682203
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32318,7 +32291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1402225611
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32789,7 +32761,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1420983016
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33382,7 +33353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1440755457
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33571,7 +33541,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1447941190
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34455,7 +34424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1502719393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36503,7 +36471,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1588484488
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36784,7 +36751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1597309004
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37058,7 +37024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1604042968
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37117,7 +37082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1606978038
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37669,7 +37633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1631759567
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38787,7 +38750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1693934906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39129,7 +39091,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1700988780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39836,7 +39797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1735466319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41923,7 +41883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1815427771
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46207,7 +46166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &2002434717
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47465,7 +47423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &2048014546
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47504,7 +47461,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061225318}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 10.04, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48057,7 +48014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &2080027662
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48322,7 +48278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &2097062213
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public partial class RotatableObject : MonoBehaviour
 	private Vector3 _refAxis;
 	private int _refAngle;
 
-	private void StaHitCheckFloorSettingStartrt()
+	private void HitCheckFloorSettingStart()
 	{
 		_isHitFloor = false;
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
@@ -44,7 +44,6 @@ public partial class RotatableObject : MonoBehaviour
 	}
 
 	public void SetisHitFloor(){
-		Debug.Log("床のフラグ入れるで");
 		_isHitFloor = true;
 	}
 
@@ -55,11 +54,17 @@ public partial class RotatableObject : MonoBehaviour
 		_refCenterPos = center;	// 中心座標
 		_refAxis = -axis;		// 軸
 		_refAngle = angle;		// 角度
+		// 自軸を反転
+		_nowRotAxis = -_nowRotAxis;
 	}
 
 	private void SetChildHitCheckFloorFlg(bool flg){
+		var size = 1.0f;
+		if(!flg) size = 0.5f;
+		// フラグとコライダーサイズを変更
 		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
 			_childObjHitCheckFloorComp[i]._isCheckHit = flg;
+			_childObjHitCheckFloorComp[i].SetCollisonSize(size,_rotAxis,flg);
 		}
 	}
 }

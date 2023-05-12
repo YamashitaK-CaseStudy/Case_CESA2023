@@ -30,18 +30,20 @@ public partial class RotatableObject : MonoBehaviour
 				}
 			}
 		}
+
+		_isHitChain = false;
 	}
 
 	void HitChainUpdate(){
 		if(!_isHitChain) return;
-		_isHitChain = false;
 
+		_isHitChain = false;
 		otherObjLength = 0;
 
 		// 相手のオブジェクト基準で位置を計測
 		var centPos = _chainObjComp.MostFarObjPos(_nowRotAxis, _rotPosOther);
 		// 相手のオブジェクトを回転させる
-		_chainObjComp.StartRotate(centPos, _chainObjComp._nowRotAxis, _HitChainAngle);
+		_chainObjComp.StartRotateChain(centPos, _chainObjComp._nowRotAxis, _HitChainAngle);
  	}
 
 	public void SetisHitChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){

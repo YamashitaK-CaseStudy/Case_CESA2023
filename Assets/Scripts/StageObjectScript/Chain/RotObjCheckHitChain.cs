@@ -6,15 +6,14 @@ public class RotObjCheckHitChain : MonoBehaviour
 {
 	private GameObject _parentObj;
 	private RotatableObject _parentRotObj;
+	private BoxCollider _thisColliderComp;
 	public bool _isCheckHit { get; set; } 		// 当たり判定を判定するかどうか
-
-	[SerializeField] private int _HitChainAngle = 180;
 	private void Start()
 	{
 		// 自分の親のオブジェクトを確保
 		_parentObj = this.transform.root.gameObject;
 		_parentRotObj = _parentObj.GetComponent<RotatableObject>();
-		var _childNum = _parentObj.transform.GetChild(0).childCount;
+		_thisColliderComp = this.GetComponent<BoxCollider>();
 		// 当たり判定をとるかどうかの判定をとる
 		_isCheckHit = false;
 	}
