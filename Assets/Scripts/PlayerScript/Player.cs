@@ -15,7 +15,6 @@ public partial class Player : MonoBehaviour{
         PlayerBlockColliderStart();
         PlayerRotationStart();
         PlayerSkAnimationStart();
-
     }
 
     void Update(){
@@ -24,6 +23,5 @@ public partial class Player : MonoBehaviour{
         PlayerBlockColliderUpdate();
         PlayerRotationUpdate();
         PlayerSkAnimationUpdate();
-
     }
 }

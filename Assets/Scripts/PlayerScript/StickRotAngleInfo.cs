@@ -12,7 +12,7 @@ public partial class StickRotAngle : MonoBehaviour {
     private UpDownFrontBack_ManyObj _xAxisManyObj;
 
     int _playerLR_obj = 1;
-    private int _stickAngle_Y, _stickAngle_X;
+    public int _stickAngle_Y, _stickAngle_X;
     private int _stickDialAngle_Y, _stickDialAngle_X;
 
     public bool _isDamiObjCreate = false;
@@ -168,6 +168,7 @@ public partial class StickRotAngle : MonoBehaviour {
 
         // NULL‰ñ”ð
         if (_hitcheck.GetRotObj == null) {
+            Debug.Log("NULL‰ñ”ð");
             return;
         }
 
@@ -253,10 +254,6 @@ public partial class StickRotAngle : MonoBehaviour {
         if ((value.x < -_deadzone || _deadzone < value.x || value.y < -_deadzone || _deadzone < value.y)) {
 
             _isActicStick = true;
-
-            if (!_isActicDial_X) {
-                return _stickAngle_X;
-            }
 
             if (_xAxisManyObj == UpDownFrontBack_ManyObj.Up) {
 
