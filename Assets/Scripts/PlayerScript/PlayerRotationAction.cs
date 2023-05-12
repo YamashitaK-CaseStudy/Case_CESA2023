@@ -12,6 +12,7 @@ public partial class Player : MonoBehaviour{
     private InputAction _rotationButton = null;
     private InputAction _rotationSpinButton = null;
 
+
     private void PlayerRotationStart() {
 
         // 右スティックコンポネント取得
@@ -29,6 +30,7 @@ public partial class Player : MonoBehaviour{
         if (Mathf.Abs(_speedx) > 0 || !_groundCheck.IsGround) {
             return;
         }
+
 
         // ブロックのロック
         if (_blocklockButton.IsPressed()) {
@@ -62,15 +64,15 @@ public partial class Player : MonoBehaviour{
         }
 
         // 真下に回転オブジェクトがある時
+
         if(_animCallBack.GetIsRotationValid && _yBlockLock) {
 
             if(_bottomHitCheck.GetRotObj == null) {
                 return;
-            }
-
-            var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
+            }            var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
             // スティック回転Y
+
             if (!rotatbleComp._isRotating) {
                 _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
             }
@@ -86,6 +88,7 @@ public partial class Player : MonoBehaviour{
 
             // 高速回転
             if (_rotationSpinButton.WasPressedThisFrame()) {
+
                 if (rotatbleComp._isSpining) {
                     Debug.Log("高速回転終了");
                     rotatbleComp.EndSpin();
@@ -96,8 +99,11 @@ public partial class Player : MonoBehaviour{
             }
         }
 
+
         // 前方に回転オブジェクトがある時
+
         else if (_animCallBack.GetIsRotationValid && _xBlockLock) {
+
 
             if (_frontHitCheck.GetRotObj == null) {
                 return;
@@ -114,20 +120,25 @@ public partial class Player : MonoBehaviour{
 
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
+
                 rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, 90, this.transform);
             }
 
             // 高速回転
             if (_rotationSpinButton.WasPressedThisFrame()) {
+
                 if (rotatbleComp._isSpining) {
                     Debug.Log("高速回転終了");
                     rotatbleComp.EndSpin();
                 }
+
                 else {
                     rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+
                 }
             }
         }
+
     }
 
     private void Pos_Correction(in Vector3 center) {
