@@ -66,7 +66,14 @@ public partial class RotatableObject : MonoBehaviour
 		}
 	}
 
-	private void SetChildHitCheckInto(bool flg){
+	private void SetChildCheckIntoChain(bool flg){
+		// フラグとコライダーサイズを変更
+		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
+			_childObjChainComp[i].SetCheckInto(flg);
+		}
+	}
+
+	private void SetChildCheckIntoFloor(bool flg){
 		// フラグとコライダーサイズを変更
 		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
 			_childObjHitCheckFloorComp[i].SetCheckInto(flg);
