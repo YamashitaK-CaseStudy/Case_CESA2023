@@ -31,7 +31,6 @@ public partial class Player : MonoBehaviour{
             return;
         }
 
-
         // ブロックのロック
         if (_blocklockButton.IsPressed()) {
 
@@ -69,7 +68,8 @@ public partial class Player : MonoBehaviour{
 
             if(_bottomHitCheck.GetRotObj == null) {
                 return;
-            }            var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
+            }            
+            var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
             // スティック回転Y
 

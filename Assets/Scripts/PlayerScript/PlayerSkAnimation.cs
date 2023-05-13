@@ -47,6 +47,10 @@ public partial class Player : MonoBehaviour{
             }
         }
 
+        // ジャンプ中に頭にブロックが当たったらボール状態にする
+        if (!_groundCheck.IsGround && _upperrayCheck.IsUpperHit) {
+            _animator.SetTrigger("UpperHit");
+        }
 
         // 速度が0以上
         var absMove = Mathf.Abs(_speedx);
@@ -59,12 +63,6 @@ public partial class Player : MonoBehaviour{
 
             _animator.SetBool("RunState", false);
             _animator.SetFloat("RunSpeed", 0);
-        }
-
-       
-        // ジャンプ中に頭にブロックが当たったらボール状態にする
-        if(!_groundCheck.IsGround && _upperrayCheck.IsUpperHit) {
-            _animator.SetTrigger("UpperHit");
         }
     }
 }

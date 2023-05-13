@@ -10,6 +10,9 @@ public class PlayerskAnimationCallBack : MonoBehaviour{
     // 実際に回転できるようになるまでのフラグ
     private bool _isRotationValid = false;
 
+    // 大ジャンプ出来るまでの待ちフラグ
+    private bool _isBigJumpValid = false;
+
     public void AnimRotStart() {
         Debug.Log("回転アニメーション開始");
         _isRotationAnimPlay = true;
@@ -29,6 +32,16 @@ public class PlayerskAnimationCallBack : MonoBehaviour{
         _isRotationValid = false;
     }
 
+    // 大ジャンプ可能状態
+    public void BigJumpVaild() {
+        _isBigJumpValid = true;
+    }
+
+    // 大ジャンプ可能状態
+    public void BigJumpInVaild() {
+        _isBigJumpValid = false;
+    }
+
     // Getter
     public bool GetIsRotationAnimPlay {
         get { return _isRotationAnimPlay; }
@@ -36,5 +49,9 @@ public class PlayerskAnimationCallBack : MonoBehaviour{
 
     public bool GetIsRotationValid{
         get{ return _isRotationValid; }
+    }
+
+    public bool GetIsBigJumpVaild {
+        get { return _isBigJumpValid; }
     }
 }
