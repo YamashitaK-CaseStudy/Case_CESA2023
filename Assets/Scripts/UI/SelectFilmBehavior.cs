@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class SelectFilmBehavior : MonoBehaviour
 {
-    const int _MAX_STAGE = 5;
+    const int _MAX_STAGE = 7;
     const int MAX_WORLD = 4;
 
     static public int obtainedCount
@@ -238,7 +238,7 @@ public class SelectFilmBehavior : MonoBehaviour
     [Header("ステージ番号設定")]
     //[SerializeField] private Sprite _numberFont;
     [SerializeField] private float _scrollAmount = 300;
-    [SerializeField] private float _scrollSpeed = 1;
+    [SerializeField] private float _scrollSpeed = 5;
     [SerializeField] private float _numberScale = .15f;
     [SerializeField] private Vector2 _numberOffset = new Vector2(-700, 0);
     [SerializeField] private float _numberDistance = 100;

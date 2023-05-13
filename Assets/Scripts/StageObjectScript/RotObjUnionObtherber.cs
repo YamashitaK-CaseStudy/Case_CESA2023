@@ -57,7 +57,7 @@ public class RotObjUnionObtherber : MonoBehaviour{
 
         // ‡‘Ì‚µ‚½uŠÔ‚ğ
         Debug.Log("‡‘Ì‚µ‚½");
-        // basechildObjects.GetComponent<RotatableObject>()._isUnion = true;
+        //basechildObjects.GetComponent<RotatableObject>().HitCheckFloorSettingStart();
 
         _unionMaterials.Clear();
     }

@@ -13,7 +13,7 @@ public partial class RotatableObject : MonoBehaviour
 	private Vector3 _refAxis;
 	private int _refAngle;
 
-	private void HitCheckFloorSettingStart()
+	public void HitCheckFloorSettingStart()
 	{
 		_isHitFloor = false;
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
