@@ -14,17 +14,17 @@ public class PlayerskAnimationCallBack : MonoBehaviour{
     private bool _isBigJumpValid = false;
 
     public void AnimRotStart() {
-        Debug.Log("回転アニメーション開始");
+        //Debug.Log("回転アニメーション開始");
         _isRotationAnimPlay = true;
     }
 
     public void AnimRotEnd() {
-        Debug.Log("回転アニメーション終了");
+        //Debug.Log("回転アニメーション終了");
         _isRotationAnimPlay = false;
     }
 
     public void RotationValid() {
-        Debug.Log("回転動作可能状態");
+        //Debug.Log("回転動作可能状態");
         _isRotationValid = true;
     }
 
