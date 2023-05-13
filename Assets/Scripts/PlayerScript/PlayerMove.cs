@@ -71,18 +71,22 @@ public partial class Player : MonoBehaviour {
 
             if (_jumpButton.WasPressedThisFrame()) {
 
-                // 頭上にブロックがあればジャンプアニメーションしない
                 if (!_upperrayCheck.IsUpperHit) {
-                    _animator.SetTrigger("StartJump");
+
+                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Ball_Run")) {
+
+                        _animator.SetTrigger("StartJump");
+                        _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
+                    }
+                    else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Idle")) {
+
+                        // 待ち処理
+                        _animator.SetTrigger("StartJump");
+                        _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
+                    }
+                }
+                else {
                     _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
-
-                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Idle")) {
-
-                        //_bigJump = true;
-                    }
-                    else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Run_Ball")) {
-
-                    }
                 }
             }
         }
