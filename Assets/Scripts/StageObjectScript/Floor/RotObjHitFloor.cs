@@ -51,11 +51,9 @@ public partial class RotatableObject : MonoBehaviour
 		_isReflectRot = true;
 		_isHitFloor = false;
 		// 必要なデータを格納する
-		_refCenterPos = center;	// 中心座標
-		_refAxis = -axis;		// 軸
-		_refAngle = angle;		// 角度
-		// 自軸を反転
-		_nowRotAxis = -_nowRotAxis;
+		_refCenterPos 	= center;	// 中心座標
+		_refAxis 		= axis;		// 軸
+		_refAngle 		= -angle;		// 角度
 	}
 
 	private void SetChildHitCheckFloorFlg(bool flg){
@@ -65,6 +63,13 @@ public partial class RotatableObject : MonoBehaviour
 		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
 			_childObjHitCheckFloorComp[i]._isCheckHit = flg;
 			_childObjHitCheckFloorComp[i].SetCollisonSize(size,_rotAxis,flg);
+		}
+	}
+
+	private void SetChildHitCheckInto(bool flg){
+		// フラグとコライダーサイズを変更
+		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
+			_childObjHitCheckFloorComp[i].SetCheckInto(flg);
 		}
 	}
 }

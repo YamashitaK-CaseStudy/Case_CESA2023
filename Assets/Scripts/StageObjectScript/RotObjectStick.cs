@@ -36,8 +36,6 @@ public partial class RotatableObject : MonoBehaviour{
 
     // }
 
-    public Vector3 _nowRotAxis;
-   
     public void StartRotateX(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
         if (oldangleX == angle) {
             return;
@@ -48,12 +46,6 @@ public partial class RotatableObject : MonoBehaviour{
 
         var offset = angle - oldangleX;
 
-        if (offset > 0) {
-            _nowRotAxis = new Vector3(0, -1, 0);
-        }
-        else {
-            _nowRotAxis = new Vector3(0, 1, 0);
-        }
         StartRotate(center, axis, offset, playerTransform);
        // RotateAxis(center, axis, offset);
 
@@ -76,14 +68,6 @@ public partial class RotatableObject : MonoBehaviour{
         playerTransform.transform.position = pPos;
 
         var offset = angle - oldangleY;
-
-        // 時計回り
-        if(offset > 0) {
-            _nowRotAxis = new Vector3(0, 1, 0);
-        }
-        else {
-            _nowRotAxis = new Vector3(0, -1, 0);
-        }
 
         StartRotate(center, axis, offset, playerTransform);
         //StartStickRotate(center, axis, offset);

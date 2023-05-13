@@ -38,6 +38,8 @@ public partial class RotatableObject : MonoBehaviour
 		// 床と連鎖の当たり判定を行う
 		SetChildHitCheckFloorFlg(true);
 		SetChildHitCheckChainFlg(true);
+		// めり込み判定を切っておく
+		SetChildHitCheckInto(false);
 
 		// 経過時間を初期化
 		_elapsedTime = 0.0f;
@@ -180,17 +182,23 @@ public partial class RotatableObject : MonoBehaviour
 				_playerTransform = null;
 			}
 			StopPartical();
+			Debug.Log("回転終了");
 		}
 		else
 		{
+
 			if(_isRotateEndFream){
-				if(_isHitFloor){
-					SetReflect(_axisCenterWorldPos, _rotAxis, _angle);
-				}
 				// 普段は当たり判定の処理を切っておく
 				SetChildHitCheckFloorFlg(false);
 				SetChildHitCheckChainFlg(false);
+				// めり込み判定の確認
+				SetChildHitCheckInto(true);
 			}
+
+			if(_isHitFloor){
+				SetReflect(_axisCenterWorldPos, _rotAxis, _angle);
+			}
+
 			_doOnce = false;
 			_isRotateEndFream = false;
 		}

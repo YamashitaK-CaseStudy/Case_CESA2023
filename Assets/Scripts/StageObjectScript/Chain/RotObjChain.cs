@@ -41,9 +41,12 @@ public partial class RotatableObject : MonoBehaviour
 		otherObjLength = 0;
 
 		// 相手のオブジェクト基準で位置を計測
-		var centPos = _chainObjComp.MostFarObjPos(_nowRotAxis, _rotPosOther);
+		var centPos = _chainObjComp.MostFarObjPos(_chainObjComp._rotAxis, _rotPosOther);
+		int otherAngle = 0;
+		if(_angle < 0) otherAngle = 180;
+		if(_angle > 0) otherAngle = -180;
 		// 相手のオブジェクトを回転させる
-		_chainObjComp.StartRotateChain(centPos, _chainObjComp._nowRotAxis, _HitChainAngle);
+		_chainObjComp.StartRotateChain(centPos, _chainObjComp._rotAxis, otherAngle);
  	}
 
 	public void SetisHitChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
@@ -51,7 +54,7 @@ public partial class RotatableObject : MonoBehaviour
 		// 当たり判定のセット
 		_chainObj = other;
 		_chainObjComp = otherRotComp;
-		_chainObjComp._nowRotAxis = -_nowRotAxis;
+		_chainObjComp._rotAxis = _rotAxis;
 
 		// 自分の回転座標から一番近い場所かどうかを確認
 		if(otherObjLength == 0){
