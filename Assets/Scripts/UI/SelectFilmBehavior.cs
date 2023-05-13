@@ -238,7 +238,7 @@ public class SelectFilmBehavior : MonoBehaviour
     [Header("ステージ番号設定")]
     //[SerializeField] private Sprite _numberFont;
     [SerializeField] private float _scrollAmount = 300;
-    [SerializeField] private float _scrollSpeed = 5;
+    [SerializeField] private float _scrollSpeed = 3;
     [SerializeField] private float _numberScale = .15f;
     [SerializeField] private Vector2 _numberOffset = new Vector2(-700, 0);
     [SerializeField] private float _numberDistance = 100;
