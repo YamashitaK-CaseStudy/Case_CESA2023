@@ -39,16 +39,19 @@ public partial class Player : MonoBehaviour {
     private void Move() {
 
         var value_x = _playerInput.actions["Move"].ReadValue<Vector2>().x;
-        var valueCeil = Mathf.Ceil(value_x);
 
-        if (-_deadZone < value_x && value_x < _deadZone) {
+        if (-_deadZone > value_x) {
 
-            _speedx = 0.0f;
+            _speedx = -_moveSpeed;
+            transform.LookAt(new Vector3(transform.position.x + value_x, transform.position.y, 0), Vector3.up);
+        }
+        else if (value_x > _deadZone) {
+
+            _speedx = _moveSpeed;
+            transform.LookAt(new Vector3(transform.position.x + value_x, transform.position.y, 0), Vector3.up);
         }
         else {
-
-            _speedx = valueCeil * _moveSpeed;
-            transform.LookAt(new Vector3(transform.position.x + value_x, transform.position.y, 0), Vector3.up);
+            _speedx = 0.0f;
         }
      
         // 速度適応
@@ -71,6 +74,7 @@ public partial class Player : MonoBehaviour {
                 // 頭上にブロックがあればジャンプアニメーションしない
                 if (!_upperrayCheck.IsUpperHit) {
                     _animator.SetTrigger("StartJump");
+                    _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
 
                     if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Idle")) {
 
@@ -78,7 +82,6 @@ public partial class Player : MonoBehaviour {
                     }
                     else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Run_Ball")) {
 
-                        _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
                     }
                 }
             }
