@@ -64,7 +64,7 @@ public partial class Player : MonoBehaviour{
 
         // 真下に回転オブジェクトがある時
 
-        if(_animCallBack.GetIsRotationValid && _yBlockLock) {
+        if(_animCallBack.GetIsRotationValid && (_yBlockLock || _yBlockUpperLock)) {
 
             if(_bottomHitCheck.GetRotObj == null) {
                 return;
