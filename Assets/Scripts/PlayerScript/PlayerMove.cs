@@ -7,11 +7,14 @@ public partial class Player : MonoBehaviour {
     [SerializeField, Header("移動速度")] private float _moveSpeed;
     [SerializeField, Header("重力")] private float _gravity;
     [SerializeField, Header("ジャンプ力")] private float _jumpPower;
-
+    [SerializeField, Header("ジャンプカーブ")] private AnimationCurve _jumpCurve;
+    
     private InputAction _jumpButton;
     private Rigidbody _rigidbody;
     private float _speedx;
 
+    private float _jumpCurveSpeed = 0.0f;
+    
     public float GetSpeedx {
         get { return _speedx; }
     }
@@ -25,6 +28,8 @@ public partial class Player : MonoBehaviour {
 
     // Update is called once per frame
     void UpdateMove() {
+
+        Debug.Log(_animCallBack.GetIsRotationAnimPlay);
 
         // スティック入力入れてるかつ回転アニメーションが再生されてる間は動けない
         if (_xBlockLock || _yBlockLock || _animCallBack.GetIsRotationAnimPlay) {
@@ -65,28 +70,22 @@ public partial class Player : MonoBehaviour {
 
     private void Jump() {
 
+        _jumpCurveSpeed += Time.deltaTime;
+        _animator.SetFloat("IdleJumpSpeed", _jumpCurve.Evaluate(_jumpCurveSpeed));
+       
         Physics.gravity = new Vector3(0, _gravity, 0);
 
         if (_groundCheck.IsGround) {
 
             if (_jumpButton.WasPressedThisFrame()) {
 
+                _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
+
                 if (!_upperrayCheck.IsUpperHit) {
 
-                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Ball_Run")) {
-
-                        _animator.SetTrigger("StartJump");
-                        _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
-                    }
-                    else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Idle")) {
-
-                        // 待ち処理
-                        _animator.SetTrigger("StartJump");
-                        _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
-                    }
-                }
-                else {
-                    _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
+                    // 待ち処理
+                    _animator.SetTrigger("StartJump");
+                    _jumpCurveSpeed = 0.0f;
                 }
             }
         }
