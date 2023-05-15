@@ -75,7 +75,7 @@ public class SelectFilmBehavior : MonoBehaviour
 
         for (int i = 1; i <= _MAX_STAGE; ++i)
         {
-            //注意　１ループで生成する数（１ステージごとの数）をInit()のfloat offset = _scrollAmount * (i / １ステージごとの数);に反映してください 検索ワード：マジックナンバー 単語単位の検索を解除しないと出ない(vs2022)
+            //注意　１ループで生成する数（１ステージ分ごとの数）をInit()のfloat offset = _scrollAmount * (i / """１ステージごとの数""");に反映してください 検索ワード：マジックナンバー 単語単位の検索を解除しないと出ない(vs2022)
 
             /*ステージ番号*/
             Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
@@ -147,9 +147,10 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         if (_actionDecision.triggered)
         {
-            bool success = SuzumuraTomoki.SceneManager.instance.LoadStage(_stageNumber + (_currentWorldNum - 1) * _MAX_STAGE);
+            bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_currentWorldNum - 1) * _MAX_STAGE);
             if (!success)
             {
+                //TODO:無効な入力を伝えるSE
                 print("ステージセレクト「そんなステージはありません」");
             }
         }

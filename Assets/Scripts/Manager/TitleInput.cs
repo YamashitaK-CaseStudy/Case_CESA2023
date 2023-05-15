@@ -21,7 +21,7 @@ public class TitleInput : MonoBehaviour{
         if (_titleEnter.WasPressedThisFrame())
         {
             Fader.instance.fadeTime = 0.5f;
-            SceneManager.instance.LoadStageSelect();
+            SceneManager.LoadStageSelect();
         }
     }
 }
