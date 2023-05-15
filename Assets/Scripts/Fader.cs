@@ -116,6 +116,7 @@ public class Fader : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene(_loadSceneNumber);
 
             FadeIn();
+            SuzumuraTomoki.SceneManager.playerInput.Enable();
             return;
         }
 

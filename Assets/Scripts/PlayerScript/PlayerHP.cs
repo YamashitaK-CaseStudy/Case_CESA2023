@@ -5,7 +5,6 @@ using UnityEngine;
 public partial class Player : MonoBehaviour
 {
     [SerializeField] private int HP;
-    [SerializeField] SuzumuraTomoki.SceneManager manager;
 
     private void StartHP(){
         
@@ -19,7 +18,7 @@ public partial class Player : MonoBehaviour
         Debug.Log(HP);
         if(HP == 0)
         {
-            manager.LoadResult();
+            SuzumuraTomoki.SceneManager.LoadResult();
         }
     }
 }
