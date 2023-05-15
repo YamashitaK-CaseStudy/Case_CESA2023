@@ -64,8 +64,17 @@ public class BGMSoundData {
 public class SESoundData {
     // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
     public enum SE {
-        Hoge,
-        e_rorate,
+        Enter,
+        Cancel,
+        Select,
+        Error,
+        Rotate,
+        Spin,
+        Magnet,
+        Chain,
+        Move,
+        Lock,
+        Jump,
     }
 
     public SE se;
