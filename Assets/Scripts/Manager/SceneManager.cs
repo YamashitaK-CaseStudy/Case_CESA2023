@@ -7,14 +7,14 @@ using UnityEditor;
 namespace SuzumuraTomoki {
 	public class SceneManager : MonoBehaviour {
 
-		/*****インターフェイス（公開実装）*******/
-
 		//定数
 		public const int NON_STAGE_SCENES_COUNT = 3;
 
-
 		//statics
-		private static SceneManager _instance = null;
+		static private SceneManager _instance = null;
+		static private UnityEngine.InputSystem.InputActionMap _playerInput = null;
+
+		/*****静的インターフェイス（公開メンバ）*******/
 
 		static public SceneManager instance {
 			get {
@@ -29,62 +29,71 @@ namespace SuzumuraTomoki {
 			}
 		}
 
-		//プロパティ・関数
-		public int Score {
-			get {
-				return score;
-			}
-			set {
-				score = value;
+		static public UnityEngine.InputSystem.InputActionMap playerInput
+		{
+			get
+			{
+				if (_playerInput == null)
+				{
+					_playerInput = Resources.Load<UnityEngine.InputSystem.InputActionAsset>("InputSeet").FindActionMap("Player");
+				}
+
+				return _playerInput;
 			}
 		}
 
-		//public int CurrentStageIndex
-		//{
-		//    get
-		//    {
-		//        return currentStageIndex;
-		//    }
-		//}
 
 		/**
         * 指定した番号のステージをロードします。
         * @param[in] ステージの番号。１以上。
         * @return false:０以下または存在しない番号
         */
-		public bool LoadStage(int stageNumber) {
+		static public bool LoadStage(int stageNumber) {
 			if ( stageNumber < 1 ) {
 				return false;
 			}
-			if ( stageNumber > _stageCount ) {
+			if ( stageNumber > instance._stageCount) {
 				return false;
 			}
 
 			//MonoInstance.StartCoroutine(LoadSceneAsync(stageSceneList[stageIndex - 1].name));
 			//UnityEngine.SceneManagement.SceneManager.LoadScene(stageSceneList[stageIndex - 1].name);
-			LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
+			instance.LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
 			return true;
 		}
 
-		public void LoadTitle() {
-			LoadScene(0);
+		static public void LoadTitle() {
+			instance.LoadScene(0);
 		}
-		public void LoadStageSelect() {
-			LoadScene(1);
+		static public void LoadStageSelect() {
+			instance.LoadScene(1);
 		}
-		public void LoadResult() {
-			LoadScene(2);
+		static public void LoadResult() {
+			instance.LoadScene(2);
 		}
 
-		public void LoadBeforeScene() {
+		static public void LoadBeforeScene() {
 			//MonoInstance.StartCoroutine(LoadSceneAsync(beforeSceneName));
 			//UnityEngine.SceneManagement.SceneManager.LoadScene(beforeSceneName);
-			LoadScene(beforeSceneNumber);
+			instance.LoadScene(instance.beforeSceneNumber);
 
 		}
 
-		public void LoadCurrentScene(){
-			LoadScene(currentSceneNumber);
+		static public void LoadCurrentScene(){
+			instance.LoadScene(instance.currentSceneNumber);
+		}
+
+		/*****インターフェイス（公開メンバ）*******/
+		public int Score
+		{
+			get
+			{
+				return score;
+			}
+			set
+			{
+				score = value;
+			}
 		}
 
 		public int stageCount {
@@ -96,6 +105,7 @@ namespace SuzumuraTomoki {
 		/*************内部実装***************/
 
 		private void LoadScene(int sceneNumber) {
+			playerInput.Disable();
 			beforeSceneNumber = currentSceneNumber;
 			currentSceneNumber = sceneNumber;
 			Fader.instance.FadeOut(sceneNumber);
