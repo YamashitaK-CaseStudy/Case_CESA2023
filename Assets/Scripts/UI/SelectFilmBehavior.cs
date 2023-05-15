@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class SelectFilmBehavior : MonoBehaviour
 {
-    const int _MAX_STAGE = 7;
+    const int _MAX_STAGE = 5;
     const int MAX_WORLD = 4;
 
     static public int obtainedCount
@@ -72,7 +72,7 @@ public class SelectFilmBehavior : MonoBehaviour
             Debug.LogError("PlayerInputに　アクション：StageSelectR　がありません");
         }
 
-
+        生成しない
         for (int i = 1; i <= _MAX_STAGE; ++i)
         {
             //注意　１ループで生成する数（１ステージ分ごとの数）をInit()のfloat offset = _scrollAmount * (i / """１ステージごとの数""");に反映してください 検索ワード：マジックナンバー 単語単位の検索を解除しないと出ない(vs2022)
