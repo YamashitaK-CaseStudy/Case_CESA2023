@@ -41,7 +41,6 @@ public class SystemSoundManager : MonoBehaviour {
         seAudioSource.volume = data.volume * seMasterVolume * masterVolume;
         seAudioSource.PlayOneShot(data.audioClip);
     }
-
 }
 
 [System.Serializable]
@@ -51,6 +50,7 @@ public class BGMSoundData {
     public enum BGM {
         Title,
         StageSelect,
+        MainGame,
         Result,
     }
 
