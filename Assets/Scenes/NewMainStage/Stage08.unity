@@ -6536,7 +6536,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
@@ -16044,7 +16043,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
@@ -27719,7 +27717,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
@@ -30944,7 +30941,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
@@ -64213,7 +64209,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
@@ -68604,7 +68599,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
@@ -69360,7 +69354,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 540}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1369096937
 MonoBehaviour:
@@ -78806,7 +78800,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
@@ -84341,7 +84334,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
@@ -98496,7 +98488,6 @@ MonoBehaviour:
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isUnion: 1
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
