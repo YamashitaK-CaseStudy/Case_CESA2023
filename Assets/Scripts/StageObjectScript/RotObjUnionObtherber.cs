@@ -55,6 +55,10 @@ public class RotObjUnionObtherber : MonoBehaviour{
            obj.transform.parent = basechildObjects.transform;
         }
 
+        // ‡‘Ì‚µ‚½uŠÔ‚ğ
+        Debug.Log("‡‘Ì‚µ‚½");
+        //basechildObjects.GetComponent<RotatableObject>().HitCheckFloorSettingStart();
+
         _unionMaterials.Clear();
     }
 

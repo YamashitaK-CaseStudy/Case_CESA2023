@@ -204,7 +204,7 @@ public class Bolt : RotatableObject
             _length = 1;
         }
 
-        UnityEditor.EditorApplication.delayCall += () => UpdateLength();
+        //UnityEditor.EditorApplication.delayCall += () => UpdateLength();
     }
 
     private void UpdateLength()

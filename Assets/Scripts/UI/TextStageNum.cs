@@ -50,7 +50,7 @@ public class TextStageNum : MonoBehaviour
         }
         if (_selectEntor.WasPressedThisFrame())//KeyCode.Return ‚Í Enter
         {
-            SceneManager.instance.LoadStage(sCurrentStageIndex);
+            SceneManager.LoadStage(sCurrentStageIndex);
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class SelectFilmBehavior : MonoBehaviour
 {
-    const int _MAX_STAGE = 5;
+    const int _MAX_STAGE = 7;
     const int MAX_WORLD = 4;
 
     static public int obtainedCount
@@ -75,7 +75,7 @@ public class SelectFilmBehavior : MonoBehaviour
 
         for (int i = 1; i <= _MAX_STAGE; ++i)
         {
-            //注意　１ループで生成する数（１ステージごとの数）をInit()のfloat offset = _scrollAmount * (i / １ステージごとの数);に反映してください 検索ワード：マジックナンバー 単語単位の検索を解除しないと出ない(vs2022)
+            //注意　１ループで生成する数（１ステージ分ごとの数）をInit()のfloat offset = _scrollAmount * (i / """１ステージごとの数""");に反映してください 検索ワード：マジックナンバー 単語単位の検索を解除しないと出ない(vs2022)
 
             /*ステージ番号*/
             Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
@@ -147,9 +147,10 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         if (_actionDecision.triggered)
         {
-            bool success = SuzumuraTomoki.SceneManager.instance.LoadStage(_stageNumber + (_currentWorldNum - 1) * _MAX_STAGE);
+            bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_currentWorldNum - 1) * _MAX_STAGE);
             if (!success)
             {
+                //TODO:無効な入力を伝えるSE
                 print("ステージセレクト「そんなステージはありません」");
             }
         }
@@ -238,7 +239,7 @@ public class SelectFilmBehavior : MonoBehaviour
     [Header("ステージ番号設定")]
     //[SerializeField] private Sprite _numberFont;
     [SerializeField] private float _scrollAmount = 300;
-    [SerializeField] private float _scrollSpeed = 1;
+    [SerializeField] private float _scrollSpeed = 3;
     [SerializeField] private float _numberScale = .15f;
     [SerializeField] private Vector2 _numberOffset = new Vector2(-700, 0);
     [SerializeField] private float _numberDistance = 100;

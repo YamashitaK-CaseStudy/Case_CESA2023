@@ -816,7 +816,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &66135293
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1306,7 +1305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &85027807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,7 +2296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &143568607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2453,17 +2450,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &152425444
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2494,7 +2491,7 @@ Transform:
   m_Children:
   - {fileID: 2116815184}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &156690915
 GameObject:
@@ -2959,7 +2956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &187066269
 GameObject:
   m_ObjectHideFlags: 0
@@ -3004,17 +3000,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &187066272
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3045,7 +3041,7 @@ Transform:
   m_Children:
   - {fileID: 1168015642}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &187186630
 GameObject:
@@ -3152,7 +3148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &187578957
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3470,7 +3465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &203733765
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3785,17 +3779,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &219927624
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3826,7 +3820,7 @@ Transform:
   m_Children:
   - {fileID: 853218324}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &225342592
 GameObject:
@@ -4567,7 +4561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &265945165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5741,7 +5734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &334618767
 GameObject:
   m_ObjectHideFlags: 0
@@ -6229,7 +6221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &366984657
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6384,7 +6375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &372661095
 GameObject:
   m_ObjectHideFlags: 0
@@ -6513,7 +6503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &373010241
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7186,7 +7175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &432413750
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7879,17 +7867,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &477203499
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7920,7 +7908,7 @@ Transform:
   m_Children:
   - {fileID: 1899747997}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &491664264
 GameObject:
@@ -8135,7 +8123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &495461625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9345,7 +9332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &562248406
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9831,7 +9817,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &579969146
 GameObject:
@@ -9878,7 +9864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &579969149
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11114,7 +11099,7 @@ Transform:
   - {fileID: 1007057694}
   - {fileID: 1606772018}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &659423344
 GameObject:
@@ -11529,7 +11514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &687713091
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11684,7 +11668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &697394252
 GameObject:
   m_ObjectHideFlags: 0
@@ -12195,7 +12178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &725614826
 GameObject:
   m_ObjectHideFlags: 0
@@ -14511,7 +14493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &843322321
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15526,7 +15507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &890216863
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16181,17 +16161,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &920983279
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16222,7 +16202,7 @@ Transform:
   m_Children:
   - {fileID: 2078920563}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &924621421
 GameObject:
@@ -17487,7 +17467,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1004326561
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17946,7 +17925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &1023572226
 GameObject:
   m_ObjectHideFlags: 0
@@ -18157,17 +18135,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1062655637
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18198,7 +18176,7 @@ Transform:
   m_Children:
   - {fileID: 1442525889}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1068017391
 GameObject:
@@ -20053,7 +20031,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1168015641
 GameObject:
@@ -20135,7 +20113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1169764654
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20194,7 +20171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1179742583
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20604,17 +20580,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1207762350
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20645,7 +20621,7 @@ Transform:
   m_Children:
   - {fileID: 2055682949}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1211878597
 GameObject:
@@ -21420,7 +21396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1240883275
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23544,7 +23519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1451133180
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24434,7 +24408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1497202961
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24493,7 +24466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1498425139
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24641,7 +24613,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1501852840
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24655,6 +24626,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 0.75, z: 0.75}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &1503600702
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5976814313001091140, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_Name
+      value: Pf_BGO_Conveyor_Slope
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7048819
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7093247
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465542199547714302, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a8d383792f3422c4fa7f5d5ad0bdeeeb, type: 3}
 --- !u!1 &1505814888
 GameObject:
   m_ObjectHideFlags: 0
@@ -26199,7 +26239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &1609397317
 GameObject:
   m_ObjectHideFlags: 0
@@ -26341,7 +26380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &1623478888
 GameObject:
   m_ObjectHideFlags: 0
@@ -26387,7 +26425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1623478891
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26459,7 +26496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &1638721347
 GameObject:
   m_ObjectHideFlags: 0
@@ -26518,7 +26554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &1645547604
 GameObject:
   m_ObjectHideFlags: 0
@@ -27698,17 +27733,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1702466045
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -27739,7 +27774,7 @@ Transform:
   m_Children:
   - {fileID: 1995165766}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1713815240
 GameObject:
@@ -27869,7 +27904,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1722325103
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28292,7 +28326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1736232664
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29767,7 +29800,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1796104191
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30218,7 +30250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1839651845
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31663,17 +31694,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1921588716
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31704,7 +31735,7 @@ Transform:
   m_Children:
   - {fileID: 1284481659}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1923956674
 GameObject:
@@ -32320,17 +32351,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a859e4cc73c990a46b586fb6e34cba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _observer: {fileID: 0}
+  _HitChainAngle: 180
   _rotRequirdTime: 0.1
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
-  _isReservation: 0
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1959630351
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -32361,7 +32392,7 @@ Transform:
   m_Children:
   - {fileID: 2138421365}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1962366468
 GameObject:
@@ -33081,7 +33112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &1983863354
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33640,7 +33670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!65 &2020535175
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34652,7 +34681,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ceb42321c6914e8d6fd9ec43be0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HitChainAngle: 180
 --- !u!1 &2089920019
 GameObject:
   m_ObjectHideFlags: 0

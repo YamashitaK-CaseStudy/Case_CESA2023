@@ -8,6 +8,7 @@ public class RotObjCheckHitChain : MonoBehaviour
 	private RotatableObject _parentRotObj;
 	private BoxCollider _thisColliderComp;
 	public bool _isCheckHit { get; set; } 		// 当たり判定を判定するかどうか
+	private bool _isCheckInto { get; set; }		// めり込みを確認
 	private void Start()
 	{
 		// 自分の親のオブジェクトを確保
@@ -16,6 +17,7 @@ public class RotObjCheckHitChain : MonoBehaviour
 		_thisColliderComp = this.GetComponent<BoxCollider>();
 		// 当たり判定をとるかどうかの判定をとる
 		_isCheckHit = false;
+		_isCheckInto = false;
 	}
 	// オブジェクトが当たったとき
 	private void OnTriggerEnter(Collider other)
@@ -25,5 +27,26 @@ public class RotObjCheckHitChain : MonoBehaviour
 		var comp = other.transform.root.GetComponent<RotatableObject>();
 		// 自分の親に知らせる
 		_parentRotObj.SetisHitChain(other.gameObject, comp, other.transform.position);
+	}
+
+	private void OnTriggerStay(Collider other)
+	{
+		// 当たり判定を行うかを確認
+		if(_isCheckHit) return;
+		if(!_isCheckInto) return;
+		// 当たってるオブジェクトと自分が回転しておらず触れ続けてる状態の時に処理を行う
+		if(_parentRotObj._isRotating) return;
+		// 触れている相手がRotObjかどうかを確認
+		if(other.transform.root.gameObject.tag != "RotateObject")return;
+		var otherRotComp = other.transform.root.gameObject.GetComponent<RotatableObject>();
+		if(otherRotComp._isRotating) return;
+
+		// 自分の親に知らせる
+		Debug.Log("ChainCheck");
+		_parentRotObj.SetisIntoChain(other.gameObject, otherRotComp, other.transform.position);
+		_isCheckInto = false;
+	}
+	public void SetCheckInto(bool flg){
+		_isCheckInto = true;
 	}
 }

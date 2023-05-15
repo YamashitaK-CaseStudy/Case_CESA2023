@@ -20,9 +20,9 @@ public class SeedBehavior : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if (other.transform.root.CompareTag("RotateObject"))
-        {
-            Destroy(gameObject);
-        }
+        // if (other.transform.root.CompareTag("RotateObject"))
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 }

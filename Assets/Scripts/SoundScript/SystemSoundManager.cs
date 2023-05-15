@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class SoundManager : MonoBehaviour {
+public class SystemSoundManager : MonoBehaviour {
     [SerializeField] AudioSource bgmAudioSource;
     [SerializeField] AudioSource seAudioSource;
 
@@ -14,7 +14,7 @@ public class SoundManager : MonoBehaviour {
     public float bgmMasterVolume = 1;
     public float seMasterVolume = 1;
 
-    public static SoundManager Instance {
+    public static SystemSoundManager Instance {
         get; private set;
     }
 
@@ -64,7 +64,8 @@ public class BGMSoundData {
 public class SESoundData {
     // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
     public enum SE {
-        Hoge, 
+        Hoge,
+        e_rorate,
     }
 
     public SE se;

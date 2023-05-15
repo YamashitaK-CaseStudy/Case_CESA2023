@@ -16,7 +16,6 @@ public partial class RotObjUnion : MonoBehaviour{
     }
 
     private void OnTriggerEnter(Collider other) {
-
         // “–‚½‚Á‚½RotateObject‚ðŽæ“¾
         GetRotateObject(other.gameObject);
     }

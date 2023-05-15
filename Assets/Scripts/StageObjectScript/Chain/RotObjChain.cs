@@ -8,9 +8,12 @@ public partial class RotatableObject : MonoBehaviour
 	GameObject _chainObj;	// 回転させるオブジェクト
 	RotatableObject _chainObjComp;	// 回転させるオブジェクト
 	RotObjCheckHitChain[] _childObjChainComp;
+	static RotObjUnionObtherber _obtherber = null;
 	float otherObjLength = 0;
 	private bool _isHitChain {get;set;}
 	Vector3 _rotPosOther;
+	int _otherAngle = 0;
+	[SerializeField] private RotObjObserver _observer;
 	[SerializeField] private int _HitChainAngle = 180;
 	void ChainSettingStart(){
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
@@ -31,6 +34,8 @@ public partial class RotatableObject : MonoBehaviour
 			}
 		}
 
+		// オブザーバーを確保する
+
 		_isHitChain = false;
 	}
 
@@ -42,11 +47,8 @@ public partial class RotatableObject : MonoBehaviour
 
 		// 相手のオブジェクト基準で位置を計測
 		var centPos = _chainObjComp.MostFarObjPos(_chainObjComp._rotAxis, _rotPosOther);
-		int otherAngle = 0;
-		if(_angle < 0) otherAngle = 180;
-		if(_angle > 0) otherAngle = -180;
 		// 相手のオブジェクトを回転させる
-		_chainObjComp.StartRotateChain(centPos, _chainObjComp._rotAxis, otherAngle);
+		_chainObjComp.StartRotateChain(centPos, _chainObjComp._rotAxis, _otherAngle);
  	}
 
 	public void SetisHitChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
@@ -72,6 +74,21 @@ public partial class RotatableObject : MonoBehaviour
 				// 相手を回転させる座標を確保
 				_rotPosOther = hitPos;
 			}
+		}
+
+		Debug.Log(_angle);
+		if(_angle < 0){
+			_otherAngle = 180;
+		} else if(_angle > 0){
+			_otherAngle = -180;
+		}
+		Debug.Log(_otherAngle);
+	}
+
+	public void SetisIntoChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
+		var lastRotObj = _observer.GetLastRotateRotObj();
+		if(this.gameObject == lastRotObj.gameObject){
+			SetisHitChain(other, otherRotComp, other.transform.position);
 		}
 	}
 

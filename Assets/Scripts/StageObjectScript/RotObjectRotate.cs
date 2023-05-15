@@ -19,6 +19,7 @@ public partial class RotatableObject : MonoBehaviour
 		{
 			return;
 		}
+		Debug.Log(this.name);
 		// 回転の中心を設定
 		_axisCenterWorldPos = rotCenter;
 		// 回転軸を設定
@@ -39,7 +40,10 @@ public partial class RotatableObject : MonoBehaviour
 		SetChildHitCheckFloorFlg(true);
 		SetChildHitCheckChainFlg(true);
 		// めり込み判定を切っておく
-		SetChildHitCheckInto(false);
+		SetChildCheckIntoFloor(false);
+		SetChildCheckIntoChain(false);
+
+		_observer.SetLastRotateRotObj(this);
 
 		// 経過時間を初期化
 		_elapsedTime = 0.0f;
@@ -56,6 +60,7 @@ public partial class RotatableObject : MonoBehaviour
 		}
 		Debug.Log("プレイヤー回転");
 		StartRotate(rotCenter, rotAxis, rotAngle);
+		//SystemSoundManager.Instance.PlaySE(SESoundData.SE.e_rorate);
 		// トランスフォームを格納
 		_playerTransform = playerTransform;
 	}
@@ -183,16 +188,17 @@ public partial class RotatableObject : MonoBehaviour
 			}
 			StopPartical();
 			Debug.Log("回転終了");
+			Debug.Log(this.name);
 		}
 		else
 		{
-
 			if(_isRotateEndFream){
 				// 普段は当たり判定の処理を切っておく
 				SetChildHitCheckFloorFlg(false);
 				SetChildHitCheckChainFlg(false);
 				// めり込み判定の確認
-				SetChildHitCheckInto(true);
+				SetChildCheckIntoFloor(true);
+				SetChildCheckIntoChain(true);
 			}
 
 			if(_isHitFloor){

@@ -6,9 +6,9 @@ using SuzumuraTomoki;
 public class ResultLoad : MonoBehaviour
 {
     static public void LoadStageSelectScene() {
-        SceneManager.instance.LoadStageSelect();
+        SceneManager.LoadStageSelect();
     }
     static public void LoadBeforeScene() {
-        SceneManager.instance.LoadBeforeScene();
+        SceneManager.LoadBeforeScene();
     }
 }
