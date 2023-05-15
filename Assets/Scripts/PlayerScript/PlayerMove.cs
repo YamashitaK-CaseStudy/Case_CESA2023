@@ -29,10 +29,9 @@ public partial class Player : MonoBehaviour {
     // Update is called once per frame
     void UpdateMove() {
 
-        Debug.Log(_animCallBack.GetIsRotationAnimPlay);
-
         // スティック入力入れてるかつ回転アニメーションが再生されてる間は動けない
         if (_xBlockLock || _yBlockLock || _animCallBack.GetIsRotationAnimPlay) {
+            Debug.Log("無効");
             return;
         }
 
@@ -77,8 +76,10 @@ public partial class Player : MonoBehaviour {
 
         if (_groundCheck.IsGround) {
 
-            if (_jumpButton.WasPressedThisFrame()) {
+            Debug.Log("浮いてる");
 
+            if (_jumpButton.WasPressedThisFrame()) {
+                Debug.Log("ジャンプボタン押された");
                 _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
 
                 if (!_upperrayCheck.IsUpperHit) {
@@ -88,6 +89,9 @@ public partial class Player : MonoBehaviour {
                     _jumpCurveSpeed = 0.0f;
                 }
             }
+        }
+        else {
+            Debug.Log("浮いてる");
         }
     }
 }
