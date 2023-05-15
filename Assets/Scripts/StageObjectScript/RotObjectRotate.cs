@@ -192,7 +192,6 @@ public partial class RotatableObject : MonoBehaviour
 		}
 		else
 		{
-
 			if(_isRotateEndFream){
 				// 普段は当たり判定の処理を切っておく
 				SetChildHitCheckFloorFlg(false);
