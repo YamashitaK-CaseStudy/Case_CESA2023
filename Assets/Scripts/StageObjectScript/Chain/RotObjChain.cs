@@ -13,7 +13,7 @@ public partial class RotatableObject : MonoBehaviour
 	private bool _isHitChain {get;set;}
 	Vector3 _rotPosOther;
 	int _otherAngle = 0;
-	[SerializeField] private RotObjObserver _observer;
+	public RotObjObserver _observer;
 	[SerializeField] private int _HitChainAngle = 180;
 	void ChainSettingStart(){
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
@@ -76,19 +76,19 @@ public partial class RotatableObject : MonoBehaviour
 			}
 		}
 
-		Debug.Log(_angle);
 		if(_angle < 0){
 			_otherAngle = 180;
 		} else if(_angle > 0){
 			_otherAngle = -180;
 		}
-		Debug.Log(_otherAngle);
 	}
 
 	public void SetisIntoChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
 		var lastRotObj = _observer.GetLastRotateRotObj();
+		Debug.Log(lastRotObj);
+		Debug.Log(this);
 		if(this.gameObject == lastRotObj.gameObject){
-			SetisHitChain(other, otherRotComp, other.transform.position);
+			// SetisHitChain(other, otherRotComp, other.transform.position);
 		}
 	}
 

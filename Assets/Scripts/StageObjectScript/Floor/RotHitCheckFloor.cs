@@ -19,6 +19,10 @@ public class RotHitCheckFloor : MonoBehaviour
 		_isCheckHit = false;
 		_isCheckInto = false;
 	}
+	public void parentUpdate(){
+		_parentObj = this.transform.root.gameObject;
+		_parentRotObj = _parentObj.GetComponent<RotatableObject>();
+	}
 	// オブジェクトが当たったとき
 	private void OnTriggerEnter(Collider other)
 	{

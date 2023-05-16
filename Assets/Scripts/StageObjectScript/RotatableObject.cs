@@ -14,7 +14,6 @@ public partial class RotatableObject : MonoBehaviour{
 	private int _angle;						// 回転角度
 	public bool _isRotating = false;		// 回転してるかフラグ
 	public bool _isSpining = false;			// 回転しているかフラグ
-
 	public bool _isRotateStartFream = false;	// 回転し始めた1フレームを教えるフラグ
 	public bool _isRotateEndFream = false;		// 回転が終了した1フレームを教えるフラグ
 	private bool _doOnce = false;
