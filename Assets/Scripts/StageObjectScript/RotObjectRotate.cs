@@ -10,7 +10,8 @@ public partial class RotatableObject : MonoBehaviour
 	private Transform _playerTransform = null;// プレイヤーのトランスフォーム
 	private float _oldAngle = 0.0f;
 	private float _polatAngle = 0.0f;
-	private bool _isSpin;
+	private bool _isSpin = false;
+	public bool _isUnion { get; set;}
 	private Quaternion _oldRotAngle;
 	private Vector3 _oldPos;
 	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
@@ -28,6 +29,7 @@ public partial class RotatableObject : MonoBehaviour
 		_angle = rotAngle;
 		// フラグを立てる
 		_isRotating = true;
+		_isUnion = false;
 
 		// 角度による補正値を計算する
 		_polatAngle = _angle / 90;
@@ -126,6 +128,12 @@ public partial class RotatableObject : MonoBehaviour
 				}
 			}
 
+			// 途中で磁石オブジェクトに当たっていた場合の処理
+			if(_isUnion && !_isHitFloor){
+				isFinish = true;
+				requiredDeltaTime -= (_elapsedTime - 1); // 補正
+			}
+
 			// 現在フレームの回転を示す回転のクォータニオン作成
 			var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
 
@@ -160,6 +168,11 @@ public partial class RotatableObject : MonoBehaviour
 				// 経過時間と補間用数値を用いて現在進んだ角度から一番近い90単位の角度を算出
 				finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, MidpointRounding.AwayFromZero) * 90;
 				SetReflect(_axisCenterWorldPos, _rotAxis, finishAngle);
+			}
+
+			if(_isUnion){
+				_isUnion = false;
+				finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, MidpointRounding.AwayFromZero) * 90;
 			}
 
 			// 最終的に回転した量を考慮して最終補正をクオータニオンで計算する

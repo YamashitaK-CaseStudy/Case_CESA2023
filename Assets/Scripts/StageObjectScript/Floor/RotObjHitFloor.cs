@@ -13,7 +13,7 @@ public partial class RotatableObject : MonoBehaviour
 	private Vector3 _refAxis;
 	private int _refAngle;
 
-	public void HitCheckFloorSettingStart()
+	private void HitCheckFloorSettingStart()
 	{
 		_isHitFloor = false;
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
@@ -32,6 +32,51 @@ public partial class RotatableObject : MonoBehaviour
 					_childObjHitCheckFloorComp[i] = obj.GetComponent<RotHitCheckFloor>();
 				}
 			}
+		}
+	}
+
+	public void ChildCountUpdate(){
+		// 一回空っぽにする
+		System.Array.Resize(ref _childObj, 0);
+		System.Array.Resize(ref _childObjHitCheckFloorComp, 0);
+		System.Array.Resize(ref _childObjChainComp, 0);
+		// 子供のサイズを設定
+		int childnum = this.gameObject.transform.GetChild(0).childCount;
+		int childcountNum = 0;
+
+		// 子供のオブジェクトを確保
+		for(int i = 0; i < childnum; i++){
+			// 孫のオブジェクトを確保
+			var tmpObj = this.gameObject.transform.GetChild(0).transform.GetChild(i).gameObject;
+			// ダミーオブジェクトの場合はループをいったん飛ばす
+			if(tmpObj.tag == "DamiObject") continue;
+			// 配列のサイズを変更
+			System.Array.Resize(ref _childObj, _childObj.Length + 1);
+			System.Array.Resize(ref _childObjHitCheckFloorComp, _childObjHitCheckFloorComp.Length + 1);
+			System.Array.Resize(ref _childObjChainComp, _childObjChainComp.Length + 1);
+
+			// 孫オブジェクトを格納
+			_childObj[childcountNum] = tmpObj;
+			// 孫のオブジェクトの子供からColliderを検索
+			for(int j = 0; j < _childObj[childcountNum].transform.childCount; j++){
+				var obj = _childObj[childcountNum].transform.GetChild(j).gameObject;
+				// レイヤー確認してAcalaのオブジェクトを探す
+				if(obj.layer == LayerMask.NameToLayer("Acala")){
+					// 中から必要なコンポーネントを持ってくる
+					_childObjHitCheckFloorComp[childcountNum] = obj.GetComponent<RotHitCheckFloor>();
+				}
+				// レイヤー確認してChainのオブジェクトを探す
+				if(obj.layer == LayerMask.NameToLayer("Chain")){
+					// 中から必要なコンポーネントを持ってくる
+					_childObjChainComp[childcountNum] = obj.GetComponent<RotObjCheckHitChain>();
+				}
+			}
+			childcountNum++;
+		}
+
+		for(int i = 0; i < childcountNum; i++){
+			_childObjHitCheckFloorComp[i].parentUpdate();
+			_childObjChainComp[i].parentUpdate();
 		}
 	}
 

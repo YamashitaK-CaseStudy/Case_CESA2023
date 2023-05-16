@@ -6,8 +6,11 @@ public class RotObjUnionObtherber : MonoBehaviour{
 
     // 回転オブジェクトの合体素材
     private List<GameObject> _unionMaterials = new List<GameObject>();
+    public bool _isUseUnion;
+    [SerializeField] private RotObjObserver _rotObserver = null;
 
     void Update() {
+        if(!_isUseUnion) return;
 
         if (_unionMaterials.Count < 2) {
             return;
@@ -28,6 +31,7 @@ public class RotObjUnionObtherber : MonoBehaviour{
         foreach (var rotobj in _unionMaterials) {
 
             if (rotobj.GetComponent<RotatableObject>()._isRotating) {
+                        Debug.Log("回転してるんや...");
                 return;
             }
         }
@@ -57,7 +61,9 @@ public class RotObjUnionObtherber : MonoBehaviour{
 
         // 合体した瞬間を
         Debug.Log("合体した");
-        //basechildObjects.GetComponent<RotatableObject>().HitCheckFloorSettingStart();
+        var rotObj = basechildObjects.transform.root.GetComponent<RotatableObject>();
+        rotObj.ChildCountUpdate();
+        _rotObserver.SetLastRotateRotObj(rotObj);
 
         _unionMaterials.Clear();
     }

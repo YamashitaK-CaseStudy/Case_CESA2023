@@ -16,9 +16,14 @@ public partial class SceneEditor : EditorWindow
 	string _path;
 	bool _isGetSameName = false;
 	bool _isOnUnionObj = false;
-	GameObject _UnionObthberPrefab;
+	GameObject _ObserverPrefab;
 	GameObject _BackGroundPrefab;
 	GameObject _GrobalVolmePrefab;
+	SeedData _seedData;
+	bool _isMainStage = false;
+	bool _isUseUnionObj = false;
+	int _stageNumber = 5;
+	int _seedCounts = 5;
 
 	[MenuItem("Editor/シーンエディター")]
 	private static void ShowWindow()
@@ -30,8 +35,9 @@ public partial class SceneEditor : EditorWindow
 		_searchFolder = AssetDatabase.LoadAssetAtPath<DefaultAsset>(_scenePath);
 		_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Pf_Player.prefab");
 		_BackGroundPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_BackGroundCanvas.prefab");
-		_UnionObthberPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/RotObjectUnionObthber.prefab");
-		//_GrobalVolmePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_GlobalVolume.prefab");
+		_ObserverPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_Observer.prefab");
+		_seedData = AssetDatabase.LoadAssetAtPath<SeedData>("Assets/Settings/SeedData.asset");
+		_GrobalVolmePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_GlobalVolume.prefab");
 	}
 	private void OnGUI()
 	{
@@ -52,7 +58,6 @@ public partial class SceneEditor : EditorWindow
 				Debug.LogError("Error");
 				break;
 		}
-
 	}
 	private void LayoutCreateNewScene()
 	{
@@ -65,8 +70,18 @@ public partial class SceneEditor : EditorWindow
 		// プレイヤーのプレハブを設定
 		_playerPrefab = (GameObject)EditorGUILayout.ObjectField("プレイヤープレハブ", _playerPrefab, typeof(GameObject), false);
 
-		// 磁石オブジェクトを設置する場合置かなければいけないものがある
-		_isOnUnionObj = EditorGUILayout.Toggle("磁石オブジェクトを設置するか", _isOnUnionObj);
+		// 磁石オブジェクトを使用するかどうか
+		_isUseUnionObj = EditorGUILayout.ToggleLeft("磁石オブジェクトを使用するかどうか",_isUseUnionObj);
+
+		// メインステージかどうか
+		_isMainStage = EditorGUILayout.ToggleLeft("メインステージの作成かどうか",_isMainStage);
+
+		if(_isMainStage){
+			// ステージ番号の設定
+			_stageNumber = EditorGUILayout.IntField("ステージ番号", _stageNumber);
+			// 種の設定個数を変更
+			_seedCounts = EditorGUILayout.IntField("種の最大数", _seedCounts);
+		}
 
 		if (GUILayout.Button("シーンの作成を開始する"))
 		{
@@ -151,14 +166,14 @@ public partial class SceneEditor : EditorWindow
 		tmpBGComp.worldCamera = tmpCameraObj.GetComponent<Camera>();
 		tmpBGComp.planeDistance = 99;
 
+		_seedData.defaultTotalCountList[_stageNumber - 1] = _seedCounts;
+
 		// グローバルボリュームの生成
-		//var tmpGV = Instantiate(_GrobalVolmePrefab, new Vector3(0,0,0), Quaternion.identity);
+		var tmpGV = Instantiate(_GrobalVolmePrefab, new Vector3(0,0,0), Quaternion.identity);
 
 		// 磁石オブジェクト用のオブザーバーをインスタンス化する
-		if (_isOnUnionObj)
-		{
-			var tmp = Instantiate(_UnionObthberPrefab, pos, Quaternion.identity);
-			tmp.name = "RotObjectUnionObthber";
-		}
+		var tmp = Instantiate(_ObserverPrefab, pos, Quaternion.identity);
+		tmp.name = "ObserverObj";
+		tmp.GetComponent<RotObjUnionObtherber>()._isUseUnion = _isUseUnionObj;
 	}
 }
