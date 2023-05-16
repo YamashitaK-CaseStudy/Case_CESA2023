@@ -11,7 +11,7 @@ public partial class RotObjUnion : MonoBehaviour{
 
         if (!_isStartDoOnce) {
             _isStartDoOnce = true;
-            _obtherber = GameObject.FindGameObjectWithTag("UnionObtherber").GetComponent<RotObjUnionObtherber>();
+            _obtherber = GameObject.FindGameObjectWithTag("Observer").GetComponent<RotObjUnionObtherber>();
         }
 
         _parentRotObjComp = this.transform.root.gameObject.GetComponent<RotatableObject>();
