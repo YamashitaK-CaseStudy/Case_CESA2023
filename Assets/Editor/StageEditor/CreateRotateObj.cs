@@ -27,6 +27,7 @@ public partial class CStageEditor : EditorWindow
 	bool _isBoxZ;
 	int _selectChildID;
 	int _length;
+	GameObject _observer;
 	enum CREATETYPE
 	{
 		normal,
@@ -41,6 +42,7 @@ public partial class CStageEditor : EditorWindow
 		_parentObject = null;
 		_object = null;
 		_selectAddChildPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_Parts.prefab");
+		_observer = GameObject.Find("ObserverObj");
 	}
 
 	void LayoutRotateObj()
@@ -419,6 +421,7 @@ public partial class CStageEditor : EditorWindow
 		_parentRigdbody.isKinematic = true;
 		// RotatableObjectの生成
 		_parentRotObj = _parentObject.AddComponent<RotatableObject>();
+		_parentRotObj._observer = _observer.GetComponent<RotObjObserver>();
 		// 種類の設定
 		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
 		_parentObjectkind._RotObjKind = _kinds;

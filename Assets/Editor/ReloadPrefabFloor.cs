@@ -11,10 +11,21 @@ public class ReloadPrefabFloor : EditorWindow
 	GameObject[] _floorObj;
 	private string _path = "Assets/Prefabs/Stage/Floor/";  // 検索するファイル
 	string[] _paths;
+	bool _isSwitchFloorObj = false;
+	int[] _posOfChangeLow = new int[3];
+	int[] _posOfChangeHight = new int[3];
+	bool _isSetX = true;
+	bool _isSetY = false;
+	bool _isSetZ = false;
+	GameObject _floorParts;
 	[MenuItem("Editor/床オブジェクト更新")]
 	private static void ShowWindow()
 	{
 		EditorWindow.GetWindow(typeof(ReloadPrefabFloor));
+	}
+
+	private void OnEnable(){
+		_floorParts = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Floor/Pf_FloorParts01.prefab");
 	}
 
 	private void OnGUI()
@@ -28,6 +39,48 @@ public class ReloadPrefabFloor : EditorWindow
 		if (GUILayout.Button("差し替え"))
 		{
 			UpdateFloor();
+		}
+
+		Line();
+		_isSwitchFloorObj = EditorGUILayout.ToggleLeft("置き変えを行うか", _isSwitchFloorObj);
+		if (_isSwitchFloorObj)
+		{
+			EditorGUILayout.HelpBox("床のオブジェクトを置き換える\n指定した範囲のFloorオブジェクトを置き換える\n 最大 5 最小1の場合は1 ~ 5の間にあるものを置き換える", MessageType.Info);
+			_floorParts = (GameObject)EditorGUILayout.ObjectField("パーツ", _floorParts, typeof(GameObject), false);
+			_isSetX = EditorGUILayout.ToggleLeft("X", _isSetX);
+			if (_isSetX)
+			{
+				using (new GUILayout.HorizontalScope())
+				{
+					_posOfChangeHight[0] = EditorGUILayout.IntField("最大値", _posOfChangeHight[0]);
+					GUILayout.FlexibleSpace();
+					_posOfChangeLow[0] = EditorGUILayout.IntField("最小値", _posOfChangeLow[0]);
+				}
+			}
+			_isSetY = EditorGUILayout.ToggleLeft("Y", _isSetY);
+			if (_isSetY)
+			{
+				using (new GUILayout.HorizontalScope())
+				{
+					_posOfChangeHight[1] = EditorGUILayout.IntField("最大値", _posOfChangeHight[1]);
+					GUILayout.FlexibleSpace();
+					_posOfChangeLow[1] = EditorGUILayout.IntField("最小値", _posOfChangeLow[1]);
+				}
+			}
+			_isSetZ = EditorGUILayout.ToggleLeft("Z", _isSetZ);
+			if (_isSetZ)
+			{
+				using (new GUILayout.HorizontalScope())
+				{
+					_posOfChangeHight[2] = EditorGUILayout.IntField("最大値", _posOfChangeHight[2]);
+					GUILayout.FlexibleSpace();
+					_posOfChangeLow[2] = EditorGUILayout.IntField("最小値", _posOfChangeLow[2]);
+				}
+			}
+			if (GUILayout.Button("置き換え"))
+			{
+				SwitchFloor();
+			}
 		}
 	}
 
@@ -60,14 +113,17 @@ public class ReloadPrefabFloor : EditorWindow
 			}
 		}
 
-		for(int i = 0; i < _floorObj[0].transform.childCount; i++){
+		for (int i = 0; i < _floorObj[0].transform.childCount; i++)
+		{
 			var child = _floorObj[0].transform.GetChild(i);
 
-			if(child.name.Contains(("Clone"))){
-				child.name = child.name.Replace("(Clone)","");
+			if (child.name.Contains(("Clone")))
+			{
+				child.name = child.name.Replace("(Clone)", "");
 			}
-			if(child.name.Contains(("Floar"))){
-				child.name = child.name.Replace("Floar","Floor");
+			if (child.name.Contains(("Floar")))
+			{
+				child.name = child.name.Replace("Floar", "Floor");
 			}
 		}
 
@@ -104,11 +160,13 @@ public class ReloadPrefabFloor : EditorWindow
 					break;
 				}
 				// 旧式名の場合01番に変更する
-				if(child.name == "Pf_FloarParts"){
+				if (child.name == "Pf_FloarParts")
+				{
 					Replace(child.gameObject, newFloor, _paths[0]);
 					break;
 				}
-				if(child.name == "Pf_FloorParts"){
+				if (child.name == "Pf_FloorParts")
+				{
 					Replace(child.gameObject, newFloor, _paths[0]);
 					break;
 				}
@@ -125,4 +183,66 @@ public class ReloadPrefabFloor : EditorWindow
 		childObj.gameObject.transform.parent = parent.transform;
 		childObj.name = childObj.name.Replace("(Clone)", "");
 	}
+
+	private void SwitchFloor()
+	{
+		foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+		{
+			// シーン上に存在するオブジェクトならば処理.
+			if (obj.name == "Floor")
+			{
+				for (int i = 0; i < obj.transform.childCount; i++)
+				{
+					var floorObj = obj.transform.GetChild(i).gameObject;
+					var floorObjPos = floorObj.transform.position;
+					bool isSwitchFloorX = true;
+					bool isSwitchFloorY = true;
+					bool isSwitchFloorZ = true;
+					// 各種方向の
+					if (_isSetX)
+					{
+						isSwitchFloorX = CheckPositionScope(floorObjPos.x, 0);
+					}
+					if (_isSetY)
+					{
+						isSwitchFloorY = CheckPositionScope(floorObjPos.y, 1);
+					}
+					if (_isSetZ)
+					{
+						isSwitchFloorZ = CheckPositionScope(floorObjPos.z, 2);
+					}
+
+					if (isSwitchFloorX && isSwitchFloorY && isSwitchFloorZ)
+					{
+						var newfloor = Instantiate(_floorParts, floorObjPos, Quaternion.identity);
+						newfloor.gameObject.transform.parent = obj.transform;
+						newfloor.name = newfloor.name.Replace("(Clone)", "");
+						DestroyImmediate(floorObj.gameObject);
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	private void Line()
+	{
+		var splitterRect = EditorGUILayout.GetControlRect(false, GUILayout.Height(1));
+		splitterRect.x = 0;
+		splitterRect.width = position.width - 100f;
+		EditorGUI.DrawRect(splitterRect, Color.Lerp(Color.gray, Color.gray, 1.0f));
+	}
+
+	bool CheckPositionScope(float pos, int num)
+	{
+		Debug.Log(pos);
+		if (_posOfChangeHight[num] >= pos && pos >= _posOfChangeLow[num])
+		{
+			Debug.Log("あ");
+			return true;
+		}
+
+		return false;
+	}
 }
+
