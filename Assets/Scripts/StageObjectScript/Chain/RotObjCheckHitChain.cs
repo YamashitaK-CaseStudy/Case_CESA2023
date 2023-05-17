@@ -19,10 +19,17 @@ public class RotObjCheckHitChain : MonoBehaviour
 		_isCheckHit = false;
 		_isCheckInto = false;
 	}
+
+	public void parentUpdate(){
+		_parentObj = this.transform.root.gameObject;
+		_parentRotObj = _parentObj.GetComponent<RotatableObject>();
+	}
+
 	// オブジェクトが当たったとき
 	private void OnTriggerEnter(Collider other)
 	{
 		if(!_isCheckHit) return;
+		if (other.transform.root.gameObject.GetComponent<RotatableObject>()._isRotating) return;
 		// RotateObjectのみと当たり判定を取る
 		var comp = other.transform.root.GetComponent<RotatableObject>();
 		// 自分の親に知らせる

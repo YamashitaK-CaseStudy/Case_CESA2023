@@ -24,8 +24,6 @@ public partial class RotObjUnion : MonoBehaviour
 		// 相手と自分のワールド座標系の比較
 		var pos1 = this.transform.position;
 		var pos2 = contactObj.transform.position;
-		Debug.Log(pos1);
-		Debug.Log(pos2);
 		// 同じ座標系の軸を所得
 		if(pos1.x >= pos2.x - 0.5f && pos1.x <= pos2.x + 0.5f){
 			generateAxis = 1;	// Y軸に発生
@@ -38,19 +36,15 @@ public partial class RotObjUnion : MonoBehaviour
 		// 同じではないほうの座標を比較して発生する座標を決定する
 		switch(generateAxis){
 			case 1:
-			Debug.Log("y軸に生成するで");
 				if(pos1.y < pos2.y){
-					Debug.Log("上に生成するで");
 					generateAngle = new Vector3(0,0,0);
 					generatePos.y += 0.5f;
 				}else{
-					Debug.Log("下に生成するで");
 					generateAngle = new Vector3(180,0,0);
 					generatePos.y -= 0.5f;
 				}
 			break;
 			case 2:
-			Debug.Log("x軸に生成するで");
 				if(pos1.x < pos2.x){
 					generateAngle = new Vector3(0,0,90);
 					generatePos.x += 0.5f;
