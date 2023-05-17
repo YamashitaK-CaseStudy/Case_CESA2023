@@ -5,8 +5,21 @@ using UnityEngine.InputSystem;
 
 public class SelectFilmBehavior : MonoBehaviour
 {
-    const int _MAX_STAGE = 5;
-    const int MAX_WORLD = 4;
+    /*定数*/
+    public const int MAX_STAGE = 5;
+
+    private const int MAX_WORLD = 4;
+    //private const float OUTER_FRAME_RATIO = 36.0f / 3261;
+    private const float FILM_FRAME_RATIO = 645.0f / 3261;
+
+    private enum TextID
+    {
+        WORLD_NUM,
+        HORIZONTAL_BAR,
+        STAGE_NUM,
+        SEED_ICON,
+        SEED_SCORE
+    }
 
     static public int obtainedCount
     {
@@ -20,25 +33,17 @@ public class SelectFilmBehavior : MonoBehaviour
         }
     }
 
-    static public int MAX_STAGE
-    {
-        get
-        {
-            return _MAX_STAGE;
-        }
-    }
-
     static private int currentStageIndex
     {
         get
         {
-            return _stageNumber - 1 + _MAX_STAGE * (_currentWorldNum - 1);
+            return _stageNumber - 1 + MAX_STAGE * (_currentWorldNum - 1);
         }
     }
 
     static private int _currentWorldNum = 1;
     static private int _stageNumber = 1;
-    static private List<int> _obtainedCountList = new List<int>(new int[_MAX_STAGE * MAX_WORLD]);
+    static private List<int> _obtainedCountList = new List<int>(new int[MAX_STAGE * MAX_WORLD]);
 
     void Start()
     {
@@ -64,6 +69,17 @@ public class SelectFilmBehavior : MonoBehaviour
         {
             Debug.LogError("PlayerInputに　アクション：StageSelectL　がありません");
         }
+        else
+        {
+            _actionStageSelectL.performed += func =>
+            {
+                if (_currentWorldNum > 1)
+                {
+                    --_currentWorldNum;
+                    UpdateWorldNum();
+                }
+            };
+        }
 
         _actionStageSelectR = GetComponent<PlayerInput>().actions.FindAction("StageSelectR");
 
@@ -71,25 +87,16 @@ public class SelectFilmBehavior : MonoBehaviour
         {
             Debug.LogError("PlayerInputに　アクション：StageSelectR　がありません");
         }
-
-        生成しない
-        for (int i = 1; i <= _MAX_STAGE; ++i)
+        else
         {
-            //注意　１ループで生成する数（１ステージ分ごとの数）をInit()のfloat offset = _scrollAmount * (i / """１ステージごとの数""");に反映してください 検索ワード：マジックナンバー 単語単位の検索を解除しないと出ない(vs2022)
-
-            /*ステージ番号*/
-            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
-            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = "-";
-            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = (i).ToString();
-
-            /*種スコア*/
-            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = "たね";
-            int totalSeeds = UiSeedBehavior.totalSeeds;
-            if (totalSeeds == 0)
-            {
-                totalSeeds = _seedData.GetDefaultTotalCount(_currentWorldNum, i);
-            }
-            Instantiate(_pfTextNumber, transform).GetComponent<UnityEngine.UI.Text>().text = _obtainedCountList[i - 1].ToString() + "/" + totalSeeds.ToString();
+            _actionStageSelectR.performed += func =>
+              {
+                  if (_currentWorldNum < MAX_WORLD)
+                  {
+                      ++_currentWorldNum;
+                      UpdateWorldNum();
+                  }
+              };
         }
 
         Init();
@@ -99,37 +106,47 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         _stageNumber = 1;
 
-        GetComponent<RectTransform>().localPosition = new Vector3(_scrollAmount * 2, 0, 0);
+        InitTransform();
 
-        int childCount = transform.childCount;
-        Transform childTransform = null;
-        for (int i = 0; i < childCount; ++i)
+        InitText();
+    }
+
+    private void InitText()
+    {
+        UpdateWorldNum();
+
+        Transform textUnitTransform = null;
+        for (int i = 0; i < MAX_STAGE; ++i)
         {
-            childTransform = transform.GetChild(i);
-            float offset = _scrollAmount * (i / 5);//マジックナンバー
+            textUnitTransform = transform.GetChild(i);
+            int stageNum = i + 1;
+            textUnitTransform.GetChild((int)TextID.STAGE_NUM).GetComponent<UnityEngine.UI.Text>().text = stageNum.ToString();
 
-            /*ステージ番号*/
-            childTransform.position = new Vector3(_numberOffset.x + offset, _numberOffset.y, 0) + transform.position;
-            childTransform.localScale = new Vector3(_numberScale, _numberScale, 0);
-
-            childTransform = transform.GetChild(++i);
-            childTransform.position = new Vector3(_numberOffset.x + offset + _numberDistance / 2, _numberOffset.y + _numberScale * 30/*ハイフンのフォントが低い位置になるため微調整*/, 0) + transform.position;
-            childTransform.localScale = new Vector3(_numberScale, _numberScale, 0);
-
-            childTransform = transform.GetChild(++i);
-            childTransform.position = new Vector3(_numberOffset.x + offset + _numberDistance, _numberOffset.y, 0) + transform.position;
-            childTransform.localScale = new Vector3(_numberScale, _numberScale, 0);
-
-            /*たねスコア*/
-            childTransform = transform.GetChild(++i);
-            childTransform.position = new Vector3(_seedIconOffset.x + offset, _seedIconOffset.y, 0) + transform.position;
-            childTransform.localScale = new Vector3(_seedIconScale, _seedIconScale, 0);
-
-            childTransform = transform.GetChild(++i);
-            childTransform.position = new Vector3(_seedScoreOffset.x + offset, _seedScoreOffset.y, 0) + transform.position;
-            childTransform.localScale = new Vector3(_seedScoreScale, _seedScoreScale, 0);
+            int totalSeeds = UiSeedBehavior.totalSeeds;
+            if (totalSeeds == 0)
+            {
+                totalSeeds = _seedData.GetDefaultTotalCount(_currentWorldNum, stageNum);
+            }
+            textUnitTransform.GetChild((int)TextID.SEED_SCORE).GetComponent<UnityEngine.UI.Text>().text = _obtainedCountList[i + (_currentWorldNum - 1) * MAX_STAGE].ToString() + "/" + totalSeeds.ToString();
         }
+    }
 
+    private void InitTransform()
+    {
+        RectTransform rectTrans = GetComponent<RectTransform>();
+
+        _scrollAmount = rectTrans.rect.width * FILM_FRAME_RATIO * rectTrans.localScale.x;//OnValidate()で0割り対策済み
+
+        rectTrans.localPosition = new Vector3(_scrollAmount * (MAX_STAGE - 1) / 2.0f, 0, 0);
+
+        Transform childTransform = null;
+        for (int i = 0; i < MAX_STAGE; ++i)
+        {
+            float offset = _scrollAmount * i + _textUnitOffset.x;
+            childTransform = transform.GetChild(i);
+            childTransform.localPosition = (new Vector3(offset, _textUnitOffset.y, 0) - rectTrans.localPosition) / rectTrans.localScale.x;
+            childTransform.localScale = new Vector3(_textUnitScale, _textUnitScale, 0);
+        }
     }
 
     void Update()
@@ -140,14 +157,13 @@ public class SelectFilmBehavior : MonoBehaviour
         }
         UpdateLoadStageInput();
         UpdateScroll();
-        UpdateInputSelectWoeld();
     }
 
     private void UpdateLoadStageInput()
     {
         if (_actionDecision.triggered)
         {
-            bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_currentWorldNum - 1) * _MAX_STAGE);
+            bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_currentWorldNum - 1) * MAX_STAGE);
             if (!success)
             {
                 //TODO:無効な入力を伝えるSE
@@ -161,17 +177,19 @@ public class SelectFilmBehavior : MonoBehaviour
     {
 
         float x = _actionMove.ReadValue<Vector2>().x;
+
+        //デッドゾーン
         if (Mathf.Abs(x) <= 0.1f)
         {
             return;
         }
         else if (x > 0)
         {
-            if (_stageNumber >= _MAX_STAGE)
+            if (_stageNumber >= MAX_STAGE)
             {
                 return;
             }
-            StartCoroutine(Scroll(false));
+            StartCoroutine(ScrollRight());
         }
         else
         {
@@ -179,75 +197,75 @@ public class SelectFilmBehavior : MonoBehaviour
             {
                 return;
             }
-            StartCoroutine(Scroll(true));
+            StartCoroutine(ScrollLeft());
         }
     }
 
-    private void UpdateInputSelectWoeld()
-    {
-        if (_actionStageSelectL.ReadValue<bool>())
-        {
-            if (_currentWorldNum > 1)
-            {
-                --_currentWorldNum;
-            }
-        }
-        if (_actionStageSelectR.ReadValue<bool>())
-        {
-            if (_currentWorldNum < MAX_WORLD)
-            {
-                ++_currentWorldNum;
-            }
-        }
-    }
-
-    private IEnumerator Scroll(bool right)
+    private IEnumerator ScrollRight()
     {
         _stopInput = true;
-
-        float speed = _scrollSpeed;
-        float scrollAmount = _scrollAmount;
-        if (!right)
-        {
-            speed *= -1;
-            scrollAmount *= -1;
-            ++_stageNumber;
-        }
-        else
-        {
-            --_stageNumber;
-        }
+        ++_stageNumber;
 
         Vector3 oldPos = transform.localPosition;
+
         while (Mathf.Abs(oldPos.x - transform.localPosition.x) < _scrollAmount)
         {
             yield return null;
-            transform.localPosition += new Vector3(speed, 0, 0);
+            transform.localPosition -= new Vector3(_scrollSpeed, 0, 0);
         }
 
-        transform.localPosition = oldPos + new Vector3(scrollAmount, 0, 0);
+        transform.localPosition = oldPos + new Vector3(-_scrollAmount, 0, 0);
         _stopInput = false;
     }
 
+    private IEnumerator ScrollLeft()
+    {
+        _stopInput = true;
+        --_stageNumber;
+
+        Vector3 oldPos = transform.localPosition;
+
+        while (Mathf.Abs(oldPos.x - transform.localPosition.x) < _scrollAmount)
+        {
+            yield return null;
+            transform.localPosition += new Vector3(_scrollSpeed, 0, 0);
+        }
+
+        transform.localPosition = oldPos + new Vector3(_scrollAmount, 0, 0);
+        _stopInput = false;
+    }
+
+    private void UpdateWorldNum()
+    {
+        for (int i = 0; i < MAX_STAGE; ++i)
+        {
+            transform.GetChild(i).GetChild((int)TextID.WORLD_NUM).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
+        }
+    }
 
     private void OnValidate()
     {
-        Init();
+        _update = false;
+        if (transform.localScale.x == 0)
+        {
+            transform.localScale = transform.localScale + new Vector3(float.Epsilon, 0, 0);
+        }
+        InitTransform();
     }
 
-    [SerializeField, Header("Textオブジェクト。フォントが完成次第入れ替えます。")] private GameObject _pfTextNumber;
-    [Header("ステージ番号設定")]
+    //[Header("ステージ番号設定")]
     //[SerializeField] private Sprite _numberFont;
-    [SerializeField] private float _scrollAmount = 300;
+    private float _scrollAmount = 0;
+    [Header("RectTransformを変更した場合updateを押すとシーンが更新されます")]
+    [SerializeField] private bool _update = false;//RectTransformをインスペクタで変更するとOnValidate()が呼ばれないため
     [SerializeField] private float _scrollSpeed = 3;
-    [SerializeField] private float _numberScale = .15f;
-    [SerializeField] private Vector2 _numberOffset = new Vector2(-700, 0);
-    [SerializeField] private float _numberDistance = 100;
-    [Header("種スコア設定")]
-    [SerializeField] private Vector2 _seedIconOffset = new Vector2(-650, -30);
-    [SerializeField] private float _seedIconScale = .05f;
-    [SerializeField] private Vector2 _seedScoreOffset = new Vector2(-550, -30);
-    [SerializeField] private float _seedScoreScale = .05f;
+    [SerializeField] private Vector2 _textUnitOffset = new Vector2(0, 0);
+    [SerializeField] private float _textUnitScale = 1;
+    //[Header("種スコア設定")]
+    //[SerializeField] private Vector2 _seedIconOffset = new Vector2(-650, -30);
+    //[SerializeField] private float _seedIconScale = .05f;
+    //[SerializeField] private Vector2 _seedScoreOffset = new Vector2(-550, -30);
+    //[SerializeField] private float _seedScoreScale = .05f;
     [SerializeField] private SeedData _seedData;
     private InputAction _actionMove = null;
     private InputAction _actionDecision = null;
