@@ -4,15 +4,15 @@ using UnityEngine;
 
 
 public class SystemSoundManager : MonoBehaviour {
-    [SerializeField] AudioSource bgmAudioSource;
-    [SerializeField] AudioSource seAudioSource;
+    [SerializeField] AudioSource _bgmAudioSource;
+    [SerializeField] AudioSource _seAudioSource;
 
-    [SerializeField] List<BGMSoundData> bgmSoundDatas;
-    [SerializeField] List<SESoundData> seSoundDatas;
+    [SerializeField] List<BGMSoundData> _bgmSoundDatas;
+    [SerializeField] List<SystemSESoundData> _seSoundDatas;
 
-    public float masterVolume = 1;
-    public float bgmMasterVolume = 1;
-    public float seMasterVolume = 1;
+    public float _masterVolume = 1;
+    public float _bgmMasterVolume = 1;
+    public float _seMasterVolume = 1;
 
     public static SystemSoundManager Instance {
         get; private set;
@@ -29,17 +29,17 @@ public class SystemSoundManager : MonoBehaviour {
     }
 
     public void PlayBGM(BGMSoundData.BGM bgm) {
-        BGMSoundData data = bgmSoundDatas.Find(data => data.bgm == bgm);
-        bgmAudioSource.clip = data.audioClip;
-        bgmAudioSource.volume = data.volume * bgmMasterVolume * masterVolume;
-        bgmAudioSource.Play();
+        BGMSoundData data = _bgmSoundDatas.Find(data => data._bgm == bgm);
+        _bgmAudioSource.clip = data._audioClip;
+        _bgmAudioSource.volume = data._volume * _bgmMasterVolume * _masterVolume;
+        _bgmAudioSource.Play();
     }
 
 
-    public void PlaySE(SESoundData.SE se) {
-        SESoundData data = seSoundDatas.Find(data => data.se == se);
-        seAudioSource.volume = data.volume * seMasterVolume * masterVolume;
-        seAudioSource.PlayOneShot(data.audioClip);
+    public void PlaySE(SystemSESoundData.SystemSE se) {
+        SystemSESoundData data = _seSoundDatas.Find(data => data._systemSe == se);
+        _seAudioSource.volume = data._systemSeVolume * _seMasterVolume * _masterVolume;
+        _seAudioSource.PlayOneShot(data._systemSeAudioClip);
     }
 }
 
@@ -54,31 +54,24 @@ public class BGMSoundData {
         Result,
     }
 
-    public BGM bgm;
-    public AudioClip audioClip;
+    public BGM _bgm;
+    public AudioClip _audioClip;
     [Range(0, 1)]
-    public float volume = 1;
+    public float _volume = 1;
 }
 
 [System.Serializable]
-public class SESoundData {
+public class SystemSESoundData {
     // ‚±‚ê‚ªƒ‰ƒxƒ‹‚É‚È‚é
-    public enum SE {
+    public enum SystemSE {
         Enter,
         Cancel,
         Select,
         Error,
-        Rotate,
-        Spin,
-        Magnet,
-        Chain,
-        Move,
-        Lock,
-        Jump,
     }
 
-    public SE se;
-    public AudioClip audioClip;
+    public SystemSE _systemSe;
+    public AudioClip _systemSeAudioClip;
     [Range(0, 1)]
-    public float volume = 1;
+    public float _systemSeVolume = 1;
 }

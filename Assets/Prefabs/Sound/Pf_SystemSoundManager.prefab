@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2089180832030824271}
   - component: {fileID: 2089180832030824270}
   m_Layer: 0
-  m_Name: Pf_SoundManager
+  m_Name: Pf_SystemSoundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
     audioClip: {fileID: 0}
     volume: 0
   - se: 2
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: b08296e4e5fd9294d81a3adb113aa374, type: 3}
     volume: 0
   - se: 3
     audioClip: {fileID: 0}
@@ -81,7 +81,7 @@ MonoBehaviour:
     audioClip: {fileID: 0}
     volume: 0
   - se: 6
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: ff63f42c6bf25f541b1406907aa7c9c9, type: 3}
     volume: 0
   - se: 7
     audioClip: {fileID: 0}
