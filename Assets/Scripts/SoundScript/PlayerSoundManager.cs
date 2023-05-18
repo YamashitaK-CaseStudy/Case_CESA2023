@@ -8,7 +8,7 @@ public class PlayerSoundManager : MonoBehaviour
     [SerializeField] List<PlayerSESoundData> _gameSeSoundDatas;
 
     public float _masterVolume = 1;
-    public float seMasterVolume = 1;
+    public float _seMasterVolume = 1;
 
     public static PlayerSoundManager Instance
     {
@@ -28,10 +28,10 @@ public class PlayerSoundManager : MonoBehaviour
         }
     }
 
-    public void PlayGameSE(PlayerSESoundData.PlayerSE se)
+    public void PlayPlayerSE(PlayerSESoundData.PlayerSE se)
     {
         PlayerSESoundData data = _gameSeSoundDatas.Find(data => data._playerSe == se);
-        _gameSeAudioSource.volume = data._playerSeVolume * seMasterVolume * _masterVolume;
+        _gameSeAudioSource.volume = data._playerSeVolume * _seMasterVolume * _masterVolume;
         _gameSeAudioSource.PlayOneShot(data._playerSeAudioClip);
     }
 }

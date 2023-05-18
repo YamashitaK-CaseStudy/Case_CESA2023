@@ -46,58 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39cc2576138356547aed8103adf3ceee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmAudioSource: {fileID: 2089180832030824271}
-  seAudioSource: {fileID: 2089180832030824270}
-  bgmSoundDatas:
-  - bgm: 0
-    audioClip: {fileID: 0}
-    volume: 0
-  - bgm: 1
-    audioClip: {fileID: 0}
-    volume: 0
-  - bgm: 2
-    audioClip: {fileID: 8300000, guid: 66f32b370a41c174da9927edf7d749e6, type: 3}
-    volume: 0
-  - bgm: 3
-    audioClip: {fileID: 0}
-    volume: 0
-  seSoundDatas:
-  - se: 0
-    audioClip: {fileID: 0}
-    volume: 0
-  - se: 1
-    audioClip: {fileID: 0}
-    volume: 0
-  - se: 2
-    audioClip: {fileID: 8300000, guid: b08296e4e5fd9294d81a3adb113aa374, type: 3}
-    volume: 0
-  - se: 3
-    audioClip: {fileID: 0}
-    volume: 0
-  - se: 4
-    audioClip: {fileID: 0}
-    volume: 0
-  - se: 5
-    audioClip: {fileID: 0}
-    volume: 0
-  - se: 6
-    audioClip: {fileID: 8300000, guid: ff63f42c6bf25f541b1406907aa7c9c9, type: 3}
-    volume: 0
-  - se: 7
-    audioClip: {fileID: 0}
-    volume: 0
-  - se: 8
-    audioClip: {fileID: 0}
-    volume: 0
-  - se: 9
-    audioClip: {fileID: 0}
-    volume: 0
-  - se: 10
-    audioClip: {fileID: 0}
-    volume: 0
-  masterVolume: 1
-  bgmMasterVolume: 1
-  seMasterVolume: 1
+  _bgmAudioSource: {fileID: 2089180832030824271}
+  _seAudioSource: {fileID: 2089180832030824270}
+  _bgmSoundDatas: []
+  _seSoundDatas: []
+  _masterVolume: 1
+  _bgmMasterVolume: 1
+  _seMasterVolume: 1
 --- !u!82 &2089180832030824271
 AudioSource:
   m_ObjectHideFlags: 0
