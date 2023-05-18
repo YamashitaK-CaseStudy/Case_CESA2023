@@ -15,7 +15,7 @@ public class PlayerCamera : MonoBehaviour{
 	void Start(){
 		target = GameObject.Find(targetName).transform;
 
-		SystemSoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
+		//SystemSoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
 	}
 
 

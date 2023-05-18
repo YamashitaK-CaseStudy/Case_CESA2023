@@ -49,21 +49,26 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         /*テキスト生成・初期化*/
 
-        _actionMove = GetComponent<PlayerInput>().actions.FindAction("Move");
+        _actionMove = SuzumuraTomoki.SceneManager.playerInput.FindAction("Move");
 
         if (_actionMove == null)
         {
             Debug.LogError("PlayerInputに　アクション：Move　がありません");
         }
 
-        _actionDecision = GetComponent<PlayerInput>().actions.FindAction("StageSelectEnter");
+        _actionDecision = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectEnter");
 
         if (_actionDecision == null)
         {
             Debug.LogError("PlayerInputに　アクション：StageSelectEnter　がありません");
         }
+        else
+        {
+            _actionDecision.started += GoStage;
+            _actionDecision.Enable();
+        }
 
-        _actionStageSelectL = GetComponent<PlayerInput>().actions.FindAction("StageSelectL");
+        _actionStageSelectL = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectL");
 
         if (_actionStageSelectL == null)
         {
@@ -71,17 +76,10 @@ public class SelectFilmBehavior : MonoBehaviour
         }
         else
         {
-            _actionStageSelectL.performed += func =>
-            {
-                if (_currentWorldNum > 1)
-                {
-                    --_currentWorldNum;
-                    UpdateWorldNum();
-                }
-            };
+            _actionStageSelectL.started += DecreaseWorldNum;
         }
 
-        _actionStageSelectR = GetComponent<PlayerInput>().actions.FindAction("StageSelectR");
+        _actionStageSelectR = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectR");
 
         if (_actionStageSelectR == null)
         {
@@ -89,17 +87,16 @@ public class SelectFilmBehavior : MonoBehaviour
         }
         else
         {
-            _actionStageSelectR.performed += func =>
-              {
-                  if (_currentWorldNum < MAX_WORLD)
-                  {
-                      ++_currentWorldNum;
-                      UpdateWorldNum();
-                  }
-              };
+            _actionStageSelectR.started += IncreaseWorldNum;
         }
 
         Init();
+    }
+
+    private void OnDestroy()
+    {
+        _actionStageSelectR.started -= IncreaseWorldNum;
+        _actionStageSelectL.started -= DecreaseWorldNum;
     }
 
     private void Init()
@@ -109,6 +106,38 @@ public class SelectFilmBehavior : MonoBehaviour
         InitTransform();
 
         InitText();
+    }
+
+    private void Update()
+    {
+        if (_stopInput)
+        {
+            return;
+        }
+
+        float x = _actionMove.ReadValue<Vector2>().x;
+
+        //デッドゾーン
+        if (Mathf.Abs(x) <= 0.1f)
+        {
+            return;
+        }
+        else if (x > 0)
+        {
+            if (_stageNumber >= MAX_STAGE)
+            {
+                return;
+            }
+            StartCoroutine(ScrollRight());
+        }
+        else
+        {
+            if (_stageNumber <= 1)
+            {
+                return;
+            }
+            StartCoroutine(ScrollLeft());
+        }
     }
 
     private void InitText()
@@ -149,58 +178,6 @@ public class SelectFilmBehavior : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (_stopInput)
-        {
-            return;
-        }
-        UpdateLoadStageInput();
-        UpdateScroll();
-    }
-
-    private void UpdateLoadStageInput()
-    {
-        if (_actionDecision.triggered)
-        {
-            bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_currentWorldNum - 1) * MAX_STAGE);
-            if (!success)
-            {
-                //TODO:無効な入力を伝えるSE
-                print("ステージセレクト「そんなステージはありません」");
-            }
-        }
-    }
-
-
-    private void UpdateScroll()
-    {
-
-        float x = _actionMove.ReadValue<Vector2>().x;
-
-        //デッドゾーン
-        if (Mathf.Abs(x) <= 0.1f)
-        {
-            return;
-        }
-        else if (x > 0)
-        {
-            if (_stageNumber >= MAX_STAGE)
-            {
-                return;
-            }
-            StartCoroutine(ScrollRight());
-        }
-        else
-        {
-            if (_stageNumber <= 1)
-            {
-                return;
-            }
-            StartCoroutine(ScrollLeft());
-        }
-    }
-
     private IEnumerator ScrollRight()
     {
         _stopInput = true;
@@ -211,7 +188,7 @@ public class SelectFilmBehavior : MonoBehaviour
         while (Mathf.Abs(oldPos.x - transform.localPosition.x) < _scrollAmount)
         {
             yield return null;
-            transform.localPosition -= new Vector3(_scrollSpeed, 0, 0);
+            transform.localPosition -= new Vector3(_scrollSpeed * Time.deltaTime, 0, 0);
         }
 
         transform.localPosition = oldPos + new Vector3(-_scrollAmount, 0, 0);
@@ -228,7 +205,7 @@ public class SelectFilmBehavior : MonoBehaviour
         while (Mathf.Abs(oldPos.x - transform.localPosition.x) < _scrollAmount)
         {
             yield return null;
-            transform.localPosition += new Vector3(_scrollSpeed, 0, 0);
+            transform.localPosition += new Vector3(_scrollSpeed * Time.deltaTime, 0, 0);
         }
 
         transform.localPosition = oldPos + new Vector3(_scrollAmount, 0, 0);
@@ -240,6 +217,45 @@ public class SelectFilmBehavior : MonoBehaviour
         for (int i = 0; i < MAX_STAGE; ++i)
         {
             transform.GetChild(i).GetChild((int)TextID.WORLD_NUM).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
+        }
+    }
+
+    private void GoStage(InputAction.CallbackContext context)
+    {
+        
+        if (_stopInput)
+        {
+            return;
+        }
+
+        bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_currentWorldNum - 1) * MAX_STAGE);
+
+        if (!success)
+        {
+            //TODO:無効な入力を伝えるSE
+            print("ステージセレクト「ステージが存在しません」");
+            return;
+        }
+
+        _actionDecision.performed -= GoStage;
+        _actionDecision.Disable();
+    }
+
+    private void DecreaseWorldNum(InputAction.CallbackContext context)
+    {
+        if (_currentWorldNum > 1)
+        {
+            --_currentWorldNum;
+            UpdateWorldNum();
+        }
+    }
+
+    private void IncreaseWorldNum(InputAction.CallbackContext context)
+    {
+        if (_currentWorldNum < MAX_WORLD)
+        {
+            ++_currentWorldNum;
+            UpdateWorldNum();
         }
     }
 
