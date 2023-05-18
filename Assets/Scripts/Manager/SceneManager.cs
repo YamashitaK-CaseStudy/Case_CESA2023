@@ -8,11 +8,18 @@ namespace SuzumuraTomoki {
 	public class SceneManager : MonoBehaviour {
 
 		//定数
-		public const int NON_STAGE_SCENES_COUNT = 3;
+		public const int NON_STAGE_SCENES_COUNT = 2;
+
+		public enum TitleInitState
+        {
+			TITLE,
+			STAGE_SELECT
+        }
 
 		//statics
 		static private SceneManager _instance = null;
 		static private UnityEngine.InputSystem.InputActionMap _playerInput = null;
+		static private TitleInitState _titleInitStatet = TitleInitState.TITLE;
 
 		/*****静的インターフェイス（公開メンバ）*******/
 
@@ -42,6 +49,13 @@ namespace SuzumuraTomoki {
 			}
 		}
 
+		static public TitleInitState titleInitState
+		{
+			get
+			{
+				return _titleInitStatet;
+			}
+		}
 
 		/**
         * 指定した番号のステージをロードします。
@@ -63,13 +77,15 @@ namespace SuzumuraTomoki {
 		}
 
 		static public void LoadTitle() {
+			_titleInitStatet = TitleInitState.TITLE;
 			instance.LoadScene(0);
 		}
 		static public void LoadStageSelect() {
-			instance.LoadScene(1);
+			_titleInitStatet = TitleInitState.STAGE_SELECT;
+			instance.LoadScene(0);
 		}
 		static public void LoadResult() {
-			instance.LoadScene(2);
+			instance.LoadScene(1);
 		}
 
 		static public void LoadBeforeScene() {

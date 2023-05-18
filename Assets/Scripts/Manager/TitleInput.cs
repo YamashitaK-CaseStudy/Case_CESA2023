@@ -4,24 +4,36 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using SuzumuraTomoki;
 
-public class TitleInput : MonoBehaviour{
+public class TitleInput : MonoBehaviour
+{
 
-    private PlayerInput _playerInput;
-    private InputAction _titleEnter;
+    [SerializeField] private GameObject _canvusStageSelect = null;
 
-    private void Start() {
-
-        TryGetComponent(out _playerInput);
-
-        _titleEnter = _playerInput.actions.FindAction("TitleEnter");
-    }
-
-    void Update()
+    private void Start()
     {
-        if (_titleEnter.WasPressedThisFrame())
+        if (SceneManager.titleInitState == SceneManager.TitleInitState.STAGE_SELECT)
         {
-            Fader.instance.fadeTime = 0.5f;
-            SceneManager.LoadStageSelect();
+            _canvusStageSelect.SetActive(true);
+            return;
         }
+
+        //else
+
+        _canvusStageSelect.SetActive(false);
+
+        var titleEnter = SceneManager.playerInput.FindAction("TitleEnter");
+        if (titleEnter == null)
+        {
+            print("InputAction\"TitleEnter\"‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+        }
+
+        titleEnter.performed += func =>
+        {
+            _canvusStageSelect.SetActive(true);
+            titleEnter.Disable();
+        };
+
+        titleEnter.Enable();
     }
+
 }
