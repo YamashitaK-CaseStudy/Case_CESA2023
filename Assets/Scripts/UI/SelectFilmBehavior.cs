@@ -95,7 +95,7 @@ public class SelectFilmBehavior : MonoBehaviour
 
     private void OnDestroy()
     {
-        _actionStageSelectL.started -= IncreaseWorldNum;
+        _actionStageSelectR.started -= IncreaseWorldNum;
         _actionStageSelectL.started -= DecreaseWorldNum;
     }
 
