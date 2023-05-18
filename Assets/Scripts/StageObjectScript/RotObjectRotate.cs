@@ -14,6 +14,7 @@ public partial class RotatableObject : MonoBehaviour
 	public bool _isUnion { get; set;}
 	private Quaternion _oldRotAngle;
 	private Vector3 _oldPos;
+	public float _hitDelaySpeed = 0;
 	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
 	{
 		if (_isSpin || _isRotating)
@@ -45,7 +46,7 @@ public partial class RotatableObject : MonoBehaviour
 		SetChildCheckIntoFloor(false);
 		SetChildCheckIntoChain(false);
 
-		_observer.SetLastRotateRotObj(this);
+		_rotObjObserver.SetLastRotateRotObj(this);
 
 		// 経過時間を初期化
 		_elapsedTime = 0.0f;
@@ -96,6 +97,12 @@ public partial class RotatableObject : MonoBehaviour
 			_isRotateStartFream = false;
 		}
 
+		if(_hitStopContr._isHitStop){
+			_hitDelaySpeed = 1;
+		}else{
+			_hitDelaySpeed = 0;
+		}
+
 		// 回転中かフラグ
 		if (_isRotating)
 		{
@@ -107,7 +114,7 @@ public partial class RotatableObject : MonoBehaviour
 			// リクエストデルタタイムを求める
 			// リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
 			// これの合算値が1になった時,1回転に必要な時間が経過したことになる
-			float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle));
+			float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle) + _hitDelaySpeed);
 			_elapsedTime += requiredDeltaTime;
 
 			// 目標回転量*リクエストデルタタイムでそのフレームでの回転角度を求めることができる

@@ -17,6 +17,8 @@ public partial class RotatableObject : MonoBehaviour{
 	public bool _isRotateStartFream = false;	// 回転し始めた1フレームを教えるフラグ
 	public bool _isRotateEndFream = false;		// 回転が終了した1フレームを教えるフラグ
 	private bool _doOnce = false;
+	private GameObject _observer;
+	HitStopController _hitStopContr;
 
 	//プロパティ。外部からのメンバ変数へのアクセスを定義するもの。ゲッターやセッターのようなもの。
 	public float ProgressRate//進捗率という意味です。_elapsedTimeが単純に経過した時間ではなく全体時間で割った０～１の進捗率として扱われているためこの名前にしました。
@@ -29,6 +31,9 @@ public partial class RotatableObject : MonoBehaviour{
 
 	// Start is called before the first frame update
 	void Start(){
+		_observer = GameObject.FindWithTag("Observer");
+		_hitStopContr = _observer.GetComponent<HitStopController>();
+
 		StartFunc();
 		//StartSettingOtherHit();
 		// 自身の回転軸の向きを正規化しとく
@@ -41,6 +46,9 @@ public partial class RotatableObject : MonoBehaviour{
 
 	// Update is called once per frame
 	void Update(){
+		// ディレイ処理が入れば処理を考慮する
+		if(_hitStopContr.isHitStop()) return;
+
 		HitChainUpdate();
 		UpdateRotate();
 		UpdateSpin();
