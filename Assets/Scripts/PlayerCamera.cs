@@ -14,6 +14,8 @@ public class PlayerCamera : MonoBehaviour{
 	// Start is called before the first frame update
 	void Start(){
 		target = GameObject.Find(targetName).transform;
+
+		SystemSoundManager.Instance.PlayBGM(BGMSoundData.BGM.Title);
 	}
 
 
