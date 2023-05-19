@@ -45,6 +45,7 @@ public class PlayerSESoundData
         Move,
         Lock,
         Jump,
+        Rotation
     }
 
     public PlayerSE _playerSe;

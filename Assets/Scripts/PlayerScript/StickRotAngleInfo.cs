@@ -121,6 +121,8 @@ public partial class StickRotAngle : MonoBehaviour {
 
         _stickAngle_Y = 0;
         rotbleobj.oldangleY = 0;
+
+        Debug.Log("角度リセット");
     }
 
     // プレイヤーの位置によるスティックの角度を取得する
@@ -292,15 +294,20 @@ public partial class StickRotAngle : MonoBehaviour {
         int dialAngle = 0;
 
         if (angle >= 45 && angle < 135) {
+       
             dialAngle = 90;
+           
         }
         else if (angle >= 135 && angle < 225) {
+           
             dialAngle = 180;
         }
         else if (angle >= 225 && angle < 315) {
+       
             dialAngle = -90;
         }
         else {
+        
             dialAngle = 0;
         }
 

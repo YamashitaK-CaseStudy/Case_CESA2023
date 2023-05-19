@@ -79,6 +79,7 @@ public partial class Player : MonoBehaviour {
             Debug.Log("浮いてる");
 
             if (_jumpButton.WasPressedThisFrame()) {
+
                 Debug.Log("ジャンプボタン押された");
                 _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
 
@@ -87,6 +88,10 @@ public partial class Player : MonoBehaviour {
                     // 待ち処理
                     _animator.SetTrigger("StartJump");
                     _jumpCurveSpeed = 0.0f;
+
+                    // JumpSE再生
+                    Debug.Log("ジャンプSE");
+                    PlayerSoundManager.Instance.PlayPlayerSE(PlayerSESoundData.PlayerSE.Jump);
                 }
             }
         }

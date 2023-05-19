@@ -46,9 +46,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameSeAudioSource: {fileID: -1718385765444790904}
-  _gameSeSoundDatas: []
+  _gameSeSoundDatas:
+  - _playerSe: 2
+    _playerSeAudioClip: {fileID: 8300000, guid: 2a7b90fbeda7f534cba8bf5c5102b227,
+      type: 3}
+    _playerSeVolume: 0.1
+  - _playerSe: 1
+    _playerSeAudioClip: {fileID: 8300000, guid: ff63f42c6bf25f541b1406907aa7c9c9,
+      type: 3}
+    _playerSeVolume: 0.1
+  - _playerSe: 3
+    _playerSeAudioClip: {fileID: 8300000, guid: b08296e4e5fd9294d81a3adb113aa374,
+      type: 3}
+    _playerSeVolume: 0.1
   _masterVolume: 1
-  seMasterVolume: 1
+  _seMasterVolume: 1
 --- !u!82 &-1718385765444790904
 AudioSource:
   m_ObjectHideFlags: 0

@@ -42,6 +42,18 @@ public class PlayerskAnimationCallBack : MonoBehaviour{
         _isBigJumpValid = false;
     }
 
+    // ロックSE
+    public void PlayerSE_Lock() {
+        Debug.Log("ロックSE");
+        PlayerSoundManager.Instance.PlayPlayerSE(PlayerSESoundData.PlayerSE.Lock);
+    }
+
+    // プレイヤー回転DE
+    public void PlayerSE_Rotation() {
+        Debug.Log("プレイヤー回転SE");
+        PlayerSoundManager.Instance.PlayPlayerSE(PlayerSESoundData.PlayerSE.Rotation);
+    }
+
     // Getter
     public bool GetIsRotationAnimPlay {
         get { return _isRotationAnimPlay; }

@@ -72,15 +72,20 @@ public partial class Player : MonoBehaviour{
             var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
             // スティック回転Y
-
-            if (!rotatbleComp._isRotating) {
+            if (rotatbleComp._isRotateEndFream) {
                 _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
             }
 
             _stricRotAngle.StickRotAngleY_Update();
             rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY, this.transform);
 
-           
+            if (rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == 1)) {
+                _animator.SetTrigger("Rotation_Y_Right");
+            }
+            else if(rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == -1)) {
+                _animator.SetTrigger("Rotation_Y_Left");
+            }
+
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
                 rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90, this.transform);
@@ -110,7 +115,7 @@ public partial class Player : MonoBehaviour{
             }
             var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
-            if (!rotatbleComp._isRotating) {
+            if (!rotatbleComp._isRotateEndFream) {
                 _stricRotAngle.xAxisManyObjJude(_frontHitCheck);
             }
 

@@ -16,7 +16,7 @@ public partial class RotatableObject : MonoBehaviour{
 
     //     playerComp.NotificationStartRotate();
 
-    
+
     //     // フラグを立てる
     //     _isRotating = true;
 
@@ -35,6 +35,8 @@ public partial class RotatableObject : MonoBehaviour{
     //     PlayPartical();
 
     // }
+
+    public Vector3 offsetRotAxis;
 
     public void StartRotateX(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
         if (oldangleX == angle) {
@@ -68,6 +70,13 @@ public partial class RotatableObject : MonoBehaviour{
         playerTransform.transform.position = pPos;
 
         var offset = angle - oldangleY;
+
+        if (offset < 0) {
+            offsetRotAxis = new Vector3(0, -1, 0);
+        }
+        else {
+            offsetRotAxis = new Vector3(0, 1, 0);
+        }
 
         StartRotate(center, axis, offset, playerTransform);
         //StartStickRotate(center, axis, offset);

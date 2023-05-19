@@ -223,7 +223,7 @@ MonoBehaviour:
   _deadZone: 0.5
   _moveSpeed: 7
   _gravity: -40
-  _jumpPower: 640
+  _jumpPower: 620
   _jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -670,7 +670,7 @@ Animator:
   m_GameObject: {fileID: 4755372522531620515}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d9c7ce6b7145a2f40b34255c7202295f, type: 2}
+  m_Controller: {fileID: 9100000, guid: aa63c56eee993f74499af55733b597fc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
