@@ -52,7 +52,7 @@ public partial class RotatableObject : MonoBehaviour
  	}
 
 	public void SetisHitChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
-		_hitStopContr.SetHitDelay();
+		HitStopController.Instance.SetHitDelay();
 		_isHitChain = true;
 		// 当たり判定のセット
 		_chainObj = other;

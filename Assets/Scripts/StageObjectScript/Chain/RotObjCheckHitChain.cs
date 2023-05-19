@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class RotObjCheckHitChain : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class RotObjCheckHitChain : MonoBehaviour
 	private BoxCollider _thisColliderComp;
 	public bool _isCheckHit { get; set; } 		// 当たり判定を判定するかどうか
 	private bool _isCheckInto { get; set; }		// めり込みを確認
+	[SerializeField] private VisualEffect _hitVFX;
 	private void Start()
 	{
 		// 自分の親のオブジェクトを確保
@@ -28,14 +30,16 @@ public class RotObjCheckHitChain : MonoBehaviour
 	// オブジェクトが当たったとき
 	private void OnTriggerEnter(Collider other)
 	{
+		if(HitStopController.Instance._isHitStop) return;
 		if(!_isCheckHit) return;
 		if (other.transform.root.gameObject.GetComponent<RotatableObject>()._isRotating) return;
 		// RotateObjectのみと当たり判定を取る
 		var comp = other.transform.root.GetComponent<RotatableObject>();
 		// 自分の親に知らせる
 		_parentRotObj.SetisHitChain(other.gameObject, comp, other.transform.position);
+		// エフェクトを起動する
+		_hitVFX.SendEvent("OnPlay");
 	}
-
 	private void OnTriggerStay(Collider other)
 	{
 		// 当たり判定を行うかを確認
@@ -51,6 +55,7 @@ public class RotObjCheckHitChain : MonoBehaviour
 		// 自分の親に知らせる
 		Debug.Log("ChainCheck");
 		_parentRotObj.SetisIntoChain(other.gameObject, otherRotComp, other.transform.position);
+		_hitVFX.SendEvent("OnPlay");
 		_isCheckInto = false;
 	}
 	public void SetCheckInto(bool flg){

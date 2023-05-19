@@ -86,6 +86,7 @@ public partial class RotatableObject : MonoBehaviour
 			return;
 		}
 		Debug.Log("連鎖回転");
+		Debug.Log(rotAngle);
 		StartRotate(rotCenter, rotAxis, rotAngle);
 	}
 
@@ -95,12 +96,6 @@ public partial class RotatableObject : MonoBehaviour
 		if (_doOnce)
 		{
 			_isRotateStartFream = false;
-		}
-
-		if(_hitStopContr._isHitStop){
-			_hitDelaySpeed = 1;
-		}else{
-			_hitDelaySpeed = 0;
 		}
 
 		// 回転中かフラグ
@@ -114,7 +109,7 @@ public partial class RotatableObject : MonoBehaviour
 			// リクエストデルタタイムを求める
 			// リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
 			// これの合算値が1になった時,1回転に必要な時間が経過したことになる
-			float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle) + _hitDelaySpeed);
+			float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle));
 			_elapsedTime += requiredDeltaTime;
 
 			// 目標回転量*リクエストデルタタイムでそのフレームでの回転角度を求めることができる
@@ -207,8 +202,6 @@ public partial class RotatableObject : MonoBehaviour
 				_playerTransform = null;
 			}
 			StopPartical();
-			Debug.Log("回転終了");
-			Debug.Log(this.name);
 		}
 		else
 		{
