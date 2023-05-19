@@ -9,10 +9,9 @@ public partial class CStageEditor : EditorWindow
 	private bool isCreateStart;     // 回転オブジェクトを作成開始する
 	GameObject _parentObject;       // 一番親のオブジェクト
 	Rigidbody _parentRigdbody;      // 親のRigidbody
-	RotatableObject _parentRotObj;  // 親のRotatableObject
 	RotObjkinds _parentObjectkind;  // 親のRotObjKinds
 	RotObjkinds.ObjectKind _kinds;
-	AudioSource _parentAudioSource;	// 親のAudioSource
+	AudioSource _parentAudioSource; // 親のAudioSource
 	GameObject _object;             // 仲介のオブジェクト
 	GameObject _selectChildObj;     // 選択している子オブジェクト
 	GameObject _selectAddChildPrefab;// 選択している子オブジェクト
@@ -27,6 +26,8 @@ public partial class CStageEditor : EditorWindow
 	bool _isBoxZ;
 	int _selectChildID;
 	int _length;
+	int _boltLength = 1;
+	int _boltTranslationLimit = 1;
 	enum CREATETYPE
 	{
 		normal,
@@ -67,7 +68,21 @@ public partial class CStageEditor : EditorWindow
 					// タイトル
 					GUILayout.Box("詳細設定");
 					Line();
-					LayoutSettings();
+					switch (_kinds)
+					{
+						case RotObjkinds.ObjectKind.NomalRotObject:
+							LayoutSettings();
+							break;
+						case RotObjkinds.ObjectKind.UnionRotObject:
+							LayoutSettings();
+							break;
+						case RotObjkinds.ObjectKind.BoltRotObject:
+							LayoutBolt();
+							break;
+						case RotObjkinds.ObjectKind.SpinObject:
+							LayoutSettings();
+							break;
+					}
 				}
 			}
 		}
@@ -78,15 +93,26 @@ public partial class CStageEditor : EditorWindow
 			if (GUILayout.Button("オブジェクトの生成開始"))
 			{
 				isCreateStart = true;
-				CreateBaseRotateObject();
 				string path = null;
-				if (_kinds == RotObjkinds.ObjectKind.UnionRotObject)
+				switch (_kinds)
 				{
-					path = "Assets/Prefabs/Stage/Pf_PartsUnionRed.prefab";
-				}
-				else
-				{
-					path = "Assets/Prefabs/Stage/Pf_Parts.prefab";
+					case RotObjkinds.ObjectKind.NomalRotObject:
+						path = "Assets/Prefabs/Stage/Pf_Parts.prefab";
+						CreateBaseRotateObject();
+						break;
+					case RotObjkinds.ObjectKind.UnionRotObject:
+						path = "Assets/Prefabs/Stage/Pf_PartsUnionRed.prefab";
+						CreateBaseRotateObject();
+						break;
+					case RotObjkinds.ObjectKind.BoltRotObject:
+						path = "Assets/Prefabs/Stage/Pf_Bolt.prefab";
+						_selectAddChildPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+						CreateBaseBoltObject();
+						break;
+					case RotObjkinds.ObjectKind.SpinObject:
+						path = "Assets/Prefabs/Stage/Pf_PartsSpinOnly.prefab";
+						CreateBaseSpinObject();
+						break;
 				}
 
 				_selectAddChildPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
@@ -130,24 +156,6 @@ public partial class CStageEditor : EditorWindow
 				}
 			}
 		}
-
-		// キー入力の検出と処理
-		if (Event.current.type == EventType.KeyDown)
-		{
-			if (Event.current.keyCode == KeyCode.UpArrow)
-			{
-				_selectChildID--;
-				if (_selectChildID == -1) _selectChildID = _object.gameObject.transform.childCount - 1;
-				Event.current.Use();
-			}
-			else if (Event.current.keyCode == KeyCode.DownArrow)
-			{
-				_selectChildID++;
-				if (_selectChildID == _object.gameObject.transform.childCount) _selectChildID = 0;
-				Event.current.Use();
-			}
-			_selectChildObj = _object.gameObject.transform.GetChild(_selectChildID).gameObject;
-		}
 	}
 
 	private void LayoutSettings()
@@ -173,13 +181,38 @@ public partial class CStageEditor : EditorWindow
 		}
 		EditorGUILayout.EndFoldoutHeaderGroup();
 
-		// 子の基本設定
-		_isChildrenSettings = EditorGUILayout.BeginFoldoutHeaderGroup(_isChildrenSettings, "子の設定");
-		if (_isChildrenSettings)
+		if (GUILayout.Button("生成終了"))
+		{
+			isCreateStart = false;
+			_selectChildObj = null;
+			_childpos = new Vector3(0, 0, 0);
+		}
+	}
+
+	private void LayoutBolt(){
+		var boltComp = _parentObject.GetComponent<Bolt>();
+		// 親の基本設定
+		_isBaseSettings = EditorGUILayout.BeginFoldoutHeaderGroup(_isBaseSettings, "基本設定");
+		if (_isBaseSettings)
 		{
 			using (new GUILayout.VerticalScope("HelpBox"))
 			{
-				LayoutChildrenSettings();
+				LayoutBaseSettings();
+			}
+		}
+		EditorGUILayout.EndFoldoutHeaderGroup();
+
+		_isAddChildObj = EditorGUILayout.BeginFoldoutHeaderGroup(_isAddChildObj, "ボルトの設定");
+		if (_isAddChildObj)
+		{
+			using (new GUILayout.VerticalScope("HelpBox"))
+			{
+				_boltLength = EditorGUILayout.IntField("長さ", _boltLength);
+				if(_boltLength <= 0) _boltLength = 1;
+				boltComp.length = (uint)_boltLength;
+				_boltTranslationLimit = EditorGUILayout.IntField("回せる最大量", _boltTranslationLimit);
+				if(_boltTranslationLimit <= 0) _boltTranslationLimit = 1;
+				boltComp.translationLimit = (uint)_boltTranslationLimit;
 			}
 		}
 		EditorGUILayout.EndFoldoutHeaderGroup();
@@ -188,7 +221,7 @@ public partial class CStageEditor : EditorWindow
 		{
 			isCreateStart = false;
 			_selectChildObj = null;
-			_childpos = new Vector3(0,0,0);
+			_childpos = new Vector3(0, 0, 0);
 		}
 	}
 
@@ -220,26 +253,13 @@ public partial class CStageEditor : EditorWindow
 			EditorGUILayout.LabelField("座標", centerbold);
 			_parentObject.transform.position = EditorGUILayout.Vector3Field("", _parentObject.transform.position);
 		}
-
-		// Rigidbodyの設定
-		EditorGUILayout.LabelField("Rigidbbody", centerbold);
-		using (new EditorGUI.IndentLevelScope())
+				// オブジェクトの座標
+		using (new GUILayout.HorizontalScope())
 		{
-			_parentRigdbody.mass = EditorGUILayout.FloatField("質量", _parentRigdbody.mass);
-			_parentRigdbody.drag = EditorGUILayout.FloatField("抗力", _parentRigdbody.drag);
-			_parentRigdbody.angularDrag = EditorGUILayout.FloatField("回転抗力", _parentRigdbody.angularDrag);
-			_parentRigdbody.useGravity = EditorGUILayout.Toggle("重力使用", _parentRigdbody.useGravity);
-			_parentRigdbody.isKinematic = EditorGUILayout.Toggle("Is Kinematic", _parentRigdbody.isKinematic);
+			EditorGUILayout.LabelField("回転角", centerbold);
+			_parentObject.transform.eulerAngles = EditorGUILayout.Vector3Field("", _parentObject.transform.eulerAngles);
 		}
 
-		// RotatableObjectの設定
-		EditorGUILayout.LabelField("RotatableObject", centerbold);
-		using (new EditorGUI.IndentLevelScope())
-		{
-			_parentRotObj._isRotating = EditorGUILayout.ToggleLeft("isRotating", _parentRotObj._isRotating);
-			_parentRotObj._isSpining = EditorGUILayout.ToggleLeft("isSpin", _parentRotObj._isSpining);
-			_parentRotObj._rotRequirdTime = EditorGUILayout.FloatField("回転速度", _parentRotObj._rotRequirdTime);
-		}
 	}
 
 	private void LayoutAddChildObj()
@@ -364,46 +384,6 @@ public partial class CStageEditor : EditorWindow
 		_selectChildObj = tmpObj;
 		_selectChildID = _object.gameObject.transform.childCount - 1;
 	}
-	private void LayoutChildrenSettings()
-	{
-		// スタイルの設定
-		GUIStyleState style = new GUIStyleState()
-		{
-			textColor = new Color(1.0f, 1.0f, 1.0f, 1.0f),
-		};
-		GUIStyle centerbold = new GUIStyle()
-		{
-			fontStyle = FontStyle.Bold,
-			normal = style,
-		};
-		// ヌルチェック
-		if (_selectChildObj == null)
-		{
-			EditorGUILayout.HelpBox("子オブジェクトが選択されていません", MessageType.Warning);
-			return;
-		}
-
-		// オブジェクトの名前
-		using (new GUILayout.HorizontalScope())
-		{
-			EditorGUILayout.LabelField("オブジェクト名", centerbold);
-			string name = _selectChildObj.name;
-			name = EditorGUILayout.TextField(name);
-			_selectChildObj.name = name;
-		}
-
-		// オブジェクトの座標
-		using (new GUILayout.HorizontalScope())
-		{
-			EditorGUILayout.LabelField("座標", centerbold);
-			_selectChildObj.transform.position = EditorGUILayout.Vector3Field("", _selectChildObj.transform.position);
-		}
-
-		if (GUILayout.Button("削除"))
-		{
-			DestroyImmediate(_selectChildObj);
-		}
-	}
 
 	private void CreateBaseRotateObject()
 	{
@@ -411,14 +391,14 @@ public partial class CStageEditor : EditorWindow
 		_parentObject = new GameObject("RotatableObject");
 		// タグ・レイヤーの設定
 		_parentObject.tag = "RotateObject";
-		_parentObject.layer = 13;
+		_parentObject.layer = LayerMask.NameToLayer("Block");
 		// 必要コンポーネントのアタッチ
 		// Rigidbodyの生成　初期設定
 		_parentRigdbody = _parentObject.AddComponent<Rigidbody>();
 		_parentRigdbody.angularDrag = 0;
 		_parentRigdbody.isKinematic = true;
 		// RotatableObjectの生成
-		_parentRotObj = _parentObject.AddComponent<RotatableObject>();
+		_parentObject.AddComponent<RotatableObject>();
 		// 種類の設定
 		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
 		_parentObjectkind._RotObjKind = _kinds;
@@ -429,6 +409,49 @@ public partial class CStageEditor : EditorWindow
 
 		_object = new GameObject("Object");
 		_object.gameObject.transform.parent = _parentObject.gameObject.transform;
+	}
+
+	private void CreateBaseSpinObject()
+	{
+		// オブジェクトの生成
+		_parentObject = new GameObject("SpinObject");
+		// タグ・レイヤーの設定
+		_parentObject.layer = LayerMask.NameToLayer("Block");
+		// 必要コンポーネントのアタッチ
+		// Rigidbodyの生成　初期設定
+		_parentRigdbody = _parentObject.AddComponent<Rigidbody>();
+		_parentRigdbody.angularDrag = 0;
+		_parentRigdbody.isKinematic = true;
+		// RotatableObjectの生成
+		_parentObject.AddComponent<OnlySpinObj>();
+		// 種類の設定
+		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
+		_parentObjectkind._RotObjKind = _kinds;
+
+		// AudioSourceの追加
+		_parentAudioSource = _parentObject.AddComponent<AudioSource>();
+		_parentAudioSource.playOnAwake = false;
+
+		_object = new GameObject("Object");
+		_object.gameObject.transform.parent = _parentObject.gameObject.transform;
+	}
+
+	private void CreateBaseBoltObject()
+	{
+		// オブジェクトの生成
+		_parentObject = Instantiate(_selectAddChildPrefab, new Vector3(0,0,0), Quaternion.identity);
+		_parentObject.name = _parentObject.name.Replace("(Clone)", "");
+		// タグ・レイヤーの設定
+		_parentObject.layer = LayerMask.NameToLayer("Block");
+		// 必要コンポーネントのアタッチ
+		// 種類の設定
+		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
+		_parentObjectkind._RotObjKind = _kinds;
+		// AudioSourceの追加
+		_parentAudioSource = _parentObject.AddComponent<AudioSource>();
+		_parentAudioSource.playOnAwake = false;
+
+		_object = _parentObject.transform.GetChild(0).gameObject;
 	}
 
 	private bool CheckNowCreateRotObj()
