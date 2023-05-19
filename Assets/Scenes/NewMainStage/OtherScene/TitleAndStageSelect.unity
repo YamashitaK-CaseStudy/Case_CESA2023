@@ -271,8 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867ca2406ef2e6649b1f0fc90eed3c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputActionAsset: {fileID: -944628639613478452, guid: 084d411ab0ee8c84b94bc04040229489,
-    type: 3}
   _canvusStageSelect: {fileID: 5395227295367970801}
 --- !u!4 &286243060
 Transform:
@@ -1209,7 +1207,6 @@ GameObject:
   - component: {fileID: 5395227295040046332}
   - component: {fileID: 5395227295040046323}
   - component: {fileID: 5395227295040046322}
-  - component: {fileID: 5395227295040046333}
   m_Layer: 5
   m_Name: StageFilm
   m_TagString: Untagged
@@ -1293,41 +1290,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _update: 0
-  _scrollSpeed: 2
+  _scrollSpeed: 300
   _textUnitOffset: {x: 0, y: 4}
   _textUnitScale: 0.4
   _seedData: {fileID: 11400000, guid: 84e90fd0d401f014792017c4a14e4ba4, type: 2}
---- !u!114 &5395227295040046333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5395227295040046320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 084d411ab0ee8c84b94bc04040229489,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &5395227295367970801
 GameObject:
   m_ObjectHideFlags: 0
