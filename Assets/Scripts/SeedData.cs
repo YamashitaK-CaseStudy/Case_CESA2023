@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
 public class SeedData : ScriptableObject
 {
     public int GetDefaultTotalCount(int world, int stage)

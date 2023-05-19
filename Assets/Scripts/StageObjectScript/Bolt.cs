@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Bolt : RotatableObject
 {
-    [SerializeField, Header("ネジ部のモデル")] private GameObject _threadObject;//インスペクタで設定
-    [SerializeField, Header("ボルトの長さ")] private uint _length = 1;
-    [SerializeField, Header("最大移動量")] private uint _translationLimit = 1;
-    [SerializeField, Header("回転時の移動量。正で抜ける方向、負で締まる方向。")] private float _TranslationPerRotation = 1.0f;
-    [SerializeField, Header("高速回転時の移動スピード")] private float _spinningTranslationSpeed = 1.0f;
-    [SerializeField, Header("連動オブジェクトのリスト(親子関係のないオブジェクト)")] private List<GameObject> _interlockingObjectList;
+    [SerializeField] private GameObject _threadObject;//インスペクタで設定
+    [SerializeField] private uint _length = 1;
+    [SerializeField] private uint _translationLimit = 1;
+    [SerializeField, Header("正で抜ける、負で締まる。")] private float _translationPerRotation = 1.0f;
+    [SerializeField] private float _spinningTranslationSpeed = 1.0f;
+    [SerializeField, Header("親子関係のないオブジェクトのみ追加できます")] private List<GameObject> _interlockingObjectList;
     private float _countTranslation = 0;
     private float _countSpinTime = 0;
     private List<Vector3> _initialPositionListOfInterlockingObjects = new List<Vector3>();//連動オブジェクトの初期位置
@@ -21,9 +21,63 @@ public class Bolt : RotatableObject
     private Vector3 _upVectorWorldSpace = Vector3.zero;
     private Vector3 _rootOldPosition = Vector3.zero;
 
+    /*publics*/
+    public uint length
+    {
+        set
+        {
+            _length = value;
+            ApplyLength();
+        }
+    }
+
+    public uint translationLimit
+    {
+        set
+        {
+            _translationLimit = value;
+        }
+    }
+
+    public uint translationPerRotation
+    {
+        set
+        {
+            _translationPerRotation = value;
+        }
+    }
+    public uint spinningTranslationSpeed
+    {
+        set
+        {
+            _spinningTranslationSpeed = value;
+        }
+    }
+
+    public void AddInterlockingObject(GameObject obj)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+
+        _interlockingObjectList.Add(obj);
+
+        ManageInterlockingObjects();
+    }
+
+    public void ApplyInspector()
+    {
+        ApplyLength();
+        ManageInterlockingObjects();
+    }
+
+
+    /*privates*/
+
     private void Start()
     {
-      
+
         if (transform.parent == null)
         {
             UpdateBolt = UpdateWhenRoot;
@@ -122,10 +176,10 @@ public class Bolt : RotatableObject
         if (progressRate >= 1)
         {
             progressRate = 0;//現在は１を越える値が返るようになっている。2023/4/6
-            _countTranslation += _TranslationPerRotation;
+            _countTranslation += _translationPerRotation;
         }
         Vector3 localPosition = Vector3.zero;
-        localPosition.y = _countTranslation + _TranslationPerRotation * progressRate;
+        localPosition.y = _countTranslation + _translationPerRotation * progressRate;
         _childTransform.localPosition = localPosition;
     }
 
@@ -162,10 +216,10 @@ public class Bolt : RotatableObject
         {
             _wasCalculateRootSpaceVec = false;
             progressRate = 1;//現在は１を越える値が返るようになっている。2023/4/6
-            _countTranslation += _TranslationPerRotation;
+            _countTranslation += _translationPerRotation;
         }
 
-        _rootTransform.position = _rootOldPosition + _upVectorWorldSpace * _TranslationPerRotation * progressRate;
+        _rootTransform.position = _rootOldPosition + _upVectorWorldSpace * _translationPerRotation * progressRate;
     }
 
     private void UpdateRootPositionInSpin()
@@ -197,22 +251,13 @@ public class Bolt : RotatableObject
         _rootTransform.position = _rootOldPosition + _upVectorWorldSpace * _spinningTranslationSpeed * _countSpinTime;
     }
 
-    private void OnValidate()
+    private void ApplyLength()
     {
         if (_length == 0)
         {
             _length = 1;
         }
 
-        //UnityEditor.EditorApplication.delayCall += () => UpdateLength();
-    }
-
-    private void UpdateLength()
-    {
-        if (this == null)
-        {
-            return;
-        }
         int childCount = transform.GetChild(0).childCount;
 
         for (int i = 1; i < childCount; ++i)
@@ -229,4 +274,26 @@ public class Bolt : RotatableObject
         }
 
     }
+
+    private void ManageInterlockingObjects()
+    {
+        int listCount = _interlockingObjectList.Count;
+        for(int i= 0; i < listCount; ++i)
+        {
+            var iObj = _interlockingObjectList[i];
+
+            if (iObj == null)
+            {
+                continue;
+            }
+
+            if (transform.root.gameObject.Equals(iObj.transform.root.gameObject))
+            {
+                _interlockingObjectList.Remove(iObj);
+                --listCount;
+                --i;
+            }
+        }
+    }
+
 }
