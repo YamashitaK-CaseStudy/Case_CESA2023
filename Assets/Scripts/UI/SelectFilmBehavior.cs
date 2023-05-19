@@ -64,7 +64,7 @@ public class SelectFilmBehavior : MonoBehaviour
         }
         else
         {
-            _actionDecision.started += GoStage;
+            _actionDecision.performed += GoStage;
             _actionDecision.Enable();
         }
 
