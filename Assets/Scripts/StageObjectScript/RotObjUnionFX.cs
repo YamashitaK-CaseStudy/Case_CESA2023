@@ -62,5 +62,6 @@ public partial class RotObjUnion : MonoBehaviour
 		_effect.transform.position = generatePos + this.transform.position;
 		_effect.transform.eulerAngles = generateAngle;
 		_effect.SendEvent(_StartEventName);
+		GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Spark);
 	}
 }

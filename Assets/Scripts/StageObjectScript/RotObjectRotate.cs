@@ -52,6 +52,8 @@ public partial class RotatableObject : MonoBehaviour
 		_elapsedTime = 0.0f;
 		// トレイルの起動
 		PlayPartical();
+
+		GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Rotate);
 	}
 
 

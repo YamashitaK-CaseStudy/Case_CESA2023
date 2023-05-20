@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _update: 0
-  _scrollSpeed: 2
+  _scrollSpeed: 100
   _textUnitOffset: {x: 0, y: 4}
   _textUnitScale: 0.4
   _seedData: {fileID: 11400000, guid: 84e90fd0d401f014792017c4a14e4ba4, type: 2}
