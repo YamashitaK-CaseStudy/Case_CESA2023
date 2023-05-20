@@ -49,6 +49,8 @@ public partial class RotatableObject : MonoBehaviour
 		var centPos = _chainObjComp.MostFarObjPos(_chainObjComp._rotAxis, _rotPosOther);
 		// 相手のオブジェクトを回転させる
 		_chainObjComp.StartRotateChain(centPos, _chainObjComp._rotAxis, _otherAngle);
+
+		GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Chain);
  	}
 
 	public void SetisHitChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
