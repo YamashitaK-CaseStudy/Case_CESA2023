@@ -35,23 +35,16 @@ public partial class RotatableObject : MonoBehaviour{
     //     PlayPartical();
 
     // }
-
+    
     public Vector3 offsetRotAxis;
 
     public void StartRotateX(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
-        if (oldangleX == angle) {
+      
+        if(angle == 0) {
             return;
         }
 
-        // プレイヤーのトランスフォームを保持
-        _playerTransform = playerTransform;
-
-        var offset = angle - oldangleX;
-
-        StartRotate(center, axis, offset, playerTransform);
-       // RotateAxis(center, axis, offset);
-
-        oldangleX = angle;
+        StartRotate(center, axis, angle, playerTransform);
     }
 
     public void StartRotateY(Vector3 center, Vector3 axis, int angle,Transform playerTransform) {

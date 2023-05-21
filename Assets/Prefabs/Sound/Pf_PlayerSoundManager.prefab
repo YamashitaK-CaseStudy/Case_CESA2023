@@ -54,9 +54,13 @@ MonoBehaviour:
   - _playerSe: 1
     _playerSeAudioClip: {fileID: 8300000, guid: ff63f42c6bf25f541b1406907aa7c9c9,
       type: 3}
-    _playerSeVolume: 0.1
+    _playerSeVolume: 0.2
   - _playerSe: 3
-    _playerSeAudioClip: {fileID: 8300000, guid: b08296e4e5fd9294d81a3adb113aa374,
+    _playerSeAudioClip: {fileID: 8300000, guid: 31ba029ec0cb58447b1855b778b41a68,
+      type: 3}
+    _playerSeVolume: 0.1
+  - _playerSe: 0
+    _playerSeAudioClip: {fileID: 8300000, guid: e997ee28d13be7842b2d1c812f48fff3,
       type: 3}
     _playerSeVolume: 0.1
   _masterVolume: 1
@@ -72,10 +76,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

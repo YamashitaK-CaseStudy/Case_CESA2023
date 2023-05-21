@@ -68,15 +68,17 @@ public partial class Player : MonoBehaviour{
 
             if(_bottomHitCheck.GetRotObj == null) {
                 return;
-            }            
+            }
+           
+            Debug.Log("下オブジェクト取得中");
+
             var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
-            // スティック回転Y
             if (rotatbleComp._isRotateEndFream) {
                 _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
             }
 
-            _stricRotAngle.StickRotAngleY_Update();
+            _stricRotAngle.StickRotY_Update();
             rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY, this.transform);
 
             if (rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == 1)) {
@@ -115,17 +117,13 @@ public partial class Player : MonoBehaviour{
             }
             var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
-            if (!rotatbleComp._isRotateEndFream) {
-                _stricRotAngle.xAxisManyObjJude(_frontHitCheck);
-            }
-
             // スティック回転X
-            _stricRotAngle.StickRotAngleX_Update();
+            _stricRotAngle.StickRotX_Update();
             rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX, this.transform);
 
+          
             // 通常軸回転
             if (_rotationButton.WasPressedThisFrame()) {
-
                 rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, 90, this.transform);
             }
 
