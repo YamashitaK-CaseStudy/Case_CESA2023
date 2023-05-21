@@ -64,7 +64,7 @@ public class SelectFilmBehavior : MonoBehaviour
         }
         else
         {
-            _actionDecision.started += GoStage;
+            _actionDecision.performed += GoStage;
             _actionDecision.Enable();
         }
 
@@ -89,6 +89,8 @@ public class SelectFilmBehavior : MonoBehaviour
         {
             _actionStageSelectR.started += IncreaseWorldNum;
         }
+
+        Fader.stopInput = SuzumuraTomoki.SceneManager.playerInput;
 
         Init();
     }

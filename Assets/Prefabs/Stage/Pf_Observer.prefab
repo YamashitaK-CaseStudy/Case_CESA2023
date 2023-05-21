@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 201496479213441596}
   - component: {fileID: 201496479213441598}
   - component: {fileID: 201496479213441597}
+  - component: {fileID: 6820264418907783321}
   - component: {fileID: 2721644579441860047}
   m_Layer: 0
   m_Name: Pf_Observer
@@ -60,6 +61,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isUseUnion: 0
   _rotObserver: {fileID: 201496479213441598}
+--- !u!114 &6820264418907783321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201496479213441595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6856e79fae805a4fa2773eabf5f5289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayTime: 0.1
 --- !u!114 &2721644579441860047
 MonoBehaviour:
   m_ObjectHideFlags: 0

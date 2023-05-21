@@ -14,6 +14,7 @@ public partial class RotatableObject : MonoBehaviour
 	public bool _isUnion { get; set;}
 	private Quaternion _oldRotAngle;
 	private Vector3 _oldPos;
+	public float _hitDelaySpeed = 0;
 	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
 	{
 		if (_isSpin || _isRotating)
@@ -45,12 +46,14 @@ public partial class RotatableObject : MonoBehaviour
 		SetChildCheckIntoFloor(false);
 		SetChildCheckIntoChain(false);
 
-		_observer.SetLastRotateRotObj(this);
+		_rotObjObserver.SetLastRotateRotObj(this);
 
 		// 経過時間を初期化
 		_elapsedTime = 0.0f;
 		// トレイルの起動
 		PlayPartical();
+
+		GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Rotate);
 	}
 
 
@@ -85,6 +88,7 @@ public partial class RotatableObject : MonoBehaviour
 			return;
 		}
 		Debug.Log("連鎖回転");
+		Debug.Log(rotAngle);
 		StartRotate(rotCenter, rotAxis, rotAngle);
 	}
 
@@ -200,8 +204,6 @@ public partial class RotatableObject : MonoBehaviour
 				_playerTransform = null;
 			}
 			StopPartical();
-			Debug.Log("回転終了");
-			Debug.Log(this.name);
 		}
 		else
 		{

@@ -189,7 +189,6 @@ public partial class CStageEditor : EditorWindow
 		// 追加分
 		AddInstance(prefabData, pos);
 	}
-
 	private void AddInstance(GameObject prefabData, Vector3 pos)
 	{
 		// X
