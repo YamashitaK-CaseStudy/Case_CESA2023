@@ -5,7 +5,16 @@ using UnityEngine.UI;
 
 public class Fader : MonoBehaviour
 {
+    /*定数*/
+    public enum State
+    {
+        NONE,
+        FADE_DONE,
+        FADING_OUT,
+        FADING_IN
+    }
 
+    /*静的公開メンバ*/
     static public Fader instance
     {
         get
@@ -34,9 +43,24 @@ public class Fader : MonoBehaviour
                 rectTransform.anchorMin = new Vector2(0, 0);
                 rectTransform.anchorMax = new Vector2(1, 1);
                 rectTransform.sizeDelta = new Vector2(0, 0);
+
+                _instance.gameObject.SetActive(false);
             }
 
             return _instance;
+        }
+    }
+
+    static public UnityEngine.InputSystem.InputActionMap stopInput
+    {
+        set
+        {
+            if (instance._state == State.NONE)
+            {
+                return;
+            }
+            value.Disable();
+            _listStopInput.Add(value);
         }
     }
 
@@ -84,39 +108,62 @@ public class Fader : MonoBehaviour
 
     public void FadeOut(int loadSceneNumber)
     {
+        switch (_state)
+        {
+            case State.NONE:
+                _countTime = 0;
+                break;
+
+            case State.FADE_DONE:
+                return;
+                break;
+
+            case State.FADING_IN:
+                _countTime = fadeTime - _countTime;
+                break;
+
+            case State.FADING_OUT:
+                return;
+                break;
+        }
+
+        _state = State.FADING_OUT;
+
         this._loadSceneNumber = loadSceneNumber;
-        this.fadeTime = fadeTime;
-        if (this.fadeTime == 0) this.fadeTime = float.Epsilon;
 
         gameObject.SetActive(true);
         UpdateFader = UpdateFadeOut;
-        _countTime = 0;
     }
 
     public void FadeIn()
     {
+        switch (_state)
+        {
+            case State.FADE_DONE:
+                _countTime = 0;
+                break;
+
+            default:
+                return;
+                break;
+        }
+
+        _state = State.FADING_IN;
         gameObject.SetActive(true);
         UpdateFader = UpdateFadeIn;
-        _countTime = 0;
     }
 
     private void UpdateFadeOut()
     {
 
-        if (_fadeOuted)
-        {
-            return;
-        }
-
         _countTime += Time.deltaTime;
         if (_countTime >= fadeTime)
         {
-            _fadeOuted = true;
+            _state = State.FADE_DONE;
             _fadeImage.color = new Color(color.r, color.g, color.b, 1);
             UnityEngine.SceneManagement.SceneManager.LoadScene(_loadSceneNumber);
 
             FadeIn();
-            SuzumuraTomoki.SceneManager.playerInput.Enable();
             return;
         }
 
@@ -129,8 +176,14 @@ public class Fader : MonoBehaviour
         _countTime += Time.deltaTime;
         if (_countTime >= fadeTime)
         {
+            SuzumuraTomoki.SceneManager.playerInput.Enable();
+            foreach (var inAcMap in _listStopInput)
+            {
+                inAcMap.Enable();
+            }
+            _listStopInput.Clear();
 
-            _fadeOuted = false;
+            _state = State.NONE;
             _fadeImage.color = new Color(color.r, color.g, color.b, 0);
             gameObject.SetActive(false);
             return;
@@ -145,8 +198,9 @@ public class Fader : MonoBehaviour
     private FadePanelUpdate UpdateFader;
 
     /*変数*/
-    private static Fader _instance = null;
-    private bool _fadeOuted = false;//非同期ロードのため。使っていない。2023/4/20
+    static private Fader _instance = null;
+    static private List<UnityEngine.InputSystem.InputActionMap> _listStopInput = new List<UnityEngine.InputSystem.InputActionMap>();
+    private State _state = State.NONE;
     private float _countTime = 0;
     private Image _fadeImage;
     private int _loadSceneNumber = 0;
