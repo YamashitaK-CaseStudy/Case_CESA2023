@@ -7,10 +7,11 @@ public class RespawnCollider : MonoBehaviour
 	// Start is called before the first frame update
 	[SerializeField] private GameObject _fadeObj;
 	[SerializeField] private Vector3 _respawnPos;
-	[SerializeField] private float _waitTime;
 	private bool _isHit = false;
+	private bool _respawnWait = false;
 	private GameObject _playerObj;
 	private MaskFade _maskFadeComp;
+	private float _requiredTime = 0;
 	void Start()
 	{
 		var mesh = this.transform.GetComponent<MeshRenderer>();
@@ -20,15 +21,39 @@ public class RespawnCollider : MonoBehaviour
 		_maskFadeComp = _fadeObj.GetComponent<MaskFade>();
 	}
 	void Update(){
-		if(!_isHit) return;
+		if(!_isHit && !_respawnWait) return;
 
-		// FadeInが終わってたら移動させる
-		if(_maskFadeComp.IsFadeInWait()){
+		// フェードアウトが終わってたら移動させる
+		if(_maskFadeComp.IsFadeInWait() && !_respawnWait){
 			// 飛ばす
-			_playerObj.transform.position = _respawnPos;
+			var pos = _respawnPos;
+			//pos.y += 5;
+			//pos.z += 4;
+			_playerObj.transform.position = pos;
 			_isHit = false;
+			_respawnWait = true;
+		}
+
+		// 時間の測定
+		if(_respawnWait){
+			_requiredTime += Time.deltaTime;
+		}
+
+		// フェードインを始める
+		if(_requiredTime >= _maskFadeComp.GetFadeWaitTime()){
 			_maskFadeComp.StartFadeIn();
-			Debug.Log(_isHit);
+			//
+			if(_playerObj.transform.position.z <= 0){
+				var pos = _playerObj.transform.position;
+				// pos.z -= 0.05f;
+				_playerObj.transform.position = pos;
+			}else{
+				var pos = _playerObj.transform.position;
+				pos.z = 0f;
+				_playerObj.transform.position = pos;
+				_requiredTime = 0;
+				_respawnWait = false;
+			}
 		}
 	}
 
@@ -41,7 +66,12 @@ public class RespawnCollider : MonoBehaviour
 		var playerObjComp = _playerObj.GetComponent<Player>();
 		// ダメージ処理
 		playerObjComp.Damage();
-		if(playerObjComp.GetHP() == 0){
+
+		// ここにプレイヤーの停止処理を入れる
+
+
+		if(playerObjComp.GetHP() <= 0){
+			// ゲームオーバーの演出いれたい
 			// リザルトに飛ぶ
 			SuzumuraTomoki.SceneManager.LoadResult();
 		} else{
