@@ -512,7 +512,7 @@ PrefabInstance:
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
@@ -652,7 +652,7 @@ PrefabInstance:
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
@@ -792,7 +792,7 @@ PrefabInstance:
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
@@ -906,7 +906,7 @@ GameObject:
   - component: {fileID: 1270713806}
   - component: {fileID: 1270713805}
   m_Layer: 5
-  m_Name: CanvasTitle
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1110,7 +1110,7 @@ PrefabInstance:
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
@@ -1250,7 +1250,7 @@ PrefabInstance:
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 885308306019003403, guid: 6c8d0e98e0c9b4345a85a763fba1e402,
         type: 3}
@@ -1370,10 +1370,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _update: 0
-  _scrollSpeed: 100
-  _textUnitOffset: {x: 0, y: 4}
+  _scrollSpeed: 200
+  _textUnitOffset: {x: 0, y: 7}
   _textUnitScale: 0.4
-  _seedData: {fileID: 11400000, guid: 84e90fd0d401f014792017c4a14e4ba4, type: 2}
+  _totalSeedData: {fileID: 11400000, guid: 84e90fd0d401f014792017c4a14e4ba4, type: 2}
 --- !u!1 &5395227295717731496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,7 +1400,7 @@ RectTransform:
   m_GameObject: {fileID: 5395227295717731496}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5395227295040046321}
@@ -1410,7 +1410,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 66.15, y: 80.41}
+  m_SizeDelta: {x: 110.1, y: 90.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5395227295717731498
 MonoBehaviour:

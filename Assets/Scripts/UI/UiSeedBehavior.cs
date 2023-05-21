@@ -5,10 +5,31 @@ using UnityEngine;
 public class UiSeedBehavior : MonoBehaviour
 {
     /*静的メンバ*/
-    static public void IncreaseTotal()
-    {
-        ++_totalSeeds;
-    }
+
+    //全体数可変長
+    //static public void IncreaseTotal()
+    //{
+    //    if (_totalSeeds >= SeedIconData.MAX_TOTAL)
+    //    {
+    //        return;
+    //    }
+    //    ++_totalSeeds;
+
+    //    if (_instance == null)
+    //    {
+    //        return;
+    //    }
+
+    //    //start()以降
+
+    //    if (_totalSeeds > SeedIconData.MIN_TOTAL)
+    //    {
+    //        SeedScore score;
+    //        score.total = (SeedIconData.TotalCountType)(_totalSeeds - SeedIconData.MIN_TOTAL);
+    //        score.obtained = _instance._countObtained;
+    //        _instance._iconSeedScore.ChangeIcon(score);
+    //    }
+    //}
 
     static public void ObtaineSeed()
     {
@@ -17,15 +38,24 @@ public class UiSeedBehavior : MonoBehaviour
             return;
         }
 
-        _instance.Obtaine();
-    }
+        _instance.IncreaseCount();
 
-    static public int totalSeeds
-    {
-        get
-        {
-            return _totalSeeds;
-        }
+        SeedScore score;
+        //全体数可変長
+        //if (_totalSeeds <= SeedIconData.MIN_TOTAL)
+        //{
+        //    score.total = SeedIconData.TotalCountType.THREE;
+        //}
+        //else
+        //{
+        //    score.total = (SeedIconData.TotalCountType)(_totalSeeds - SeedIconData.MIN_TOTAL);
+        //}
+
+        score.total = (SeedIconData.TotalCountType)(_totalSeeds - SeedIconData.MIN_TOTAL);
+        score.obtained = _instance._countObtained;
+
+        _instance._iconSeedScore.ChangeIcon(score);
+
     }
 
     static private int _totalSeeds = 0;
@@ -42,40 +72,52 @@ public class UiSeedBehavior : MonoBehaviour
         _instance = this;
 
         var canvusRect = GetComponent<RectTransform>().rect;
-        for (int i = 0; i < _totalSeeds; ++i)
-        {
-            var rectTrans = Instantiate(_iconEmpty, transform).GetComponent<RectTransform>();
-            rectTrans.anchoredPosition = new Vector2(rectTrans.rect.width / 2 - canvusRect.width / 2 + _offsetFromUpperLeft.x + (i * (rectTrans.rect.width + _iconDistance)), canvusRect.height / 2 - rectTrans.rect.height / 2 - _offsetFromUpperLeft.y);
-        }
 
-        int alreadyObtained = SelectFilmBehavior.obtainedCount;
 
-        for (int i = 0; i < alreadyObtained; ++i)
-        {
-            Obtaine();
-        }
+        //固定の場合
+        SeedScore score = SelectFilmBehavior.seedScore;
+        score.obtained = 0;
+        _iconSeedScore.ChangeIcon(score);
+        _totalSeeds = (int)score.total + SeedIconData.MIN_TOTAL;
+
+        //可変の場合。種オブジェクトのAwake()で_totalSeedsを加算する。
+        //全体数可変長
+        //if (_totalSeeds > SeedIconData.MIN_TOTAL)
+        //{
+        //    SeedScore score;
+        //    score.total = (SeedIconData.TotalCountType)(_totalSeeds - SeedIconData.MIN_TOTAL);
+        //    score.obtained = _countObtained;
+        //    _iconSeedScore.ChangeIcon(score);
+        //}
     }
 
     private void OnDestroy()
     {
-        _totalSeeds = 0;
-        SelectFilmBehavior.obtainedCount = _countObtained;
+        SeedScore score = SelectFilmBehavior.seedScore;
+
+        if(score.obtained >= _countObtained)
+        {
+            return;
+        }
+
+        //全体数可変長
+        //score.total = (SeedIconData.TotalCountType)(_totalSeeds - SeedIconData.MIN_TOTAL);
+        score.obtained = _countObtained;
+        SelectFilmBehavior.seedScore = score;
+
+        //_totalSeeds = 0;//全体数可変長
     }
 
-    private void Obtaine()
+    private void IncreaseCount()
     {
         if (_countObtained >= _totalSeeds)
         {
             return;
         }
 
-        transform.GetChild(_countObtained).GetComponent<UnityEngine.UI.Text>().text = "X";
         ++_countObtained;
     }
 
-    [SerializeField] private GameObject _iconSeed;
-    [SerializeField] private GameObject _iconEmpty;
-    [SerializeField] private float _iconDistance = .1f;
-    [SerializeField] private Vector2 _offsetFromUpperLeft;
+    [SerializeField] private SeedScoreIcon _iconSeedScore;
     private int _countObtained = 0;
 }
