@@ -9455,6 +9455,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306918070}
   m_Mesh: {fileID: -4829904058411883291, guid: 3317ed80a86761749b89d79e2e232cec, type: 3}
+--- !u!1 &308315926 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2507138598649004092, guid: 5c7a55347d0503240a58e15072d485b4,
+    type: 3}
+  m_PrefabInstance: {fileID: 548499288}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &308315927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308315926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a25cc6266903747a062e3291d5e293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deadzone: 0
+  _stickAngle_Y: 0
+  _stickAngle_X: 0
+  _isDamiObjCreate: 0
+  _damiObject: {fileID: 0}
 --- !u!1 &308368057
 GameObject:
   m_ObjectHideFlags: 0
@@ -16477,7 +16500,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5513105246136359691, guid: 5c7a55347d0503240a58e15072d485b4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5c7a55347d0503240a58e15072d485b4, type: 3}
 --- !u!1 &548701789
 GameObject:
@@ -28463,6 +28487,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &876359029
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -34185,6 +34210,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1097732698
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -53436,6 +53462,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1699612076
 Rigidbody:
   m_ObjectHideFlags: 0
