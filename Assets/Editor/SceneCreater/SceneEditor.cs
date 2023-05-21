@@ -19,7 +19,7 @@ public partial class SceneEditor : EditorWindow
 	GameObject _ObserverPrefab;
 	GameObject _BackGroundPrefab;
 	GameObject _GrobalVolmePrefab;
-	SeedData _seedData;
+	TotalSeedData _totalSeedData;
 	bool _isMainStage = false;
 	bool _isUseUnionObj = false;
 	int _stageNumber = 5;
@@ -36,7 +36,7 @@ public partial class SceneEditor : EditorWindow
 		_playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Player/Pf_Player.prefab");
 		_BackGroundPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_BackGroundCanvas.prefab");
 		_ObserverPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_Observer.prefab");
-		_seedData = AssetDatabase.LoadAssetAtPath<SeedData>("Assets/Settings/SeedData.asset");
+		_totalSeedData = AssetDatabase.LoadAssetAtPath<TotalSeedData>("Assets/Settings/TotalSeedData.asset");
 		_GrobalVolmePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_GlobalVolume.prefab");
 	}
 	private void OnGUI()
@@ -166,7 +166,7 @@ public partial class SceneEditor : EditorWindow
 		tmpBGComp.worldCamera = tmpCameraObj.GetComponent<Camera>();
 		tmpBGComp.planeDistance = 99;
 
-		_seedData.defaultTotalCountList[_stageNumber - 1] = _seedCounts;
+		_totalSeedData.defaultTotalCountList[_stageNumber - 1] = _seedCounts;
 
 		// グローバルボリュームの生成
 		var tmpGV = Instantiate(_GrobalVolmePrefab, new Vector3(0,0,0), Quaternion.identity);

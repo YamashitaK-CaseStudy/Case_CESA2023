@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public struct SeedScore
+{
+    public SeedIconData.TotalCountType total;
+    public int obtained;
+}
+
 public class SelectFilmBehavior : MonoBehaviour
 {
     /*定数*/
@@ -17,33 +23,38 @@ public class SelectFilmBehavior : MonoBehaviour
         WORLD_NUM,
         HORIZONTAL_BAR,
         STAGE_NUM,
-        SEED_ICON,
-        SEED_SCORE
+        SEED_ICON
     }
 
-    static public int obtainedCount
+    /*静的公開メンバ*/
+
+    static public SeedScore seedScore
     {
         get
         {
-            return _obtainedCountList[currentStageIndex];
+            return _seedScoreArray[currentStageIndex];
         }
         set
         {
-            _obtainedCountList[currentStageIndex] = value;
+            _seedScoreArray[currentStageIndex] = value;
         }
     }
+
+    /*静的非公開メンバ*/
 
     static private int currentStageIndex
     {
         get
         {
-            return _stageNumber - 1 + MAX_STAGE * (_currentWorldNum - 1);
+            return _stageNumber - 1 + MAX_STAGE * (_worldNum - 1);
         }
     }
 
-    static private int _currentWorldNum = 1;
+    static private int _worldNum = 1;
     static private int _stageNumber = 1;
-    static private List<int> _obtainedCountList = new List<int>(new int[MAX_STAGE * MAX_WORLD]);
+    static private SeedScore[] _seedScoreArray = new SeedScore[MAX_STAGE * MAX_WORLD];
+
+    /*非公開メンバ*/
 
     void Start()
     {
@@ -108,6 +119,8 @@ public class SelectFilmBehavior : MonoBehaviour
         InitTransform();
 
         InitText();
+
+        UpdateSeedScore();
     }
 
     private void Update()
@@ -152,13 +165,6 @@ public class SelectFilmBehavior : MonoBehaviour
             textUnitTransform = transform.GetChild(i);
             int stageNum = i + 1;
             textUnitTransform.GetChild((int)TextID.STAGE_NUM).GetComponent<UnityEngine.UI.Text>().text = stageNum.ToString();
-
-            int totalSeeds = UiSeedBehavior.totalSeeds;
-            if (totalSeeds == 0)
-            {
-                totalSeeds = _seedData.GetDefaultTotalCount(_currentWorldNum, stageNum);
-            }
-            textUnitTransform.GetChild((int)TextID.SEED_SCORE).GetComponent<UnityEngine.UI.Text>().text = _obtainedCountList[i + (_currentWorldNum - 1) * MAX_STAGE].ToString() + "/" + totalSeeds.ToString();
         }
     }
 
@@ -218,19 +224,19 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         for (int i = 0; i < MAX_STAGE; ++i)
         {
-            transform.GetChild(i).GetChild((int)TextID.WORLD_NUM).GetComponent<UnityEngine.UI.Text>().text = _currentWorldNum.ToString();
+            transform.GetChild(i).GetChild((int)TextID.WORLD_NUM).GetComponent<UnityEngine.UI.Text>().text = _worldNum.ToString();
         }
     }
 
     private void GoStage(InputAction.CallbackContext context)
     {
-        
+
         if (_stopInput)
         {
             return;
         }
 
-        bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_currentWorldNum - 1) * MAX_STAGE);
+        bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_worldNum - 1) * MAX_STAGE);
 
         if (!success)
         {
@@ -245,19 +251,35 @@ public class SelectFilmBehavior : MonoBehaviour
 
     private void DecreaseWorldNum(InputAction.CallbackContext context)
     {
-        if (_currentWorldNum > 1)
+        if (_worldNum > 1)
         {
-            --_currentWorldNum;
+            --_worldNum;
             UpdateWorldNum();
+            UpdateSeedScore();
         }
     }
 
     private void IncreaseWorldNum(InputAction.CallbackContext context)
     {
-        if (_currentWorldNum < MAX_WORLD)
+        if (_worldNum < MAX_WORLD)
         {
-            ++_currentWorldNum;
+            ++_worldNum;
             UpdateWorldNum();
+            UpdateSeedScore();
+        }
+    }
+
+    private void UpdateSeedScore()
+    {
+        int scoreIndex;
+        for (int i = 0; i < MAX_STAGE; ++i)
+        {
+            scoreIndex = i + (_worldNum - 1) * MAX_STAGE;
+            if (_seedScoreArray[scoreIndex].total == 0)
+            {
+                _seedScoreArray[scoreIndex].total = _totalSeedData.GetDefaultTotalCount(_worldNum, i + 1);
+            }
+            transform.GetChild(i).GetChild((int)TextID.SEED_ICON).GetComponent<SeedScoreIcon>().ChangeIcon(_seedScoreArray[scoreIndex]);
         }
     }
 
@@ -284,7 +306,7 @@ public class SelectFilmBehavior : MonoBehaviour
     //[SerializeField] private float _seedIconScale = .05f;
     //[SerializeField] private Vector2 _seedScoreOffset = new Vector2(-550, -30);
     //[SerializeField] private float _seedScoreScale = .05f;
-    [SerializeField] private SeedData _seedData;
+    [SerializeField] private TotalSeedData _totalSeedData;
     private InputAction _actionMove = null;
     private InputAction _actionDecision = null;
     private InputAction _actionStageSelectL = null;
