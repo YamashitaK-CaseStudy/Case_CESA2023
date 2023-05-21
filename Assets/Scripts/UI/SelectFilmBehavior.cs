@@ -90,6 +90,8 @@ public class SelectFilmBehavior : MonoBehaviour
             _actionStageSelectR.started += IncreaseWorldNum;
         }
 
+        Fader.stopInput = SuzumuraTomoki.SceneManager.playerInput;
+
         Init();
     }
 
