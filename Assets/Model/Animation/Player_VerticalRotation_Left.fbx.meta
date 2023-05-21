@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 901c59c604acd73418ed3347b9d26cbc
+guid: d583519ae676fd446ba9bf96c862e496
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: VerticalRotation
+      name: VerticalRotationLeft
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
@@ -71,7 +71,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.23911698
+      - time: 0.2578366
         functionName: PlayerSE_Rotation
         data: 
         objectReferenceParameter: {instanceID: 0}

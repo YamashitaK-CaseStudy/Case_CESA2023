@@ -79,7 +79,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471363414108438688}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.75, z: 0}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 544992193960871432}
   - component: {fileID: 1750225579074150439}
   - component: {fileID: 7508143827200873855}
-  - component: {fileID: 6894760810590162927}
+  - component: {fileID: 5513105246136359691}
   m_Layer: 0
   m_Name: Pf_Player
   m_TagString: Player
@@ -223,7 +223,40 @@ MonoBehaviour:
   _deadZone: 0.5
   _moveSpeed: 7
   _gravity: -40
-  _jumpPower: 640
+  _jumpPower: 620
+  _jumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.657533
+      value: 3.0879452
+      inSlope: 1.4999919
+      outSlope: 1.4999919
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _skeletalObj: {fileID: 4755372522531620515}
   _animCallBack: {fileID: 12525846323750052}
 --- !u!114 &7508143827200873855
@@ -238,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd30a045fba5fca4994eec28b1a450da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6894760810590162927
+--- !u!114 &5513105246136359691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -247,15 +280,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2507138598649004092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a25cc6266903747a062e3291d5e293, type: 3}
+  m_Script: {fileID: 11500000, guid: 07fd6d45dc6235845875f9be74586d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deadzone: 0.5
+  _deadzone: 0.7
   _stickAngle_Y: 0
   _stickAngle_X: 0
   _isDamiObjCreate: 0
   _damiObject: {fileID: 0}
-  _isActicStick: 0
 --- !u!1 &6069264933920637730
 GameObject:
   m_ObjectHideFlags: 0

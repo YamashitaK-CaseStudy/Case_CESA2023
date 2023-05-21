@@ -46,9 +46,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameSeAudioSource: {fileID: -1718385765444790904}
-  _gameSeSoundDatas: []
+  _gameSeSoundDatas:
+  - _playerSe: 2
+    _playerSeAudioClip: {fileID: 8300000, guid: 2a7b90fbeda7f534cba8bf5c5102b227,
+      type: 3}
+    _playerSeVolume: 0.1
+  - _playerSe: 1
+    _playerSeAudioClip: {fileID: 8300000, guid: ff63f42c6bf25f541b1406907aa7c9c9,
+      type: 3}
+    _playerSeVolume: 0.2
+  - _playerSe: 3
+    _playerSeAudioClip: {fileID: 8300000, guid: 31ba029ec0cb58447b1855b778b41a68,
+      type: 3}
+    _playerSeVolume: 0.1
+  - _playerSe: 0
+    _playerSeAudioClip: {fileID: 8300000, guid: e997ee28d13be7842b2d1c812f48fff3,
+      type: 3}
+    _playerSeVolume: 0.1
   _masterVolume: 1
-  seMasterVolume: 1
+  _seMasterVolume: 1
 --- !u!82 &-1718385765444790904
 AudioSource:
   m_ObjectHideFlags: 0
@@ -60,10 +76,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

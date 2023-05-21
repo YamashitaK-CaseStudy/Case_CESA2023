@@ -43,7 +43,8 @@ public partial class Player : MonoBehaviour{
         if (_bottomHitCheck.GetRotObj != null) {
 
             if (_bottomHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotateStartFream) {
-                _animator.SetTrigger("Rotation_Y");
+                Debug.Log("回転開始フレーム");
+               // _animator.SetTrigger("Rotation_Y");
             }
         }
 

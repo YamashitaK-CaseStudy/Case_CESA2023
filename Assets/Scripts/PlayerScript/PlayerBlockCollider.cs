@@ -35,10 +35,10 @@ public partial class Player : MonoBehaviour{
 
             // 切り替えタイミング
             Debug.Log("フロント切り替えタイミング");
-            _stricRotAngle._isDamiObjCreate = false;
-            Destroy(_stricRotAngle._damiObject);
+            //_stricRotAngle._isDamiObjCreate = false;
+            //Destroy(_stricRotAngle._damiObject);
 
-            _stricRotAngle.xAxisManyObjJude(_frontHitCheck);
+            //_stricRotAngle.xAxisManyObjJude(_frontHitCheck);
         }
 
         // Bottom回転オブジェクトが切り替わった時

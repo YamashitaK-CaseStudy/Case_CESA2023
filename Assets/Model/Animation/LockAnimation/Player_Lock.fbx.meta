@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 901c59c604acd73418ed3347b9d26cbc
+guid: 487d7911cb424f74eafb269e093639e0
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: VerticalRotation
+      name: Idle_Lock
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -58,21 +58,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: AnimRotStart
+        functionName: RotationValid
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 1
-        functionName: AnimRotEnd
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.23911698
-        functionName: PlayerSE_Rotation
+      - time: 0.50372684
+        functionName: PlayerSE_Lock
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
