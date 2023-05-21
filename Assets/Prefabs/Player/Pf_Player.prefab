@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 544992193960871432}
   - component: {fileID: 1750225579074150439}
   - component: {fileID: 7508143827200873855}
-  - component: {fileID: 5513105246136359691}
+  - component: {fileID: 6238186020751197903}
   m_Layer: 0
   m_Name: Pf_Player
   m_TagString: Player
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd30a045fba5fca4994eec28b1a450da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5513105246136359691
+--- !u!114 &6238186020751197903
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,10 +280,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2507138598649004092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07fd6d45dc6235845875f9be74586d86, type: 3}
+  m_Script: {fileID: 11500000, guid: 04a25cc6266903747a062e3291d5e293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deadzone: 0.7
+  _deadzone: 0.8
   _stickAngle_Y: 0
   _stickAngle_X: 0
   _isDamiObjCreate: 0
