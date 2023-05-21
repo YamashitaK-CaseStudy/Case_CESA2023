@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 1146040159161477722}
   - component: {fileID: 4822202320374317302}
   - component: {fileID: 2866078334887657879}
+  - component: {fileID: 196449368881496084}
   m_Layer: 5
   m_Name: Pf_RespawnFade
   m_TagString: Untagged
@@ -177,6 +178,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &196449368881496084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6957776625428590852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c51e9d54c4fec4cb74bdf30611ef0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fadeOutTime: 0.75
+  _fadeInTime: 0.5
+  _fadeWaitTime: 1
 --- !u!1 &7251228177052535689
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +205,6 @@ GameObject:
   - component: {fileID: 6553379292581844522}
   - component: {fileID: 1648954360491795082}
   - component: {fileID: 6050192465382082863}
-  - component: {fileID: 924048386258601773}
   m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
@@ -270,19 +285,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &924048386258601773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7251228177052535689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46c51e9d54c4fec4cb74bdf30611ef0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fadeTime: 5
 --- !u!1 &8477080851162987922
 GameObject:
   m_ObjectHideFlags: 0

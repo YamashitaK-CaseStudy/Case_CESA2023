@@ -9,7 +9,9 @@ public class MaskFade : MonoBehaviour
 	bool _fadeInWait, _fadeOutWait;
 	float _min = 0f,_max = 25f;
 	float _elapsedTime = 0.0f;
-	[SerializeField] float _fadeTime;
+	[SerializeField] float _fadeOutTime = 5;
+	[SerializeField] float _fadeInTime = 3;
+	[SerializeField] float _fadeWaitTime = 1;
 	private RectTransform _unmaskObjTrans;
 	void Start()
 	{
@@ -19,9 +21,10 @@ public class MaskFade : MonoBehaviour
 		_fadeOutWait = true;
 
 		for(int i = 0; i < this.transform.childCount; i++){
-			var tmpObj = this.transform.GetChild(i).gameObject;
+			var tmpObj = this.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject;
 			if(tmpObj.name == "UnMask"){
 				_unmaskObjTrans = tmpObj.GetComponent<RectTransform>();
+				Debug.Log(tmpObj.name);
 				break;
 			}
 		}
@@ -37,11 +40,16 @@ public class MaskFade : MonoBehaviour
 		}
 	}
 	void FadeIn(){
-		float size = _max / _fadeTime;
-		_elapsedTime += size;
+		// 時間を計算
+		_elapsedTime += Time.deltaTime;
+		// 必要時間からこのFで大きくなる量を計算する
+		float size = _max / _fadeInTime / (1 / Time.deltaTime);
+
 		Vector3 tmpSize = new Vector3(1,1,1);
+		// スケールに加算をする
 		_unmaskObjTrans.localScale += tmpSize * size;
-		if(_elapsedTime >= _max){
+		Debug.Log(tmpSize * size);
+		if(_elapsedTime >= _fadeInTime){
 			// 最後の補正をかける
 			_unmaskObjTrans.localScale = _max * new Vector3(1,1,1);
 			// fadeIn待ち状態にする
@@ -52,11 +60,16 @@ public class MaskFade : MonoBehaviour
 	}
 
 	void FadeOut(){
-		float size = _max / _fadeTime;
-		_elapsedTime += size;
+		// 時間を計算
+		_elapsedTime += Time.deltaTime;
+		// 必要時間からこのFで大きくなる量を計算する
+		float size = _max / _fadeOutTime / (1 / Time.deltaTime);
+
 		Vector3 tmpSize = new Vector3(1,1,1);
+		// スケールに加算をする
 		_unmaskObjTrans.localScale -= tmpSize * size;
-		if(_elapsedTime >= _max){
+		Debug.Log(tmpSize * size);
+		if(_elapsedTime >= _fadeOutTime){
 			// 最後の補正をかける
 			_unmaskObjTrans.localScale = _min * new Vector3(1,1,1);
 			// fadeIn待ち状態にする
@@ -84,5 +97,9 @@ public class MaskFade : MonoBehaviour
 
 	public bool IsFadeOutWait(){
 		return _fadeOutWait;
+	}
+
+	public float GetFadeWaitTime(){
+		return _fadeWaitTime;
 	}
 }

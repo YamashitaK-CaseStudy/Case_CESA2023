@@ -6677,6 +6677,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &154812222
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -26867,6 +26868,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &631374699
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -40576,6 +40578,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &921701421
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -49927,6 +49930,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1110778861
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -55786,6 +55790,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1242323360
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -56868,6 +56873,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1275637286
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -59648,6 +59654,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1339258174
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83835,6 +83842,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &1880433090
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 402735097202559114, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_Name
+      value: Pf_PlayerSoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.2902632
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.06498197
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.9889874
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1565430473628138588, guid: 695bfc6c40fa08941a3d0b7748976526,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 695bfc6c40fa08941a3d0b7748976526, type: 3}
 --- !u!1 &1881075925
 GameObject:
   m_ObjectHideFlags: 0
@@ -88563,6 +88639,7 @@ MonoBehaviour:
   _rotSpeed: 15
   oldangleY: 0
   oldangleX: 0
+  offsetRotAxis: {x: 0, y: 0, z: 0}
 --- !u!54 &1961072565
 Rigidbody:
   m_ObjectHideFlags: 0

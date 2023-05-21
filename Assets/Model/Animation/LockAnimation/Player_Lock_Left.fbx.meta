@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 901c59c604acd73418ed3347b9d26cbc
+guid: 1b0174d9737ba4e46816fb362782244b
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: VerticalRotation
+      name: Lock_Left
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 33
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -64,14 +64,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 1
+      - time: 0.9904524
         functionName: AnimRotEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.23911698
+      - time: 0.4316314
         functionName: PlayerSE_Rotation
         data: 
         objectReferenceParameter: {instanceID: 0}
