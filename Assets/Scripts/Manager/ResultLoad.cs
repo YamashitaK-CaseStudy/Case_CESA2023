@@ -5,10 +5,16 @@ using SuzumuraTomoki;
 
 public class ResultLoad : MonoBehaviour
 {
-    static public void LoadStageSelectScene() {
+    public void LoadStageSelectScene() {
+        Fader.stopInput = _inputs.FindActionMap("UI");
         SceneManager.LoadStageSelect();
     }
-    static public void LoadBeforeScene() {
+    public void LoadBeforeScene() {
+        Fader.stopInput = _inputs.FindActionMap("UI");
         SceneManager.LoadBeforeScene();
     }
+
+
+    [SerializeField] UnityEngine.InputSystem.InputActionAsset _inputs = null;
+
 }

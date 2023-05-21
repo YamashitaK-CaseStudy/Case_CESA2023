@@ -8,30 +8,34 @@ public class HitStopController : MonoBehaviour
 	// ヒットストップのマネージャー
 
 	// Start is called before the first frame update
-	private bool _isHitStop;
-	[SerializeField] float RotateObjHitStopFrame = 30f;
-	[SerializeField]
-	void Start()
-	{
+	[HideInInspector] public bool _isHitStop { get; set;}
+	[SerializeField] float DelayTime = 1f;
 
+	public static HitStopController Instance{
+		get; private set;
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-		if(!_isHitStop){
-			if(Input.GetButtonDown("Jump")){
-				SetHitDelay();
-				DOVirtual.DelayedCall(3f, ()=> ReleseHitDelay());
-			}
+	private void Awake(){
+		if(Instance == null){
+			Instance = this;
+			DontDestroyOnLoad(gameObject);
+		}else{
+			Destroy(gameObject);
 		}
+
+		Init();
 	}
 
-	void SetHitDelay(){
-		Debug.Log("ディレイスタート");
+	void Init(){
+		_isHitStop = false;
+	}
+
+	public void SetHitDelay(){
+		DOVirtual.DelayedCall(DelayTime, ()=> ReleseHitDelay());
+		_isHitStop = true;
 	}
 
 	void ReleseHitDelay(){
-		Debug.Log("ディレイ解除");
+		_isHitStop = false;
 	}
 }

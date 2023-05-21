@@ -16,9 +16,9 @@ public partial class Player : MonoBehaviour
     public void Damage(){
         HP -= 1;
         Debug.Log(HP);
-        if(HP == 0)
-        {
-            SuzumuraTomoki.SceneManager.LoadResult();
-        }
+    }
+
+    public int GetHP(){
+        return HP;
     }
 }

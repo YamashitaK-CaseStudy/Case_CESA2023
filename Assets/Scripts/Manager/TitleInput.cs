@@ -7,17 +7,17 @@ using SuzumuraTomoki;
 public class TitleInput : MonoBehaviour
 {
 
-    private void Start()
+    private void Awake()
     {
         if (SceneManager.titleInitState == SceneManager.TitleInitState.STAGE_SELECT)
         {
-            _canvusStageSelect.SetActive(true);
+            _stageSelectFilm.SetActive(true);
             return;
         }
 
         //else
         SceneManager.playerInput.FindAction("StageSelectEnter").Disable();
-        _canvusStageSelect.SetActive(false);
+        _stageSelectFilm.SetActive(false);
 
         _titleEnter = SceneManager.playerInput.FindAction("TitleEnter");
         if (_titleEnter == null)
@@ -32,11 +32,11 @@ public class TitleInput : MonoBehaviour
 
     private void ProcessInput(InputAction.CallbackContext context)
     {
-        _canvusStageSelect.SetActive(true);
+        _stageSelectFilm.SetActive(true);
         _titleEnter.performed -= ProcessInput;
         _titleEnter.Disable();
     }
 
-    [SerializeField] private GameObject _canvusStageSelect = null;
+    [SerializeField] private GameObject _stageSelectFilm = null;
     private InputAction _titleEnter = null;
 }

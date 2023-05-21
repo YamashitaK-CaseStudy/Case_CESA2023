@@ -13,6 +13,7 @@ public class RotObjkinds : MonoBehaviour{
 
         NomalRotObject,
         UnionRotObject,
-        BoltRotObject
+        BoltRotObject,
+        SpinObject
     }
 }

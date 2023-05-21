@@ -8,12 +8,11 @@ public partial class RotatableObject : MonoBehaviour
 	GameObject _chainObj;	// 回転させるオブジェクト
 	RotatableObject _chainObjComp;	// 回転させるオブジェクト
 	RotObjCheckHitChain[] _childObjChainComp;
-	static RotObjUnionObtherber _obtherber = null;
 	float otherObjLength = 0;
 	private bool _isHitChain {get;set;}
 	Vector3 _rotPosOther;
 	int _otherAngle = 0;
-	public RotObjObserver _observer;
+	private RotObjObserver _rotObjObserver;
 	[SerializeField] private int _HitChainAngle = 180;
 	void ChainSettingStart(){
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
@@ -35,6 +34,7 @@ public partial class RotatableObject : MonoBehaviour
 		}
 
 		// オブザーバーを確保する
+		_rotObjObserver = _observer.GetComponent<RotObjObserver>();
 
 		_isHitChain = false;
 	}
@@ -49,9 +49,12 @@ public partial class RotatableObject : MonoBehaviour
 		var centPos = _chainObjComp.MostFarObjPos(_chainObjComp._rotAxis, _rotPosOther);
 		// 相手のオブジェクトを回転させる
 		_chainObjComp.StartRotateChain(centPos, _chainObjComp._rotAxis, _otherAngle);
+
+		GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Chain);
  	}
 
 	public void SetisHitChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
+		HitStopController.Instance.SetHitDelay();
 		_isHitChain = true;
 		// 当たり判定のセット
 		_chainObj = other;
@@ -84,11 +87,11 @@ public partial class RotatableObject : MonoBehaviour
 	}
 
 	public void SetisIntoChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
-		var lastRotObj = _observer.GetLastRotateRotObj();
+		var lastRotObj = _rotObjObserver.GetLastRotateRotObj();
 		Debug.Log(lastRotObj);
 		Debug.Log(this);
 		if(this.gameObject == lastRotObj.gameObject){
-			// SetisHitChain(other, otherRotComp, other.transform.position);
+			SetisHitChain(other, otherRotComp, other.transform.position);
 		}
 	}
 
