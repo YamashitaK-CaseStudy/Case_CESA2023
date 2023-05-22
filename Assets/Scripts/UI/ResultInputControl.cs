@@ -9,5 +9,6 @@ public class ResultInputControl : MonoBehaviour
         Fader.stopInput = _inputs.FindActionMap("UI");
     }
 
-    [SerializeField] UnityEngine.InputSystem.InputActionAsset _inputs = null;
+
+    [SerializeField]private UnityEngine.InputSystem.InputActionAsset _inputs;
 }
