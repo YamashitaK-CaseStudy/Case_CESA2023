@@ -21,8 +21,10 @@ public partial class RotObjUnion : MonoBehaviour{
         // “–‚½‚Á‚½RotateObject‚ðŽæ“¾
         GetRotateObject(other.gameObject);
 
+        if(other.transform.root.gameObject.tag != "RotateObject") return;
         if(this.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
         if(_parentRotObjComp._isUnion)return;
+        Debug.Log(other.transform.root.name);
         _parentRotObjComp._isUnion = true;
     }
 
