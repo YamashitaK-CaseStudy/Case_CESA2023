@@ -39,7 +39,7 @@ public class TitleMovieBehaivor : MonoBehaviour
     private void CallbackTitleEnter(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         SetMovie_toSelect();
-        context.action.performed -= CallbackTitleEnter;
+        _titleInput.titleEnter.performed -= CallbackTitleEnter;
     }
 
     [SerializeField] private double _selectBeginLoopPoint;
