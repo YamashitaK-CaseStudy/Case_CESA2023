@@ -116,7 +116,7 @@ public class Fader : MonoBehaviour
 
             case State.FADE_DONE:
                 return;
-                break;
+                //break;
 
             case State.FADING_IN:
                 _countTime = fadeTime - _countTime;
@@ -124,7 +124,7 @@ public class Fader : MonoBehaviour
 
             case State.FADING_OUT:
                 return;
-                break;
+                //break;
         }
 
         _state = State.FADING_OUT;
@@ -145,7 +145,7 @@ public class Fader : MonoBehaviour
 
             default:
                 return;
-                break;
+                //break;
         }
 
         _state = State.FADING_IN;

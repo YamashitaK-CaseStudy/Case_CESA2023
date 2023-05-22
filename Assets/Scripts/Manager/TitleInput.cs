@@ -6,18 +6,25 @@ using SuzumuraTomoki;
 
 public class TitleInput : MonoBehaviour
 {
+    public InputAction titleEnter
+    {
+        get
+        {
+            return _titleEnter;
+        }
+    }
 
     private void Awake()
     {
         if (SceneManager.titleInitState == SceneManager.TitleInitState.STAGE_SELECT)
         {
-            _stageSelectFilm.SetActive(true);
+            _stageSelectUi.SetActive(true);
             return;
         }
 
         //else
         SceneManager.playerInput.FindAction("StageSelectEnter").Disable();
-        _stageSelectFilm.SetActive(false);
+        _stageSelectUi.SetActive(false);
 
         _titleEnter = SceneManager.playerInput.FindAction("TitleEnter");
         if (_titleEnter == null)
@@ -32,11 +39,11 @@ public class TitleInput : MonoBehaviour
 
     private void ProcessInput(InputAction.CallbackContext context)
     {
-        _stageSelectFilm.SetActive(true);
+        _stageSelectUi.SetActive(true);
         _titleEnter.performed -= ProcessInput;
         _titleEnter.Disable();
     }
 
-    [SerializeField] private GameObject _stageSelectFilm = null;
+    [SerializeField] private GameObject _stageSelectUi = null;
     private InputAction _titleEnter = null;
 }
