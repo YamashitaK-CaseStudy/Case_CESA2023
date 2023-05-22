@@ -13,8 +13,8 @@ public class SelectFilmBehavior : MonoBehaviour
 {
     /*定数*/
     public const int MAX_STAGE = 5;
+    public const int MAX_WORLD = 4;
 
-    private const int MAX_WORLD = 4;
     //private const float OUTER_FRAME_RATIO = 36.0f / 3261;
     private const float FILM_FRAME_RATIO = 645.0f / 3261;
 
@@ -46,20 +46,92 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         get
         {
-            return _stageNumber - 1 + MAX_STAGE * (_worldNum - 1);
+            return _stageNum - 1 + MAX_STAGE * (_worldNum - 1);
         }
     }
 
     static private int _worldNum = 1;
-    static private int _stageNumber = 1;
+    static private int _stageNum = 1;
     static private SeedScore[] _seedScoreArray = new SeedScore[MAX_STAGE * MAX_WORLD];
+
+
+    /*公開メンバ*/
+
+    public void EnableInput()
+    {
+        _actionDecision.Enable();
+        _actionMove.Enable();
+        _actionStageSelectL.Enable();
+        _actionStageSelectR.Enable();
+    }
+
+    public void DisableInput()
+    {
+        _actionDecision.Disable();
+        _actionMove.Disable();
+        _actionStageSelectL.Disable();
+        _actionStageSelectR.Disable();
+    }
+
 
     /*非公開メンバ*/
 
-    void Start()
+    private void Awake()
     {
-        /*テキスト生成・初期化*/
 
+        InitInput();
+
+        InitTransform();
+
+        InitText();
+
+        UpdateSeedScore();
+
+        _stagePreviewImage.sprite = _stagePreviewData.GetSprite(_worldNum, _stageNum);
+
+        Fader.stopInput = SuzumuraTomoki.SceneManager.playerInput;//フェードイン中のみ入力が止まる
+    }
+
+    private void OnDestroy()
+    {
+        _actionStageSelectR.started -= IncreaseWorldNum;
+        _actionStageSelectL.started -= DecreaseWorldNum;
+    }
+
+    private void Update()
+    {
+        if (_stopInput)
+        {
+            return;
+        }
+
+        float x = _actionMove.ReadValue<Vector2>().x;
+
+        //デッドゾーン
+        if (Mathf.Abs(x) <= 0.1f)
+        {
+            return;
+        }
+        else if (x > 0)
+        {
+            if (_stageNum >= MAX_STAGE)
+            {
+                return;
+            }
+            StartCoroutine(ScrollRight());
+        }
+        else
+        {
+            if (_stageNum <= 1)
+            {
+                return;
+            }
+            StartCoroutine(ScrollLeft());
+        }
+    }
+
+    private void InitInput()
+    {
         _actionMove = SuzumuraTomoki.SceneManager.playerInput.FindAction("Move");
 
         if (_actionMove == null)
@@ -76,7 +148,6 @@ public class SelectFilmBehavior : MonoBehaviour
         else
         {
             _actionDecision.performed += GoStage;
-            _actionDecision.Enable();
         }
 
         _actionStageSelectL = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectL");
@@ -100,59 +171,6 @@ public class SelectFilmBehavior : MonoBehaviour
         {
             _actionStageSelectR.started += IncreaseWorldNum;
         }
-
-        Fader.stopInput = SuzumuraTomoki.SceneManager.playerInput;
-
-        Init();
-    }
-
-    private void OnDestroy()
-    {
-        _actionStageSelectR.started -= IncreaseWorldNum;
-        _actionStageSelectL.started -= DecreaseWorldNum;
-    }
-
-    private void Init()
-    {
-        _stageNumber = 1;
-
-        InitTransform();
-
-        InitText();
-
-        UpdateSeedScore();
-    }
-
-    private void Update()
-    {
-        if (_stopInput)
-        {
-            return;
-        }
-
-        float x = _actionMove.ReadValue<Vector2>().x;
-
-        //デッドゾーン
-        if (Mathf.Abs(x) <= 0.1f)
-        {
-            return;
-        }
-        else if (x > 0)
-        {
-            if (_stageNumber >= MAX_STAGE)
-            {
-                return;
-            }
-            StartCoroutine(ScrollRight());
-        }
-        else
-        {
-            if (_stageNumber <= 1)
-            {
-                return;
-            }
-            StartCoroutine(ScrollLeft());
-        }
     }
 
     private void InitText()
@@ -175,6 +193,7 @@ public class SelectFilmBehavior : MonoBehaviour
         _scrollAmount = rectTrans.rect.width * FILM_FRAME_RATIO * rectTrans.localScale.x;//OnValidate()で0割り対策済み
 
         rectTrans.localPosition = new Vector3(_scrollAmount * (MAX_STAGE - 1) / 2.0f, 0, 0);
+        rectTrans.localPosition += new Vector3(_scrollAmount * (_stageNum - 1), 0, 0);
 
         Transform childTransform = null;
         for (int i = 0; i < MAX_STAGE; ++i)
@@ -189,7 +208,7 @@ public class SelectFilmBehavior : MonoBehaviour
     private IEnumerator ScrollRight()
     {
         _stopInput = true;
-        ++_stageNumber;
+        ++_stageNum;
 
         Vector3 oldPos = transform.localPosition;
 
@@ -201,12 +220,14 @@ public class SelectFilmBehavior : MonoBehaviour
 
         transform.localPosition = oldPos + new Vector3(-_scrollAmount, 0, 0);
         _stopInput = false;
+
+        _stagePreviewImage.sprite = _stagePreviewData.GetSprite(_worldNum, _stageNum);
     }
 
     private IEnumerator ScrollLeft()
     {
         _stopInput = true;
-        --_stageNumber;
+        --_stageNum;
 
         Vector3 oldPos = transform.localPosition;
 
@@ -218,6 +239,8 @@ public class SelectFilmBehavior : MonoBehaviour
 
         transform.localPosition = oldPos + new Vector3(_scrollAmount, 0, 0);
         _stopInput = false;
+
+        _stagePreviewImage.sprite = _stagePreviewData.GetSprite(_worldNum, _stageNum);
     }
 
     private void UpdateWorldNum()
@@ -226,6 +249,7 @@ public class SelectFilmBehavior : MonoBehaviour
         {
             transform.GetChild(i).GetChild((int)TextID.WORLD_NUM).GetComponent<UnityEngine.UI.Text>().text = _worldNum.ToString();
         }
+        _stagePreviewImage.sprite = _stagePreviewData.GetSprite(_worldNum, _stageNum);
     }
 
     private void GoStage(InputAction.CallbackContext context)
@@ -236,7 +260,7 @@ public class SelectFilmBehavior : MonoBehaviour
             return;
         }
 
-        bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNumber + (_worldNum - 1) * MAX_STAGE);
+        bool success = SuzumuraTomoki.SceneManager.LoadStage(_stageNum + (_worldNum - 1) * MAX_STAGE);
 
         if (!success)
         {
@@ -307,6 +331,8 @@ public class SelectFilmBehavior : MonoBehaviour
     //[SerializeField] private Vector2 _seedScoreOffset = new Vector2(-550, -30);
     //[SerializeField] private float _seedScoreScale = .05f;
     [SerializeField] private TotalSeedData _totalSeedData;
+    [SerializeField] private StagePreviewData _stagePreviewData;
+    [SerializeField] private UnityEngine.UI.Image _stagePreviewImage;
     private InputAction _actionMove = null;
     private InputAction _actionDecision = null;
     private InputAction _actionStageSelectL = null;
