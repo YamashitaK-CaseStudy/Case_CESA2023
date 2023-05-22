@@ -6,7 +6,7 @@ public class SeedBehavior : MonoBehaviour
 {
     private void Awake()
     {
-        UiSeedBehavior.IncreaseTotal();
+        //UiSeedBehavior.IncreaseTotal();
     }
 
     private void OnDestroy()
