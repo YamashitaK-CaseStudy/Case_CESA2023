@@ -117,7 +117,7 @@ public partial class RotatableObject : MonoBehaviour
 	}
 
 	private void SetChildHitCheckChainFlg(bool flg){
-		if(_kinds == RotObjkinds.ObjectKind.BoltRotObject)
+		if(this.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) return;
 		for(int i = 0; i < _childObjChainComp.Length; i++){
 			if(_childObjChainComp[i] == null) continue;
 			_childObjChainComp[i]._isCheckHit = flg;
@@ -125,7 +125,7 @@ public partial class RotatableObject : MonoBehaviour
 	}
 
 	private void SetChildCheckIntoChain(bool flg){
-		if(_kinds == RotObjkinds.ObjectKind.BoltRotObject)
+		if(this.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) return;
 		// フラグとコライダーサイズを変更
 		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
 			if(_childObjChainComp[i] == null) continue;

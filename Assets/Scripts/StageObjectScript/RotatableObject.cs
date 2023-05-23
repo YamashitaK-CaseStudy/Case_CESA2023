@@ -18,7 +18,6 @@ public partial class RotatableObject : MonoBehaviour{
 	public bool _isRotateEndFream = false;		// 回転が終了した1フレームを教えるフラグ
 	private bool _doOnce = false;
 	private GameObject _observer;
-	private RotObjkinds.ObjectKind _kinds;
 
 	//プロパティ。外部からのメンバ変数へのアクセスを定義するもの。ゲッターやセッターのようなもの。
 	public float ProgressRate//進捗率という意味です。_elapsedTimeが単純に経過した時間ではなく全体時間で割った０～１の進捗率として扱われているためこの名前にしました。
@@ -32,7 +31,6 @@ public partial class RotatableObject : MonoBehaviour{
 	// Start is called before the first frame update
 	void Start(){
 		_observer = GameObject.FindWithTag("Observer");
-		_kinds = GetComponent<RotObjkinds>()._RotObjKind;
 		StartFunc();
 		//StartSettingOtherHit();
 		// 自身の回転軸の向きを正規化しとく
