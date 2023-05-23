@@ -186,6 +186,7 @@ public partial class CStageEditor : EditorWindow
 		// プレハブからインスタンスを生成
 		float size = prefabData.transform.localScale.x;
 		Instantiate(prefabData, pos, Quaternion.identity);
+		Undo.RegisterCreatedObjectUndo(prefabData, "Create New GameObject");
 		// 追加分
 		AddInstance(prefabData, pos);
 	}
@@ -200,6 +201,7 @@ public partial class CStageEditor : EditorWindow
 				var tmppos = pos;
 				tmppos.x += i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
+				Undo.RegisterCreatedObjectUndo(prefabData, "Create New GameObject");
 			}
 		}
 		// 負
@@ -210,6 +212,7 @@ public partial class CStageEditor : EditorWindow
 				var tmppos = pos;
 				tmppos.x -= i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
+				Undo.RegisterCreatedObjectUndo(prefabData, "Create New GameObject");
 			}
 		}
 		// Y
@@ -221,6 +224,7 @@ public partial class CStageEditor : EditorWindow
 				var tmppos = pos;
 				tmppos.y += i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
+				Undo.RegisterCreatedObjectUndo(prefabData, "Create New GameObject");
 			}
 		}
 		// 負
@@ -231,6 +235,7 @@ public partial class CStageEditor : EditorWindow
 				var tmppos = pos;
 				tmppos.y -= i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
+				Undo.RegisterCreatedObjectUndo(prefabData, "Create New GameObject");
 			}
 		}
 		// Z
@@ -242,6 +247,7 @@ public partial class CStageEditor : EditorWindow
 				var tmppos = pos;
 				tmppos.z += i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
+				Undo.RegisterCreatedObjectUndo(prefabData, "Create New GameObject");
 			}
 		}
 		// 負
@@ -252,6 +258,7 @@ public partial class CStageEditor : EditorWindow
 				var tmppos = pos;
 				tmppos.z -= i;
 				Instantiate(prefabData, tmppos, Quaternion.identity);
+				Undo.RegisterCreatedObjectUndo(prefabData, "Create New GameObject");
 			}
 		}
 	}
