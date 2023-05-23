@@ -12,7 +12,7 @@ public partial class RotatableObject : MonoBehaviour
 	private bool _isHitChain {get;set;}
 	Vector3 _rotPosOther;
 	int _otherAngle = 0;
-	private RotObjObserver _rotObjObserver;
+	protected RotObjObserver _rotObjObserver;
 	[SerializeField] private int _HitChainAngle = 180;
 	void ChainSettingStart(){
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
@@ -116,7 +116,7 @@ public partial class RotatableObject : MonoBehaviour
 		return _childObj[farnum].transform.position;
 	}
 
-	private void SetChildHitCheckChainFlg(bool flg){
+	protected void SetChildHitCheckChainFlg(bool flg){
 		if(this.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) return;
 		for(int i = 0; i < _childObjChainComp.Length; i++){
 			if(_childObjChainComp[i] == null) continue;
@@ -124,7 +124,7 @@ public partial class RotatableObject : MonoBehaviour
 		}
 	}
 
-	private void SetChildCheckIntoChain(bool flg){
+	protected void SetChildCheckIntoChain(bool flg){
 		if(this.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) return;
 		// フラグとコライダーサイズを変更
 		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){

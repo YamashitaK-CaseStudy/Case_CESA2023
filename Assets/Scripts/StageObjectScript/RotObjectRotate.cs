@@ -7,13 +7,13 @@ using System;
 public partial class RotatableObject : MonoBehaviour
 {
 
-	private Transform _playerTransform = null;// プレイヤーのトランスフォーム
-	private float _oldAngle = 0.0f;
-	private float _polatAngle = 0.0f;
-	private bool _isSpin = false;
+	protected Transform _playerTransform = null;// プレイヤーのトランスフォーム
+	protected float _oldAngle = 0.0f;
+	protected float _polatAngle = 0.0f;
+	protected bool _isSpin = false;
 	public bool _isUnion { get; set;}
-	private Quaternion _oldRotAngle;
-	private Vector3 _oldPos;
+	protected Quaternion _oldRotAngle;
+	protected Vector3 _oldPos;
 	public float _hitDelaySpeed = 0;
 	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
 	{
