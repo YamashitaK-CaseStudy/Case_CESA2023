@@ -46,7 +46,9 @@ public partial class RotatableObject : MonoBehaviour
 		SetChildCheckIntoFloor(false);
 		SetChildCheckIntoChain(false);
 
-		_rotObjObserver.SetLastRotateRotObj(this);
+		if(this.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.BoltRotObject){
+			_rotObjObserver.SetLastRotateRotObj(this);
+		}
 
 		// 経過時間を初期化
 		_elapsedTime = 0.0f;
