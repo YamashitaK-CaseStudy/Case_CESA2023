@@ -19,6 +19,12 @@ public partial class SceneEditor : EditorWindow
 	GameObject _ObserverPrefab;
 	GameObject _BackGroundPrefab;
 	GameObject _GrobalVolmePrefab;
+	GameObject _MainCameraPrefab;
+	GameObject _UICanvasPrefab;
+	GameObject _SeedObjectprefab;
+	GameObject _PlayerVCamPrefab;
+	GameObject _GoalobjectPrefab;
+	GameObject[] _SoundController;
 	TotalSeedData _totalSeedData;
 	bool _isMainStage = false;
 	bool _isUseUnionObj = false;
@@ -38,6 +44,15 @@ public partial class SceneEditor : EditorWindow
 		_ObserverPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_Observer.prefab");
 		_totalSeedData = AssetDatabase.LoadAssetAtPath<TotalSeedData>("Assets/Settings/TotalSeedData.asset");
 		_GrobalVolmePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_GlobalVolume.prefab");
+		_MainCameraPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Pf_MainCamera.prefab");
+		_PlayerVCamPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/VCAM/PlayerFramingTransportVCAM.prefab");
+		_UICanvasPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/Pf_UICanvas.prefab");
+		_SoundController = new GameObject[3];
+		_SoundController[0] = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Sound/Pf_GameSoundManager.prefab");
+		_SoundController[1] = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Sound/Pf_PlayerSoundManager.prefab");
+		_SoundController[2] = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Sound/Pf_SystemSoundManager.prefab");
+		_SeedObjectprefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_SunflowerSeed.prefab");
+		_GoalobjectPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_Goal.prefab");
 	}
 	private void OnGUI()
 	{
@@ -147,26 +162,42 @@ public partial class SceneEditor : EditorWindow
 
 		Debug.Log("プレイヤー生成");
 		// プレハブからインスタンスを生成
-		var tmpObj = Instantiate(_playerPrefab, pos, Quaternion.identity);
-		tmpObj.name = "Player";
-		Debug.Log(tmpObj);
+		var tmpPlayerObj = Instantiate(_playerPrefab, pos, Quaternion.identity);
+		tmpPlayerObj.name = "Player";
+
+		// ゴールを生成
+		var tmpGoalObj = Instantiate(_playerPrefab, new Vector3(0,0,0), Quaternion.identity);
 
 		// カメラのコンポーネントを設定
 		// カメラのオブジェクトを検索
 		var tmpCameraObj = GameObject.Find("Main Camera");
-		// プレイヤーカメラのコンポーネントを所得
-		var tmpCameraComp = tmpCameraObj.AddComponent<PlayerCamera>();
-		tmpCameraComp.targetName = tmpObj.name;
-		tmpCameraComp.cameraOffset = new Vector3(0, 2f, -9);
-		tmpCameraComp.targetOffset = new Vector3(0, 0, 0);
+		// 最初からあるカメラを削除
+		DestroyImmediate(tmpCameraObj);
+		tmpCameraObj = Instantiate(_MainCameraPrefab, new Vector3(0,0,0), Quaternion.identity);
+		tmpCameraObj.name = "Main Camera";
+
+		// VCam設置
+		var tmpVCam = Instantiate(_PlayerVCamPrefab, new Vector3(0,0,0), Quaternion.identity);
+		var tmpVCamComp = tmpVCam.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+		tmpVCamComp.Follow = tmpPlayerObj.transform;
 
 		// 背景のインスタンスを生成
 		var tmpBG = Instantiate(_BackGroundPrefab, new Vector3(0,0,0), Quaternion.identity);
 		var tmpBGComp = tmpBG.GetComponent<Canvas>();
 		tmpBGComp.worldCamera = tmpCameraObj.GetComponent<Camera>();
 		tmpBGComp.planeDistance = 99;
+		var BGChildComp = tmpBG.transform.GetChild(0).GetComponent<ScrollBackGround>();
+		BGChildComp._player = tmpPlayerObj;
+		BGChildComp._goal = tmpGoalObj;
 
+		// 環境エフェクトを配置する
+
+		// 種オブジェクトの設定を書き換える
 		_totalSeedData.defaultTotalCountList[_stageNumber - 1] = _seedCounts;
+		// 種を配置する
+		for(int i = 0 ; i < _seedCounts; i++){
+			Instantiate(_SeedObjectprefab, new Vector3(0,0,0), Quaternion.identity);
+		}
 
 		// グローバルボリュームの生成
 		var tmpGV = Instantiate(_GrobalVolmePrefab, new Vector3(0,0,0), Quaternion.identity);
@@ -175,5 +206,10 @@ public partial class SceneEditor : EditorWindow
 		var tmp = Instantiate(_ObserverPrefab, pos, Quaternion.identity);
 		tmp.name = "ObserverObj";
 		tmp.GetComponent<RotObjUnionObtherber>()._isUseUnion = _isUseUnionObj;
+
+		// サウンドマネージャーを生成する
+		for(int i = 0; i < _SoundController.Length; i++){
+			Instantiate(_SoundController[i], new Vector3(0,0,0), Quaternion.identity);
+		}
 	}
 }

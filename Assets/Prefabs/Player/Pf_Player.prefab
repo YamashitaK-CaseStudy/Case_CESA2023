@@ -219,7 +219,7 @@ MonoBehaviour:
   _groundColliderObj: {fileID: 471363414108438688}
   _frontrayColliderObj: {fileID: 6069264933920637730}
   _upperrayColliderObj: {fileID: 291748975204248151}
-  HP: 0
+  HP: 3
   _deadZone: 0.5
   _moveSpeed: 7
   _gravity: -40

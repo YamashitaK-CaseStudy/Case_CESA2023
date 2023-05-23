@@ -7,8 +7,8 @@ public class ScrollBackGround : MonoBehaviour
 
     [SerializeField] private Vector3 _startCenterPosBG;
     [SerializeField] private Vector3 _endCenterPosBG;
-    [SerializeField] private GameObject _player;
-    [SerializeField] private GameObject _goal;
+    [SerializeField] public GameObject _player;
+    [SerializeField] public GameObject _goal;
 
     private float _movingRangeBG;
     private float _distanceToGoal;

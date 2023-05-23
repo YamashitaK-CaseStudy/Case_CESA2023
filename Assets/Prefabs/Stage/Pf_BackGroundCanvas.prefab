@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 8355983642185809206}
   - component: {fileID: 1322907793577812652}
   - component: {fileID: 5921427079330118128}
+  - component: {fileID: 7563873509950322895}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -137,7 +138,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 540}
+  m_SizeDelta: {x: 2000, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1322907793577812652
 CanvasRenderer:
@@ -177,3 +178,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7563873509950322895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8743129050831034137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9e3817833f4834d8b2e8d45c9b10b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startCenterPosBG: {x: 300, y: -55, z: 0}
+  _endCenterPosBG: {x: -300, y: -55, z: 0}
+  _player: {fileID: 0}
+  _goal: {fileID: 0}

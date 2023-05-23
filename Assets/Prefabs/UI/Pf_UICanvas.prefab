@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 2383304388646193625}
   - component: {fileID: 2383304388646193626}
   - component: {fileID: 2383304388646193627}
+  - component: {fileID: 5442813722398827318}
   m_Layer: 5
-  m_Name: Pf_UICanbas
+  m_Name: Pf_UICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,6 +103,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5442813722398827318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2383304388646193620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ebb614da99c2c4d974c75bd24eafe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _iconSeedScore: {fileID: 6265723592962898189}
 --- !u!1001 &2383304387394137886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,6 +241,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2383304387394137886}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6265723592962898189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8639980923461801491, guid: c16d9f0eb8a81e64b8a1cfaa4bc86c3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2383304387394137886}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7ff85a7f02f7f4784d3e8b096114ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4476604604969668860
 PrefabInstance:
   m_ObjectHideFlags: 0
