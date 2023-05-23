@@ -10,7 +10,8 @@ public partial class Player : MonoBehaviour{
     [SerializeField] private GameObject _groundColliderObj;
     [SerializeField] private GameObject _frontrayColliderObj;
     [SerializeField] private GameObject _upperrayColliderObj;
-
+    [SerializeField] private GameObject _LockFreamObj;
+     
     private RotObjHitCheck _frontHitCheck = null;
     private RotObjHitCheck _bottomHitCheck = null;
     private GroundCheck _groundCheck = null;
