@@ -111,6 +111,8 @@ public partial class CUpdatePrefab : EditorWindow
 	}
 	private void ReplacePrefab()
 	{
+		EditorGUI.BeginChangeCheck();
+
 		string[] name = new string[_paths.Length];
 		for (int i = 0; i < _paths.Length; i++)
 		{
@@ -134,7 +136,15 @@ public partial class CUpdatePrefab : EditorWindow
 					}
 				}
 			}
-			DestroyImmediate(_rotObjects[i].transform.GetChild(0).gameObject);
+			Undo.DestroyObjectImmediate(_rotObjects[i].transform.GetChild(0).gameObject);
+		}
+
+		// 変更点が存在してるかどうかを確認
+		if (EditorGUI.EndChangeCheck())
+		{
+			// シーンに変更があったことを知らせる
+			var scene = SceneManager.GetActiveScene();
+			EditorSceneManager.MarkSceneDirty(scene);
 		}
 
 	}
@@ -147,6 +157,7 @@ public partial class CUpdatePrefab : EditorWindow
 		var childObj = Instantiate(prefabData, child.transform.position, Quaternion.identity);
 		childObj.gameObject.transform.parent = parent.transform;
 		childObj.name = childObj.name.Replace("(Clone)","");
+		Undo.RegisterCreatedObjectUndo(childObj, "Create New GameObject");
 	}
 	private void Line()
 	{
