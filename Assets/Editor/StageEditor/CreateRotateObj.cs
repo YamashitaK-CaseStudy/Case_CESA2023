@@ -380,6 +380,7 @@ public partial class CStageEditor : EditorWindow
 		var tmpObj = Instantiate(_selectAddChildPrefab, pos, Quaternion.identity);
 		tmpObj.gameObject.transform.parent = _object.gameObject.transform;
 		tmpObj.name = tmpObj.name.Replace("(Clone)", "");
+		Undo.RegisterCreatedObjectUndo(tmpObj, "Create New GameObject");
 		// 親子付けを設定
 		_selectChildObj = tmpObj;
 		_selectChildID = _object.gameObject.transform.childCount - 1;
@@ -422,6 +423,7 @@ public partial class CStageEditor : EditorWindow
 		_parentRigdbody = _parentObject.AddComponent<Rigidbody>();
 		_parentRigdbody.angularDrag = 0;
 		_parentRigdbody.isKinematic = true;
+		Undo.RegisterCreatedObjectUndo(_parentObject, "Create New GameObject");
 		// RotatableObjectの生成
 		_parentObject.AddComponent<OnlySpinObj>();
 		// 種類の設定
@@ -434,6 +436,7 @@ public partial class CStageEditor : EditorWindow
 
 		_object = new GameObject("Object");
 		_object.gameObject.transform.parent = _parentObject.gameObject.transform;
+		Undo.RegisterCreatedObjectUndo(_object, "Create New GameObject");
 	}
 
 	private void CreateBaseBoltObject()
@@ -441,6 +444,7 @@ public partial class CStageEditor : EditorWindow
 		// オブジェクトの生成
 		_parentObject = Instantiate(_selectAddChildPrefab, new Vector3(0,0,0), Quaternion.identity);
 		_parentObject.name = _parentObject.name.Replace("(Clone)", "");
+		Undo.RegisterCreatedObjectUndo(_parentObject, "Create New GameObject");
 		// タグ・レイヤーの設定
 		_parentObject.layer = LayerMask.NameToLayer("Block");
 		// 必要コンポーネントのアタッチ
