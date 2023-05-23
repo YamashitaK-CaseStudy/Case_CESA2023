@@ -172,7 +172,7 @@ public class ReloadPrefabFloor : EditorWindow
 				}
 			}
 		}
-		DestroyImmediate(_floorObj[0].gameObject);
+		Undo.DestroyObjectImmediate(_floorObj[0].gameObject);
 	}
 
 	private void Replace(GameObject child, GameObject parent, string prefabPath)
@@ -182,6 +182,7 @@ public class ReloadPrefabFloor : EditorWindow
 		var childObj = Instantiate(prefabData, child.transform.position, Quaternion.identity);
 		childObj.gameObject.transform.parent = parent.transform;
 		childObj.name = childObj.name.Replace("(Clone)", "");
+		Undo.RegisterCreatedObjectUndo(childObj, "Create New GameObject");
 	}
 
 	private void SwitchFloor()
@@ -217,12 +218,17 @@ public class ReloadPrefabFloor : EditorWindow
 						var newfloor = Instantiate(_floorParts, floorObjPos, Quaternion.identity);
 						newfloor.gameObject.transform.parent = obj.transform;
 						newfloor.name = newfloor.name.Replace("(Clone)", "");
-						DestroyImmediate(floorObj.gameObject);
+						Undo.RegisterCreatedObjectUndo(newfloor, "Create New GameObject");
+						Undo.DestroyObjectImmediate(floorObj.gameObject);
 					}
 				}
 				break;
 			}
 		}
+
+		// シーンに変更があったことを知らせる
+		var scene = SceneManager.GetActiveScene();
+		EditorSceneManager.MarkSceneDirty(scene);
 	}
 
 	private void Line()

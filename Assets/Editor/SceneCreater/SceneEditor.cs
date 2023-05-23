@@ -15,15 +15,15 @@ public partial class SceneEditor : EditorWindow
 	GameObject _playerPrefab;
 	string _path;
 	bool _isGetSameName = false;
-	bool _isOnUnionObj = false;
 	GameObject _ObserverPrefab;
 	GameObject _BackGroundPrefab;
 	GameObject _GrobalVolmePrefab;
 	GameObject _MainCameraPrefab;
 	GameObject _UICanvasPrefab;
-	GameObject _SeedObjectprefab;
+	GameObject _SeedObjectPrefab;
 	GameObject _PlayerVCamPrefab;
 	GameObject _GoalobjectPrefab;
+	GameObject _EnvironmentFXPrefab;
 	GameObject[] _SoundController;
 	TotalSeedData _totalSeedData;
 	bool _isMainStage = false;
@@ -51,8 +51,9 @@ public partial class SceneEditor : EditorWindow
 		_SoundController[0] = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Sound/Pf_GameSoundManager.prefab");
 		_SoundController[1] = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Sound/Pf_PlayerSoundManager.prefab");
 		_SoundController[2] = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Sound/Pf_SystemSoundManager.prefab");
-		_SeedObjectprefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_SunflowerSeed.prefab");
+		_SeedObjectPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_SunflowerSeed.prefab");
 		_GoalobjectPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_Goal.prefab");
+		_EnvironmentFXPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_EnviFX.prefab");
 	}
 	private void OnGUI()
 	{
@@ -86,12 +87,13 @@ public partial class SceneEditor : EditorWindow
 		_playerPrefab = (GameObject)EditorGUILayout.ObjectField("プレイヤープレハブ", _playerPrefab, typeof(GameObject), false);
 
 		// 磁石オブジェクトを使用するかどうか
-		_isUseUnionObj = EditorGUILayout.ToggleLeft("磁石オブジェクトを使用するかどうか",_isUseUnionObj);
+		_isUseUnionObj = EditorGUILayout.ToggleLeft("磁石オブジェクトを使用するかどうか", _isUseUnionObj);
 
 		// メインステージかどうか
-		_isMainStage = EditorGUILayout.ToggleLeft("メインステージの作成かどうか",_isMainStage);
+		_isMainStage = EditorGUILayout.ToggleLeft("メインステージの作成かどうか", _isMainStage);
 
-		if(_isMainStage){
+		if (_isMainStage)
+		{
 			// ステージ番号の設定
 			_stageNumber = EditorGUILayout.IntField("ステージ番号", _stageNumber);
 			// 種の設定個数を変更
@@ -111,7 +113,7 @@ public partial class SceneEditor : EditorWindow
 		EditorGUILayout.HelpBox("稀に必要オブジェクトが生成されないことがあるので\nその場合は以下のボタンを押してください", MessageType.Info);
 		if (GUILayout.Button("再生成"))
 		{
-			SceneSettings();
+			SceneSettings(55, 55);
 		}
 	}
 	private void CreateScene()
@@ -135,7 +137,7 @@ public partial class SceneEditor : EditorWindow
 		EditorSceneManager.SaveScene(newScene, path);
 
 		// 生成したのちに必要なコンポーネントを設定する
-		SceneSettings();
+		SceneSettings(_stageNumber, _seedCounts);
 	}
 	private bool CheckSameNameScene()
 	{
@@ -154,62 +156,152 @@ public partial class SceneEditor : EditorWindow
 		}
 		return false;
 	}
-	private void SceneSettings()
+	private void SceneSettings(int stageNum, int seedCounts)
 	{
-		Debug.Log("設定開始");
+		EditorGUI.BeginChangeCheck();
 		// プレイヤーの配置
 		Vector3 pos = new Vector3(0, 1, 0);
 
+		// オブジェクトを探して見つかれば消して作り直す
+		var tmpCheckObj = GameObject.Find("Player");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
 		Debug.Log("プレイヤー生成");
 		// プレハブからインスタンスを生成
 		var tmpPlayerObj = Instantiate(_playerPrefab, pos, Quaternion.identity);
 		tmpPlayerObj.name = "Player";
+		Undo.RegisterCreatedObjectUndo(tmpPlayerObj, "Create New GameObject");
 
+		// オブジェクトを探して見つかれば消して作り直す
+		Vector3 tmpPos = new Vector3(0, 0, 0);
+		tmpCheckObj = GameObject.Find("Goal");
+		if (tmpCheckObj != null)
+		{
+			tmpPos = tmpCheckObj.transform.position;
+			Undo.DestroyObjectImmediate (tmpCheckObj);
+		}
+		tmpCheckObj = GameObject.Find("Pf_Goal");
+		if (tmpCheckObj != null)
+		{
+			tmpPos = tmpCheckObj.transform.position;
+			Undo.DestroyObjectImmediate (tmpCheckObj);
+		}
+		tmpCheckObj = GameObject.Find("Pf_Goal(Clone)");
+		if (tmpCheckObj != null)
+		{
+			tmpPos = tmpCheckObj.transform.position;
+			Undo.DestroyObjectImmediate (tmpCheckObj);
+		}
 		// ゴールを生成
-		var tmpGoalObj = Instantiate(_playerPrefab, new Vector3(0,0,0), Quaternion.identity);
+		var tmpGoalObj = Instantiate(_GoalobjectPrefab, tmpPos, Quaternion.identity);
+		tmpGoalObj.name = "Goal";
+		Undo.RegisterCreatedObjectUndo(tmpGoalObj, "Create New GameObject");
 
 		// カメラのコンポーネントを設定
 		// カメラのオブジェクトを検索
 		var tmpCameraObj = GameObject.Find("Main Camera");
 		// 最初からあるカメラを削除
-		DestroyImmediate(tmpCameraObj);
-		tmpCameraObj = Instantiate(_MainCameraPrefab, new Vector3(0,0,0), Quaternion.identity);
+		if (tmpCameraObj != null) Undo.DestroyObjectImmediate(tmpCameraObj);
+		tmpCameraObj = Instantiate(_MainCameraPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 		tmpCameraObj.name = "Main Camera";
+		Undo.RegisterCreatedObjectUndo(tmpCameraObj, "Create New GameObject");
 
 		// VCam設置
-		var tmpVCam = Instantiate(_PlayerVCamPrefab, new Vector3(0,0,0), Quaternion.identity);
+		tmpCheckObj = GameObject.Find("VCam_PlayerHoming");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("PlayerFramingTransportVCAM");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		var tmpVCam = Instantiate(_PlayerVCamPrefab);
 		var tmpVCamComp = tmpVCam.GetComponent<Cinemachine.CinemachineVirtualCamera>();
 		tmpVCamComp.Follow = tmpPlayerObj.transform;
+		tmpVCamComp.name = "VCam_PlayerHoming";
+		Undo.RegisterCreatedObjectUndo(tmpVCamComp, "Create New GameObject");
 
 		// 背景のインスタンスを生成
-		var tmpBG = Instantiate(_BackGroundPrefab, new Vector3(0,0,0), Quaternion.identity);
+		tmpCheckObj = GameObject.Find("Pf_BackGroundCanvas(Clone)");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("BackGround");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		var tmpBG = Instantiate(_BackGroundPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		tmpBG.name = "BackGround";
+		Undo.RegisterCreatedObjectUndo(tmpBG, "Create New GameObject");
 		var tmpBGComp = tmpBG.GetComponent<Canvas>();
 		tmpBGComp.worldCamera = tmpCameraObj.GetComponent<Camera>();
 		tmpBGComp.planeDistance = 99;
+		// スクロール用に必要なオブジェクトをセットする
 		var BGChildComp = tmpBG.transform.GetChild(0).GetComponent<ScrollBackGround>();
 		BGChildComp._player = tmpPlayerObj;
 		BGChildComp._goal = tmpGoalObj;
 
-		// 環境エフェクトを配置する
+		// UIを配置
+		tmpCheckObj = GameObject.Find("UICanbas");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("UICanvas");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		var tmpUICanvas = Instantiate(_UICanvasPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		tmpUICanvas.name = "UICanvas";
+		Undo.RegisterCreatedObjectUndo(tmpUICanvas, "Create New GameObject");
 
-		// 種オブジェクトの設定を書き換える
-		_totalSeedData.defaultTotalCountList[_stageNumber - 1] = _seedCounts;
-		// 種を配置する
-		for(int i = 0 ; i < _seedCounts; i++){
-			Instantiate(_SeedObjectprefab, new Vector3(0,0,0), Quaternion.identity);
+		// 環境エフェクトを配置する
+		tmpCheckObj = GameObject.Find("Vg_Dust01");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("Vg_SmokeFog01");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("EnviFX");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		var tmpEnviFX = Instantiate(_EnvironmentFXPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		tmpEnviFX.name = "EnviFX";
+		tmpEnviFX.GetComponent<EmbiVFX>()._GoalObj = tmpGoalObj;
+		Undo.RegisterCreatedObjectUndo(tmpEnviFX, "Create New GameObject");
+
+		if (stageNum != 55 && seedCounts != 55)
+		{
+			// 種オブジェクトの設定を書き換える
+			_totalSeedData.defaultTotalCountList[stageNum - 1] = seedCounts;
+			// 種を配置する
+			for (int i = 0; i < seedCounts; i++)
+			{
+				var tmpSeed = Instantiate(_SeedObjectPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+				tmpSeed.name = "SunFlowerSeed";
+				Undo.RegisterCreatedObjectUndo(tmpSeed, "Create New GameObject");
+			}
 		}
 
 		// グローバルボリュームの生成
-		var tmpGV = Instantiate(_GrobalVolmePrefab, new Vector3(0,0,0), Quaternion.identity);
+		tmpCheckObj = GameObject.Find("Global Volume");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("GlobalVolme");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		var tmpGV = Instantiate(_GrobalVolmePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		tmpGV.name = "GlobalVolme";
+		Undo.RegisterCreatedObjectUndo(tmpGV, "Create New GameObject");
 
 		// 磁石オブジェクト用のオブザーバーをインスタンス化する
+		tmpCheckObj = GameObject.Find("ObserverObj");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
 		var tmp = Instantiate(_ObserverPrefab, pos, Quaternion.identity);
 		tmp.name = "ObserverObj";
 		tmp.GetComponent<RotObjUnionObtherber>()._isUseUnion = _isUseUnionObj;
+		Undo.RegisterCreatedObjectUndo(tmp, "Create New GameObject");
 
 		// サウンドマネージャーを生成する
-		for(int i = 0; i < _SoundController.Length; i++){
-			Instantiate(_SoundController[i], new Vector3(0,0,0), Quaternion.identity);
+		tmpCheckObj = GameObject.Find("Pf_GameSoundManager");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("Pf_SystemSoundManager");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("Pf_PlayerSoundManager");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("GameSoundManager");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("SystemSoundManager");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		tmpCheckObj = GameObject.Find("PlayerSoundManager");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate (tmpCheckObj);
+		for (int i = 0; i < _SoundController.Length; i++)
+		{
+			var tmpSoundMgr = Instantiate(_SoundController[i], new Vector3(0, 0, 0), Quaternion.identity);
+			tmpSoundMgr.name = tmpSoundMgr.name.Replace("(Clone)", "");
+			tmpSoundMgr.name = tmpSoundMgr.name.Replace("Pf_", "");
+			Undo.RegisterCreatedObjectUndo(tmpSoundMgr, "Create New GameObject");
 		}
 	}
 }
