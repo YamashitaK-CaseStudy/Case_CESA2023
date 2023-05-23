@@ -10,7 +10,8 @@ public class BoltInspector : Editor
     SerializedProperty _length;
     SerializedProperty _translationLimit;
     SerializedProperty _translationPerRotation;
-    SerializedProperty _spinningTranslationSpeed;
+    SerializedProperty _rotRequirdTime;
+    //SerializedProperty _spinningTranslationSpeed;
     SerializedProperty _interlockingObjectList;
 
     void OnEnable()
@@ -20,7 +21,8 @@ public class BoltInspector : Editor
         _length = serializedObject.FindProperty("_length");
         _translationLimit = serializedObject.FindProperty("_translationLimit");
         _translationPerRotation = serializedObject.FindProperty("_translationPerRotation");
-        _spinningTranslationSpeed = serializedObject.FindProperty("_spinningTranslationSpeed");
+        _rotRequirdTime = serializedObject.FindProperty("_rotRequirdTime");
+        //_spinningTranslationSpeed = serializedObject.FindProperty("_spinningTranslationSpeed");
         _interlockingObjectList = serializedObject.FindProperty("_interlockingObjectList");
     }
 
@@ -32,7 +34,8 @@ public class BoltInspector : Editor
         EditorGUILayout.PropertyField(_length, new GUIContent("ボルトの長さ"));
         EditorGUILayout.PropertyField(_translationLimit, new GUIContent("最大移動量"));
         EditorGUILayout.PropertyField(_translationPerRotation, new GUIContent("１回転あたりの移動量"));
-        EditorGUILayout.PropertyField(_spinningTranslationSpeed, new GUIContent("高速回転時のスピード"));
+        EditorGUILayout.PropertyField(_rotRequirdTime, new GUIContent("１回転する時間"));
+        //EditorGUILayout.PropertyField(_spinningTranslationSpeed, new GUIContent("高速回転時のスピード"));
         EditorGUILayout.PropertyField(_interlockingObjectList, new GUIContent("連動するオブジェクトのリスト"));
 
         //Apply changes to the serializedProperty - always do this at the end of OnInspectorGUI.

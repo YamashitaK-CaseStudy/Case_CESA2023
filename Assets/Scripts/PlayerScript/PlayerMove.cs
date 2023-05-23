@@ -8,10 +8,12 @@ public partial class Player : MonoBehaviour {
     [SerializeField, Header("重力")] private float _gravity;
     [SerializeField, Header("ジャンプ力")] private float _jumpPower;
     [SerializeField, Header("ジャンプカーブ")] private AnimationCurve _jumpCurve;
-    
+    [SerializeField, Header("ジャンプ中の移動減衰係数")] private float _jumpNowMoveDecay;
+
     private InputAction _jumpButton;
     private Rigidbody _rigidbody;
     private float _speedx;
+    private bool _isJumpflg,_isJumpNowflg;
 
     private float _jumpCurveSpeed = 0.0f;
     
@@ -30,7 +32,7 @@ public partial class Player : MonoBehaviour {
     void UpdateMove() {
 
         // スティック入力入れてるかつ回転アニメーションが再生されてる間は動けない
-        if (_xBlockLock || _yBlockLock || _animCallBack.GetIsRotationAnimPlay) {
+        if (_xBlockLock || _yBlockLock || _yBlockUpperLock || _animCallBack.GetIsRotationAnimPlay) {
            // Debug.Log("無効");
             return;
         }
@@ -44,20 +46,29 @@ public partial class Player : MonoBehaviour {
 
         var value_x = _playerInput.actions["Move"].ReadValue<Vector2>().x;
 
+        float speed = 0.0f;
+
         if (-_deadZone > value_x) {
 
-            _speedx = -_moveSpeed;
+            speed = -_moveSpeed;
             transform.LookAt(new Vector3(transform.position.x + value_x, transform.position.y, 0), Vector3.up);
         }
         else if (value_x > _deadZone) {
 
-            _speedx = _moveSpeed;
+            speed = _moveSpeed;
             transform.LookAt(new Vector3(transform.position.x + value_x, transform.position.y, 0), Vector3.up);
         }
         else {
-            _speedx = 0.0f;
+            speed = 0.0f;
         }
-     
+
+        if (!_groundCheck.IsGround && _isJumpNowflg) {
+            _speedx = speed * _jumpNowMoveDecay;
+        }
+        else {
+            _speedx = speed;
+        }
+
         // 速度適応
         _rigidbody.velocity = new Vector3(_speedx, _rigidbody.velocity.y, 0);
 
@@ -76,9 +87,13 @@ public partial class Player : MonoBehaviour {
 
         if (_groundCheck.IsGround) {
 
+            _isJumpNowflg = false;
+
             //Debug.Log("浮いてる");
 
             if (_jumpButton.WasPressedThisFrame()) {
+
+                _isJumpflg = true;
 
                // Debug.Log("ジャンプボタン押された");
                 _rigidbody.AddForce(_jumpPower * Vector3.up, ForceMode.Impulse);
@@ -96,7 +111,13 @@ public partial class Player : MonoBehaviour {
             }
         }
         else {
-           // Debug.Log("浮いてる");
+            // ジャンプボタンを押して自ら空中に飛んだ時
+            if (_isJumpflg) {
+                _isJumpNowflg = true;
+                _isJumpflg = false;
+            }
         }
+
+       // Debug.Log("ジャンプ中" + _isJumpNowflg);
     }
 }

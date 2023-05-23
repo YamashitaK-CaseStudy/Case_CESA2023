@@ -4,78 +4,22 @@ using UnityEngine;
 
 public partial class RotatableObject : MonoBehaviour{
 
-    // 前回の回転
-    public int oldangleY = 0;
-    public int oldangleX = 0;
-
-    //     if (_isSpin || _isRotating) {
-    //         return;
-    //     }
-
-    //     var playerComp = _playerTransform.GetComponent<Player>();
-
-    //     playerComp.NotificationStartRotate();
-
-
-    //     // フラグを立てる
-    //     _isRotating = true;
-
-    //     // 経過時間を初期化
-    //     _elapsedTime = 0.0f;
-
-    //     // 回転の中心を設定
-    //     _axisCenterWorldPos = rotCenter;
-
-    //     // 回転軸を設定
-    //     _rotAxis = rotAxis;
-
-    //     // 回転オフセット値をセット
-    //     _angle = rotAngle;
-
-    //     PlayPartical();
-
-    // }
-    
     public Vector3 offsetRotAxis;
 
-    public void StartRotateX(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
-      
+    public virtual void StickRotate(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
+
         if(angle == 0) {
             return;
         }
 
-        StartRotate(center, axis, angle, playerTransform);
-    }
-
-    public void StartRotateY(Vector3 center, Vector3 axis, int angle,Transform playerTransform) {
-        if (oldangleY == angle) {
-
-            _isRotateStartFream = false;
-            return;
-        }
-        _isRotateStartFream = true;
-
-        // プレイヤーのトランスフォームを保持
-        _playerTransform = playerTransform;
-
-        var Pos = playerTransform.position;
-        var pPos = new Vector3(center.x,Pos.y,0);
-        playerTransform.transform.position = pPos;
-
-        var offset = angle - oldangleY;
-
-        if (offset < 0) {
+        if (angle < 0) {
             offsetRotAxis = new Vector3(0, -1, 0);
         }
         else {
             offsetRotAxis = new Vector3(0, 1, 0);
         }
 
-        StartRotate(center, axis, offset, playerTransform);
-        //StartStickRotate(center, axis, offset);
-        //RotateAxis(center, axis, offset);
-
-        oldangleY = angle;
+        StartRotate(center, axis, angle, playerTransform);
         PlayPartical();
     }
 }

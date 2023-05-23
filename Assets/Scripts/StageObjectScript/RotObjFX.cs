@@ -15,13 +15,13 @@ public partial class RotatableObject : MonoBehaviour
 		}
 	}
 	// トレイルパーティクルの起動
-	void PlayPartical(){
+	protected void PlayPartical(){
 		for(int i = 0; i < _childParticleNum; i++){
 			_childParticle[i].PlayPartical();
 		}
 	}
 	// トレイルパーティクルの停止
-	void StopPartical(){
+	protected void StopPartical(){
 		for(int i = 0; i < _childParticleNum; i++){
 			_childParticle[i].StopPartical();
 		}

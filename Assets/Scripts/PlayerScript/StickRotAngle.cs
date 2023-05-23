@@ -212,8 +212,7 @@ public partial class StickRotAngle : MonoBehaviour {
         RotatableObject rotbleobj = _hitcheck.GetRotObj.GetComponent<RotatableObject>();
 
         _stickAngle_Y = 0;
-        rotbleobj.oldangleY = 0;
-
+      
         Debug.Log("角度リセット");
     }
 

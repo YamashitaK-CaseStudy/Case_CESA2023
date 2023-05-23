@@ -9,14 +9,14 @@ public partial class RotatableObject : MonoBehaviour{
 
 
 	protected Vector3 _rotAxis;				// 自身の回転軸ベクトル
-	public Vector3 _axisCenterWorldPos;		// 回転軸の中心のワールド座標
-	private float _elapsedTime = 0.0f;		// 回転開始からの経過時間
-	private int _angle;						// 回転角度
+	public Vector3 _axisCenterWorldPos;     // 回転軸の中心のワールド座標
+	protected float _elapsedTime = 0.0f;        // 回転開始からの経過時間
+	protected int _angle;						// 回転角度
 	public bool _isRotating = false;		// 回転してるかフラグ
 	public bool _isSpining = false;			// 回転しているかフラグ
 	public bool _isRotateStartFream = false;	// 回転し始めた1フレームを教えるフラグ
-	public bool _isRotateEndFream = false;		// 回転が終了した1フレームを教えるフラグ
-	private bool _doOnce = false;
+	public bool _isRotateEndFream = false;      // 回転が終了した1フレームを教えるフラグ
+	protected bool _doOnce = false;
 	private GameObject _observer;
 
 	//プロパティ。外部からのメンバ変数へのアクセスを定義するもの。ゲッターやセッターのようなもの。
