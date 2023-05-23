@@ -78,18 +78,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e43a10a30c8411418796cedb5cbb8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _HitChainAngle: 180
   _rotRequirdTime: 1
+  _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
-  _isSpin: 0
-  oldangleY: 0
-  oldangleX: 0
-  _nowRotAxis: {x: 0, y: 0, z: 0}
+  _isSpining: 0
+  _isRotateStartFream: 0
+  _isRotateEndFream: 0
+  _hitDelaySpeed: 0
+  _rotSpeed: 15
+  offsetRotAxis: {x: 0, y: 0, z: 0}
   _threadObject: {fileID: 919132149155446097, guid: 2441832514da19447865c85cd292fe80,
     type: 3}
   _length: 1
   _translationLimit: 1
-  _amountTranslation: 1
-  _spinningTranslationSpeed: 1
+  _translationPerRotation: 1
   _interlockingObjectList: []
 --- !u!54 &6541486685924264060
 Rigidbody:
@@ -101,9 +104,9 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

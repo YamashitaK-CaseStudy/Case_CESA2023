@@ -7,7 +7,7 @@ public partial class RotatableObject : MonoBehaviour
 	private GameObject _parentObj;
 	private RotatableObject _parentRotObj;
 	private RotHitCheckFloor[] _childObjHitCheckFloorComp;
-	private bool _isHitFloor {get;set;}
+	protected bool _isHitFloor {get;set;}
 	private bool _isReflectRot = false; // 反射を行うかどうか
 	private Vector3 _refCenterPos;
 	private Vector3 _refAxis;
@@ -96,7 +96,7 @@ public partial class RotatableObject : MonoBehaviour
 		_isHitFloor = true;
 	}
 
-	private void SetReflect(Vector3 center,Vector3 axis, int angle){
+	protected void SetReflect(Vector3 center,Vector3 axis, int angle){
 		_isReflectRot = true;
 		_isHitFloor = false;
 		// 必要なデータを格納する
@@ -105,7 +105,7 @@ public partial class RotatableObject : MonoBehaviour
 		_refAngle 		= -angle;		// 角度
 	}
 
-	private void SetChildHitCheckFloorFlg(bool flg){
+	protected void SetChildHitCheckFloorFlg(bool flg){
 		if(this.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) return;
 		var size = 1.0f;
 		if(!flg) size = 0.5f;
@@ -119,7 +119,7 @@ public partial class RotatableObject : MonoBehaviour
 		}
 	}
 
-	private void SetChildCheckIntoFloor(bool flg){
+	protected void SetChildCheckIntoFloor(bool flg){
 		if(this.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) return;
 		// フラグとコライダーサイズを変更
 		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
