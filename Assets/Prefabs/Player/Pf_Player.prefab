@@ -221,7 +221,7 @@ MonoBehaviour:
   _frontrayColliderObj: {fileID: 6069264933920637730}
   _upperrayColliderObj: {fileID: 291748975204248151}
   _LockFreamObj: {fileID: 5866770482282355875}
-  HP: 0
+  HP: 3
   _deadZone: 0.5
   _moveSpeed: 7
   _gravity: -40
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2507138598649004092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07fd6d45dc6235845875f9be74586d86, type: 3}
+  m_Script: {fileID: 11500000, guid: 04a25cc6266903747a062e3291d5e293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _deadzone: 0.7
