@@ -117,8 +117,19 @@ public partial class RotatableObject : MonoBehaviour
 	}
 
 	private void SetChildHitCheckChainFlg(bool flg){
+		if(this.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) return;
 		for(int i = 0; i < _childObjChainComp.Length; i++){
+			if(_childObjChainComp[i] == null) continue;
 			_childObjChainComp[i]._isCheckHit = flg;
+		}
+	}
+
+	private void SetChildCheckIntoChain(bool flg){
+		if(this.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) return;
+		// フラグとコライダーサイズを変更
+		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
+			if(_childObjChainComp[i] == null) continue;
+			_childObjChainComp[i].SetCheckInto(flg);
 		}
 	}
 }

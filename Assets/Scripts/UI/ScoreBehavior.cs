@@ -81,7 +81,7 @@ public class ScoreBehavior : MonoBehaviour
 
     private void OnDestroy()
     {
-        _sceneManager.Score = _score;
+        //_sceneManager.Score = _score;
     }
 
     private void OnValidate()

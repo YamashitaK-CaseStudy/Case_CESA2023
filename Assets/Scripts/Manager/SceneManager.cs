@@ -100,17 +100,6 @@ namespace SuzumuraTomoki {
 		}
 
 		/*****インターフェイス（公開メンバ）*******/
-		public int Score
-		{
-			get
-			{
-				return score;
-			}
-			set
-			{
-				score = value;
-			}
-		}
 
 		public int stageCount {
 			get {
@@ -163,7 +152,6 @@ namespace SuzumuraTomoki {
 		//変数
 
 		private int _stageCount=0;
-		private int score = 0;
 		private int beforeSceneNumber = 0;
 		private int currentSceneNumber = 0;
 	}
