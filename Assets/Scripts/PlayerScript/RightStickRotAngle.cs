@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public partial class StickRotAngle : MonoBehaviour {
+public class RightStickRotAngle : MonoBehaviour
+{
 
     [SerializeField, Header("デッドゾーン")] private float _deadzone;
     private PlayerInput _playerInput;
@@ -77,7 +78,7 @@ public partial class StickRotAngle : MonoBehaviour {
                 _stickAngle_Y = (int)(Mathf.Atan2(-value.x, -value.y) * Mathf.Rad2Deg);
             }
         }
-      
+
         if (_stickAngle_Y < 0) {
             _stickAngle_Y += 360;
         }
@@ -212,7 +213,7 @@ public partial class StickRotAngle : MonoBehaviour {
         RotatableObject rotbleobj = _hitcheck.GetRotObj.GetComponent<RotatableObject>();
 
         _stickAngle_Y = 0;
-      
+
         Debug.Log("角度リセット");
     }
 
@@ -299,4 +300,3 @@ public partial class StickRotAngle : MonoBehaviour {
         _oldspinAxis = _spinAxis;
     }
 }
-

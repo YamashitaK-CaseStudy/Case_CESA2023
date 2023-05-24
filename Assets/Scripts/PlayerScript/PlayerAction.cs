@@ -23,7 +23,7 @@ public partial class Player : MonoBehaviour {
         _rotationSpinButton = _playerInput.actions.FindAction("RotationSpin");
 
         // 右スティックの状態を取得
-        _stricRotAngle = GetComponent<StickRotAngle>();
+        _stricRotAngle = GetComponent<RightStickRotAngle>();
     }
 
     void UpdateAction() {
