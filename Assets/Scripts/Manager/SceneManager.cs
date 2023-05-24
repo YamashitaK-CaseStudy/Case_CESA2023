@@ -17,6 +17,8 @@ namespace SuzumuraTomoki {
         }
 
 		//statics
+		static public bool missionFailed = false;
+
 		static private SceneManager _instance = null;
 		static private UnityEngine.InputSystem.InputActionMap _playerInput = null;
 		static private TitleInitState _titleInitStatet = TitleInitState.TITLE;
