@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438f1b3ed42d3db4a8e7679ec302be7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unionColliderX: {fileID: 1364511710295889781}
+  _unionColliderY: {fileID: 9073914611019464543}
+  _unionColliderZ: {fileID: 6974449100603829603}
   _effect: {fileID: 1223605859591830470}
   _partical: {fileID: 0}
   _StartEventName: OnStart

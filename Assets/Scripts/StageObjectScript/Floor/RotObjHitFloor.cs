@@ -19,8 +19,6 @@ public partial class RotatableObject : MonoBehaviour
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
 		_childObj = new GameObject[childnum];
 		_childObjHitCheckFloorComp = new RotHitCheckFloor[childnum];
-		Debug.Log(childnum);
-		Debug.Log(_childObjHitCheckFloorComp);
 		// 子供のオブジェクトを確保
 		for(int i = 0; i < childnum; i++){
 			// 子供のオブジェクトを確保
@@ -35,8 +33,6 @@ public partial class RotatableObject : MonoBehaviour
 				}
 			}
 		}
-		Debug.Log("ここで確認");
-		Debug.Log(_childObjHitCheckFloorComp.Length);
 	}
 
 	public void ChildCountUpdate(){
@@ -111,8 +107,6 @@ public partial class RotatableObject : MonoBehaviour
 		var size = 1.0f;
 		if(!flg) size = 0.5f;
 		// フラグとコライダーサイズを変更
-		Debug.Log(this.name);
-		Debug.Log(_childObjHitCheckFloorComp);
 		for(int i = 0; i < _childObjHitCheckFloorComp.Length; i++){
 			if(_childObjHitCheckFloorComp[i] == null) continue;
 			_childObjHitCheckFloorComp[i]._isCheckHit = flg;
