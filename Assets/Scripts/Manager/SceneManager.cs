@@ -70,8 +70,6 @@ namespace SuzumuraTomoki {
 				return false;
 			}
 
-			//MonoInstance.StartCoroutine(LoadSceneAsync(stageSceneList[stageIndex - 1].name));
-			//UnityEngine.SceneManagement.SceneManager.LoadScene(stageSceneList[stageIndex - 1].name);
 			instance.LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
 			return true;
 		}
@@ -89,10 +87,7 @@ namespace SuzumuraTomoki {
 		}
 
 		static public void LoadBeforeScene() {
-			//MonoInstance.StartCoroutine(LoadSceneAsync(beforeSceneName));
-			//UnityEngine.SceneManagement.SceneManager.LoadScene(beforeSceneName);
 			instance.LoadScene(instance.beforeSceneNumber);
-
 		}
 
 		static public void LoadCurrentScene(){
@@ -110,6 +105,10 @@ namespace SuzumuraTomoki {
 		/*************“à•”ŽÀ‘•***************/
 
 		private void LoadScene(int sceneNumber) {
+			if(Fader.state != Fader.State.NONE)
+            {
+				return;
+            }
 			playerInput.Disable();
 			beforeSceneNumber = currentSceneNumber;
 			currentSceneNumber = sceneNumber;
