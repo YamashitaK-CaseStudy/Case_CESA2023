@@ -45,7 +45,7 @@ public partial class RotatableObject : MonoBehaviour{
 	// Update is called once per frame
 	void FixedUpdate(){
 		// ディレイ処理が入れば処理を考慮する
-		if(HitStopController.Instance._isHitStop) return;
+		if(_observer.GetComponent<HitStopController>()._isHitStop) return;
 
 		HitChainUpdate();
 		UpdateRotate();
