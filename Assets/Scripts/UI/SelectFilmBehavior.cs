@@ -13,7 +13,7 @@ public class SelectFilmBehavior : MonoBehaviour
 {
     /*íËêî*/
     public const int MAX_STAGE = 5;
-    public const int MAX_WORLD = 4;
+    public const int MAX_WORLD = 3;
 
     //private const float OUTER_FRAME_RATIO = 36.0f / 3261;
     private const float FILM_FRAME_RATIO = 645.0f / 3261;
