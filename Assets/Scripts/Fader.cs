@@ -55,15 +55,20 @@ public class Fader : MonoBehaviour
     {
         set
         {
-            if (instance._state == State.NONE)
-            {
-                return;
-            }
             value.Disable();
             _listStopInput.Add(value);
         }
     }
 
+    static public State state
+    {
+        get
+        {
+            return instance._state;
+        }
+    }
+
+    /*ŒöŠJ*/
     public float fadeTime
     {
         get
@@ -100,10 +105,6 @@ public class Fader : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        UpdateFader();
-    }
 
 
     public void FadeOut(int loadSceneNumber)
@@ -116,7 +117,7 @@ public class Fader : MonoBehaviour
 
             case State.FADE_DONE:
                 return;
-                //break;
+            //break;
 
             case State.FADING_IN:
                 _countTime = fadeTime - _countTime;
@@ -152,6 +153,14 @@ public class Fader : MonoBehaviour
         gameObject.SetActive(true);
         UpdateFader = UpdateFadeIn;
     }
+
+    /*”ñŒöŠJ*/
+
+    private void Update()
+    {
+        UpdateFader();
+    }
+
 
     private void UpdateFadeOut()
     {
