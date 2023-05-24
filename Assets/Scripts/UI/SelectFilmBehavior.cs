@@ -177,12 +177,10 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         UpdateWorldNum();
 
-        Transform textUnitTransform = null;
         for (int i = 0; i < MAX_STAGE; ++i)
         {
-            textUnitTransform = transform.GetChild(i);
             int stageNum = i + 1;
-            textUnitTransform.GetChild((int)TextID.STAGE_NUM).GetComponent<UnityEngine.UI.Text>().text = stageNum.ToString();
+            transform.GetChild(i).GetChild((int)TextID.STAGE_NUM).GetComponent<NumberFontImage>().numberImage = (NumberFontImage.NumberImage)stageNum;
         }
     }
 
@@ -247,7 +245,7 @@ public class SelectFilmBehavior : MonoBehaviour
     {
         for (int i = 0; i < MAX_STAGE; ++i)
         {
-            transform.GetChild(i).GetChild((int)TextID.WORLD_NUM).GetComponent<UnityEngine.UI.Text>().text = _worldNum.ToString();
+            transform.GetChild(i).GetChild((int)TextID.WORLD_NUM).GetComponent<NumberFontImage>().numberImage = (NumberFontImage.NumberImage)_worldNum;
         }
         _stagePreviewImage.sprite = _stagePreviewData.GetSprite(_worldNum, _stageNum);
     }
