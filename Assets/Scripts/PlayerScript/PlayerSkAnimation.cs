@@ -9,6 +9,10 @@ public partial class Player : MonoBehaviour{
 
     private Animator _animator;
 
+    public Animator GetAnimator {
+        get { return _animator; }
+    }
+
     // アニメーション側で使う変数
     private bool _yBlockLock = false, _yBlockUpperLock = false, _xBlockLock = false;
    
@@ -37,15 +41,6 @@ public partial class Player : MonoBehaviour{
             _animator.SetBool("StartRot_Y", false);
             _animator.SetBool("StartRot_X", false);
             _animator.SetBool("StartRotUpper_Y", false);
-        }
-
-        // y軸回転時のアニメーション
-        if (_bottomHitCheck.GetRotObj != null) {
-
-            if (_bottomHitCheck.GetRotObj.GetComponent<RotatableObject>()._isRotateStartFream) {
-                Debug.Log("回転開始フレーム");
-               // _animator.SetTrigger("Rotation_Y");
-            }
         }
 
         // ジャンプ中に頭にブロックが当たったらボール状態にする

@@ -36,9 +36,6 @@ public partial class Player : MonoBehaviour{
 
     private void PlayerRotationUpdate() {
 
-        // ロックフレームの可視化
-        LockFreamDisplay(_bottomHitCheck, _frontHitCheck);
-
         // 移動中、ジャンプ中は回転させない
         if (Mathf.Abs(_speedx) > 0 || !_groundCheck.IsGround) {
             return;
@@ -53,12 +50,6 @@ public partial class Player : MonoBehaviour{
                 // アニメーションの遷移
                 AnimatoinState(true);
 
-                // フレームの色変更
-                LockFreamColorChange(Color.white);
-
-                // フレームの色変更
-                LockFreamColorChange(Color.blue);
-
                 _isLock = true;
                 Debug.Log("ブロックロック");
             }
@@ -68,7 +59,6 @@ public partial class Player : MonoBehaviour{
         if (_blocklockButton.WasReleasedThisFrame()) {
 
             AnimatoinState(false);
-            LockFreamColorChange(Color.red);
             _isLock = false;
             Debug.Log("ブロックロック解除");
         }
@@ -83,42 +73,53 @@ public partial class Player : MonoBehaviour{
             }
 
             var rotatbleComp = _lockObject.GetComponent<RotatableObject>();
+            var rotatbleKind = _lockObject.GetComponent<RotObjkinds>();
 
             // 下の回転オブジェクトを参照
             if (_blockPriorty == BlockPriorty.Bottom) {
 
                 Debug.Log("下オブジェクト取得中");
 
-                if (rotatbleComp._isRotateEndFream) {
-                    _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
-                }
+                // ブロックごとに回転の種類が違うのでKindを使って仕分ける
+                // 通常の黄色ブロックと磁石ブロックはスティックでの操作にて行う
+                if(rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.NomalRotObject || rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.UnionRotObject) {
 
-                _stricRotAngle.StickRotY_Update();
-                rotatbleComp.StickRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY, this.transform);
-
-                Debug.Log("回転開始" + rotatbleComp._isRotateStartFream);
-
-                if (rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == 1)) {
-                    _animator.SetTrigger("Rotation_Y_Right");
-                }
-                else if (rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == -1)) {
-                    _animator.SetTrigger("Rotation_Y_Left");
-                }
-
-                // 通常軸回転
-                if (_rotationButton.WasPressedThisFrame()) {
-                    rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90, this.transform);
-                }
-
-                // 高速回転
-                if (_rotationSpinButton.WasPressedThisFrame()) {
-
-                    if (rotatbleComp._isSpining) {
-                        Debug.Log("高速回転終了");
-                        rotatbleComp.EndSpin();
+                    // スティックでの回転
+                    if (rotatbleComp._isRotateEndFream) {
+                        _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
                     }
-                    else {
-                        rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+                    _stricRotAngle.StickRotY_Update();
+                    rotatbleComp.StickRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY, this.transform);
+
+                    if (rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == 1)) {
+                        _animator.SetTrigger("Rotation_Y_Right");
+                    }
+                    else if (rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == -1)) {
+                        _animator.SetTrigger("Rotation_Y_Left");
+                    }
+                }
+
+                // ボルトブロック操作
+                if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) {
+
+                    _stricRotAngle.StickRotY_Update();
+                    rotatbleComp.StickRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY, this.transform);
+                }
+
+                // 高速回転はスティックの右左倒した自転で始まる
+                if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.SpinObject) {
+
+                    // R3押し込み時の処理
+                    if (_rotationSpinButton.WasPressedThisFrame()) {
+
+                        if (rotatbleComp._isSpining) {
+                            Debug.Log("高速回転終了");
+                            rotatbleComp.EndSpin();
+                        }
+                        else {
+
+                            rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.up);
+                        }
                     }
                 }
             }
@@ -126,31 +127,33 @@ public partial class Player : MonoBehaviour{
             // 左右の回転オブジェクトを参照
             else if (_blockPriorty == BlockPriorty.Front) {
 
-
                 Debug.Log("左右オブジェクト取得中");
 
-                // スティック回転X
-                _stricRotAngle.StickRotX_Update();
-                rotatbleComp.StickRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX, this.transform);
+                // ブロックごとに回転の種類が違うのでKindを使って仕分ける
+                // 通常の黄色ブロックと磁石ブロックはスティックでの操作にて行う
+                if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.NomalRotObject || rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.UnionRotObject) {
 
-                // 通常軸回転
-                if (_rotationButton.WasPressedThisFrame()) {
-                    rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, 90, this.transform);
+                    // スティック回転X
+                    _stricRotAngle.StickRotX_Update();
+                    rotatbleComp.StickRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX, this.transform);
                 }
 
-                // 高速回転
-                if (_rotationSpinButton.WasPressedThisFrame()) {
+                // 高速回転はスティックの押し込みにて行う
+                if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.SpinObject) {
 
-                    if (rotatbleComp._isSpining) {
-                        Debug.Log("高速回転終了");
-                        rotatbleComp.EndSpin();
+                    // R3押し込み時の処理
+                    if (_rotationSpinButton.WasPressedThisFrame()) {
+
+                        if (rotatbleComp._isSpining) {
+                            Debug.Log("高速回転終了");
+                            rotatbleComp.EndSpin();
+                        }
+                        else {
+
+                            rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+                        }
                     }
-
-                    else {
-
-                        rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
-                    }
-                }
+                }               
             }
         }
     }
@@ -170,30 +173,6 @@ public partial class Player : MonoBehaviour{
         _isRotating = false;
     }
 
-    private void LockFreamDisplay(in RotObjHitCheck _bottom,in RotObjHitCheck _front) {
-
-        // 下優先
-        if(_bottom.GetRotObj != null) {
-
-            // 座標補正
-            _LockFreamObj.transform.position = _bottom.GetRotPartsObj.transform.position;
-
-            // LockFreamを可視化
-            _LockFreamObj.active = true;
-        }
-        else if (_front.GetRotObj != null) {
-
-            // 座標補正
-            _LockFreamObj.transform.position = _front.GetRotPartsObj.transform.position;
-
-            // LockFreamを可視化
-            _LockFreamObj.active = true;
-        }
-        else {
-            _LockFreamObj.active = false;
-        }
-    }
-
     // 下か左右どっちを参照するか関数
     private GameObject BlockPriority(in RotObjHitCheck _bottom, in RotObjHitCheck _front) {
 
@@ -205,7 +184,6 @@ public partial class Player : MonoBehaviour{
         }
         else if (_front.GetRotObj != null) {
             _blockPriorty = BlockPriorty.Front;
-            Debug.Log("左右のブロック返す");
             return _front.GetRotObj;
         }
         else {
@@ -234,7 +212,14 @@ public partial class Player : MonoBehaviour{
                 }
                 // 左右に回転オブジェクトがあった場合のアニメーション
                 else if (_frontHitCheck.GetRotObj != null) {
-                    _xBlockLock = true;
+
+                    // 左右にボルトがある場合はYのアニメーションの再生をする
+                    if (_frontHitCheck.GetRotObj.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) {
+                        _yBlockLock = true;
+                    }
+                    else {
+                        _xBlockLock = true;
+                    }
                 }
                 // 下に回転オブジェクトが無くかつ頭にブロックがある場合のアニメーション
                 else if (_bottomHitCheck.GetRotObj == null && _upperrayCheck.IsUpperHit) {
@@ -257,12 +242,5 @@ public partial class Player : MonoBehaviour{
 
                 break;
         }
-    }
-
-    // ロックされた時のフレームの色の変更
-    private void LockFreamColorChange(Color color) {
-
-        var mat = _LockFreamObj.GetComponent<MeshRenderer>().material;
-        mat.SetColor("_Color", color);
     }
 }
