@@ -89,7 +89,10 @@ public class SelectFilmBehavior : MonoBehaviour
 
         _stagePreviewImage.sprite = _stagePreviewData.GetSprite(_worldNum, _stageNum);
 
-        Fader.stopInput = SuzumuraTomoki.SceneManager.playerInput;//フェードイン中のみ入力が止まる
+        if (Fader.state == Fader.State.FADING_IN)
+        {
+            Fader.stopInput = SuzumuraTomoki.SceneManager.playerInput;
+        }
     }
 
     private void OnDestroy()
