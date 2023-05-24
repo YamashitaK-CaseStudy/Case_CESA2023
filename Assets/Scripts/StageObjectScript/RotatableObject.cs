@@ -17,7 +17,7 @@ public partial class RotatableObject : MonoBehaviour{
 	public bool _isRotateStartFream = false;	// 回転し始めた1フレームを教えるフラグ
 	public bool _isRotateEndFream = false;      // 回転が終了した1フレームを教えるフラグ
 	protected bool _doOnce = false;
-	private GameObject _observer;
+	protected GameObject _observer;
 
 	//プロパティ。外部からのメンバ変数へのアクセスを定義するもの。ゲッターやセッターのようなもの。
 	public float ProgressRate//進捗率という意味です。_elapsedTimeが単純に経過した時間ではなく全体時間で割った０～１の進捗率として扱われているためこの名前にしました。

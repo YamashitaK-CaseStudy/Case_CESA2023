@@ -145,6 +145,7 @@ public class Bolt : RotatableObject
         }
 
         _childTransform = transform.GetChild(0);
+        _observer = GameObject.FindWithTag("Observer");
     }
     private void Update()
     {
