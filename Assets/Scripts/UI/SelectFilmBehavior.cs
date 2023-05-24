@@ -194,14 +194,15 @@ public class SelectFilmBehavior : MonoBehaviour
         _scrollAmount = rectTrans.rect.width * FILM_FRAME_RATIO * rectTrans.localScale.x;//OnValidate()Ç≈0äÑÇËëŒçÙçœÇ›
 
         rectTrans.localPosition = new Vector3(_scrollAmount * (MAX_STAGE - 1) / 2.0f, 0, 0);
-        rectTrans.localPosition += new Vector3(_scrollAmount * (_stageNum - 1), 0, 0);
+        float currentStageOffset = _scrollAmount * (_stageNum - 1);
+        rectTrans.localPosition -= new Vector3(currentStageOffset, 0, 0);
 
         Transform childTransform = null;
         for (int i = 0; i < MAX_STAGE; ++i)
         {
             float offset = _scrollAmount * i + _textUnitOffset.x;
             childTransform = transform.GetChild(i);
-            childTransform.localPosition = (new Vector3(offset, _textUnitOffset.y, 0) - rectTrans.localPosition) / rectTrans.localScale.x;
+            childTransform.localPosition = (new Vector3(offset - currentStageOffset, _textUnitOffset.y, 0) - rectTrans.localPosition) / rectTrans.localScale.x;
             childTransform.localScale = new Vector3(_textUnitScale, _textUnitScale, 0);
         }
     }
