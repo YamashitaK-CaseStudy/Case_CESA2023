@@ -4,8 +4,8 @@ using UnityEngine;
 
 public partial class RotObjUnion : MonoBehaviour{
 
-    static bool _isStartDoOnce = false;
-    static RotObjUnionObtherber _obtherber = null;
+    bool _isStartDoOnce = false;
+    RotObjUnionObtherber _obtherber = null;
     private RotatableObject _parentRotObjComp = null;
     [SerializeField]private Collider _unionColliderX;
     [SerializeField]private Collider _unionColliderY;
@@ -20,20 +20,19 @@ public partial class RotObjUnion : MonoBehaviour{
         _parentRotObjComp = this.transform.root.gameObject.GetComponent<RotatableObject>();
     }
 
-    private void OnTriggerEnter(Collider other) {
-        // 当たったRotateObjectを取得
-        GetRotateObject(other.gameObject);
-
-        if(other.transform.root.gameObject.tag != "RotateObject") return;
-        if(this.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
-        if(_parentRotObjComp._isUnion)return;
-        _parentRotObjComp._isUnion = true;
-    }
+    // private void OnTriggerEnter(Collider other) {
+    //     if(other.transform.root.gameObject.tag != "RotateObject") return;
+    //     if(this.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
+    //     if(_parentRotObjComp._isUnion)return;
+    //     _parentRotObjComp._isUnion = true;
+    //     // 当たったRotateObjectを取得
+    //     GetRotateObject(other.gameObject);
+    // }
 
     private void OnTriggerStay(Collider other) {
-        if(other.gameObject.tag != "RotateObject") return;
-        if(other.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
-        _parentRotObjComp.PreparationUinon();
+        if(other.gameObject.transform.root.tag != "RotateObject") return;
+        Debug.Log(other.name);
+        if(other.gameObject.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
         GetRotateObject(other.gameObject);
         Debug.Log("合体処理入るで");
     }
@@ -42,14 +41,12 @@ public partial class RotObjUnion : MonoBehaviour{
     private void GetRotateObject(GameObject obj) {
 
         if (obj.transform.root.gameObject.tag == "RotateObject") {
-
             var rotcomp = obj.transform.root.gameObject.GetComponent<RotatableObject>();
 
             var _rotObj = obj.transform.root.gameObject;
 
             // オブザーバーに素材を送る
             _obtherber.AddunionMaterial(_rotObj);
-            Debug.Log(obj);
             EffectGenerate(obj.gameObject);
             GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Magnet);
         }

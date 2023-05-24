@@ -54,7 +54,7 @@ public partial class RotatableObject : MonoBehaviour
  	}
 
 	public void SetisHitChain(GameObject other, RotatableObject otherRotComp, Vector3 hitPos){
-		HitStopController.Instance.SetHitDelay();
+		_observer.GetComponent<HitStopController>().SetHitDelay();
 		_isHitChain = true;
 		// 当たり判定のセット
 		_chainObj = other;

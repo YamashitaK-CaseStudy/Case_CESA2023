@@ -11,18 +11,7 @@ public class HitStopController : MonoBehaviour
 	[HideInInspector] public bool _isHitStop { get; set;}
 	[SerializeField] float DelayTime = 1f;
 
-	public static HitStopController Instance{
-		get; private set;
-	}
-
-	private void Awake(){
-		if(Instance == null){
-			Instance = this;
-			DontDestroyOnLoad(gameObject);
-		}else{
-			Destroy(gameObject);
-		}
-
+	void Start(){
 		Init();
 	}
 
