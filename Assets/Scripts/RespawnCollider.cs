@@ -9,7 +9,7 @@ public class RespawnCollider : MonoBehaviour
 	[SerializeField] private GameObject _fadeObj;
 	[SerializeField] private Vector3 _respawnPos;
 	[SerializeField] private float _waitTimeBeforeFade;
-	[SerializeField] private Cinemachine.CinemachineVirtualCamera _tmp;
+	[SerializeField] private Cinemachine.CinemachineVirtualCamera _respawnVCam;
 	private bool _isHit = false;
 	private bool _respawnWait = false;
 	private GameObject _playerObj;
@@ -75,7 +75,7 @@ public class RespawnCollider : MonoBehaviour
 			// フラグを管理
 			_respawnWait = true;
 			// VCam
-			_tmp.enabled = false;
+			_respawnVCam.Priority = 11;
 		}
 
 		// 時間の測定
@@ -104,7 +104,7 @@ public class RespawnCollider : MonoBehaviour
 				// プレイヤーの入力を始める
 				SuzumuraTomoki.SceneManager.playerInput.Enable();
 				// Vカメラ
-				_tmp.enabled = true;
+				_respawnVCam.Priority = 9;
 
 				// プレイヤーの座標を補正する
 				var pos = _playerObj.transform.position;

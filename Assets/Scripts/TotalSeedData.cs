@@ -14,7 +14,6 @@ public class TotalSeedData : ScriptableObject
         }
         return (SeedIconData.TotalCountType)defaultTotalCountList[index] - SeedIconData.MIN_TOTAL;
     }
-
-    [HideInInspector]
+[HideInInspector]
     public List<int> defaultTotalCountList;
 }
