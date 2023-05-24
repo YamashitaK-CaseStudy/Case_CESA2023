@@ -46,6 +46,9 @@ public partial class RotatableObject : MonoBehaviour
 		SetChildCheckIntoFloor(false);
 		SetChildCheckIntoChain(false);
 
+		// 磁石のオブジェクトの場合は磁石の当たり判定を切っておく
+		SetUnionChildCollider(false);
+
 		if(this.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.BoltRotObject){
 			_rotObjObserver.SetLastRotateRotObj(this);
 		}
@@ -134,11 +137,11 @@ public partial class RotatableObject : MonoBehaviour
 				}
 			}
 
-			// 途中で磁石オブジェクトに当たっていた場合の処理
-			if(_isUnion && !_isHitFloor){
-				isFinish = true;
-				requiredDeltaTime -= (_elapsedTime - 1); // 補正
-			}
+			// // 途中で磁石オブジェクトに当たっていた場合の処理
+			// if(_isUnion && !_isHitFloor){
+			// 	isFinish = true;
+			// 	requiredDeltaTime -= (_elapsedTime - 1); // 補正
+			// }
 
 			// 現在フレームの回転を示す回転のクォータニオン作成
 			var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
@@ -216,6 +219,8 @@ public partial class RotatableObject : MonoBehaviour
 				// めり込み判定の確認
 				SetChildCheckIntoFloor(true);
 				SetChildCheckIntoChain(true);
+				// 止まってる状態のときは磁石オブジェクトの当たり判定を起動
+				SetUnionChildCollider(true);
 			}
 
 			if(_isHitFloor){

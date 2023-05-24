@@ -37,12 +37,13 @@ public partial class RotatableObject : MonoBehaviour{
 		_rotAxis.Normalize();
 		ChainSettingStart();
 		HitCheckFloorSettingStart();
+		UnionSettingStart();
 	}
 
-
+	// デバッグ状況によってはUpdateに戻す
 
 	// Update is called once per frame
-	void Update(){
+	void FixedUpdate(){
 		// ディレイ処理が入れば処理を考慮する
 		if(HitStopController.Instance._isHitStop) return;
 

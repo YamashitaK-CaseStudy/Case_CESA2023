@@ -24,7 +24,6 @@ public class MaskFade : MonoBehaviour
 			var tmpObj = this.transform.GetChild(0).gameObject.transform.GetChild(i).gameObject;
 			if(tmpObj.name == "UnMask"){
 				_unmaskObjTrans = tmpObj.GetComponent<RectTransform>();
-				Debug.Log(tmpObj.name);
 				break;
 			}
 		}
@@ -48,7 +47,6 @@ public class MaskFade : MonoBehaviour
 		Vector3 tmpSize = new Vector3(1,1,1);
 		// スケールに加算をする
 		_unmaskObjTrans.localScale += tmpSize * size;
-		Debug.Log(tmpSize * size);
 		if(_elapsedTime >= _fadeInTime){
 			// 最後の補正をかける
 			_unmaskObjTrans.localScale = _max * new Vector3(1,1,1);
@@ -68,7 +66,6 @@ public class MaskFade : MonoBehaviour
 		Vector3 tmpSize = new Vector3(1,1,1);
 		// スケールに加算をする
 		_unmaskObjTrans.localScale -= tmpSize * size;
-		Debug.Log(tmpSize * size);
 		if(_elapsedTime >= _fadeOutTime){
 			// 最後の補正をかける
 			_unmaskObjTrans.localScale = _min * new Vector3(1,1,1);
@@ -85,7 +82,6 @@ public class MaskFade : MonoBehaviour
 		_fadeInWait = false;
 	}
 	public void StartFadeOut(){
-		Debug.Log(_fadeOutWait);
 		if(!_fadeOutWait) return;
 		_fadeOut = true;
 		_fadeOutWait = false;
