@@ -426,7 +426,7 @@ public partial class CStageEditor : EditorWindow
 		_parentRigdbody.isKinematic = true;
 		Undo.RegisterCreatedObjectUndo(_parentObject, "Create New GameObject");
 		// RotatableObjectの生成
-		_parentObject.AddComponent<OnlySpinObj>();
+		_parentObject.AddComponent<RotatableObject>();
 		// 種類の設定
 		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
 		_parentObjectkind._RotObjKind = _kinds;
