@@ -19901,7 +19901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085e0a288a14b2149b2a0dc7048cd839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isUseUnion: 0
+  _isUseUnion: 1
   _rotObserver: {fileID: 452878833}
 --- !u!114 &452878833
 MonoBehaviour:
