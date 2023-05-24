@@ -6,7 +6,7 @@ public partial class RotatableObject : MonoBehaviour{
 
     public Vector3 offsetRotAxis;
 
-    public virtual void StickRotate(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
+    virtual public void StickRotate(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
 
         if(angle == 0) {
             return;
@@ -22,4 +22,6 @@ public partial class RotatableObject : MonoBehaviour{
         StartRotate(center, axis, angle, playerTransform);
         PlayPartical();
     }
+
+
 }

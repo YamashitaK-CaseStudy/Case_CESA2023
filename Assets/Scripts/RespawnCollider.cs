@@ -53,9 +53,8 @@ public class RespawnCollider : MonoBehaviour
 		// ここにプレイヤーの停止処理を入れる
 		SuzumuraTomoki.SceneManager.playerInput.Disable();
 
-
 		// ここで爆発アニメーション入れて
-
+		_playerObjComp.GetAnimator.SetTrigger("GameOver");
 
 	}
 
