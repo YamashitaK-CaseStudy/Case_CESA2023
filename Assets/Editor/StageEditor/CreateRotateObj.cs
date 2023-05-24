@@ -417,6 +417,7 @@ public partial class CStageEditor : EditorWindow
 		// オブジェクトの生成
 		_parentObject = new GameObject("SpinObject");
 		// タグ・レイヤーの設定
+		_parentObject.tag = "RotateObject";
 		_parentObject.layer = LayerMask.NameToLayer("Block");
 		// 必要コンポーネントのアタッチ
 		// Rigidbodyの生成　初期設定

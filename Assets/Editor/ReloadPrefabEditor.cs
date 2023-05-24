@@ -87,6 +87,19 @@ public partial class CUpdatePrefab : EditorWindow
 			// シーン上に存在するオブジェクトならば処理.
 			if (obj.transform.gameObject.activeInHierarchy)
 			{
+				if(!obj.name.Contains("Bolt")){
+					Debug.Log("ボルト内で" + obj.name);
+					System.Array.Resize(ref _rotObjects, num + 1);
+					_rotObjects[num] = obj.transform.gameObject;
+					num++;
+				}
+			}
+		}
+		foreach (OnlySpinObj obj in UnityEngine.Object.FindObjectsOfType(typeof(OnlySpinObj)))
+		{
+			// シーン上に存在するオブジェクトならば処理.
+			if (obj.transform.gameObject.activeInHierarchy)
+			{
 				System.Array.Resize(ref _rotObjects, num + 1);
 				_rotObjects[num] = obj.transform.gameObject;
 			}
@@ -133,6 +146,8 @@ public partial class CUpdatePrefab : EditorWindow
 					if (obj.name == name[k])
 					{
 						Replace(obj.gameObject,tmpObj,_paths[k]);
+						Debug.Log("名前 ; " + obj.name);
+						Debug.Log("パス ; " + name[k]);
 					}
 				}
 			}
@@ -149,12 +164,9 @@ public partial class CUpdatePrefab : EditorWindow
 
 	}
 	private void Replace(GameObject child, GameObject parent ,string prefabPath){
-		Debug.Log(child.name);
-		Debug.Log(prefabPath);
-
 		var prefabData = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
 		// プレハブからインスタンスを生成
-		var childObj = Instantiate(prefabData, child.transform.position, Quaternion.identity);
+		var childObj = Instantiate(prefabData, child.transform.position, child.transform.localRotation);
 		childObj.gameObject.transform.parent = parent.transform;
 		childObj.name = childObj.name.Replace("(Clone)","");
 		Undo.RegisterCreatedObjectUndo(childObj, "Create New GameObject");
