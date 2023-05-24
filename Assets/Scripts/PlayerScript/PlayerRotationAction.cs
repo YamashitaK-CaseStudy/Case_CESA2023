@@ -32,9 +32,15 @@ public partial class Player : MonoBehaviour{
         _blocklockButton    = _playerInput.actions.FindAction("BlockLock");
         _rotationButton     = _playerInput.actions.FindAction("Rotation");
         _rotationSpinButton = _playerInput.actions.FindAction("RotationSpin");
+
+        // フレームの色を赤色にする
+        LockFreamChangeColor(Color.red);
     }
 
     private void PlayerRotationUpdate() {
+
+        // ロックフレームの可視化
+        LockFreamDisplay(_bottomHitCheck, _frontHitCheck);
 
         // 移動中、ジャンプ中は回転させない
         if (Mathf.Abs(_speedx) > 0 || !_groundCheck.IsGround) {
@@ -50,6 +56,9 @@ public partial class Player : MonoBehaviour{
                 // アニメーションの遷移
                 AnimatoinState(true);
 
+                // ブロック全部のフレーム可視化
+                LockFreamMassSetActive(_lockObject,true);
+
                 _isLock = true;
                 Debug.Log("ブロックロック");
             }
@@ -59,6 +68,7 @@ public partial class Player : MonoBehaviour{
         if (_blocklockButton.WasReleasedThisFrame()) {
 
             AnimatoinState(false);
+            LockFreamMassSetActive(_lockObject,false);
             _isLock = false;
             Debug.Log("ブロックロック解除");
         }
@@ -201,6 +211,7 @@ public partial class Player : MonoBehaviour{
                 // 下に回転オブジェクトがありかつ頭の上にブロックがない場合のアニメーション
                 if (_bottomHitCheck.GetRotObj != null && !_upperrayCheck.IsUpperHit) {
 
+                    Debug.Log(" 下に回転オブジェクトがありかつ頭の上にブロックがない場合のアニメーション");
                     Pos_Correction(_bottomHitCheck.GetRotPartsObj.transform.position);
                     _yBlockLock = true;
                 }
@@ -243,4 +254,44 @@ public partial class Player : MonoBehaviour{
                 break;
         }
     }
+
+    // ロックフレームの色を変更
+    private void LockFreamChangeColor(Color color) {
+        var mat = _LockFreamObj.GetComponent<MeshRenderer>().material;
+        mat.SetColor("_Color", color);
+    }
+
+    // ロック可能な時のみ表示
+    private void LockFreamDisplay(RotObjHitCheck _bottom,RotObjHitCheck _front) {
+        if(_bottom.GetRotObj != null) {
+            _LockFreamObj.transform.position = _bottom.GetRotPartsObj.transform.position;
+            _LockFreamObj.active = true;
+        }
+        else if(_front.GetRotObj != null) {
+            _LockFreamObj.transform.position = _front.GetRotPartsObj.transform.position;
+            _LockFreamObj.active = true;
+        }
+        else {
+            _LockFreamObj.active = false;
+        }
+    }
+
+    private void LockFreamMassSetActive(GameObject _object, bool _displayflg) {
+
+        // 対象オブジェクトの子オブジェクトをチェックする
+        foreach (Transform child in _object.transform) {
+
+            // 子オブジェクトのアクティブを切り替える
+            GameObject childObject = child.gameObject;
+
+            if(childObject.tag == "LockFream") {
+                childObject.SetActive(_displayflg);
+            }
+
+            // 再帰的に全ての子オブジェクトを処理する
+            LockFreamMassSetActive(childObject, _displayflg);
+        }
+    }
 }
+
+
