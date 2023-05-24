@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +5,7 @@ public partial class Player : MonoBehaviour{
 
     private bool _isRotating = true;
 
-    private StickRotAngle _stricRotAngle = null;
+    private RightStickRotAngle _stricRotAngle = null;
    
     private InputAction _blocklockButton = null;
     private InputAction _rotationButton = null;
@@ -26,7 +24,7 @@ public partial class Player : MonoBehaviour{
     private void PlayerRotationStart() {
 
         // 右スティックコンポネント取得
-        _stricRotAngle = GetComponent<StickRotAngle>();
+        _stricRotAngle = GetComponent<RightStickRotAngle>();
 
         // 各種ボタンの取得
         _blocklockButton    = _playerInput.actions.FindAction("BlockLock");
@@ -36,19 +34,24 @@ public partial class Player : MonoBehaviour{
         // フレームの色を赤色にする
         LockFreamChangeColor(Color.red);
     }
-
+   
     private void PlayerRotationUpdate() {
 
         // ロックフレームの可視化
         LockFreamDisplay(_bottomHitCheck, _frontHitCheck);
 
-        // 移動中、ジャンプ中は回転させない
-        if (Mathf.Abs(_speedx) > 0 || !_groundCheck.IsGround) {
-            return;
-        }
-
         if (_blocklockButton.IsPressed()) {
-            if (!_isLock) {
+
+            // 移動中、ジャンプ中は回転させない
+            if (Mathf.Abs(_speedx) > 0 || !_groundCheck.IsGround) {
+              
+                AnimatoinState(false);
+                LockFreamMassSetActive(_lockObject, false);
+                _isLock = false;
+
+                return;
+            }
+            else if (!_isLock) {
 
                 // ブロックの優先度確認
                 _lockObject = BlockPriority(_bottomHitCheck, _frontHitCheck);
@@ -124,6 +127,7 @@ public partial class Player : MonoBehaviour{
 
                         if (rotatbleComp._isSpining) {
                             Debug.Log("高速回転終了");
+                            _lockObject = null;
                             rotatbleComp.EndSpin();
                         }
                         else {
@@ -156,6 +160,7 @@ public partial class Player : MonoBehaviour{
 
                         if (rotatbleComp._isSpining) {
                             Debug.Log("高速回転終了");
+                          
                             rotatbleComp.EndSpin();
                         }
                         else {
@@ -263,11 +268,14 @@ public partial class Player : MonoBehaviour{
 
     // ロック可能な時のみ表示
     private void LockFreamDisplay(RotObjHitCheck _bottom,RotObjHitCheck _front) {
-        if(_bottom.GetRotObj != null) {
+
+        if(_bottom.GetRotPartsObj != null) {
+            Debug.Log("下フレーム");
             _LockFreamObj.transform.position = _bottom.GetRotPartsObj.transform.position;
             _LockFreamObj.active = true;
         }
-        else if(_front.GetRotObj != null) {
+        else if(_front.GetRotPartsObj != null) {
+            Debug.Log("左右フレーム");
             _LockFreamObj.transform.position = _front.GetRotPartsObj.transform.position;
             _LockFreamObj.active = true;
         }
@@ -277,6 +285,10 @@ public partial class Player : MonoBehaviour{
     }
 
     private void LockFreamMassSetActive(GameObject _object, bool _displayflg) {
+
+        if(_object == null) {
+            return;
+        }
 
         // 対象オブジェクトの子オブジェクトをチェックする
         foreach (Transform child in _object.transform) {
