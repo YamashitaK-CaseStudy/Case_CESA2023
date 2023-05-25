@@ -82,7 +82,24 @@ public class Bolt : RotatableObject
         {
             return;
         }
-        _isRotating = true;
+
+        //リミットチェック
+        if (_countTranslation >= _translationLimit)
+        {
+            if (_translationVecPerRotation > 0)
+            {
+                return;
+            }
+        }
+        else if (_countTranslation <= 0)
+        {
+            if (_translationVecPerRotation < 0)
+            {
+                return;
+            }
+        }
+
+        /*全てのチェックを通過*/
 
         if (angle < 0)
         {
@@ -196,22 +213,7 @@ public class Bolt : RotatableObject
         while (_isRotating)
         {
 
-            if (_countTranslation >= _translationLimit)
-            {
-                if (_translationVecPerRotation > 0)
-                {
-                    _isRotating = false;
-                    break;
-                }
-            }
-            else if (_countTranslation <= 0)
-            {
-                if (_translationVecPerRotation < 0)
-                {
-                    _isRotating = false;
-                    break;
-                }
-            }
+            
 
             UpdateRotate();
             UpdatePositionInRotationWhenChild();
@@ -360,6 +362,8 @@ public class Bolt : RotatableObject
 
     private new void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle, Transform playerTransform)
     {
+        _isRotating = true;
+
         GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Rotate);
 
         _playerTransform = playerTransform;
