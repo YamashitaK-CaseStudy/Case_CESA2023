@@ -10,6 +10,7 @@ public class RespawnCollider : MonoBehaviour
 	[SerializeField] private Vector3 _respawnPos;
 	[SerializeField] private float _waitTimeBeforeFade;
 	[SerializeField] private Cinemachine.CinemachineVirtualCamera _respawnVCam;
+	private Cinemachine.CinemachineVirtualCamera _playerVCam;
 	private bool _isHit = false;
 	private bool _respawnWait = false;
 	private GameObject _playerObj;
@@ -18,6 +19,7 @@ public class RespawnCollider : MonoBehaviour
 	private Vector3 _playerDeadpoint;
 	private float _requiredTime = 0;
 	private bool _waitFade = false;
+	private Vector3 _VCamAngle;
 	void Start()
 	{
 		this.GetComponent<MeshRenderer>().enabled = false;
@@ -26,6 +28,9 @@ public class RespawnCollider : MonoBehaviour
 
 		_playerObj = GameObject.FindWithTag("Player");
 		_playerObjComp = _playerObj.GetComponent<Player>();
+
+		_playerVCam = GameObject.Find("VCam_PlayerHoming").GetComponent<Cinemachine.CinemachineVirtualCamera>();
+		_VCamAngle = _playerVCam.transform.eulerAngles;
 	}
 	void Update(){
 		// 当たった後のみ処理を行う
@@ -56,6 +61,8 @@ public class RespawnCollider : MonoBehaviour
 		// ここで爆発アニメーション入れて
 		_playerObjComp.GetAnimator.SetTrigger("GameOver");
 
+		_playerVCam.Follow = null;
+		_playerVCam.LookAt = _playerObj.transform;
 	}
 
 	void UpdateFade(){
@@ -67,7 +74,9 @@ public class RespawnCollider : MonoBehaviour
 			pos.y += 5;
 			pos.z += 4;
 			_playerObj.transform.position = pos;
-
+			_playerVCam.LookAt = null;
+			_playerVCam.transform.eulerAngles = _VCamAngle;
+			_playerVCam.Follow = _playerObj.transform;
 
 			// ここでボールに戻ってほしい（完全に暗転してる最中の処理）
 

@@ -38,7 +38,6 @@ public partial class RotatableObject : MonoBehaviour{
 	void SetUnionChildCollider(bool flg){
 		// Unionオブジェクト以外は処理を行わない
 		if(this.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
-		Debug.Log("合体当たり判定フラグ切り替え" + flg);
 		for(int i = 0; i < _unionChildComp.Length;i++){
 			_unionChildComp[i].SetUnionCollider(flg);
 		}

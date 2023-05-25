@@ -91,7 +91,7 @@ public partial class Player : MonoBehaviour{
             // 下の回転オブジェクトを参照
             if (_blockPriorty == BlockPriorty.Bottom) {
 
-                Debug.Log("下オブジェクト取得中");
+//                Debug.Log("下オブジェクト取得中");
 
                 // ブロックごとに回転の種類が違うのでKindを使って仕分ける
                 // 通常の黄色ブロックと磁石ブロックはスティックでの操作にて行う
@@ -141,7 +141,7 @@ public partial class Player : MonoBehaviour{
             // 左右の回転オブジェクトを参照
             else if (_blockPriorty == BlockPriorty.Front) {
 
-                Debug.Log("左右オブジェクト取得中");
+//                Debug.Log("左右オブジェクト取得中");
 
                 // ブロックごとに回転の種類が違うのでKindを使って仕分ける
                 // 通常の黄色ブロックと磁石ブロックはスティックでの操作にて行う
@@ -270,12 +270,12 @@ public partial class Player : MonoBehaviour{
     private void LockFreamDisplay(RotObjHitCheck _bottom,RotObjHitCheck _front) {
 
         if(_bottom.GetRotPartsObj != null) {
-            Debug.Log("下フレーム");
+//            Debug.Log("下フレーム");
             _LockFreamObj.transform.position = _bottom.GetRotPartsObj.transform.position;
             _LockFreamObj.active = true;
         }
         else if(_front.GetRotPartsObj != null) {
-            Debug.Log("左右フレーム");
+//            Debug.Log("左右フレーム");
             _LockFreamObj.transform.position = _front.GetRotPartsObj.transform.position;
             _LockFreamObj.active = true;
         }

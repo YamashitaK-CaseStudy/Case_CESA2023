@@ -11,10 +11,11 @@ public partial class RotatableObject : MonoBehaviour
 	protected float _oldAngle = 0.0f;
 	protected float _polatAngle = 0.0f;
 	protected bool _isSpin = false;
-	public bool _isUnion { get; set;}
+	public bool _isUnion { get; set; }
 	protected Quaternion _oldRotAngle;
 	protected Vector3 _oldPos;
 	public float _hitDelaySpeed = 0;
+	bool _collison = false;
 	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
 	{
 		if (_isSpin || _isRotating)
@@ -28,6 +29,13 @@ public partial class RotatableObject : MonoBehaviour
 		_rotAxis = rotAxis;
 		// 回転オフセット値をセット
 		_angle = rotAngle;
+
+		// ここで回るかどうか確認
+		// if (!CheckCanRotate(_rotAxis, _axisCenterWorldPos))
+		// {
+		// 	return;
+		// }
+
 		// フラグを立てる
 		_isRotating = true;
 		_isUnion = false;
@@ -49,7 +57,8 @@ public partial class RotatableObject : MonoBehaviour
 		// 磁石のオブジェクトの場合は磁石の当たり判定を切っておく
 		SetUnionChildCollider(false);
 
-		if(this.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.BoltRotObject){
+		if (this.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.BoltRotObject)
+		{
 			_rotObjObserver.SetLastRotateRotObj(this);
 		}
 
@@ -138,7 +147,8 @@ public partial class RotatableObject : MonoBehaviour
 			}
 
 			// 途中で磁石オブジェクトに当たっていた場合の処理
-			if(_isUnion && !_isHitFloor){
+			if (_isUnion && !_isHitFloor)
+			{
 				isFinish = true;
 				requiredDeltaTime -= (_elapsedTime - 1); // 補正
 			}
@@ -165,8 +175,8 @@ public partial class RotatableObject : MonoBehaviour
 			if (!isFinish) return;
 
 			// 終了時に変更するフラグを変更
-			_isRotating = false;		// 回転処理の終了
-			_isRotateEndFream = true;	// 回転が終わったFを通知
+			_isRotating = false;        // 回転処理の終了
+			_isRotateEndFream = true;   // 回転が終わったFを通知
 
 			// 最終的に回転した量
 			var finishAngle = _angle;
@@ -179,7 +189,8 @@ public partial class RotatableObject : MonoBehaviour
 				SetReflect(_axisCenterWorldPos, _rotAxis, finishAngle);
 			}
 
-			if(_isUnion){
+			if (_isUnion)
+			{
 				_isUnion = false;
 				finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, MidpointRounding.AwayFromZero) * 90;
 			}
@@ -212,7 +223,8 @@ public partial class RotatableObject : MonoBehaviour
 		}
 		else
 		{
-			if(_isRotateEndFream){
+			if (_isRotateEndFream)
+			{
 				// 普段は当たり判定の処理を切っておく
 				SetChildHitCheckFloorFlg(false);
 				SetChildHitCheckChainFlg(false);
@@ -224,12 +236,38 @@ public partial class RotatableObject : MonoBehaviour
 				SetUnionChildCollider(true);
 			}
 
-			if(_isHitFloor){
+			if (_isHitFloor)
+			{
 				SetReflect(_axisCenterWorldPos, _rotAxis, _angle);
 			}
 
 			_doOnce = false;
 			_isRotateEndFream = false;
 		}
+	}
+
+	bool CheckCanRotate(Vector3 axis, Vector3 mypos)
+	{
+		_collison = false;
+		for (int i = 0; i < _childObj.Length; i++)
+		{
+			var broObjPos = _childObj[i].transform.position;
+			if (axis.x != 0)
+			{	// 回転軸をもとに確認場所を設定
+				if (!(mypos.y == broObjPos.y && mypos.z == broObjPos.z))
+				{
+					Debug.Log("確認場所" + broObjPos);
+				}
+			}
+			else if (axis.y != 0)
+			{	// 回転軸をもとに確認場所を設定
+				if (mypos.x != broObjPos.x && mypos.z != broObjPos.z)
+				{
+					Debug.Log("確認場所" + broObjPos);
+				}
+			}
+		}
+		_collison = true;
+		return true;
 	}
 }
