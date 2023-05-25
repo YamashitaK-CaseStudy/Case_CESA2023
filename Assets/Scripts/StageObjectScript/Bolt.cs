@@ -6,6 +6,11 @@ using SuzumuraTomoki;
 
 public class Bolt : RotatableObject
 {
+    private void FixedUpdate()
+    {
+        //定義することで親クラスのFixedUpdateを止める
+    }
+
     [SerializeField] private GameObject _threadObject;//インスペクタで設定
     [SerializeField] private uint _length = 1;
     [SerializeField] private uint _translationLimit = 1;
@@ -18,7 +23,7 @@ public class Bolt : RotatableObject
     private float _translationVecPerRotation = 0;
     private List<Vector3> _initialPositionListOfInterlockingObjects = new List<Vector3>();//連動オブジェクトの初期位置
     private Transform _childTransform;
-    private delegate void FuncUpdateBolt();
+    private delegate IEnumerator FuncUpdateBolt();
     private FuncUpdateBolt UpdateBolt;
     private Transform _rootTransform = null;
     private bool _wasCalculateRootSpaceVec = false;
@@ -58,12 +63,26 @@ public class Bolt : RotatableObject
         }
     }
 
-    public override void StickRotate(Vector3 center, Vector3 axis, int angle, Transform playerTransform)
+    public override void StickRotate(Vector3 center, Vector3 rotAxis, int angle, Transform playerTransform)
     {
-        if (_isSpin || _isRotating)
+        if (_isRotating)
         {
             return;
         }
+
+        //rotAxisがローカルYベクトルと平行じゃなければ終了
+        if (!CheckCanHold(rotAxis))
+        {
+            return;
+        }
+
+        bool success = CheckInputStick(rotAxis);//抜ける専用//抜け締め：UpdateTranslationVector(rotAxis);
+
+        if (!success)
+        {
+            return;
+        }
+        _isRotating = true;
 
         if (angle < 0)
         {
@@ -74,7 +93,7 @@ public class Bolt : RotatableObject
             offsetRotAxis = new Vector3(0, 1, 0);
         }
 
-        StartRotate(center, axis, 90, playerTransform);
+        StartRotate(center, rotAxis, 90, playerTransform);
         PlayPartical();
     }
 
@@ -109,7 +128,7 @@ public class Bolt : RotatableObject
         Vector3 vec3 = transform.localToWorldMatrix.GetColumn(1);
         var dot = Vector3.Dot(vec3.normalized, rotAxis.normalized);
 
-        if (dot > 0.9f)
+        if (Math.Abs(dot) > 0.9f)
         {
             return true;
         }
@@ -122,6 +141,7 @@ public class Bolt : RotatableObject
 
     private void Start()
     {
+        _translationVecPerRotation = _translationPerRotation;
 
         if (transform.parent == null)
         {
@@ -132,7 +152,6 @@ public class Bolt : RotatableObject
             _rootTransform = transform.root;
             UpdateBolt = UpdateWhenChild;
         }
-
 
         foreach (var obj in _interlockingObjectList)
         {
@@ -147,88 +166,74 @@ public class Bolt : RotatableObject
         _childTransform = transform.GetChild(0);
         _observer = GameObject.FindWithTag("Observer");
     }
-    private void Update()
+
+    private IEnumerator UpdateWhenRoot()
     {
-        UpdateBolt();
-    }
-
-    private void UpdateWhenRoot()
-    {
-        if (_isRotating == false)
+        while (_isRotating)
         {
-            return;
-        }
-
-        if (Math.Abs(_countTranslation) >= _translationLimit)
-        {
-            _isRotating = _isSpining = false;
-            return;
-        }
-
-        UpdateRotate();
-        UpdatePositionInRotation();
-        //else
-        //{
-        //    UpdateSpin();
-        //    UpdatePositionInSpin();
-        //}
-
-        //連動オブジェクトの位置を更新
-        int count = _interlockingObjectList.Count;
-        for (int i = 0; i < count; ++i)
-        {
-            _interlockingObjectList[i].transform.position = _initialPositionListOfInterlockingObjects[i] + _childTransform.localPosition;
-        }
-    }
-
-    private void UpdateWhenChild()
-    {
-        if (_isRotating == false)
-        {
-            return;
-        }
-
-        if (_countTranslation >= _translationLimit)
-        {
-            if (_translationVecPerRotation > 0)
+            if (Math.Abs(_countTranslation) >= _translationLimit)
             {
-                _isRotating = _isSpining = false;
-                return;
+                _isRotating = false;
+                break;
             }
-        }
-        else if (_countTranslation <= 0)
-        {
-            if (_translationVecPerRotation < 0)
+
+            UpdateRotate();
+            UpdatePositionInRotationWhenRoot();
+
+            //連動オブジェクトの位置を更新
+            int count = _interlockingObjectList.Count;
+            for (int i = 0; i < count; ++i)
             {
-                _isRotating = _isSpining = false;
-                return;
+                _interlockingObjectList[i].transform.position = _initialPositionListOfInterlockingObjects[i] + _childTransform.localPosition;
             }
+
+            yield return null;
         }
+    }
 
-        UpdateRotate();
-        UpdateRootPositionInRotation();
-        //else isSpin
-        //{
-        //    UpdateSpin();
-        //    UpdateRootPositionInSpin();
-        //}
-
-        //連動オブジェクトの位置を更新
-        int count = _interlockingObjectList.Count;
-        for (int i = 0; i < count; ++i)
+    private IEnumerator UpdateWhenChild()
+    {
+        while (_isRotating)
         {
-            _interlockingObjectList[i].transform.position = _initialPositionListOfInterlockingObjects[i] + _childTransform.localPosition;
+
+            if (_countTranslation >= _translationLimit)
+            {
+                if (_translationVecPerRotation > 0)
+                {
+                    _isRotating = false;
+                    break;
+                }
+            }
+            else if (_countTranslation <= 0)
+            {
+                if (_translationVecPerRotation < 0)
+                {
+                    _isRotating = false;
+                    break;
+                }
+            }
+
+            UpdateRotate();
+            UpdatePositionInRotationWhenChild();
+
+            //連動オブジェクトの位置を更新
+            int count = _interlockingObjectList.Count;
+            for (int i = 0; i < count; ++i)
+            {
+                _interlockingObjectList[i].transform.position = _initialPositionListOfInterlockingObjects[i] + _childTransform.localPosition;
+            }
+
+            yield return null;
         }
 
     }
 
-    private void UpdatePositionInRotation()
+    private void UpdatePositionInRotationWhenRoot()
     {
         // 座標更新
         float progressRate = ProgressRate;
         if (progressRate >= 1)
         {
-            print("UpdatePositionInRotation() 終了処理");
             _isRotating = false;
             progressRate = 0;//現在は１を越える値が返るようになっている。2023/4/6
             _countTranslation += _translationVecPerRotation;
@@ -253,7 +258,7 @@ public class Bolt : RotatableObject
         _childTransform.localPosition = localPosition;
     }
 
-    private void UpdateRootPositionInRotation()
+    private void UpdatePositionInRotationWhenChild()
     {
         /*回転始めに一度計算する*/
         if (!_wasCalculateRootSpaceVec)
@@ -270,7 +275,6 @@ public class Bolt : RotatableObject
         if (progressRate >= 1)
         {
             _isRotating = false;
-            print("UpdateRootPositionInRotation() 終了処理");
             _wasCalculateRootSpaceVec = false;
             progressRate = 1;//現在は１を越える値が返るようになっている。2023/4/6
             _countTranslation += _translationVecPerRotation;
@@ -360,19 +364,6 @@ public class Bolt : RotatableObject
 
         _playerTransform = playerTransform;
 
-        //rotAxisがローカルYベクトルと平行じゃなければ終了
-        if (!CheckCanHold(rotAxis))
-        {
-            return;
-        }
-
-        bool success = UpdateTranslationVector(rotAxis);
-
-        if (!success)
-        {
-            return;
-        }
-
         // 回転の中心を設定
         _axisCenterWorldPos = rotCenter;
         // 回転軸を設定
@@ -401,6 +392,8 @@ public class Bolt : RotatableObject
         _elapsedTime = 0.0f;
         // トレイルの起動
         PlayPartical();
+
+        StartCoroutine(UpdateBolt());
     }
 
     private new void UpdateRotate()
@@ -410,134 +403,116 @@ public class Bolt : RotatableObject
             _isRotateStartFream = false;
         }
 
-        // 回転中かフラグ
-        if (_isRotating)
+        if (!_doOnce)
         {
-            if (!_doOnce)
-            {
-                _isRotateStartFream = true;
-                _doOnce = true;
-            }
-            // リクエストデルタタイムを求める
-            // リクエストデルタタイム：デルタタイムを1回転に必要な時間で割った値
-            // これの合算値が1になった時,1回転に必要な時間が経過したことになる
-            float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle));
-            _elapsedTime += requiredDeltaTime;
+            _isRotateStartFream = true;
+            _doOnce = true;
+        }
 
-            // 目標回転量*リクエストデルタタイムでそのフレームでの回転角度を求めることができる
-            // リクエストデルタタイムの合算値がちょうど1になるように補正をかけると総回転量は目標回転量と一致する
-            bool isFinish = false;
-            if (_elapsedTime >= 1)
-            {   // 修了確認
-                requiredDeltaTime -= (_elapsedTime - 1); // 補正
-                isFinish = true;
-            }   // 90度進むごとに確認当たってるかどうかを確認する
-            else if (_elapsedTime >= 1 / Math.Abs(_polatAngle))
-            {
-                SetChildHitCheckFloorFlg(true);
-                if (_isHitFloor)
-                {
-                    requiredDeltaTime -= (_elapsedTime - 1); // 補正
-                    isFinish = true;
-                }
-            }
+        //デルタタイムを1回転に必要な時間で割った値
+        float requiredDeltaTime = Time.deltaTime / (_rotRequirdTime * Math.Abs(_polatAngle));
+        _elapsedTime += requiredDeltaTime;
 
-            // 途中で磁石オブジェクトに当たっていた場合の処理
-            if (_isUnion && !_isHitFloor)
-            {
-                isFinish = true;
-                requiredDeltaTime -= (_elapsedTime - 1); // 補正
-            }
-
-            // 現在フレームの回転を示す回転のクォータニオン作成
-            var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
-
-            // 円運動の位置計算
-            var tr = transform;
-            var pos = tr.position;
-            // クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
-            // _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
-            pos -= _axisCenterWorldPos;
-            pos = angleAxis * pos;
-            pos += _axisCenterWorldPos;
-            tr.position = pos;
-
-            // 向き更新
-            tr.rotation = angleAxis * tr.rotation;
-
-            _oldAngle = _elapsedTime * _angle;
-
-            // ** 終了時処理
-            if (!isFinish) return;
-
-            // 終了時に変更するフラグを変更
-            _isRotating = false;        // 回転処理の終了
-            _isRotateEndFream = true;   // 回転が終わったFを通知
-
-            // 最終的に回転した量
-            var finishAngle = _angle;
-
-            // 床に当たってた時の処理
+        bool isFinish = false;
+        if (_elapsedTime >= 1)
+        {   // 修了確認
+            requiredDeltaTime -= (_elapsedTime - 1); // 補正
+            isFinish = true;
+        }   // 90度進むごとに確認当たってるかどうかを確認する
+        else if (_elapsedTime >= 1 / Math.Abs(_polatAngle))
+        {
+            SetChildHitCheckFloorFlg(true);
             if (_isHitFloor)
             {
-                // 経過時間と補間用数値を用いて現在進んだ角度から一番近い90単位の角度を算出
-                finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, System.MidpointRounding.AwayFromZero) * 90;
-                SetReflect(_axisCenterWorldPos, _rotAxis, finishAngle);
+                requiredDeltaTime -= (_elapsedTime - 1); // 補正
+                isFinish = true;
             }
-
-            if (_isUnion)
-            {
-                _isUnion = false;
-                finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, System.MidpointRounding.AwayFromZero) * 90;
-            }
-
-            // 最終的に回転した量を考慮して最終補正をクオータニオンで計算する
-            // 現在フレームの回転を示す回転のクォータニオン作成
-            var qtAngleAxis = Quaternion.AngleAxis(finishAngle, _rotAxis);
-            // 円運動の位置計算
-            // クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
-            // _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
-            // 向き更新
-            this.transform.rotation = qtAngleAxis * _oldRotAngle;
-
-            // プレイヤー起因の回転かを判定
-            if (_playerTransform != null)
-            {
-                var playerComp = _playerTransform.GetComponent<Player>();
-                // プレイヤーに回転終了通知を飛ばす
-                playerComp.NotificationEndRotate();
-                // バグ防止
-                _playerTransform = null;
-            }
-            StopPartical();
         }
-        else
+
+        // 途中で磁石オブジェクトに当たっていた場合の処理
+        if (_isUnion && !_isHitFloor)
         {
-            if (_isRotateEndFream)
-            {
-                // 普段は当たり判定の処理を切っておく
-                SetChildHitCheckFloorFlg(false);
-                SetChildHitCheckChainFlg(false);
-                // めり込み判定の確認
-                SetChildCheckIntoFloor(true);
-                SetChildCheckIntoChain(true);
-            }
-
-            if (_isHitFloor)
-            {
-                SetReflect(_axisCenterWorldPos, _rotAxis, _angle);
-            }
-
-            _doOnce = false;
-            _isRotateEndFream = false;
+            isFinish = true;
+            requiredDeltaTime -= (_elapsedTime - 1); // 補正
         }
+
+        // 現在フレームの回転を示す回転のクォータニオン作成
+        var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
+
+        // 円運動の位置計算
+        var tr = transform;
+
+        // 向き更新
+        tr.rotation = angleAxis * tr.rotation;
+
+        _oldAngle = _elapsedTime * _angle;
+
+
+        if (!isFinish) return;
+
+        /***** 終了時処理*****/
+
+        // 終了時に変更するフラグを変更
+        _isRotating = false;        // 回転処理の終了
+        _isRotateEndFream = true;   // 回転が終わったFを通知
+
+        // 最終的に回転した量
+        var finishAngle = _angle;
+
+        // 床に当たってた時の処理
+        if (_isHitFloor)
+        {
+            // 経過時間と補間用数値を用いて現在進んだ角度から一番近い90単位の角度を算出
+            finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, System.MidpointRounding.AwayFromZero) * 90;
+            SetReflect(_axisCenterWorldPos, _rotAxis, finishAngle);
+        }
+
+        if (_isUnion)
+        {
+            _isUnion = false;
+            finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, System.MidpointRounding.AwayFromZero) * 90;
+        }
+
+        // 最終的に回転した量を考慮して最終補正をクオータニオンで計算する
+        // 現在フレームの回転を示す回転のクォータニオン作成
+        var qtAngleAxis = Quaternion.AngleAxis(finishAngle, _rotAxis);
+        // 円運動の位置計算
+        // クォータニオンを用いた回転は原点からのオフセットを用いる必要がある
+        // _axisCenterWorldPosを任意軸の座標に変更すれば任意軸の回転ができる
+        this.transform.rotation = qtAngleAxis * _oldRotAngle;
+
+        // プレイヤー起因の回転かを判定
+        if (_playerTransform != null)
+        {
+            var playerComp = _playerTransform.GetComponent<Player>();
+            // プレイヤーに回転終了通知を飛ばす
+            playerComp.NotificationEndRotate();
+            // バグ防止
+            _playerTransform = null;
+        }
+        StopPartical();
+        if (_isRotateEndFream)
+        {
+            // 普段は当たり判定の処理を切っておく
+            SetChildHitCheckFloorFlg(false);
+            SetChildHitCheckChainFlg(false);
+            // めり込み判定の確認
+            SetChildCheckIntoFloor(true);
+            SetChildCheckIntoChain(true);
+        }
+
+        if (_isHitFloor)
+        {
+            SetReflect(_axisCenterWorldPos, _rotAxis, _angle);
+        }
+
+        _doOnce = false;
+        _isRotateEndFream = false;
     }
 
     private bool UpdateTranslationVector(Vector3 rotAxis)
     {
         var stick_xy = SceneManager.playerInput.FindAction("RotaionSelect").ReadValue<Vector2>();
-
-        print("UpdateTranslationVector x y " + stick_xy.x + stick_xy.y);
 
         if (rotAxis == Vector3.up)
         {
@@ -563,6 +538,45 @@ public class Bolt : RotatableObject
             {
                 _translationVecPerRotation = _translationPerRotation * -1;
                 return true;
+            }
+        }
+        else
+        {
+            Debug.LogError("Bolt 予期しない動作");
+        }
+
+        return false;
+    }
+
+    private bool CheckInputStick(Vector3 rotAxis)
+    {
+        var stick_xy = SceneManager.playerInput.FindAction("RotaionSelect").ReadValue<Vector2>();
+
+        if (rotAxis == Vector3.up)
+        {
+            if (stick_xy.y > 0.2f && Math.Abs(stick_xy.x) < stick_xy.y / 2.0f)
+            {
+                return true;
+            }
+        }
+        else if (rotAxis == Vector3.right)
+        {
+            //向きが左の時と右の時がある
+            var localY_inWorld = transform.localToWorldMatrix.GetColumn(1);
+            float absRatioY = Math.Abs(stick_xy.x) / 2.0f;
+            if (localY_inWorld.x > 0)
+            {
+                if (stick_xy.x > 0.2f && Math.Abs(stick_xy.y) < absRatioY)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (stick_xy.x < -0.2f && Math.Abs(stick_xy.y) < absRatioY)
+                {
+                    return true;
+                }
             }
         }
         else
