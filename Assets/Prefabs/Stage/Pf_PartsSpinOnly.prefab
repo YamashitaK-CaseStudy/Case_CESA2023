@@ -68,6 +68,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6416178464455707925}
   - component: {fileID: 3650519383119368754}
+  - component: {fileID: 5955360116041610820}
+  - component: {fileID: 1272753095848271975}
   m_Layer: 0
   m_Name: Pf_PartsSpinOnly
   m_TagString: Untagged
@@ -107,6 +109,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5955360116041610820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8194474517452351565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7dcd5158d7bd440be557ae67ee8329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particle: {fileID: 4239640712281065258, guid: bca9c79eecf5bd245bc63c8f76bff025,
+    type: 3}
+--- !u!114 &1272753095848271975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8194474517452351565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42248bd90a19cb44aab2b39e25658354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 1
 --- !u!1 &9044337507711597643
 GameObject:
   m_ObjectHideFlags: 0
