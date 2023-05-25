@@ -46,7 +46,7 @@ public class GroundCheck : MonoBehaviour{
 
         if(_hitObj != null && _hitObj.transform.root.gameObject.layer == 13) {
 
-            Debug.Log("下のブロック" + _hitObj);
+//            Debug.Log("下のブロック" + _hitObj);
             _isGround = true;
         }
         else {

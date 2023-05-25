@@ -30,6 +30,10 @@ public partial class RotatableObject : MonoBehaviour{
 		// 合体処理が入った時点で他の当たり判定を切る
 		SetUnionChildCollider(false);
 	}
+	// 合体が終了したことを知らせる
+	public void FinishUnion(){
+		SetUnionChildCollider(true);
+	}
 
 	void SetUnionChildCollider(bool flg){
 		// Unionオブジェクト以外は処理を行わない
