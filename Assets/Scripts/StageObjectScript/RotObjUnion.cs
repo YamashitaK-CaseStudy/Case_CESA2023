@@ -49,6 +49,7 @@ public partial class RotObjUnion : MonoBehaviour{
 
             // オブザーバーに素材を送る
             _obtherber.AddunionMaterial(_rotObj);
+            if(obj.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
             EffectGenerate(obj.gameObject);
             GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Magnet);
         }
