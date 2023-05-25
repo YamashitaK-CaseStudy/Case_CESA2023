@@ -25,7 +25,7 @@ public class Bolt : RotatableObject
     private Transform _childTransform;
     private delegate IEnumerator FuncUpdateBolt();
     private FuncUpdateBolt UpdateBolt;
-    private Transform _rootTransform = null;
+    //private Transform _rootTransform = null;
     private bool _wasCalculateRootSpaceVec = false;
     private Vector3 _upVectorWorldSpace = Vector3.zero;
     private Vector3 _rootOldPosition = Vector3.zero;
@@ -166,7 +166,6 @@ public class Bolt : RotatableObject
         }
         else
         {
-            _rootTransform = transform.root;
             UpdateBolt = UpdateWhenChild;
         }
 
@@ -268,7 +267,7 @@ public class Bolt : RotatableObject
             var matrix = transform.localToWorldMatrix;
             _upVectorWorldSpace = matrix.GetColumn(1);
             _upVectorWorldSpace = _upVectorWorldSpace.normalized;
-            _rootOldPosition = _rootTransform.position;
+            _rootOldPosition = transform.root.position;
             _wasCalculateRootSpaceVec = true;
         }
 
@@ -282,7 +281,7 @@ public class Bolt : RotatableObject
             _countTranslation += _translationVecPerRotation;
         }
 
-        _rootTransform.position = _rootOldPosition + _upVectorWorldSpace * _translationVecPerRotation * progressRate;
+        transform.root.position = _rootOldPosition + _upVectorWorldSpace * _translationVecPerRotation * progressRate;
     }
 
     private void UpdateRootPositionInSpin()
@@ -293,13 +292,13 @@ public class Bolt : RotatableObject
             var matrix = transform.localToWorldMatrix;
             _upVectorWorldSpace = matrix.GetColumn(1);
             _upVectorWorldSpace = _upVectorWorldSpace.normalized;
-            _rootOldPosition = _rootTransform.position;
+            _rootOldPosition = transform.root.position;
             _wasCalculateRootSpaceVec = true;
         }
 
         _countSpinTime += Time.deltaTime;
 
-        float translated = (_rootTransform.position - _rootOldPosition).magnitude;
+        float translated = (transform.root.position - _rootOldPosition).magnitude;
 
         if (Mathf.Abs(translated) >= _translationLimit)
         {
@@ -307,11 +306,11 @@ public class Bolt : RotatableObject
             _wasCalculateRootSpaceVec = false;
 
             _countSpinTime = 0;
-            _rootTransform.position = _rootOldPosition + _upVectorWorldSpace * _translationLimit;
+            transform.root.position = _rootOldPosition + _upVectorWorldSpace * _translationLimit;
             return;
         }
 
-        _rootTransform.position = _rootOldPosition + _upVectorWorldSpace * _spinningTranslationSpeed * _countSpinTime;
+        transform.root.position = _rootOldPosition + _upVectorWorldSpace * _spinningTranslationSpeed * _countSpinTime;
     }
 
     private void ApplyLength()
