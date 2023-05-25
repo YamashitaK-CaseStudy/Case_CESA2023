@@ -6,18 +6,15 @@ public class SeedBehavior : MonoBehaviour
 {
     private void Awake()
     {
+        //‘”‚ğ‰Â•Ï’·‚É‚·‚é‚È‚ç
         //UiSeedBehavior.IncreaseTotal();
-    }
-
-    private void OnDestroy()
-    {
-        UiSeedBehavior.ObtaineSeed();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.root.CompareTag("Player"))
         {
+            UiSeedBehavior.ObtaineSeed();
             Destroy(gameObject);
         }
         // if (other.transform.root.CompareTag("RotateObject"))
