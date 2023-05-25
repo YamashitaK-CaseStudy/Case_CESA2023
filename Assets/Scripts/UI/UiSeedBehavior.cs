@@ -71,9 +71,6 @@ public class UiSeedBehavior : MonoBehaviour
     {
         _instance = this;
 
-        var canvusRect = GetComponent<RectTransform>().rect;
-
-
         //å≈íËÇÃèÍçá
         SeedScore score = SelectFilmBehavior.seedScore;
         score.obtained = 0;
