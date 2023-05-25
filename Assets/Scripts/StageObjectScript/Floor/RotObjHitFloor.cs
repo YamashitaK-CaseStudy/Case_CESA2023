@@ -40,6 +40,7 @@ public partial class RotatableObject : MonoBehaviour
 		System.Array.Resize(ref _childObj, 0);
 		System.Array.Resize(ref _childObjHitCheckFloorComp, 0);
 		System.Array.Resize(ref _childObjChainComp, 0);
+		System.Array.Resize(ref _unionChildComp, 0);
 		// 子供のサイズを設定
 		int childnum = this.gameObject.transform.GetChild(0).childCount;
 		int childcountNum = 0;
@@ -55,6 +56,7 @@ public partial class RotatableObject : MonoBehaviour
 			System.Array.Resize(ref _childObj, _childObj.Length + 1);
 			System.Array.Resize(ref _childObjHitCheckFloorComp, _childObjHitCheckFloorComp.Length + 1);
 			System.Array.Resize(ref _childObjChainComp, _childObjChainComp.Length + 1);
+			System.Array.Resize(ref _unionChildComp, _unionChildComp.Length + 1);
 
 			// 孫オブジェクトを格納
 			_childObj[childcountNum] = tmpObj;
@@ -70,6 +72,11 @@ public partial class RotatableObject : MonoBehaviour
 				if(obj.layer == LayerMask.NameToLayer("Chain")){
 					// 中から必要なコンポーネントを持ってくる
 					_childObjChainComp[childcountNum] = obj.GetComponent<RotObjCheckHitChain>();
+				}
+				// レイヤーを確認してUnionのオブジェクトを探す
+				if(obj.layer == LayerMask.NameToLayer("Union")){
+					// 中から必要なコンポーネントを持ってくる
+					_unionChildComp[childcountNum] = obj.GetComponent<RotObjUnion>();
 				}
 			}
 			childcountNum++;

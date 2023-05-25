@@ -20,22 +20,24 @@ public partial class RotObjUnion : MonoBehaviour{
         _parentRotObjComp = this.transform.root.gameObject.GetComponent<RotatableObject>();
     }
 
-    // private void OnTriggerEnter(Collider other) {
-    //     if(other.transform.root.gameObject.tag != "RotateObject") return;
-    //     if(this.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
-    //     if(_parentRotObjComp._isUnion)return;
-    //     _parentRotObjComp._isUnion = true;
-    //     // 当たったRotateObjectを取得
-    //     GetRotateObject(other.gameObject);
-    // }
-
-    private void OnTriggerStay(Collider other) {
-        if(other.gameObject.transform.root.tag != "RotateObject") return;
-        Debug.Log(other.name);
-        if(other.gameObject.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
+    private void OnTriggerEnter(Collider other) {
+        // 当たったRotateObjectを取得
         GetRotateObject(other.gameObject);
-        Debug.Log("合体処理入るで");
+        if(other.transform.root.gameObject.tag != "RotateObject") return;
+        if(this.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
+        if(_parentRotObjComp._isUnion)return;
+        _parentRotObjComp._isUnion = true;
     }
+
+    // private void OnTriggerStay(Collider other) {
+    //     if(other.transform.root.tag != "RotateObject") return;
+    //     if(other.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
+    //     // if(other.transform.root.GetComponent<RotatableObject>()._isRotating) return;
+    //     Debug.Log(other.name);
+    //     _parentRotObjComp.PreparationUinon();
+    //     GetRotateObject(other.gameObject);
+    //     Debug.Log("合体処理入るで");
+    // }
 
     // 回転オブジェクトの取得
     private void GetRotateObject(GameObject obj) {
@@ -56,10 +58,5 @@ public partial class RotObjUnion : MonoBehaviour{
         _unionColliderX.enabled = flg;
         _unionColliderY.enabled = flg;
         _unionColliderZ.enabled = flg;
-    }
-
-    // 合体が終了したことを知らせる
-    public void FinishUnion(){
-
     }
 }

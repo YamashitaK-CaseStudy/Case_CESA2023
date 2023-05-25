@@ -137,11 +137,11 @@ public partial class RotatableObject : MonoBehaviour
 				}
 			}
 
-			// // 途中で磁石オブジェクトに当たっていた場合の処理
-			// if(_isUnion && !_isHitFloor){
-			// 	isFinish = true;
-			// 	requiredDeltaTime -= (_elapsedTime - 1); // 補正
-			// }
+			// 途中で磁石オブジェクトに当たっていた場合の処理
+			if(_isUnion && !_isHitFloor){
+				isFinish = true;
+				requiredDeltaTime -= (_elapsedTime - 1); // 補正
+			}
 
 			// 現在フレームの回転を示す回転のクォータニオン作成
 			var angleAxis = Quaternion.AngleAxis(_angle * requiredDeltaTime, _rotAxis);
@@ -219,6 +219,7 @@ public partial class RotatableObject : MonoBehaviour
 				// めり込み判定の確認
 				SetChildCheckIntoFloor(true);
 				SetChildCheckIntoChain(true);
+				Debug.Log("回転終了");
 				// 止まってる状態のときは磁石オブジェクトの当たり判定を起動
 				SetUnionChildCollider(true);
 			}

@@ -62,8 +62,9 @@ public class RotObjUnionObtherber : MonoBehaviour{
         // 合体した瞬間を
         Debug.Log("合体した");
         var rotObj = basechildObjects.transform.root.GetComponent<RotatableObject>();
-        rotObj.ChildCountUpdate();
-        _rotObserver.SetLastRotateRotObj(rotObj);
+        rotObj.ChildCountUpdate();  // 子供の更新
+        rotObj.FinishUnion();       // 合体が終了したのを通知する
+        _rotObserver.SetLastRotateRotObj(rotObj);   // オブザーバーに最後に回転したオブジェクトとして登録
 
         _unionMaterials.Clear();
     }
