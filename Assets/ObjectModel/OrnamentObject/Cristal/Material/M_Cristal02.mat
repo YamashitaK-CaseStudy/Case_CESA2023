@@ -101,7 +101,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
-    - _BottomLine: 0.647
+    - _BottomLine: 0.676
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -120,12 +120,12 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.718
+    - _Smoothness: 0.737
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _TopLine: 0.673
+    - _TopLine: 0.864
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
