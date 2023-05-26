@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using DG.Tweening;
+
 
 public class SystemSoundManager : MonoBehaviour {
     [SerializeField] AudioSource _bgmAudioSource;
@@ -33,6 +35,19 @@ public class SystemSoundManager : MonoBehaviour {
         _bgmAudioSource.clip = data._audioClip;
         _bgmAudioSource.volume = data._volume * _bgmMasterVolume * _masterVolume;
         _bgmAudioSource.Play();
+    }
+
+    public void PlayBGMWithFade(BGMSoundData.BGM bgm, float vol, float duration) {
+        BGMSoundData data = _bgmSoundDatas.Find(data => data._bgm == bgm);
+        _bgmAudioSource.loop = true;
+        _bgmAudioSource.clip = data._audioClip;
+        _bgmAudioSource.volume = 0;
+        _bgmAudioSource.Play();
+        _bgmAudioSource.DOFade(vol, duration);
+    }
+
+    public void StopBGMWithFade(float duration) {
+        _bgmAudioSource.DOFade(0, duration);
     }
 
 
