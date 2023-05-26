@@ -18,6 +18,7 @@ namespace SuzumuraTomoki {
 
 		//statics
 		static public bool missionFailed = false;
+		static public bool missionClear = false;//“¯‚¶ó‘Ô‚ğ•\‚·•Ï”‚ª‚Ó‚½‚Â‚ ‚é‚Ì‚ÍŠï–­‚¾‚ªA’÷‚ßØ‚è‚ª‹ß‚¢‚½‚ß•ÏX‰ÓŠ‚ğ­‚È‚­‚·‚é‚½‚ß
 
 		static private SceneManager _instance = null;
 		static private UnityEngine.InputSystem.InputActionMap _playerInput = null;

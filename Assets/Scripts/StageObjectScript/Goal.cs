@@ -12,16 +12,14 @@ public class Goal : MonoBehaviour
 		if(other.gameObject.layer == LayerMask.NameToLayer("PlayerRotCollider")) return;
 		if(other.transform.root.gameObject.tag != "Player") return;
 
+    SuzumuraTomoki.SceneManager.missionClear = true;
+
 		_isGoalEffect = true;
 		SuzumuraTomoki.SceneManager.playerInput.Disable();
 		_resultVCam.Priority = 11;
 	}
 
 	public void Update(){
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			SuzumuraTomoki.SceneManager.LoadCurrentScene();
-		}
 
 		if(_isGoalEffect){
 			_rotRequirdTime += Time.deltaTime;
@@ -33,10 +31,10 @@ public class Goal : MonoBehaviour
 			}
 
 			if(_rotRequirdTime > 3){
+        SuzumuraTomoki.SceneManager.playerInput.Enable();
 				SuzumuraTomoki.SceneManager.LoadResult();
-				SuzumuraTomoki.SceneManager.playerInput.Enable();
 			}
 		}
-    }
+ }
 
 }
