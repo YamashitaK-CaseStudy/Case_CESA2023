@@ -38,6 +38,10 @@ public class Bolt : RotatableObject
             _length = value;
             ApplyLength();
         }
+        get
+        {
+            return _length;
+        }
     }
 
     public uint translationLimit
@@ -45,6 +49,10 @@ public class Bolt : RotatableObject
         set
         {
             _translationLimit = value;
+        }
+        get
+        {
+            return _translationLimit;
         }
     }
 

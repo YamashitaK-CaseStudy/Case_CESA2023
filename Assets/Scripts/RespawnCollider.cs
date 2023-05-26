@@ -150,7 +150,9 @@ public class RespawnCollider : MonoBehaviour
 		if(_playerObjComp.GetHP() <= 0){
 			// ゲームオーバーの演出いれたい
 			// リザルトに飛ぶ
+			SuzumuraTomoki.SceneManager.missionFailed = true;
 			SuzumuraTomoki.SceneManager.LoadResult();
+
 		} else{
 			// Fade入れる
 			_maskFadeComp.StartFadeOut();
