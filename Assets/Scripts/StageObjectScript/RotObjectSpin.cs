@@ -7,20 +7,20 @@ public partial class RotatableObject : MonoBehaviour
 
 	[SerializeField] int _rotSpeed = 15;
 
-	private GameObject[] _cloneBaceObjs;        // Clone元のオブジェクトの配列
+	
+	private List<GameObject> _originObjList;    // クローン元のオブジェクトリスト
 	private GameObject[,] _cloneObjs;           // Cloneしたオブジェクトの配列
 	private GameObject[] _toSpinCloneObjs;		// 回す用のクローンの配列
 
-	private List<GameObject> _originObjList;    // クローン元のオブジェクトリスト
 
 	private int _originNum = 0;
 	private int _listLength = 0;
 
-	private bool _isPerformance = false;        // 回転の演出中かどうか
 	private int _totalSpinedAngle = 0;
 
-	public void StartFunc(){
+	public void StartFuncSpin(){
 		_originObjList = new List<GameObject>();
+		AddCloneOriginToList();
 	}
 
 	public void StartSpin()
@@ -29,8 +29,6 @@ public partial class RotatableObject : MonoBehaviour
 		{
 			return;
 		}
-
-		_isPerformance = true;
 
 		// フラグを立てる
 		_isSpining = true;
@@ -54,18 +52,22 @@ public partial class RotatableObject : MonoBehaviour
 
 		// フラグを立てる
 		_isSpining = true;
-		_isPerformance = true;
 
 		// クローン用のGameObjectを確保
 		// クローン1つに対して,90°・180°・270°用の3つ必要
 		_cloneObjs = new GameObject[_originNum, 3];
-
-		//Debug.Log(_cloneBaceObjs.Length);
-
-		CreateClone();
-
-		CreateCloneToSpin();
 		
+		CreateCloneToSpin();
+
+
+		// baseの点滅フラグをオンにする
+		foreach (GameObject originObj in _originObjList){
+			var compornents = originObj.GetComponentsInChildren<Blink>();
+			foreach (Blink blink in compornents){
+				blink.StartBlink();
+			}
+		}
+
 	}
 
 
@@ -79,9 +81,7 @@ public partial class RotatableObject : MonoBehaviour
 		}
 
 		_isSpining = false;
-		_isPerformance = true;
-
-
+		
 		foreach (GameObject cloneObj in _cloneObjs)
 		{
 			Destroy(cloneObj);
@@ -92,6 +92,17 @@ public partial class RotatableObject : MonoBehaviour
 		{
 			Destroy(toSpinCloneObj);
 		}
+
+		_totalSpinedAngle = 0;
+
+		// baseの点滅フラグをオフにする
+		foreach (GameObject originObj in _originObjList){
+			var compornents = originObj.GetComponentsInChildren<Blink>();
+			foreach (Blink blink in compornents){
+				blink.EndBlink();
+			}
+		}
+
 	}
 
 	// 高速回転の更新処理
@@ -124,16 +135,18 @@ public partial class RotatableObject : MonoBehaviour
 				tr.rotation = rotQuat * tr.rotation;
 
 			}
-			/*
+			
+
 			// 回転量を加算
-			_totalSpinedAngle = _rotSpeed;
+			_totalSpinedAngle += _rotSpeed;
+			Debug.Log(_totalSpinedAngle);
 			if ( _totalSpinedAngle <= 270 ) {
 				// 前回の複製から90度回転していたら
 				if ( _totalSpinedAngle % 90 == 0 ) {
 					CreateClone(_totalSpinedAngle / 90);
 				}
 			}
-			 */
+			 
 
 		}
 	}
@@ -221,9 +234,10 @@ public partial class RotatableObject : MonoBehaviour
 		}
 	}
 
+	
 	protected void CreateClone(int cloneCnt) {
 		
-		if ( cloneCnt > 3 ) {
+		if ( cloneCnt > 3  ) {
 			Debug.Log("不正な値です");
 			return;
 		}
@@ -255,8 +269,17 @@ public partial class RotatableObject : MonoBehaviour
 
 			// 向き更新
 			tr.rotation = rotQuat * tr.rotation;
-			
+
+			// Cloneの点滅フラグをオンにする
+			var compornents = _cloneObjs[i, cloneIndex].GetComponentsInChildren<Blink>();
+			foreach (Blink blink in compornents)
+			{
+				blink.StartBlink();
+			}
 		}
+
+
+
 	}
 
 	// 回転用のクローンを生成
