@@ -8,14 +8,8 @@ public class Goal : MonoBehaviour
 	private void OnTriggerEnter(Collider other) {
         if(other.transform.root.gameObject.tag != "Player") return;
 
-		SuzumuraTomoki.SceneManager.LoadResult();
-    }
-
-	public void Update(){
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			SuzumuraTomoki.SceneManager.LoadCurrentScene();
-		}
+        SuzumuraTomoki.SceneManager.missionClear = true;
+        SuzumuraTomoki.SceneManager.LoadResult();
     }
 
 }
