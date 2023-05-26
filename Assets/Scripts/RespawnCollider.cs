@@ -20,6 +20,7 @@ public class RespawnCollider : MonoBehaviour
 	private float _requiredTime = 0;
 	private bool _waitFade = false;
 	private Vector3 _VCamAngle;
+	private PlayerHP _hpBehavior;
 	void Start()
 	{
 		this.GetComponent<MeshRenderer>().enabled = false;
@@ -31,6 +32,16 @@ public class RespawnCollider : MonoBehaviour
 
 		_playerVCam = GameObject.Find("VCam_PlayerHoming").GetComponent<Cinemachine.CinemachineVirtualCamera>();
 		_VCamAngle = _playerVCam.transform.eulerAngles;
+
+		foreach(GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject))){
+			if(obj.layer != LayerMask.NameToLayer("UI")) continue;
+			var objComp = obj.GetComponent<PlayerHP>();
+			Debug.Log(obj.name);
+			if(objComp != null){
+				_hpBehavior = objComp;
+				break;
+			}
+		}
 	}
 	void Update(){
 		// 当たった後のみ処理を行う
@@ -55,6 +66,9 @@ public class RespawnCollider : MonoBehaviour
 		_playerDeadpoint = _playerObj.transform.position;
 		// ダメージ処理
 		_playerObjComp.Damage();
+		if(_playerObjComp.GetHP() != 0){
+			_hpBehavior.ChangeIcon(_playerObjComp.GetHP());
+		}
 		// ここにプレイヤーの停止処理を入れる
 		SuzumuraTomoki.SceneManager.playerInput.Disable();
 

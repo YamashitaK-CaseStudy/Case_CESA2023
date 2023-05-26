@@ -39,6 +39,7 @@ public partial class RotatableObject : MonoBehaviour{
 		// Unionオブジェクト以外は処理を行わない
 		if(this.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
 		for(int i = 0; i < _unionChildComp.Length;i++){
+			if(_unionChildComp[i] == null) continue;
 			_unionChildComp[i].SetUnionCollider(flg);
 		}
 	}
