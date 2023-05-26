@@ -27,7 +27,7 @@ MonoBehaviour:
   - m_From: VCam_PlayerHoming
     m_To: VCam_Result
     m_Blend:
-      m_Style: 3
+      m_Style: 1
       m_Time: 1
       m_CustomCurve:
         serializedVersion: 2
