@@ -62,6 +62,12 @@ MonoBehaviour:
   - _gameSe: 2
     _gameSeAudioClip: {fileID: 8300000, guid: ff63f42c6bf25f541b1406907aa7c9c9, type: 3}
     _gameSeVolume: 0.1
+  - _gameSe: 5
+    _gameSeAudioClip: {fileID: 8300000, guid: e126e7fca422788459140b900e40bb24, type: 3}
+    _gameSeVolume: 0.1
+  - _gameSe: 6
+    _gameSeAudioClip: {fileID: 8300000, guid: 7b6ffb38e18fea24b94783ac3329f323, type: 3}
+    _gameSeVolume: 0.1
   _masterVolume: 1
   _seMasterVolume: 1
   _bgmMasterVolume: 1

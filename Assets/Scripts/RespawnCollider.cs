@@ -73,6 +73,7 @@ public class RespawnCollider : MonoBehaviour
 		SuzumuraTomoki.SceneManager.playerInput.Disable();
 
 		// ここで爆発アニメーション入れて
+		GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
 		_playerObjComp.GetAnimator.SetTrigger("GameOver");
 
 		_playerVCam.Follow = null;
@@ -86,7 +87,7 @@ public class RespawnCollider : MonoBehaviour
 			var pos = _respawnPos;
 			// 飛ばす座標を目標地点からちょっと奥にするように
 			pos.y += 5;
-			pos.z += 4;
+			pos.z += 6;
 			_playerObj.transform.position = pos;
 			_playerVCam.LookAt = null;
 			_playerVCam.transform.eulerAngles = _VCamAngle;
@@ -113,7 +114,7 @@ public class RespawnCollider : MonoBehaviour
 
 			if(_playerObj.transform.position.z > 0){
 				var pos = _playerObj.transform.position;
-				pos.z -= 3f * Time.deltaTime;
+				pos.z -= 3.5f * Time.deltaTime;
 				_playerObj.transform.position = pos;
 
 
@@ -128,6 +129,8 @@ public class RespawnCollider : MonoBehaviour
 				SuzumuraTomoki.SceneManager.playerInput.Enable();
 				// Vカメラ
 				_respawnVCam.Priority = 9;
+
+				GameSoundManager.Instance.StopGameSEWithFade(2.0f);
 
 				// プレイヤーの座標を補正する
 				var pos = _playerObj.transform.position;
@@ -154,6 +157,8 @@ public class RespawnCollider : MonoBehaviour
 
 		// フェードアウト中はプレイヤーを動かさない
 		if(_maskFadeComp.IsFadeInWait()){
+			// コンベアの音起動
+			GameSoundManager.Instance.PlayGameSEWithFade(GameSESoundData.GameSE.Conveyor, 0.5f, 2.0f);
 			_requiredTime = 0;
 			_waitFade = false;
 		}else{
