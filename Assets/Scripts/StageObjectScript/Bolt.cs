@@ -11,6 +11,16 @@ public class Bolt : RotatableObject
         //定義することで親クラスのFixedUpdateを止める
     }
 
+    /*定数*/
+    public enum UpVectorInWorld
+    {
+        VERTICAL,
+        HORIZONTAL,
+    }
+
+
+    /*変数　非公開*/
+
     [SerializeField] private GameObject _threadObject;//インスペクタで設定
     [SerializeField] private uint _length = 1;
     [SerializeField] private uint _translationLimit = 1;
@@ -38,6 +48,10 @@ public class Bolt : RotatableObject
             _length = value;
             ApplyLength();
         }
+        get
+        {
+            return _length;
+        }
     }
 
     public uint translationLimit
@@ -45,6 +59,10 @@ public class Bolt : RotatableObject
         set
         {
             _translationLimit = value;
+        }
+        get
+        {
+            return _translationLimit;
         }
     }
 
@@ -60,6 +78,19 @@ public class Bolt : RotatableObject
         set
         {
             _spinningTranslationSpeed = value;
+        }
+    }
+
+    public UpVectorInWorld upVectorInWorld
+    {
+        get
+        {
+            float yVecInW_y = transform.localToWorldMatrix.GetColumn(1).y;
+            if (Math.Abs(yVecInW_y) < 0.01f)
+            {
+                return UpVectorInWorld.HORIZONTAL;
+            }
+            return UpVectorInWorld.VERTICAL;
         }
     }
 
@@ -212,7 +243,7 @@ public class Bolt : RotatableObject
         while (_isRotating)
         {
 
-            
+
 
             UpdateRotate();
             UpdatePositionInRotationWhenChild();

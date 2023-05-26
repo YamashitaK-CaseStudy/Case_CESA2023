@@ -145,9 +145,12 @@ public partial class CUpdatePrefab : EditorWindow
 					var obj = child.GetChild(j);
 					if (obj.name == name[k])
 					{
-						Replace(obj.gameObject,tmpObj,_paths[k]);
-						Debug.Log("名前 ; " + obj.name);
-						Debug.Log("パス ; " + name[k]);
+						if(obj.name.Contains("Bolt")){
+							Debug.Log("ボルト");
+							ReplaceBolt(obj.gameObject,tmpObj,_paths[k]);
+						}else{
+							Replace(obj.gameObject,tmpObj,_paths[k]);
+						}
 					}
 				}
 			}
@@ -168,6 +171,30 @@ public partial class CUpdatePrefab : EditorWindow
 		// プレハブからインスタンスを生成
 		var childObj = Instantiate(prefabData, child.transform.position, child.transform.localRotation);
 		childObj.gameObject.transform.parent = parent.transform;
+		childObj.name = childObj.name.Replace("(Clone)","");
+		Undo.RegisterCreatedObjectUndo(childObj, "Create New GameObject");
+	}
+
+	private void ReplaceBolt(GameObject child, GameObject parent ,string prefabPath){
+		var Length = child.transform.GetComponent<Bolt>().length;
+		var Limit = child.transform.GetComponent<Bolt>().translationLimit;
+
+		var prefabData = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+		// プレハブからインスタンスを生成
+		var childObj = Instantiate(prefabData, child.transform.position, child.transform.localRotation);
+		childObj.gameObject.transform.parent = parent.transform;
+		// 必要なデータを格納していく
+		childObj.transform.GetComponent<Bolt>().length = Length;
+		childObj.transform.GetComponent<Bolt>().translationLimit = Limit;
+		// レイヤーを設定
+		childObj.layer = LayerMask.NameToLayer("Block");
+		// 必要になるコンポーネントを再生成
+		// 種類の設定
+		var childKinds = childObj.AddComponent<RotObjkinds>();
+		childKinds._RotObjKind = RotObjkinds.ObjectKind.BoltRotObject;
+		// AudioSourceの追加
+		var childAudio = childObj.AddComponent<AudioSource>();
+		childAudio.playOnAwake = false;
 		childObj.name = childObj.name.Replace("(Clone)","");
 		Undo.RegisterCreatedObjectUndo(childObj, "Create New GameObject");
 	}

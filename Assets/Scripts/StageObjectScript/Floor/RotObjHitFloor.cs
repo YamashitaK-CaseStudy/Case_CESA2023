@@ -52,6 +52,7 @@ public partial class RotatableObject : MonoBehaviour
 			// ダミーオブジェクトの場合はループをいったん飛ばす
 			if(tmpObj.tag == "DamiObject") continue;
 			if(tmpObj.tag == "SeedObject") continue;
+			if(tmpObj.tag == "RotateObject") continue;
 			// 配列のサイズを変更
 			System.Array.Resize(ref _childObj, _childObj.Length + 1);
 			System.Array.Resize(ref _childObjHitCheckFloorComp, _childObjHitCheckFloorComp.Length + 1);
