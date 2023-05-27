@@ -17,7 +17,7 @@ namespace SuzumuraTomoki {
         }
 
 		//statics
-		static public int _currentStageNum = 0;
+		static public int _currentStageNum = 1;
 		static public bool missionFailed = false;
 		static public bool missionClear = false;//“¯‚¶ó‘Ô‚ğ•\‚·•Ï”‚ª‚Ó‚½‚Â‚ ‚é‚Ì‚ÍŠï–­‚¾‚ªA’÷‚ßØ‚è‚ª‹ß‚¢‚½‚ß•ÏX‰ÓŠ‚ğ­‚È‚­‚·‚é‚½‚ß
 
@@ -130,6 +130,7 @@ namespace SuzumuraTomoki {
 			beforeSceneNumber = currentSceneNumber;
 			currentSceneNumber = sceneNumber;
 			Fader.instance.FadeOut(sceneNumber);
+			SystemSoundManager.Instance.StopBGMWithFade(Fader.instance.fadeTime);
 			GameSoundManager.Instance.StopGameBGMWithFade(Fader.instance.fadeTime);
 			GameSoundManager.Instance.StopGameSEWithFade(Fader.instance.fadeTime);
 			return true;
