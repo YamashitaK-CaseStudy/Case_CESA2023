@@ -34,7 +34,7 @@ public partial class Player : MonoBehaviour{
         // フレームの色を赤色にする
         LockFreamChangeColor(Color.red);
     }
-   
+    static int a = 0;
     private void PlayerRotationUpdate() {
 
         // ロックフレームの可視化
@@ -47,6 +47,7 @@ public partial class Player : MonoBehaviour{
               
                 AnimatoinState(false);
                 LockFreamMassSetActive(_lockObject, false);
+                _upperrayCheck.SetDistacne(0.7f);
                 _isLock = false;
 
                 return;
@@ -62,6 +63,9 @@ public partial class Player : MonoBehaviour{
                 // ブロック全部のフレーム可視化
                 LockFreamMassSetActive(_lockObject,true);
 
+                // 頭上の当たり判定rayを伸ばす(ボルト用に)
+                _upperrayCheck.SetDistacne(1.5f);
+
                 _isLock = true;
                 Debug.Log("ブロックロック");
             }
@@ -73,11 +77,12 @@ public partial class Player : MonoBehaviour{
             AnimatoinState(false);
             LockFreamMassSetActive(_lockObject,false);
             _isLock = false;
+            _upperrayCheck.SetDistacne(0.7f);
             Debug.Log("ブロックロック解除");
         }
-
+      
         // Lock中
-        if ((_isLock && _animCallBack.GetIsRotationValid) || _yBlockLock || _yBlockUpperLock || _xBlockLock) {
+        if ((_isLock && _animCallBack.GetIsRotationValid) ) {
 
             // どっちにも当たってなければ抜ける
             if (_lockObject == null) {
@@ -88,14 +93,16 @@ public partial class Player : MonoBehaviour{
             var rotatbleComp = _lockObject.GetComponent<RotatableObject>();
             var rotatbleKind = _lockObject.GetComponent<RotObjkinds>();
 
+            Debug.Log("ブロックの種類" + rotatbleKind);
+
             // 下の回転オブジェクトを参照
             if (_blockPriorty == BlockPriorty.Bottom) {
 
-//                Debug.Log("下オブジェクト取得中");
+                //                Debug.Log("下オブジェクト取得中");
 
                 // ブロックごとに回転の種類が違うのでKindを使って仕分ける
                 // 通常の黄色ブロックと磁石ブロックはスティックでの操作にて行う
-                if(rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.NomalRotObject || rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.UnionRotObject) {
+                if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.NomalRotObject || rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.UnionRotObject) {
 
                     // スティックでの回転
                     if (rotatbleComp._isRotateEndFream) {
@@ -104,21 +111,34 @@ public partial class Player : MonoBehaviour{
                     _stricRotAngle.StickRotY_Update();
                     rotatbleComp.StickRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY, this.transform);
 
-                    if (rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == 1)) {
-                        _animator.SetTrigger("Rotation_Y_Right");
-                    }
-                    else if (rotatbleComp._isRotateStartFream && (rotatbleComp.offsetRotAxis.y == -1)) {
-                        _animator.SetTrigger("Rotation_Y_Left");
+                    // ロック時のY回転アニメーション
+                    if (_stricRotAngle._isOldAngleChinge) {
+
+                        // 通常回転時のアニメーションスピードの変更
+                        _animator.SetFloat("RotationSpeed", 6);
+
+                        if (rotatbleComp.offsetRotAxis.y == 1) {
+                            _animator.SetTrigger("Rotation_Y_Right");
+                        }
+                        else if (rotatbleComp.offsetRotAxis.y == -1) {
+                            _animator.SetTrigger("Rotation_Y_Left");
+                        }
                     }
                 }
 
                 // ボルトブロック操作
-                if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) {
+                if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject && !_upperrayCheck.IsUpperHit) {
 
                     _stricRotAngle.StickRotY_Update();
                     rotatbleComp.StickRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY, this.transform);
-                }
 
+                    // ボルトにとってる状態のY回転アニメーション
+                    if (rotatbleComp._isRotateStartFream) {
+                        _animator.SetFloat("RotationSpeed", 1);
+                        _animator.SetTrigger("Rotation_Y_Right");
+                    }
+                }
+              
                 // 高速回転はスティックの右左倒した自転で始まる
                 if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.SpinObject) {
 
@@ -141,7 +161,7 @@ public partial class Player : MonoBehaviour{
             // 左右の回転オブジェクトを参照
             else if (_blockPriorty == BlockPriorty.Front) {
 
-//                Debug.Log("左右オブジェクト取得中");
+                //                Debug.Log("左右オブジェクト取得中");
 
                 // ブロックごとに回転の種類が違うのでKindを使って仕分ける
                 // 通常の黄色ブロックと磁石ブロックはスティックでの操作にて行う
@@ -160,7 +180,7 @@ public partial class Player : MonoBehaviour{
 
                         if (rotatbleComp._isSpining) {
                             Debug.Log("高速回転終了");
-                          
+
                             rotatbleComp.EndSpin();
                         }
                         else {
@@ -168,7 +188,7 @@ public partial class Player : MonoBehaviour{
                             rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
                         }
                     }
-                }               
+                }
             }
         }
     }
