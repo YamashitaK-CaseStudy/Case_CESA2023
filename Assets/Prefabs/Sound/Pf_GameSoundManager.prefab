@@ -69,7 +69,13 @@ MonoBehaviour:
     _gameSeAudioClip: {fileID: 8300000, guid: 7b6ffb38e18fea24b94783ac3329f323, type: 3}
     _gameSeVolume: 0.1
   - _gameSe: 7
-    _gameSeAudioClip: {fileID: 8300000, guid: 7b6ffb38e18fea24b94783ac3329f323, type: 3}
+    _gameSeAudioClip: {fileID: 8300000, guid: c5174479cb086bf4f93a8e1398720fb4, type: 3}
+    _gameSeVolume: 0.1
+  - _gameSe: 8
+    _gameSeAudioClip: {fileID: 8300000, guid: 5416866de117f50418b9cde3539264ca, type: 3}
+    _gameSeVolume: 0.1
+  - _gameSe: 9
+    _gameSeAudioClip: {fileID: 8300000, guid: 1fa4ff4bedf20454ea8fca78461e652f, type: 3}
     _gameSeVolume: 0.1
   _masterVolume: 1
   _seMasterVolume: 1

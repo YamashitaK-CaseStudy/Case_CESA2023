@@ -63,6 +63,14 @@ MonoBehaviour:
     _playerSeAudioClip: {fileID: 8300000, guid: e997ee28d13be7842b2d1c812f48fff3,
       type: 3}
     _playerSeVolume: 0.1
+  - _playerSe: 4
+    _playerSeAudioClip: {fileID: 8300000, guid: 3ca1acd74b7888843a00bd901b81127a,
+      type: 3}
+    _playerSeVolume: 0.1
+  - _playerSe: 5
+    _playerSeAudioClip: {fileID: 8300000, guid: 1da71fbe98d151b4c927d2ed8825f5fe,
+      type: 3}
+    _playerSeVolume: 0.1
   _masterVolume: 1
   _seMasterVolume: 1
 --- !u!82 &-1718385765444790904
