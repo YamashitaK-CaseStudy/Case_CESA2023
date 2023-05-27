@@ -24,6 +24,12 @@ public class UpperRayCheck : MonoBehaviour {
     void Start() {
     }
 
+    public void SetDistacne(float distance) {
+        foreach (var myray in _oneRays) {
+            myray.distance = distance;
+        }
+    }
+
     void Update() {
 
         // “ª‚ÌƒŠƒO‚ÌˆÊ’u

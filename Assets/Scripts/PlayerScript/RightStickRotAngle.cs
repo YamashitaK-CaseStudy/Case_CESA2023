@@ -12,11 +12,13 @@ public class RightStickRotAngle : MonoBehaviour
     private int _stickDialAngle_Y, _stickDialAngle_X;
     private bool _isActicDial_Y = false, _isActicDial_X = false;
     public int _stickAngle_Y, _stickAngle_X;
+    private int _oldStickDialAngle_Y = 0;
     private LeftRightFrontBack_ManyObj _yAxisManyObj;
 
     public bool _isDamiObjCreate = false;
     public GameObject _damiObject;
 
+    public bool _isOldAngleChinge { get; set; } = false;
 
     // Getter
     public int GetStickDialAngleY {
@@ -40,14 +42,29 @@ public class RightStickRotAngle : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
     }
 
-
     // y回転の更新
     public void StickRotY_Update() {
-        _stickDialAngle_Y = SettingDialAngle(GetAngleY());
+        
+        int angleY = SettingDialAngle(GetAngleY());
+
+        if(_oldStickDialAngle_Y == angleY) {
+            _isOldAngleChinge = false;
+            return;
+        }
+        else {
+            if(angleY != 0) {
+                Debug.Log("必要な時のみ更新" + angleY);
+                _isOldAngleChinge = true;
+            }
+         
+            _oldStickDialAngle_Y = angleY;
+            _stickDialAngle_Y = _oldStickDialAngle_Y;
+        }
     }
 
     // x回転の更新
     public void StickRotX_Update() {
+
         _stickDialAngle_X = GetAngleX();
     }
 
@@ -55,7 +72,9 @@ public class RightStickRotAngle : MonoBehaviour
 
         var value = _playerInput.actions["RotaionSelect"].ReadValue<Vector2>();
 
-        if ((value.x < -_deadzone || _deadzone < value.x || value.y < -_deadzone || _deadzone < value.y)) {
+        Debug.Log("スティック" + value);
+
+        if(value.magnitude > _deadzone) {
 
             // 右
             if (_yAxisManyObj == LeftRightFrontBack_ManyObj.Right) {
@@ -78,6 +97,7 @@ public class RightStickRotAngle : MonoBehaviour
                 _stickAngle_Y = (int)(Mathf.Atan2(-value.x, -value.y) * Mathf.Rad2Deg);
             }
         }
+
 
         if (_stickAngle_Y < 0) {
             _stickAngle_Y += 360;
@@ -121,26 +141,22 @@ public class RightStickRotAngle : MonoBehaviour
     // スティックの角度をダイアルに振り分ける
     private int SettingDialAngle(int angle) {
 
-        int dialAngle = 0;
-
         if (angle >= 45 && angle < 135) {
-
-            dialAngle = 90;
+            return 90;
+           // dialAngle = 90;
         }
         else if (angle >= 135 && angle < 225) {
-
-            dialAngle = 180;
+            return 180;
+           // dialAngle = 180;
         }
         else if (angle >= 225 && angle < 315) {
-
-            dialAngle = -90;
+            return -90;
+           // dialAngle = -90;
         }
         else {
-
-            dialAngle = 0;
+            return 0;
+            //dialAngle = 0;
         }
-
-        return dialAngle;
     }
 
     public void yAxisManyObjJude(RotObjHitCheck _hitcheck) {
@@ -213,7 +229,7 @@ public class RightStickRotAngle : MonoBehaviour
         RotatableObject rotbleobj = _hitcheck.GetRotObj.GetComponent<RotatableObject>();
 
         _stickAngle_Y = 0;
-
+        
         Debug.Log("角度リセット");
     }
 
