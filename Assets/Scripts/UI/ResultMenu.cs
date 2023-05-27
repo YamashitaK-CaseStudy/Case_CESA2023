@@ -10,7 +10,9 @@ public class ResultMenu : MonoBehaviour
     int _dispImageNum = 0;
     int _inputAxis = 0;
     bool _isInput = false;
+    bool _isCanInput = false;
     float _reqTime = 0;
+    float _reqTimeInput = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,13 @@ public class ResultMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!_isCanInput && this.gameObject.activeSelf == true){
+            _reqTimeInput += Time.deltaTime;
+            if(_reqTimeInput > 0.5){
+                _isCanInput = true;
+                _reqTimeInput = 0.0f;
+            }
+        }
         _reqTime += Time.deltaTime;
         if(_reqTime <= 0.1)return;
         _reqTime = 0f;
@@ -27,7 +36,7 @@ public class ResultMenu : MonoBehaviour
     }
 
     void Input(){
-        if(this.gameObject.activeSelf == false) return;
+        if(!_isCanInput) return;
         if(_isInput){
             _dispImageNum -= _inputAxis;
             if(_dispImageNum == 3) _dispImageNum = 0;
@@ -38,7 +47,7 @@ public class ResultMenu : MonoBehaviour
     }
 
     public void OnDecision(InputAction.CallbackContext context){
-        if(this.gameObject.activeSelf == false) return;
+        if(!_isCanInput) return;
         if(!context.performed) return;
         switch (_dispImageNum){
             case 0: // NextStage
@@ -55,6 +64,7 @@ public class ResultMenu : MonoBehaviour
         SystemSoundManager.Instance.StopBGMWithFade(1.5f);
     }
     public void OnArrow(InputAction.CallbackContext context){
+        if(!_isCanInput) return;
         if(context.started){
             _inputAxis = (int)context.ReadValue<Vector2>().y;
             _isInput = true;

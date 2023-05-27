@@ -56,7 +56,7 @@ public partial class RotatableObject : MonoBehaviour
 		SetChildCheckIntoChain(false);
 
 		// 磁石のオブジェクトの場合は磁石の当たり判定を切っておく
-		SetUnionChildCollider(true);
+		SetUnionChildCollider(false);
 
 		if (this.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.BoltRotObject)
 		{
@@ -148,6 +148,8 @@ public partial class RotatableObject : MonoBehaviour
 				}
 			}
 
+			Debug.Log("処理");
+			Debug.Log(this.name + _isUnion);
 			// 途中で磁石オブジェクトに当たっていた場合の処理
 			if (_isUnion && !_isHitFloor && !_isChainRot)
 			{
@@ -189,10 +191,12 @@ public partial class RotatableObject : MonoBehaviour
 				// 経過時間と補間用数値を用いて現在進んだ角度から一番近い90単位の角度を算出
 				finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, MidpointRounding.AwayFromZero) * 90;
 				SetReflect(_axisCenterWorldPos, _rotAxis, finishAngle);
+				GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Reflect);
 			}
 
 			if (_isUnion)
 			{
+				Debug.Log("あああ");
 				_isUnion = false;
 				finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, MidpointRounding.AwayFromZero) * 90;
 			}
@@ -237,7 +241,7 @@ public partial class RotatableObject : MonoBehaviour
 				SetChildCheckIntoChain(true);
 				Debug.Log("回転終了");
 				// 止まってる状態のときは磁石オブジェクトの当たり判定を起動
-				SetUnionChildCollider(false);
+				SetUnionChildCollider(true);
 			}
 
 			if (_isHitFloor)
