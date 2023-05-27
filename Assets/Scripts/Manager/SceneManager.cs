@@ -130,6 +130,8 @@ namespace SuzumuraTomoki {
 			beforeSceneNumber = currentSceneNumber;
 			currentSceneNumber = sceneNumber;
 			Fader.instance.FadeOut(sceneNumber);
+			GameSoundManager.Instance.StopGameBGMWithFade(Fader.instance.fadeTime);
+			GameSoundManager.Instance.StopGameSEWithFade(Fader.instance.fadeTime);
 			return true;
 		}
 
