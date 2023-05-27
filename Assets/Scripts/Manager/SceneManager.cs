@@ -17,13 +17,13 @@ namespace SuzumuraTomoki {
         }
 
 		//statics
+		static public int _currentStageNum = 1;
 		static public bool missionFailed = false;
 		static public bool missionClear = false;//同じ状態を表す変数がふたつあるのは奇妙だが、締め切りが近いため変更箇所を少なくするため
 
 		static private SceneManager _instance = null;
 		static private UnityEngine.InputSystem.InputActionMap _playerInput = null;
 		static private TitleInitState _titleInitStatet = TitleInitState.TITLE;
-		static private int _lastStageNum = 0;
 
 		/*****静的インターフェイス（公開メンバ）*******/
 
@@ -76,7 +76,7 @@ namespace SuzumuraTomoki {
 
 			bool flg = instance.LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
 			if(flg) {
-				_lastStageNum = stageNumber;
+				_currentStageNum = stageNumber;
 			}
 			return flg;
 		}
@@ -103,9 +103,9 @@ namespace SuzumuraTomoki {
 
 		static public void LoadNextScene()
 		{
-            if (!LoadStage(_lastStageNum + 1))
+            if (!LoadStage(_currentStageNum + 1))
             {
-				if(_lastStageNum == instance.stageCount){
+				if(_currentStageNum == instance.stageCount){
 					LoadTitle();
 				}
             }
@@ -130,6 +130,7 @@ namespace SuzumuraTomoki {
 			beforeSceneNumber = currentSceneNumber;
 			currentSceneNumber = sceneNumber;
 			Fader.instance.FadeOut(sceneNumber);
+			SystemSoundManager.Instance.StopBGMWithFade(Fader.instance.fadeTime);
 			GameSoundManager.Instance.StopGameBGMWithFade(Fader.instance.fadeTime);
 			GameSoundManager.Instance.StopGameSEWithFade(Fader.instance.fadeTime);
 			return true;

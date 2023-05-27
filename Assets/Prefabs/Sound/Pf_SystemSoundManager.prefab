@@ -55,11 +55,34 @@ MonoBehaviour:
   - _bgm: 3
     _audioClip: {fileID: 8300000, guid: 1a0eff04bac300b48b28752882a19188, type: 3}
     _volume: 0.1
+  - _bgm: 0
+    _audioClip: {fileID: 8300000, guid: 893c2c714cff0f049b5ce112f13122ca, type: 3}
+    _volume: 0.1
   _seSoundDatas:
   - _systemSe: 2
     _systemSeAudioClip: {fileID: 8300000, guid: b08296e4e5fd9294d81a3adb113aa374,
       type: 3}
-    _systemSeVolume: 0
+    _systemSeVolume: 0.1
+  - _systemSe: 1
+    _systemSeAudioClip: {fileID: 8300000, guid: c8071ef2a106d1242a29a2b278a99c9b,
+      type: 3}
+    _systemSeVolume: 0.1
+  - _systemSe: 4
+    _systemSeAudioClip: {fileID: 8300000, guid: a11906784ffaba14dbf5b5f382296466,
+      type: 3}
+    _systemSeVolume: 0.1
+  - _systemSe: 5
+    _systemSeAudioClip: {fileID: 8300000, guid: a901b2975e5df3e4898b70f5411addd4,
+      type: 3}
+    _systemSeVolume: 0.1
+  - _systemSe: 6
+    _systemSeAudioClip: {fileID: 8300000, guid: 2b22c8f242903464dad90079200d9e43,
+      type: 3}
+    _systemSeVolume: 0.1
+  - _systemSe: 7
+    _systemSeAudioClip: {fileID: 8300000, guid: 2c1ae8866f5124546b05af8e4e9f292e,
+      type: 3}
+    _systemSeVolume: 0.1
   _masterVolume: 1
   _bgmMasterVolume: 1
   _seMasterVolume: 1

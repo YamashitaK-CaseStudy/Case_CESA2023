@@ -105,6 +105,8 @@ public class GameSESoundData
         Bomb,
         Conveyor,
         Shutter,
+        Reflect,
+        Projection,
      }
 
     public GameSE _gameSe;

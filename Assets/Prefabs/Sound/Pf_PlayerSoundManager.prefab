@@ -48,7 +48,7 @@ MonoBehaviour:
   _gameSeAudioSource: {fileID: -1718385765444790904}
   _gameSeSoundDatas:
   - _playerSe: 2
-    _playerSeAudioClip: {fileID: 8300000, guid: 2a7b90fbeda7f534cba8bf5c5102b227,
+    _playerSeAudioClip: {fileID: 8300000, guid: 7c5d67b8b0ab0994385e8b423f04b4ee,
       type: 3}
     _playerSeVolume: 0.1
   - _playerSe: 1
@@ -61,6 +61,14 @@ MonoBehaviour:
     _playerSeVolume: 0.1
   - _playerSe: 0
     _playerSeAudioClip: {fileID: 8300000, guid: e997ee28d13be7842b2d1c812f48fff3,
+      type: 3}
+    _playerSeVolume: 0.1
+  - _playerSe: 4
+    _playerSeAudioClip: {fileID: 8300000, guid: 3ca1acd74b7888843a00bd901b81127a,
+      type: 3}
+    _playerSeVolume: 0.1
+  - _playerSe: 5
+    _playerSeAudioClip: {fileID: 8300000, guid: 1da71fbe98d151b4c927d2ed8825f5fe,
       type: 3}
     _playerSeVolume: 0.1
   _masterVolume: 1
