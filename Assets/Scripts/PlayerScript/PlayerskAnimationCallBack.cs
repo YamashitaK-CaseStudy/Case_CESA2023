@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerskAnimationCallBack : MonoBehaviour{
 
@@ -12,6 +13,9 @@ public class PlayerskAnimationCallBack : MonoBehaviour{
 
     // 大ジャンプ出来るまでの待ちフラグ
     private bool _isBigJumpValid = false;
+
+    // ジャンプ時のエフェクトフラグ
+    private bool _isJumpEffectPlay = false;
 
     public void AnimRotStart() {
         //Debug.Log("回転アニメーション開始");
@@ -54,6 +58,18 @@ public class PlayerskAnimationCallBack : MonoBehaviour{
         PlayerSoundManager.Instance.PlayPlayerSE(PlayerSESoundData.PlayerSE.Rotation);
     }
 
+    // プレイヤージャンプ時のエフェクト起動開始
+    public void PlayerJumpEffectPlay() {
+        // エフェクトを起動する
+        _isJumpEffectPlay = true;
+    }
+
+    // プレイヤージャンプ時のエフェクト停止
+    public void PlayerJumpEffectStop() {
+        // エフェクトを起動する
+         _isJumpEffectPlay = false;
+    }
+
     // Getter
     public bool GetIsRotationAnimPlay {
         get { return _isRotationAnimPlay; }
@@ -65,5 +81,9 @@ public class PlayerskAnimationCallBack : MonoBehaviour{
 
     public bool GetIsBigJumpVaild {
         get { return _isBigJumpValid; }
+    }
+
+    public bool GetIsJumpEffectPlay {
+        get { return _isJumpEffectPlay; }
     }
 }
