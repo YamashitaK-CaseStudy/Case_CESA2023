@@ -27,6 +27,7 @@ public class ResultMenu : MonoBehaviour
     }
 
     void Input(){
+        if(this.gameObject.activeSelf == false) return;
         if(_isInput){
             _dispImageNum -= _inputAxis;
             if(_dispImageNum == 3) _dispImageNum = 0;
@@ -37,7 +38,8 @@ public class ResultMenu : MonoBehaviour
     }
 
     public void OnDecision(InputAction.CallbackContext context){
-        if(!context.performed)
+        if(this.gameObject.activeSelf == false) return;
+        if(!context.performed) return;
         switch (_dispImageNum){
             case 0: // NextStage
             SuzumuraTomoki.SceneManager.LoadNextScene();
