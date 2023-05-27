@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.VFX;
 
 public class RespawnCollider : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class RespawnCollider : MonoBehaviour
 	[SerializeField] private Vector3 _respawnPos;
 	[SerializeField] private float _waitTimeBeforeFade;
 	[SerializeField] private Cinemachine.CinemachineVirtualCamera _respawnVCam;
+	[SerializeField] private VisualEffect _explosionEf;
 	private Cinemachine.CinemachineVirtualCamera _playerVCam;
 	private bool _isHit = false;
 	private bool _respawnWait = false;
@@ -74,6 +76,9 @@ public class RespawnCollider : MonoBehaviour
 
 		// ここで爆発アニメーション入れて
 		GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+		_explosionEf.transform.position = _playerObj.transform.position;
+		// エフェクト再生
+		_explosionEf.SendEvent("OnPlay");
 		_playerObjComp.GetAnimator.SetTrigger("GameOver");
 
 		_playerVCam.Follow = null;

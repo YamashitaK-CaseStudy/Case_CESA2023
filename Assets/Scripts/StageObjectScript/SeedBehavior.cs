@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 using DG.Tweening;
 
 public class SeedBehavior : MonoBehaviour
@@ -10,6 +11,7 @@ public class SeedBehavior : MonoBehaviour
     GameObject _child;
     Vector3 _childPos;
     float ypos;
+    [SerializeField] VisualEffect _GetEffect;
     private void Awake()
     {
         //‘”‚ð‰Â•Ï’·‚É‚·‚é‚È‚ç
@@ -25,14 +27,23 @@ public class SeedBehavior : MonoBehaviour
         {
             UiSeedBehavior.ObtaineSeed();
             _isOnce = true;
+
+            _GetEffect.transform.position = this.transform.position;
+            _GetEffect.transform.localEulerAngles = this.transform.localEulerAngles;
+            _GetEffect.SendEvent("OnPlay");
+
             ypos = other.transform.position.y;
-            this.transform.position = new Vector3(this.transform.position.x, ypos + 1f, this.transform.position.z);
+            var pos = new Vector3(this.transform.position.x, ypos + 1f, this.transform.position.z);
+            this.transform.DOMove(pos,0.5f);
             _child.transform.position = _childPos;
 
             this.transform.DORotate(new Vector3(0f, 180f, 0f), 0.25f).OnComplete(OnCompleteRotate);
 
             //1.5??????
-            DOVirtual.DelayedCall(1.5f, ()=> Destroy(gameObject));
+            DOVirtual.DelayedCall(1.0f, ()=> Destroy(gameObject));
+
+            // SE
+            PlayerSoundManager.Instance.PlayPlayerSE(PlayerSESoundData.PlayerSE.GetSeed);
         }
     }
 

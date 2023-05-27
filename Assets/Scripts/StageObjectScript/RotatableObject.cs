@@ -31,6 +31,7 @@ public partial class RotatableObject : MonoBehaviour{
 	// Start is called before the first frame update
 	void Start(){
 		_observer = GameObject.FindWithTag("Observer");
+		_isUnion = false;
 		StartFuncSpin();
 		//StartSettingOtherHit();
 		// 自身の回転軸の向きを正規化しとく

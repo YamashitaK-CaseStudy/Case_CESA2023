@@ -78,7 +78,7 @@ public partial class Player : MonoBehaviour{
             LockFreamMassSetActive(_lockObject,false);
             _isLock = false;
             _upperrayCheck.SetDistacne(0.7f);
-            Debug.Log("ブロックロック解除");
+//            Debug.Log("ブロックロック解除");
         }
       
         // Lock中
@@ -93,7 +93,7 @@ public partial class Player : MonoBehaviour{
             var rotatbleComp = _lockObject.GetComponent<RotatableObject>();
             var rotatbleKind = _lockObject.GetComponent<RotObjkinds>();
 
-            Debug.Log("ブロックの種類" + rotatbleKind);
+//            Debug.Log("ブロックの種類" + rotatbleKind);
 
             // 下の回転オブジェクトを参照
             if (_blockPriorty == BlockPriorty.Bottom) {

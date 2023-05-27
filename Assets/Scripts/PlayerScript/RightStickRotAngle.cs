@@ -72,7 +72,7 @@ public class RightStickRotAngle : MonoBehaviour
 
         var value = _playerInput.actions["RotaionSelect"].ReadValue<Vector2>();
 
-        Debug.Log("スティック" + value);
+//        Debug.Log("スティック" + value);
 
         if(value.magnitude > _deadzone) {
 
