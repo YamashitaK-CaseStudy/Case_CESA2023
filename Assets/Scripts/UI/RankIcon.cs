@@ -24,7 +24,7 @@ public class RankIcon : MonoBehaviour
 
     private void Start()
     {
-        var score = SelectFilmBehavior.seedScore;
+        var score = UiSeedBehavior.seedScore;
         _seedObtained = score.obtained;
         _nowDispNum = 0;
 
@@ -36,36 +36,43 @@ public class RankIcon : MonoBehaviour
         ChangeIcon(_nowDispNum - 1);
     }
 
-    private void Update(){
-        if(_isFinish) return;
-        if(_isChange){
+    private void Update()
+    {
+        if (_isFinish) return;
+        if (_isChange)
+        {
             _nowDispNum += 1;
             Debug.Log(_nowDispNum);
             ChangeIcon(_nowDispNum - 1);
             _seedScoreIcon.ChangeIcon(_nowDispNum);
-            _isOnce= false;
+            _isOnce = false;
             _isChange = false;
-        }else{
-            if(!_isOnce){
+        }
+        else
+        {
+            if (!_isOnce)
+            {
                 var waitTime = 0.5f + _nowDispNum * 0.1f;
                 this.transform.DOScale(new Vector3(1.0f, 1.0f, 1.0f), waitTime);
                 _seedScoreIcon.transform.DORotate(Vector3.up * 180f, waitTime / 2f);
-                DOVirtual.DelayedCall(0.25f, ()=> _seedScoreIcon.transform.DORotate(Vector3.up * 0f, waitTime / 2f));
-                if(_nowDispNum == _seedObtained){
+                DOVirtual.DelayedCall(0.25f, () => _seedScoreIcon.transform.DORotate(Vector3.up * 0f, waitTime / 2f));
+                if (_nowDispNum == _seedObtained)
+                {
                     _isFinish = true;
-                    DOVirtual.DelayedCall(1.1f, ()=> this.transform.root.gameObject.GetComponent<ResultEffect>().FinishEvaluation());
+                    DOVirtual.DelayedCall(1.1f, () => this.transform.root.gameObject.GetComponent<ResultEffect>().FinishEvaluation());
                     return;
                 }
-                DOVirtual.DelayedCall(waitTime, ()=> _isChange = true);
+                DOVirtual.DelayedCall(waitTime, () => _isChange = true);
                 _isOnce = true;
             }
         }
 
     }
 
-    private void ChangeIcon(int score){
+    private void ChangeIcon(int score)
+    {
         _image.sprite = _rankIconResourseArray[score];
-        _image.transform.localScale = new Vector3(2.0f,2.0f,2.0f);
+        _image.transform.localScale = new Vector3(2.0f, 2.0f, 2.0f);
     }
 
     [SerializeField] private Sprite[] _rankIconResourseArray = new Sprite[5];

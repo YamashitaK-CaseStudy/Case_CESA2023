@@ -58,8 +58,17 @@ public class UiSeedBehavior : MonoBehaviour
 
     }
 
+    static public SeedScore seedScore
+    {
+        get
+        {
+            return _seedScore;
+        }
+    }
+
     static private int _totalSeeds = 0;
     static private UiSeedBehavior _instance = null;
+    static private SeedScore _seedScore;
 
     /*ŒöŠJƒƒ“ƒo*/
 
@@ -90,6 +99,9 @@ public class UiSeedBehavior : MonoBehaviour
 
     private void OnDestroy()
     {
+        _seedScore.obtained = _instance._countObtained;
+        _seedScore.total = (SeedIconData.TotalCountType)(_totalSeeds - SeedIconData.MIN_TOTAL);
+
         if (!SuzumuraTomoki.SceneManager.missionClear)
         {
             return;
@@ -97,7 +109,7 @@ public class UiSeedBehavior : MonoBehaviour
 
         SeedScore score = SelectFilmBehavior.seedScore;
 
-        if(score.obtained >= _countObtained)
+        if (score.obtained >= _countObtained)
         {
             return;
         }
