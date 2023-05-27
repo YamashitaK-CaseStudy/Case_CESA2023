@@ -83,6 +83,10 @@ public class SystemSESoundData {
         Cancel,
         Select,
         Error,
+        Decision1,
+        Decision2,
+        Decision3,
+        Failed,
     }
 
     public SystemSE _systemSe;

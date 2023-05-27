@@ -45,7 +45,9 @@ public class PlayerSESoundData
         Move,
         Lock,
         Jump,
-        Rotation
+        Rotation,
+        Moter,
+        GetSeed,
     }
 
     public PlayerSE _playerSe;
