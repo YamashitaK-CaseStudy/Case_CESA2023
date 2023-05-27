@@ -18,6 +18,7 @@ public partial class RotObjUnion : MonoBehaviour{
         }
 
         _parentRotObjComp = this.transform.root.gameObject.GetComponent<RotatableObject>();
+        _parentRotObjComp._isUnion = false;
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -25,6 +26,7 @@ public partial class RotObjUnion : MonoBehaviour{
         GetRotateObject(other.gameObject);
         if(other.transform.root.gameObject.tag != "RotateObject") return;
         if(this.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
+        //Debug.Log( _parentRotObjComp.name + _parentRotObjComp._isUnion);
         if(_parentRotObjComp._isUnion)return;
         _parentRotObjComp._isUnion = true;
     }

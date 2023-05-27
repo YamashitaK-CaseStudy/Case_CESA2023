@@ -104,6 +104,7 @@ public class GameSESoundData
         Spark,
         Bomb,
         Conveyor,
+        Shutter,
      }
 
     public GameSE _gameSe;

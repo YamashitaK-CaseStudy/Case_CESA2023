@@ -17,6 +17,8 @@ public class Goal : MonoBehaviour
 		_isGoalEffect = true;
 		SuzumuraTomoki.SceneManager.playerInput.Disable();
 		_resultVCam.Priority = 11;
+
+		GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Shutter);
 	}
 
 	public void Update(){

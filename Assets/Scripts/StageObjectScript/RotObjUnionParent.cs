@@ -32,7 +32,7 @@ public partial class RotatableObject : MonoBehaviour{
 	}
 	// 合体が終了したことを知らせる
 	public void FinishUnion(){
-		SetUnionChildCollider(true);
+		SetUnionChildCollider(false);
 	}
 
 	void SetUnionChildCollider(bool flg){

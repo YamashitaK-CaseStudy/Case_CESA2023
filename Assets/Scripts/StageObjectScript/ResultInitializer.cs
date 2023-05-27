@@ -10,8 +10,6 @@ public class ResultInitializer : MonoBehaviour
         {
             _win.SetActive(false);
             _lose.SetActive(true);
-            _uiScore.SetActive(false);
-            _uiRank.SetActive(false);
 
             SuzumuraTomoki.SceneManager.missionFailed = false;
             return;
@@ -37,6 +35,4 @@ public class ResultInitializer : MonoBehaviour
 
     [SerializeField] private GameObject _win;
     [SerializeField] private GameObject _lose;
-    [SerializeField] private GameObject _uiScore;
-    [SerializeField] private GameObject _uiRank;
 }

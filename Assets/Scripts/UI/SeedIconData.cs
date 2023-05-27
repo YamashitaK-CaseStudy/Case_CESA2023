@@ -38,6 +38,11 @@ public class SeedIconData : ScriptableObject
         return _spriteArray[(int)seedScore.total]._spriteList[seedScore.obtained];
     }
 
+    public Sprite GetIcon(int seedScore)
+    {
+        return _spriteArray[0]._spriteList[seedScore];
+    }
+
     /*”ñŒöŠJ*/
     [SerializeField] private SpriteList[] _spriteArray;
 }

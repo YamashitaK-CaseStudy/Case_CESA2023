@@ -16,6 +16,7 @@ public partial class RotatableObject : MonoBehaviour
 	protected Vector3 _oldPos;
 	public float _hitDelaySpeed = 0;
 	bool _collison = false;
+	bool _isChainRot = false;
 	public void StartRotate(Vector3 rotCenter, Vector3 rotAxis, int rotAngle)
 	{
 		if (_isSpin || _isRotating)
@@ -55,7 +56,7 @@ public partial class RotatableObject : MonoBehaviour
 		SetChildCheckIntoChain(false);
 
 		// 磁石のオブジェクトの場合は磁石の当たり判定を切っておく
-		SetUnionChildCollider(false);
+		SetUnionChildCollider(true);
 
 		if (this.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.BoltRotObject)
 		{
@@ -103,6 +104,7 @@ public partial class RotatableObject : MonoBehaviour
 		}
 		Debug.Log("連鎖回転");
 		Debug.Log(rotAngle);
+		_isChainRot = true;
 		StartRotate(rotCenter, rotAxis, rotAngle);
 	}
 
@@ -147,7 +149,7 @@ public partial class RotatableObject : MonoBehaviour
 			}
 
 			// 途中で磁石オブジェクトに当たっていた場合の処理
-			if (_isUnion && !_isHitFloor)
+			if (_isUnion && !_isHitFloor && !_isChainRot)
 			{
 				isFinish = true;
 				requiredDeltaTime -= (_elapsedTime - 1); // 補正
@@ -210,6 +212,8 @@ public partial class RotatableObject : MonoBehaviour
 			// 向き更新
 			this.transform.rotation = qtAngleAxis * _oldRotAngle;
 
+			_isChainRot  = false;
+
 			// プレイヤー起因の回転かを判定
 			if (_playerTransform != null)
 			{
@@ -233,7 +237,7 @@ public partial class RotatableObject : MonoBehaviour
 				SetChildCheckIntoChain(true);
 				Debug.Log("回転終了");
 				// 止まってる状態のときは磁石オブジェクトの当たり判定を起動
-				SetUnionChildCollider(true);
+				SetUnionChildCollider(false);
 			}
 
 			if (_isHitFloor)
