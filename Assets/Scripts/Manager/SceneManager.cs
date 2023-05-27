@@ -18,10 +18,12 @@ namespace SuzumuraTomoki {
 
 		//statics
 		static public bool missionFailed = false;
+		static public bool missionClear = false;//同じ状態を表す変数がふたつあるのは奇妙だが、締め切りが近いため変更箇所を少なくするため
 
 		static private SceneManager _instance = null;
 		static private UnityEngine.InputSystem.InputActionMap _playerInput = null;
 		static private TitleInitState _titleInitStatet = TitleInitState.TITLE;
+		static private int _lastStageNum = 0;
 
 		/*****静的インターフェイス（公開メンバ）*******/
 
@@ -72,6 +74,7 @@ namespace SuzumuraTomoki {
 				return false;
 			}
 
+			_lastStageNum = stageNumber;
 			instance.LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
 			return true;
 		}
@@ -94,6 +97,14 @@ namespace SuzumuraTomoki {
 
 		static public void LoadCurrentScene(){
 			instance.LoadScene(instance.currentSceneNumber);
+		}
+
+		static public void LoadNextScene()
+		{
+            if (!LoadStage(++_lastStageNum))
+            {
+				LoadTitle();
+            }
 		}
 
 		/*****インターフェイス（公開メンバ）*******/

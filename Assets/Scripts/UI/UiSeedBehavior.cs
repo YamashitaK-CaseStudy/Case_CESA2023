@@ -90,6 +90,11 @@ public class UiSeedBehavior : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (!SuzumuraTomoki.SceneManager.missionClear)
+        {
+            return;
+        }
+
         SeedScore score = SelectFilmBehavior.seedScore;
 
         if(score.obtained >= _countObtained)

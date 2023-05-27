@@ -62,6 +62,18 @@ public class GameSoundManager : MonoBehaviour
         _gameSeAudioSource.volume = data._gameSeVolume * _seMasterVolume * _masterVolume;
         _gameSeAudioSource.PlayOneShot(data._gameSeAudioClip);
     }
+    public void PlayGameSEWithFade(GameSESoundData.GameSE se , float vol , float duration) {
+        GameSESoundData data = _gameSeSoundDatas.Find(data => data._gameSe == se);
+        _gameBgmAudioSource.loop = true;
+        _gameBgmAudioSource.clip = data._gameSeAudioClip;
+        _gameBgmAudioSource.volume = 0;
+        _gameBgmAudioSource.Play();
+        _gameBgmAudioSource.DOFade(vol, duration);
+    }
+
+    public void StopGameSEWithFade(float duration) {
+        _gameBgmAudioSource.DOFade(0, duration);
+    }
 }
 
 
@@ -90,6 +102,8 @@ public class GameSESoundData
         Magnet,
         Chain,
         Spark,
+        Bomb,
+        Conveyor,
      }
 
     public GameSE _gameSe;
