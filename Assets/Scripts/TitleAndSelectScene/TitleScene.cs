@@ -24,6 +24,7 @@ public class TitleScene : MonoBehaviour
 	{
         if (SceneManager.titleInitState == SceneManager.TitleInitState.STAGE_SELECT)
         {
+            _titleUI.SetActive(false);
             _stageSelectUI.SetActive(true);
             return;
         }

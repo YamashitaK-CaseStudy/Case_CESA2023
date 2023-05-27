@@ -116,7 +116,12 @@ public class SelectScene : MonoBehaviour
 
     // ステージ番号を減らす
     private void DecreaseStageNum(InputAction.CallbackContext context){
-		if (SuzumuraTomoki.SceneManager._currentStageNum > 0)
+        if (_stopInput)
+        {
+            return;
+        }
+
+        if (SuzumuraTomoki.SceneManager._currentStageNum > 1)
 		{
             SuzumuraTomoki.SceneManager._currentStageNum--;
             _scrollTotalAmount += _scroolAmount;
@@ -128,7 +133,13 @@ public class SelectScene : MonoBehaviour
     // ステージ番号を増やす
     private void IncreaseStageNum(InputAction.CallbackContext context)
     {
-		if (SuzumuraTomoki.SceneManager._currentStageNum < STAGE_NUM)
+        if (_stopInput)
+        {
+            return;
+        }
+
+
+        if (SuzumuraTomoki.SceneManager._currentStageNum < STAGE_NUM)
 		{
             SuzumuraTomoki.SceneManager._currentStageNum++;
             _scrollTotalAmount -= _scroolAmount;
@@ -145,6 +156,8 @@ public class SelectScene : MonoBehaviour
         }
 
         bool success = SuzumuraTomoki.SceneManager.LoadStage(SuzumuraTomoki.SceneManager._currentStageNum);
+
+        SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Decision3);
 
         if (!success)
         {
