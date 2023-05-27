@@ -9,7 +9,7 @@ public class RotObjUnionObtherber : MonoBehaviour{
     public bool _isUseUnion;
     [SerializeField] private RotObjObserver _rotObserver = null;
 
-    void Update() {
+    void FixedUpdate() {
         if(!_isUseUnion) return;
 
         if (_unionMaterials.Count < 2) {

@@ -116,6 +116,9 @@ public partial class Player : MonoBehaviour {
                 _isJumpNowflg = true;
                 _isJumpflg = false;
             }
+
+            // 地面についてる時は煙エフェクト停止
+           
         }
 
        // Debug.Log("ジャンプ中" + _isJumpNowflg);

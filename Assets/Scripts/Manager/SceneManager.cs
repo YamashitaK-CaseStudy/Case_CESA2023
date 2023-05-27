@@ -74,9 +74,11 @@ namespace SuzumuraTomoki {
 				return false;
 			}
 
-			_lastStageNum = stageNumber;
-			instance.LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
-			return true;
+			bool flg = instance.LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
+			if(flg) {
+				_lastStageNum = stageNumber;
+			}
+			return flg;
 		}
 
 		static public void LoadTitle() {
@@ -101,9 +103,11 @@ namespace SuzumuraTomoki {
 
 		static public void LoadNextScene()
 		{
-            if (!LoadStage(++_lastStageNum))
+            if (!LoadStage(_lastStageNum + 1))
             {
-				LoadTitle();
+				if(_lastStageNum == instance.stageCount){
+					LoadTitle();
+				}
             }
 		}
 
@@ -117,15 +121,16 @@ namespace SuzumuraTomoki {
 
 		/*************“à•”ŽÀ‘•***************/
 
-		private void LoadScene(int sceneNumber) {
+		private bool LoadScene(int sceneNumber) {
 			if(Fader.state != Fader.State.NONE)
             {
-				return;
+				return false;
             }
 			playerInput.Disable();
 			beforeSceneNumber = currentSceneNumber;
 			currentSceneNumber = sceneNumber;
 			Fader.instance.FadeOut(sceneNumber);
+			return true;
 		}
 
 		private IEnumerator LoadSceneAsync(int sceneNumber) {
