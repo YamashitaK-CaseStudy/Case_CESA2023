@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class BlinklingText : MonoBehaviour
 {
@@ -38,5 +39,10 @@ public class BlinklingText : MonoBehaviour
     {
         _tmp.color = Color.Lerp(_startColor, _endColor, Mathf.PingPong(Time.time / _duration, 1.0f));
     }
+
+    void Enter()
+	{
+        
+	}
 }
 
