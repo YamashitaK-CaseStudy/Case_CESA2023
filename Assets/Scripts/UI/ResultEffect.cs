@@ -7,6 +7,8 @@ public class ResultEffect : MonoBehaviour
     GameObject _rank;
     GameObject _seed;
     GameObject _menu;
+    GameObject _textClear;
+    GameObject _textFailed;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,12 @@ public class ResultEffect : MonoBehaviour
                 case "Menu":
                 _menu = obj;
                 break;
+                case "TextClear":
+                _textClear = obj;
+                break;
+                case "TextFailed":
+                _textFailed = obj;
+                break;
                 default:
                 Debug.LogError("なんそれ");
                 break;
@@ -31,6 +39,8 @@ public class ResultEffect : MonoBehaviour
         _rank.SetActive(false);
         _seed.SetActive(false);
         _menu.SetActive(false);
+        _textClear.SetActive(false);
+        _textFailed.SetActive(false);
     }
 
     void ActiveEvaluation(){
@@ -38,13 +48,27 @@ public class ResultEffect : MonoBehaviour
         _seed.SetActive(true);
     }
 
+    void ActiveClear(){
+        _textClear.SetActive(true);
+    }
+
+    void ActiveFailed(){
+        _textFailed.SetActive(true);
+        ActiveMenu();
+    }
+
     void ActiveMenu(){
         _menu.SetActive(true);
     }
 
-    public void FinishAnimation(){
-        ActiveEvaluation();
-        SystemSoundManager.Instance.PlayBGM(BGMSoundData.BGM.Result);
+    public void FinishAnimation(bool clearFlg){
+        if(clearFlg){
+            SystemSoundManager.Instance.PlayBGM(BGMSoundData.BGM.Result);
+            ActiveClear();
+            ActiveEvaluation();
+        }else{
+            ActiveFailed();
+        }
     }
 
     public void FinishEvaluation(){
