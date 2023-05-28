@@ -29,11 +29,7 @@ public class RankIcon : MonoBehaviour
         _nowDispNum = 0;
 
         _seedScoreIcon.ChangeIcon(_nowDispNum);
-        if (_seedObtained == 0)
-        {
-            _nowDispNum = 1;
-        }
-        ChangeIcon(_nowDispNum - 1);
+        ChangeIcon(_nowDispNum);
     }
 
     private void Update(){
