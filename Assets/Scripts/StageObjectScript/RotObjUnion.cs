@@ -6,7 +6,6 @@ public partial class RotObjUnion : MonoBehaviour{
 
     bool _isStartDoOnce = false;
     RotObjUnionObtherber _obtherber = null;
-    private RotatableObject _parentRotObjComp = null;
     [SerializeField]private Collider _unionColliderX;
     [SerializeField]private Collider _unionColliderY;
     [SerializeField]private Collider _unionColliderZ;
@@ -16,8 +15,6 @@ public partial class RotObjUnion : MonoBehaviour{
             _isStartDoOnce = true;
             _obtherber = GameObject.FindGameObjectWithTag("Observer").GetComponent<RotObjUnionObtherber>();
         }
-
-        _parentRotObjComp = this.transform.root.gameObject.GetComponent<RotatableObject>();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -50,6 +47,7 @@ public partial class RotObjUnion : MonoBehaviour{
 
             // IuU[o[ÉfŢđé
             _obtherber.AddunionMaterial(_rotObj);
+            Debug.Log("このオブジェクト送られた:" + _rotObj.name);
             if(obj.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
             EffectGenerate(obj.gameObject);
             GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Magnet);

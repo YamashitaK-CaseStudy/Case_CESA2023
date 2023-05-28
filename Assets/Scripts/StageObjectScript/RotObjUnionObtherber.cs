@@ -7,9 +7,14 @@ public class RotObjUnionObtherber : MonoBehaviour{
     // 回転オブジェクトの合体素材
     private List<GameObject> _unionMaterials = new List<GameObject>();
     public bool _isUseUnion;
+    HitStopController _ctrl;
     [SerializeField] private RotObjObserver _rotObserver = null;
+    void Start(){
+        _ctrl = this.gameObject.GetComponent<HitStopController>();
+    }
 
     void FixedUpdate() {
+        if(_ctrl._isHitStop) return;
         if(!_isUseUnion) return;
 
         if (_unionMaterials.Count < 2) {

@@ -29,7 +29,6 @@ public class SeedBehavior : MonoBehaviour
             _isOnce = true;
 
             _GetEffect.transform.position = this.transform.position;
-            _GetEffect.transform.localEulerAngles = this.transform.localEulerAngles;
             _GetEffect.SendEvent("OnPlay");
 
             ypos = other.transform.position.y;
