@@ -18,17 +18,16 @@ public partial class RotObjUnion : MonoBehaviour{
         }
 
         _parentRotObjComp = this.transform.root.gameObject.GetComponent<RotatableObject>();
-        _parentRotObjComp._isUnion = false;
     }
 
     private void OnTriggerEnter(Collider other) {
-        // ��������RotateObject���擾
+        // ˝Á˝RotateObjectđćž
         GetRotateObject(other.gameObject);
         if(other.transform.root.gameObject.tag != "RotateObject") return;
         if(this.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
-        //Debug.Log( _parentRotObjComp.name + _parentRotObjComp._isUnion);
-        if(_parentRotObjComp._isUnion)return;
-        _parentRotObjComp._isUnion = true;
+        var otherComp = other.transform.root.gameObject.transform.GetComponent<RotatableObject>();
+        if(otherComp._isUnion)return;
+        otherComp._isUnion = true;
     }
 
     // private void OnTriggerStay(Collider other) {
@@ -38,10 +37,10 @@ public partial class RotObjUnion : MonoBehaviour{
     //     Debug.Log(other.name);
     //     _parentRotObjComp.PreparationUinon();
     //     GetRotateObject(other.gameObject);
-    //     Debug.Log("���̏��������");
+    //     Debug.Log("ĚüéĹ");
     // }
 
-    // ��]�I�u�W�F�N�g�̎擾
+    // ń]IuWFNgĚćž
     private void GetRotateObject(GameObject obj) {
 
         if (obj.transform.root.gameObject.tag == "RotateObject") {
@@ -49,7 +48,7 @@ public partial class RotObjUnion : MonoBehaviour{
 
             var _rotObj = obj.transform.root.gameObject;
 
-            // �I�u�U�[�o�[�ɑf�ނ𑗂�
+            // IuU[o[ÉfŢđé
             _obtherber.AddunionMaterial(_rotObj);
             if(obj.transform.root.gameObject.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.UnionRotObject) return;
             EffectGenerate(obj.gameObject);

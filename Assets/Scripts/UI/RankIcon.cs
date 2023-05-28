@@ -26,11 +26,10 @@ public class RankIcon : MonoBehaviour
     {
         var score = UiSeedBehavior.seedScore;
         _seedObtained = score.obtained;
-        _nowDispNum = _seedObtained;
-        Debug.Log(_seedObtained);
+        _nowDispNum = 0;
 
         _seedScoreIcon.ChangeIcon(_nowDispNum);
-        if (_nowDispNum == 0)
+        if (_seedObtained == 0)
         {
             _nowDispNum = 1;
         }

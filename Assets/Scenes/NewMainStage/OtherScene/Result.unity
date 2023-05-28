@@ -1810,9 +1810,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2089180832030824268, guid: bb6f8b2b7c78a2648ae004b1c22a885b,
         type: 3}
+      propertyPath: _bgmSoundDatas.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2089180832030824268, guid: bb6f8b2b7c78a2648ae004b1c22a885b,
+        type: 3}
+      propertyPath: _bgmSoundDatas.Array.data[3]._volume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2089180832030824268, guid: bb6f8b2b7c78a2648ae004b1c22a885b,
+        type: 3}
       propertyPath: _seSoundDatas.Array.data[1]._systemSe
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2089180832030824268, guid: bb6f8b2b7c78a2648ae004b1c22a885b,
+        type: 3}
+      propertyPath: _bgmSoundDatas.Array.data[3]._audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 893c2c714cff0f049b5ce112f13122ca, type: 3}
     - target: {fileID: 2089180832030824268, guid: bb6f8b2b7c78a2648ae004b1c22a885b,
         type: 3}
       propertyPath: _seSoundDatas.Array.data[1]._systemSeAudioClip

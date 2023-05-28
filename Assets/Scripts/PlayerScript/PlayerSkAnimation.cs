@@ -71,7 +71,7 @@ public partial class Player : MonoBehaviour{
         }
 
        
-        Debug.Log("速度" + Math.Abs(_speedx));
+        //Debug.Log("速度" + Math.Abs(_speedx));
         // 移動時のエフェクト起動
         if (Math.Abs(_speedx) > 0 && _groundCheck.IsGround) {
 
@@ -94,7 +94,7 @@ public partial class Player : MonoBehaviour{
             _MoveEffectdoOnce = false;
         }
 
-        Debug.Log("エフェクトの個数" + _MoveEffectList.Count);
+        //Debug.Log("エフェクトの個数" + _MoveEffectList.Count);
 
         // ジャンプ中エフェクト発生
         if (_animCallBack.GetIsJumpEffectPlay) {
