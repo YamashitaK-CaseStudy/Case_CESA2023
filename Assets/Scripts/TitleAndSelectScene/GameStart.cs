@@ -11,7 +11,7 @@ public class GameStart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _startFade.FadeOut(3s, ActivaTitle);
+        _startFade.FadeOut(3, ActivaTitle);
     }
 
 	private void ActivaTitle(){
