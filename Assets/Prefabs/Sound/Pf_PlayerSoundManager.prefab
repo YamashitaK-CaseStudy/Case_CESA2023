@@ -71,7 +71,7 @@ MonoBehaviour:
     _playerSeAudioClip: {fileID: 8300000, guid: 1da71fbe98d151b4c927d2ed8825f5fe,
       type: 3}
     _playerSeVolume: 0.1
-  _masterVolume: 1
+  _masterVolume: 3
   _seMasterVolume: 1
 --- !u!82 &-1718385765444790904
 AudioSource:

@@ -48,6 +48,7 @@ public class TitleScene : MonoBehaviour
 
     private void ProcessMoveToSelect(InputAction.CallbackContext context)
 	{
+        SystemSoundManager.Instance.StopBGMWithFade(3.0f);
         _stageSelectUI.SetActive(true);
         _titleUI.SetActive(false);
         _MoveToSelect.performed -= ProcessMoveToSelect;
