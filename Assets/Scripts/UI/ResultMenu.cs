@@ -30,7 +30,7 @@ public class ResultMenu : MonoBehaviour
             }
         }
         _reqTime += Time.deltaTime;
-        if(_reqTime <= 0.1)return;
+        if(_reqTime <= 0.15)return;
         _reqTime = 0f;
         Input();
     }

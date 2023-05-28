@@ -9,12 +9,13 @@ public class RotObjUnionObtherber : MonoBehaviour{
     public bool _isUseUnion;
     HitStopController _ctrl;
     [SerializeField] private RotObjObserver _rotObserver = null;
-    void Start(){
-        _ctrl = this.gameObject.GetComponent<HitStopController>();
-    }
 
     void FixedUpdate() {
-        if(_ctrl._isHitStop) return;
+        if(_ctrl == null){
+            _ctrl = this.gameObject.GetComponent<HitStopController>();
+        }else{
+            if(_ctrl._isHitStop) return;
+        }
         if(!_isUseUnion) return;
 
         if (_unionMaterials.Count < 2) {

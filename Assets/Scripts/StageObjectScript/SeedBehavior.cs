@@ -9,7 +9,6 @@ public class SeedBehavior : MonoBehaviour
     bool _isOnce = false;
     float _reqTime = 0;
     GameObject _child;
-    Vector3 _childPos;
     float ypos;
     [SerializeField] VisualEffect _GetEffect;
     private void Awake()
@@ -17,7 +16,11 @@ public class SeedBehavior : MonoBehaviour
         //ëçêîÇâ¬ïœí∑Ç…Ç∑ÇÈÇ»ÇÁ
         //UiSeedBehavior.IncreaseTotal();
         _child = this.transform.GetChild(0).gameObject;
-        _childPos = _child.transform.localPosition + this.transform.localPosition;
+        Debug.Log(this.transform.position);
+        _GetEffect.transform.parent = null;
+        _GetEffect.transform.position = this.transform.position;
+        Debug.Log(_GetEffect.transform.position);
+        _GetEffect.transform.localEulerAngles = this.transform.localEulerAngles;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,10 +34,9 @@ public class SeedBehavior : MonoBehaviour
             _GetEffect.transform.position = this.transform.position;
             _GetEffect.SendEvent("OnPlay");
 
-            ypos = other.transform.position.y;
-            var pos = new Vector3(this.transform.position.x, ypos + 1f, this.transform.position.z);
+            var pos = this.transform.position;
+            pos.y += 1;
             this.transform.DOMove(pos,0.5f);
-            _child.transform.position = _childPos;
 
             this.transform.DORotate(new Vector3(0f, 180f, 0f), 0.25f).OnComplete(OnCompleteRotate);
 
