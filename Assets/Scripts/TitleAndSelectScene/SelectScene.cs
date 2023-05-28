@@ -8,7 +8,7 @@ public class SelectScene : MonoBehaviour
 {
     public const int STAGE_NUM = 15;
 
-    [SerializeField] private float _scroolAmount = 13.475f;
+    [SerializeField] private float _scrollAmount = 13.475f;
     [SerializeField] private float _scrollSpeed = 3;
     static private float _scrollTotalAmount = 0;
 
@@ -29,6 +29,9 @@ public class SelectScene : MonoBehaviour
 	private void Awake()
 	{
 		_rectTransform = GetComponent<RectTransform>();
+        _scrollTotalAmount = -((SuzumuraTomoki.SceneManager._currentStageNum - 1) * _scrollAmount); 
+        _rectTransform.localPosition = new Vector3(_scrollTotalAmount, 0, 0);
+
         InitInputAction();
     }
 
@@ -86,7 +89,7 @@ public class SelectScene : MonoBehaviour
 
         Vector3 oldPos = _rectTransform.localPosition;
 
-        while (Mathf.Abs(oldPos.x - _rectTransform.localPosition.x) < _scroolAmount)
+        while (Mathf.Abs(oldPos.x - _rectTransform.localPosition.x) < _scrollAmount)
         {
             yield return null;
             _rectTransform.localPosition -= new Vector3(_scrollSpeed * Time.deltaTime, 0, 0);
@@ -104,7 +107,7 @@ public class SelectScene : MonoBehaviour
 
         Vector3 oldPos = _rectTransform.localPosition;
 
-        while (Mathf.Abs(oldPos.x - _rectTransform.localPosition.x) < _scroolAmount)
+        while (Mathf.Abs(oldPos.x - _rectTransform.localPosition.x) < _scrollAmount)
         {
             yield return null;
             _rectTransform.localPosition += new Vector3(_scrollSpeed * Time.deltaTime, 0, 0);
@@ -124,7 +127,7 @@ public class SelectScene : MonoBehaviour
         if (SuzumuraTomoki.SceneManager._currentStageNum > 1)
 		{
             SuzumuraTomoki.SceneManager._currentStageNum--;
-            _scrollTotalAmount += _scroolAmount;
+            _scrollTotalAmount += _scrollAmount;
             StartCoroutine(ScrollLeft());
             
         }
@@ -142,7 +145,7 @@ public class SelectScene : MonoBehaviour
         if (SuzumuraTomoki.SceneManager._currentStageNum < STAGE_NUM)
 		{
             SuzumuraTomoki.SceneManager._currentStageNum++;
-            _scrollTotalAmount -= _scroolAmount;
+            _scrollTotalAmount -= _scrollAmount;
             StartCoroutine(ScrollRight());
 
         }
