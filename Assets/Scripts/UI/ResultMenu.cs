@@ -49,6 +49,10 @@ public class ResultMenu : MonoBehaviour
     public void OnDecision(InputAction.CallbackContext context){
         if(!_isCanInput) return;
         if(!context.performed) return;
+
+        SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Decision1);
+        SystemSoundManager.Instance.StopBGMWithFade(1.5f);
+        SuzumuraTomoki.SceneManager.playerInput.Disable();
         switch (_dispImageNum){
             case 0: // NextStage
             SuzumuraTomoki.SceneManager.LoadNextScene();
@@ -60,8 +64,6 @@ public class ResultMenu : MonoBehaviour
             SuzumuraTomoki.SceneManager.LoadStageSelect();
             break;
         }
-
-        SystemSoundManager.Instance.StopBGMWithFade(1.5f);
     }
     public void OnArrow(InputAction.CallbackContext context){
         if(!_isCanInput) return;
