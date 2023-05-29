@@ -126,6 +126,7 @@ public class SelectScene : MonoBehaviour
 
         if (SuzumuraTomoki.SceneManager._currentStageNum > 1)
 		{
+            SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
             SuzumuraTomoki.SceneManager._currentStageNum--;
             _scrollTotalAmount += _scrollAmount;
             StartCoroutine(ScrollLeft());
@@ -144,6 +145,7 @@ public class SelectScene : MonoBehaviour
 
         if (SuzumuraTomoki.SceneManager._currentStageNum < STAGE_NUM)
 		{
+            SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
             SuzumuraTomoki.SceneManager._currentStageNum++;
             _scrollTotalAmount -= _scrollAmount;
             StartCoroutine(ScrollRight());
@@ -161,6 +163,7 @@ public class SelectScene : MonoBehaviour
         bool success = SuzumuraTomoki.SceneManager.LoadStage(SuzumuraTomoki.SceneManager._currentStageNum);
 
         SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Decision3);
+        SystemSoundManager.Instance.StopBGMWithFade(0.5f);
 
         if (!success)
         {
@@ -172,4 +175,14 @@ public class SelectScene : MonoBehaviour
         _actionDecision.started -= GoToStage;
         _actionDecision.Disable();
     }
+
+    public void StopInput()
+	{
+        _stopInput = true;
+	}
+
+    public void EnableInput()
+	{
+        _stopInput = false;
+	}
 }
