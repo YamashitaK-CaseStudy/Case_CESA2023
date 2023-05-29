@@ -127,7 +127,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2451140557824149215}
         m_TargetAssemblyTypeName: PauseBehaivior, Assembly-CSharp
-        m_MethodName: ExitPause
+        m_MethodName: BackToGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

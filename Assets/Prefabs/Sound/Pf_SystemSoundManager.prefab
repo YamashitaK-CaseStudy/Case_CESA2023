@@ -79,10 +79,14 @@ MonoBehaviour:
     _systemSeAudioClip: {fileID: 8300000, guid: 2b22c8f242903464dad90079200d9e43,
       type: 3}
     _systemSeVolume: 0.1
-  - _systemSe: 7
+  - _systemSe: 8
     _systemSeAudioClip: {fileID: 8300000, guid: 2c1ae8866f5124546b05af8e4e9f292e,
       type: 3}
     _systemSeVolume: 0.1
+  - _systemSe: 7
+    _systemSeAudioClip: {fileID: 8300000, guid: 2cad0272120c4dc4d8a34406b8757f9f,
+      type: 3}
+    _systemSeVolume: 0.3
   _masterVolume: 1
   _bgmMasterVolume: 1
   _seMasterVolume: 1

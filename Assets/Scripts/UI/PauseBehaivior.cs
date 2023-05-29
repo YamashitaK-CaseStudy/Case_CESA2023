@@ -26,10 +26,16 @@ public class PauseBehaivior : MonoBehaviour
         _uiUnit.SetActive(false);
         _playerInput.currentActionMap = SuzumuraTomoki.SceneManager.playerInput;
     }
+    public void BackToGame()
+    {
+        SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Decision5);
+
+        ExitPause();
+    }
 
     public void Restart()
     {
-        GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+        SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Decision5);
 
         ExitPause();
         SuzumuraTomoki.SceneManager.LoadCurrentScene();
@@ -37,7 +43,7 @@ public class PauseBehaivior : MonoBehaviour
 
     public void GoToSelect()
     {
-        GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+        SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Decision5);
 
         ExitPause();
         SuzumuraTomoki.SceneManager.LoadStageSelect();
@@ -71,12 +77,12 @@ public class PauseBehaivior : MonoBehaviour
         switch (_uiUnit.activeSelf)
         {
             case true:
-                GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+                SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Cancel);
 
                 ExitPause();
                 break;
             case false:
-                GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+                SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Cancel);
 
                 _enable = true;
                 Time.timeScale = 0;
@@ -89,7 +95,7 @@ public class PauseBehaivior : MonoBehaviour
 
     private void CallBackCancelButton(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext)
     {
-        GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+        SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Cancel);
 
         ExitPause();
     }
