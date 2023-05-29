@@ -29,12 +29,16 @@ public class PauseBehaivior : MonoBehaviour
 
     public void Restart()
     {
+        GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+
         ExitPause();
         SuzumuraTomoki.SceneManager.LoadCurrentScene();
     }
 
     public void GoToSelect()
     {
+        GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+
         ExitPause();
         SuzumuraTomoki.SceneManager.LoadStageSelect();
     }
@@ -67,9 +71,13 @@ public class PauseBehaivior : MonoBehaviour
         switch (_uiUnit.activeSelf)
         {
             case true:
+                GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+
                 ExitPause();
                 break;
             case false:
+                GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+
                 _enable = true;
                 Time.timeScale = 0;
                 _playerInput.currentActionMap = _inputs.FindActionMap("Pause");
@@ -81,6 +89,8 @@ public class PauseBehaivior : MonoBehaviour
 
     private void CallBackCancelButton(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext)
     {
+        GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Bomb);
+
         ExitPause();
     }
 
