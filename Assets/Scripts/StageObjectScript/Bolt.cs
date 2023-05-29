@@ -361,6 +361,10 @@ public class Bolt : RotatableObject
         for (int i = 1; i < _length; ++i)
         {
             var threadTransform = Instantiate(_threadObject, transform.GetChild(0)).transform;
+            threadTransform.tag = "ThreadObj";
+            var boxCollider = threadTransform.gameObject.AddComponent<BoxCollider>();
+            boxCollider.center = Vector3.zero;
+            boxCollider.size = new Vector3(1, 1, 1);
 
             threadTransform.name = "Thread";
             threadTransform.localPosition = new Vector3(0, -i, 0);

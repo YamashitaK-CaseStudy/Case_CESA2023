@@ -8,12 +8,11 @@ public partial class Player : MonoBehaviour{
 
     [SerializeField] private GameObject _skeletalObj;
     [SerializeField] private PlayerskAnimationCallBack _animCallBack;
-    [SerializeField] private VisualEffect _jumpEffect;
+    [SerializeField] private VisualEffect _jumpEffectRight,_jumpEffectLeft;
     [SerializeField] private VisualEffect _moveEffect;
 
     private Animator _animator;
     private bool _jumpEffectdoOnce = false;
-    private bool _MoveEffectdoOnce = false;
     private List<GameObject> _MoveEffectList = new List<GameObject>();
 
     public Animator GetAnimator {
@@ -74,41 +73,34 @@ public partial class Player : MonoBehaviour{
         //Debug.Log("速度" + Math.Abs(_speedx));
         // 移動時のエフェクト起動
         if (Math.Abs(_speedx) > 0 && _groundCheck.IsGround) {
-
-
             // プレイヤーが反転した時煙生成
             var moveEffect = Instantiate(_moveEffect.gameObject, _moveEffect.transform.position, transform.rotation);
             moveEffect.GetComponent<VisualEffect>().SendEvent("PlayEffect");
             moveEffect.GetComponent<EffectEndDestroy>().EffctStopTimerStart();
-
-            if (!_MoveEffectdoOnce) {
-
-
-
-
-
-                _MoveEffectdoOnce = true;
-            }
-        }
-        else {
-            _MoveEffectdoOnce = false;
         }
 
         //Debug.Log("エフェクトの個数" + _MoveEffectList.Count);
 
         // ジャンプ中エフェクト発生
         if (_animCallBack.GetIsJumpEffectPlay) {
-          
+         
             if (!_jumpEffectdoOnce) {
                 Debug.Log("発生中");
-                _jumpEffect.SendEvent("StopEffect");
-                _jumpEffect.SendEvent("PlayEffect");
+                //_jumpEffect.SendEvent("StopEffect");
+                //_jumpEffect.SendEvent("PlayEffect");
+
+                var jumpEffectL = Instantiate(_jumpEffectLeft.gameObject,  _jumpEffectLeft.transform.position,  _jumpEffectLeft.transform.rotation);
+                var jumpEffectR = Instantiate(_jumpEffectRight.gameObject, _jumpEffectRight.transform.position, _jumpEffectRight.transform.rotation);
+                jumpEffectL.GetComponent<VisualEffect>().SendEvent("PlayEffect");
+                jumpEffectR.GetComponent<VisualEffect>().SendEvent("PlayEffect");
+                jumpEffectL.GetComponent<EffectEndDestroy>().EffctStopTimerStart();
+                jumpEffectR.GetComponent<EffectEndDestroy>().EffctStopTimerStart();
+
                 _jumpEffectdoOnce = true;
             }
         }
-        // 削除
         else {
-            _jumpEffect.SendEvent("StopEffect");
+            //_jumpEffect.SendEvent("StopEffect");
             _jumpEffectdoOnce = false;
         }
     }
