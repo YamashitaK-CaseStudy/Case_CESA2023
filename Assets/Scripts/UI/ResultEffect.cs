@@ -6,7 +6,8 @@ public class ResultEffect : MonoBehaviour
 {
     GameObject _rank;
     GameObject _seed;
-    GameObject _menu;
+    GameObject _menuClear;
+    GameObject _menuFailed;
     GameObject _textClear;
     GameObject _textFailed;
     // Start is called before the first frame update
@@ -21,8 +22,11 @@ public class ResultEffect : MonoBehaviour
                 case "Seed":
                 _seed = obj;
                 break;
-                case "Menu":
-                _menu = obj;
+                case "MenuClear":
+                _menuClear = obj;
+                break;
+                case "MenuFailed":
+                _menuFailed = obj;
                 break;
                 case "TextClear":
                 _textClear = obj;
@@ -38,7 +42,8 @@ public class ResultEffect : MonoBehaviour
 
         _rank.SetActive(false);
         _seed.SetActive(false);
-        _menu.SetActive(false);
+        _menuClear.SetActive(false);
+        _menuFailed.SetActive(false);
         _textClear.SetActive(false);
         _textFailed.SetActive(false);
     }
@@ -54,11 +59,17 @@ public class ResultEffect : MonoBehaviour
 
     void ActiveFailed(){
         _textFailed.SetActive(true);
-        ActiveMenu();
+        ActiveMenu(false);
     }
 
-    void ActiveMenu(){
-        _menu.SetActive(true);
+    void ActiveMenu(bool result){
+        if(result){
+            _menuClear.SetActive(true);
+            _menuClear.GetComponent<ResultMenu>().SetResult(true);
+        }else{
+            _menuFailed.SetActive(true);
+            _menuClear.GetComponent<ResultMenu>().SetResult(false);
+        }
     }
 
     public void FinishAnimation(bool clearFlg){
@@ -72,12 +83,6 @@ public class ResultEffect : MonoBehaviour
     }
 
     public void FinishEvaluation(){
-        ActiveMenu();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ActiveMenu(true);
     }
 }

@@ -196,7 +196,6 @@ public partial class RotatableObject : MonoBehaviour
 
 			if (_isUnion)
 			{
-				Debug.Log("あああ");
 				_isUnion = false;
 				finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, MidpointRounding.AwayFromZero) * 90;
 			}
