@@ -13,6 +13,7 @@ public partial class Player : MonoBehaviour{
 
     // ロックしている時のオブジェクト
     private GameObject _lockObject = null;
+    private GameObject _lockObjectParts = null;
     private bool _isLock = false;
     private BlockPriorty _blockPriorty;
 
@@ -55,7 +56,7 @@ public partial class Player : MonoBehaviour{
             else if (!_isLock) {
 
                 // ブロックの優先度確認
-                _lockObject = BlockPriority(_bottomHitCheck, _frontHitCheck);
+                BlockPriority(_bottomHitCheck, _frontHitCheck);
 
                 // アニメーションの遷移
                 AnimatoinState(true);
@@ -90,15 +91,14 @@ public partial class Player : MonoBehaviour{
                 return;
             }
 
+            var rotatebleboltComp = _lockObject.GetComponent<Bolt>();
             var rotatbleComp = _lockObject.GetComponent<RotatableObject>();
             var rotatbleKind = _lockObject.GetComponent<RotObjkinds>();
-
-//            Debug.Log("ブロックの種類" + rotatbleKind);
 
             // 下の回転オブジェクトを参照
             if (_blockPriorty == BlockPriorty.Bottom) {
 
-                //                Debug.Log("下オブジェクト取得中");
+                // Debug.Log("下オブジェクト取得中");
 
                 // ブロックごとに回転の種類が違うのでKindを使って仕分ける
                 // 通常の黄色ブロックと磁石ブロックはスティックでの操作にて行う
@@ -161,8 +161,6 @@ public partial class Player : MonoBehaviour{
             // 左右の回転オブジェクトを参照
             else if (_blockPriorty == BlockPriorty.Front) {
 
-                //                Debug.Log("左右オブジェクト取得中");
-
                 // ブロックごとに回転の種類が違うのでKindを使って仕分ける
                 // 通常の黄色ブロックと磁石ブロックはスティックでの操作にて行う
                 if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.NomalRotObject || rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.UnionRotObject) {
@@ -170,6 +168,18 @@ public partial class Player : MonoBehaviour{
                     // スティック回転X
                     _stricRotAngle.StickRotX_Update();
                     rotatbleComp.StickRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleX, this.transform);
+                }
+
+                // ボルトブロック操作
+                if (rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) {
+                    if (_lockObjectParts.tag == "ScrewObj") {
+                        if (rotatebleboltComp.upVectorInWorld == Bolt.UpVectorInWorld.HORIZONTAL) {
+                            if (!_backHItCheck.GetIsHit) {
+                                _stricRotAngle.StickRotY_Update();
+                                rotatbleComp.StickRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right, _stricRotAngle.GetStickDialAngleY, this.transform);
+                            }
+                        }
+                    }
                 }
 
                 // 高速回転はスティックの押し込みにて行う
@@ -209,21 +219,24 @@ public partial class Player : MonoBehaviour{
     }
 
     // 下か左右どっちを参照するか関数
-    private GameObject BlockPriority(in RotObjHitCheck _bottom, in RotObjHitCheck _front) {
+    private void BlockPriority(in RotObjHitCheck _bottom, in RotObjHitCheck _front) {
 
         // 下にオブジェクトがあるか確認
         if (_bottom.GetRotObj != null) {
 
             _blockPriorty = BlockPriorty.Bottom;
-            return _bottom.GetRotObj;
+            _lockObject = _bottom.GetRotObj;
+            _lockObjectParts = _bottom.GetRotPartsObj;
         }
         else if (_front.GetRotObj != null) {
             _blockPriorty = BlockPriorty.Front;
-            return _front.GetRotObj;
+            _lockObject = _front.GetRotObj;
+            _lockObjectParts = _front.GetRotPartsObj;
         }
         else {
             _blockPriorty = BlockPriorty.None;
-            return null;
+            _lockObject = null;
+            _lockObjectParts = null;
         }
     }
 
@@ -249,12 +262,15 @@ public partial class Player : MonoBehaviour{
                 // 左右に回転オブジェクトがあった場合のアニメーション
                 else if (_frontHitCheck.GetRotObj != null) {
 
-                    // 左右にボルトがある場合はYのアニメーションの再生をする
-                    if (_frontHitCheck.GetRotObj.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) {
-                        _yBlockLock = true;
+                    if (_frontHitCheck.GetRotPartsObj.tag == "ScrewObj" && _frontHitCheck.GetRotPartsObj.transform.parent.parent.gameObject.GetComponent<Bolt>().upVectorInWorld == Bolt.UpVectorInWorld.HORIZONTAL) {
+                        _xBlockLock = true;
+                    }
+                    else if (_frontHitCheck.GetRotObj.GetComponent<RotObjkinds>()._RotObjKind != RotObjkinds.ObjectKind.BoltRotObject) {
+
+                        _xBlockLock = true;
                     }
                     else {
-                        _xBlockLock = true;
+                        _yBlockLock = true;
                     }
                 }
                 // 下に回転オブジェクトが無くかつ頭にブロックがある場合のアニメーション
@@ -289,15 +305,40 @@ public partial class Player : MonoBehaviour{
     // ロック可能な時のみ表示
     private void LockFreamDisplay(RotObjHitCheck _bottom,RotObjHitCheck _front) {
 
-        if(_bottom.GetRotPartsObj != null) {
-//            Debug.Log("下フレーム");
-            _LockFreamObj.transform.position = _bottom.GetRotPartsObj.transform.position;
-            _LockFreamObj.active = true;
+        if (_bottom.GetRotPartsObj != null) {
+           
+            if(_bottom.GetRotPartsObj.transform.parent.parent.gameObject.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) {
+                if (_bottom.GetRotPartsObj.tag == "ScrewObj" && _bottom.GetRotPartsObj.transform.parent.parent.gameObject.GetComponent<Bolt>().upVectorInWorld == Bolt.UpVectorInWorld.VERTICAL) {
+                    Debug.Log("当たり下" + _bottom.GetRotPartsObj.transform.position);
+                    _LockFreamObj.transform.position = _bottom.GetRotPartsObj.transform.position;
+                    _LockFreamObj.active = true;
+                }
+                else {
+                    _LockFreamObj.active = false;
+                }
+            }
+            else {
+                Debug.Log("当たり下" + _bottom.GetRotPartsObj.transform.position);
+                _LockFreamObj.transform.position = _bottom.GetRotPartsObj.transform.position;
+                _LockFreamObj.active = true;
+            }
         }
         else if(_front.GetRotPartsObj != null) {
-//            Debug.Log("左右フレーム");
-            _LockFreamObj.transform.position = _front.GetRotPartsObj.transform.position;
-            _LockFreamObj.active = true;
+
+            if (_front.GetRotPartsObj.transform.parent.parent.gameObject.GetComponent<RotObjkinds>()._RotObjKind == RotObjkinds.ObjectKind.BoltRotObject) {
+                if (_front.GetRotPartsObj.tag == "ScrewObj" && _front.GetRotPartsObj.transform.parent.parent.gameObject.GetComponent<Bolt>().upVectorInWorld == Bolt.UpVectorInWorld.HORIZONTAL) {
+                    Debug.Log("当たり左右" + _front.GetRotPartsObj);
+                    _LockFreamObj.transform.position = _front.GetRotPartsObj.transform.position;
+                    _LockFreamObj.active = true;
+                }
+                else {
+                    _LockFreamObj.active = false;
+                }
+            }
+            else {
+                _LockFreamObj.transform.position = _front.GetRotPartsObj.transform.position;
+                _LockFreamObj.active = true;
+            }
         }
         else {
             _LockFreamObj.active = false;

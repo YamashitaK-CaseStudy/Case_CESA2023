@@ -74,11 +74,11 @@ namespace SuzumuraTomoki {
 				return false;
 			}
 
-			bool flg = instance.LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
-			if(flg) {
+			bool success = instance.LoadScene(stageNumber + NON_STAGE_SCENES_COUNT - 1);
+			if(success) {
 				_currentStageNum = stageNumber;
 			}
-			return flg;
+			return success;
 		}
 
 		static public void LoadTitle() {
@@ -132,7 +132,6 @@ namespace SuzumuraTomoki {
 			Fader.instance.FadeOut(sceneNumber);
 			GameSoundManager.Instance.StopGameBGMWithFade(Fader.instance.fadeTime);
 			GameSoundManager.Instance.StopGameSEWithFade(Fader.instance.fadeTime);
-			SystemSoundManager.Instance.StopBGMWithFade(Fader.instance.fadeTime);
 			return true;
 		}
 
