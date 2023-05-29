@@ -14,7 +14,11 @@ public class RotObjHitCheck : MonoBehaviour{
     // 当たった回転オブジェクトが変更されたときフラグ
     private bool _ischangeRotHit = false;
 
+    // 当たったオブジェクトの配列
+    private List<GameObject> _onCollisonEnterObjList = new List<GameObject>();
+
     private void OnTriggerEnter(Collider other) {
+
         if (other.transform.parent == null)//対処療法的でよくない
         {
             return;//床などは無視
@@ -40,6 +44,8 @@ public class RotObjHitCheck : MonoBehaviour{
         _rotObj = null;
         _rotPartsObj = null;
         _isRotHit = false;
+
+        _onCollisonEnterObjList.Clear();
     }
 
     public void InitChangeRotHit() {
@@ -51,6 +57,9 @@ public class RotObjHitCheck : MonoBehaviour{
 
         if (obj.transform.parent.parent.gameObject.tag == "RotateObject") {
 
+            Debug.Log("当たり判定" + obj);
+           // _onCollisonEnterObjList.Add(obj.transform.parent.parent.gameObject);
+            
             _isRotHit = true;
             _ischangeRotHit = true;
 

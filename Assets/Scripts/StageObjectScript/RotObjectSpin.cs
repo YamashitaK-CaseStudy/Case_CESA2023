@@ -159,7 +159,7 @@ public partial class RotatableObject : MonoBehaviour
 		_originNum = this.transform.childCount; // 実際のクローン元の数
 		_listLength = _originObjList.Count;  // 現時点のクローン元を格納している配列の長さを取得しとく
 
-		Debug.Log(_listLength);
+		//Debug.Log(_listLength);
 
 		// クローンの数に変更がなければ処理をスキップ
 		if (_listLength == this.transform.childCount)
