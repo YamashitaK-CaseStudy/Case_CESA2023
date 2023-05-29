@@ -16,7 +16,7 @@ public partial class Player : MonoBehaviour{
         PlayerRotationStart();
         PlayerSkAnimationStart();
 
-        GameSoundManager.Instance.PlayGameBGMWithFade(GameBGMSoundData.GameBGM.Roborder, 0.5f, 5);
+        GameSoundManager.Instance.PlayGameBGMWithFade(GameBGMSoundData.GameBGM.Roborder, 1f, 1.5f);
     }
 
     void Update(){

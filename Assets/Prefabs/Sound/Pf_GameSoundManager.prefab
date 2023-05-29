@@ -48,7 +48,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameBgmAudioSource: {fileID: -206293858873596529}
   _gameSeAudioSource: {fileID: 1018150278376609669}
-  _gameBgmSoundDatas: []
+  _gameBgmSoundDatas:
+  - _gameBgm: 0
+    _gameBgmAudioClip: {fileID: 8300000, guid: 66f32b370a41c174da9927edf7d749e6, type: 3}
+    _gameBgmVolume: 0
   _gameSeSoundDatas:
   - _gameSe: 0
     _gameSeAudioClip: {fileID: 8300000, guid: e6b3b19806aba4f4bade8b767913dd11, type: 3}
