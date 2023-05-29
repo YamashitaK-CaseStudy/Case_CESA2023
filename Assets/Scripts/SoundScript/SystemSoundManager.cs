@@ -50,6 +50,10 @@ public class SystemSoundManager : MonoBehaviour {
         _bgmAudioSource.DOFade(0, duration);
     }
 
+    public void BGMFade(float vol,float duration)
+    {
+        _bgmAudioSource.DOFade(vol, duration);
+    }
 
     public void PlaySE(SystemSESoundData.SystemSE se) {
         SystemSESoundData data = _seSoundDatas.Find(data => data._systemSe == se);
@@ -87,6 +91,8 @@ public class SystemSESoundData {
         Decision2,
         Decision3,
         Failed,
+        ToSelect,
+        Slide,
     }
 
     public SystemSE _systemSe;

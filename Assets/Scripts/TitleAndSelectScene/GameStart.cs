@@ -17,9 +17,12 @@ public class GameStart : MonoBehaviour
 		if (_isStarted)
 		{
             _startFade.FadeOut(0, ActivaTitle);
+            return;
         }
 
         _startFade.FadeOut(3, ActivaTitle);
+        SystemSoundManager.Instance.PlayBGMWithFade(BGMSoundData.BGM.Title, 0.1f, 3);
+        
         _isStarted = true;
     }
 
