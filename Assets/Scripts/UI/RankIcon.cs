@@ -36,8 +36,7 @@ public class RankIcon : MonoBehaviour
         if(_isFinish) return;
         if(_isChange){
             _nowDispNum += 1;
-            Debug.Log(_nowDispNum);
-            ChangeIcon(_nowDispNum - 1);
+            ChangeIcon(_nowDispNum);
             _seedScoreIcon.ChangeIcon(_nowDispNum);
             _isOnce= false;
             _isChange = false;
@@ -68,6 +67,9 @@ public class RankIcon : MonoBehaviour
     }
 
     private void ChangeIcon(int score){
+        if(score == 5){
+            score = 4;
+        }
         _image.sprite = _rankIconResourseArray[score];
         _image.transform.localScale = new Vector3(2.0f,2.0f,2.0f);
     }
