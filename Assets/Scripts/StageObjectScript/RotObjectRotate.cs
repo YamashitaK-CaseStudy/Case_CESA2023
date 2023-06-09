@@ -238,7 +238,7 @@ public partial class RotatableObject : MonoBehaviour
 				// めり込み判定の確認
 				SetChildCheckIntoFloor(true);
 				SetChildCheckIntoChain(true);
-				Debug.Log("回転終了");
+				//Debug.Log("回転終了");
 				// 止まってる状態のときは磁石オブジェクトの当たり判定を起動
 				SetUnionChildCollider(true);
 			}

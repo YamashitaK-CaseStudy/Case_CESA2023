@@ -32,29 +32,5 @@ public partial class Player : MonoBehaviour{
     }
 
     private void PlayerBlockColliderUpdate() {
-
-        // Front回転オブジェクトが切り替わった時
-        if (_frontHitCheck.GetIsChangeRotHit) {
-            _frontHitCheck.InitChangeRotHit();
-
-            // 切り替えタイミング
-            Debug.Log("フロント切り替えタイミング");
-            //_stricRotAngle._isDamiObjCreate = false;
-            //Destroy(_stricRotAngle._damiObject);
-
-            //_stricRotAngle.xAxisManyObjJude(_frontHitCheck);
-        }
-
-        // Bottom回転オブジェクトが切り替わった時
-        if (_bottomHitCheck.GetIsChangeRotHit) {
-            _bottomHitCheck.InitChangeRotHit();
-
-            // 切り替えタイミング
-            Debug.Log("ボトム切り替えタイミング");
-            _stricRotAngle._isDamiObjCreate = false;
-            Destroy(_stricRotAngle._damiObject);
-
-            _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
-        }
     }
 }

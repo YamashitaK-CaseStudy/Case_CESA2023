@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,16 +7,14 @@ public class RightStickRotAngle : MonoBehaviour
     [SerializeField, Header("デッドゾーン")] private float _deadzone;
     private PlayerInput _playerInput;
 
-    private int _stickDialAngle_Y, _stickDialAngle_X;
-    private bool _isActicDial_Y = false, _isActicDial_X = false;
-    public int _stickAngle_Y, _stickAngle_X;
+    private int _stickAngle_Y, _stickDialAngle_Y, _stickDialAngle_X;
     private int _oldStickDialAngle_Y = 0;
+    private bool _isActicDial_X = false;
+    public bool _isOldAngleChinge { get; set; } = false;
     private LeftRightFrontBack_ManyObj _yAxisManyObj;
 
     public bool _isDamiObjCreate = false;
     public GameObject _damiObject;
-
-    public bool _isOldAngleChinge { get; set; } = false;
 
     // Getter
     public int GetStickDialAngleY {
@@ -30,12 +26,11 @@ public class RightStickRotAngle : MonoBehaviour
         get { return _stickDialAngle_X; }
     }
 
-
     // y軸の4方向を示す
     private enum LeftRightFrontBack_ManyObj {
         Right, Left, Front, Back
     }
-
+   
     private void Start() {
 
         // InputSystemを取得
@@ -44,19 +39,20 @@ public class RightStickRotAngle : MonoBehaviour
 
     // y回転の更新
     public void StickRotY_Update() {
-        
-        int angleY = SettingDialAngle(GetAngleY());
 
-        if(_oldStickDialAngle_Y == angleY) {
+        int angleY = SettingDialAngle(GetAngleY());
+        _stickDialAngle_Y = angleY;
+
+        if (_oldStickDialAngle_Y == angleY) {
             _isOldAngleChinge = false;
             return;
         }
         else {
-            if(angleY != 0) {
+            if (angleY != 0) {
                 Debug.Log("必要な時のみ更新" + angleY);
                 _isOldAngleChinge = true;
             }
-         
+
             _oldStickDialAngle_Y = angleY;
             _stickDialAngle_Y = _oldStickDialAngle_Y;
         }
@@ -71,10 +67,7 @@ public class RightStickRotAngle : MonoBehaviour
     private int GetAngleY() {
 
         var value = _playerInput.actions["RotaionSelect"].ReadValue<Vector2>();
-
-//        Debug.Log("スティック" + value);
-
-        if(value.magnitude > _deadzone) {
+        if (value.magnitude > _deadzone) {
 
             // 右
             if (_yAxisManyObj == LeftRightFrontBack_ManyObj.Right) {
@@ -98,64 +91,28 @@ public class RightStickRotAngle : MonoBehaviour
             }
         }
 
-
         if (_stickAngle_Y < 0) {
             _stickAngle_Y += 360;
         }
-
+    
         return _stickAngle_Y;
     }
 
-    private int GetAngleX() {
-
-        var value = _playerInput.actions["RotaionSelect"].ReadValue<Vector2>();
-
-        int angle = 0;
-
-        if (value.y < -_deadzone) {
-            if (!_isActicDial_X) {
-                angle = -90;
-                _isActicDial_X = true;
-            }
-            else {
-                _stickDialAngle_X = 0;
-            }
-        }
-        else if (_deadzone < value.y) {
-            if (!_isActicDial_X) {
-                angle = 90;
-                _isActicDial_X = true;
-            }
-            else {
-                _stickDialAngle_X = 0;
-            }
-        }
-        else {
-            _isActicDial_X = false;
-            _stickDialAngle_X = 0;
-        }
-
-        return _stickDialAngle_X + angle;
-    }
-
+  
     // スティックの角度をダイアルに振り分ける
     private int SettingDialAngle(int angle) {
 
         if (angle >= 45 && angle < 135) {
             return 90;
-           // dialAngle = 90;
         }
         else if (angle >= 135 && angle < 225) {
-            return 180;
-           // dialAngle = 180;
+            return -180;
         }
         else if (angle >= 225 && angle < 315) {
             return -90;
-           // dialAngle = -90;
         }
         else {
             return 0;
-            //dialAngle = 0;
         }
     }
 
@@ -209,28 +166,64 @@ public class RightStickRotAngle : MonoBehaviour
         var max = Mathf.Max(rightnum, leftnum, backnum, frontnum);
 
         if (max == rightnum) {
+            Debug.Log("右基準");
             _yAxisManyObj = LeftRightFrontBack_ManyObj.Right;
         }
         else if (max == leftnum) {
+            Debug.Log("左基準");
             _yAxisManyObj = LeftRightFrontBack_ManyObj.Left;
         }
         else if (max == backnum) {
+            Debug.Log("後基準");
             _yAxisManyObj = LeftRightFrontBack_ManyObj.Back;
         }
         else if (max == frontnum) {
+            Debug.Log("前基準");
             _yAxisManyObj = LeftRightFrontBack_ManyObj.Front;
         }
+
+        var _rotComp = _hitcheck.GetRotObj.GetComponent<RotatableObject>();
+        _rotComp._oldAngleY = 0;
+        _stickAngle_Y = 0;
 
         if (!_isDamiObjCreate) {
             _damiObject = yAxisCreateDamiObj(_yAxisManyObj, new Vector3(rideObj_x, rideObj_y, rideObj_z), objects.transform);
             _isDamiObjCreate = true;
         }
 
-        RotatableObject rotbleobj = _hitcheck.GetRotObj.GetComponent<RotatableObject>();
+        Debug.Log("基準角度" + _stickAngle_Y);
+    }
 
-        _stickAngle_Y = 0;
-        
-        Debug.Log("角度リセット");
+    private int GetAngleX() {
+
+        var value = _playerInput.actions["RotaionSelect"].ReadValue<Vector2>();
+
+        int angle = 0;
+
+        if (value.y < -_deadzone) {
+            if (!_isActicDial_X) {
+                angle = -90;
+                _isActicDial_X = true;
+            }
+            else {
+                _stickDialAngle_X = 0;
+            }
+        }
+        else if (_deadzone < value.y) {
+            if (!_isActicDial_X) {
+                angle = 90;
+                _isActicDial_X = true;
+            }
+            else {
+                _stickDialAngle_X = 0;
+            }
+        }
+        else {
+            _isActicDial_X = false;
+            _stickDialAngle_X = 0;
+        }
+
+        return _stickDialAngle_X + angle;
     }
 
     // 座標補正　Playerのやつマルコピ
@@ -246,6 +239,11 @@ public class RightStickRotAngle : MonoBehaviour
         }
 
         return ++valueInt;
+    }
+
+    public void yAxisDestroyDamiobj() {
+        _isDamiObjCreate = false;
+        Destroy(_damiObject);
     }
 
     private GameObject yAxisCreateDamiObj(LeftRightFrontBack_ManyObj dir, Vector3 ridePos, Transform objectObj) {
