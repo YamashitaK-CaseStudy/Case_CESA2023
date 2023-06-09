@@ -42,6 +42,10 @@ public partial class Player : MonoBehaviour{
         // ロックフレームの可視化
         LockFreamDisplay(_bottomHitCheck, _frontHitCheck);
 
+        if(Mathf.Abs(_speedx) > 0 || !_groundCheck.IsGround) {
+            return;
+        }
+
         // ロックボタンを押された時
         if (_blocklockButton.IsPressed()) {
             if (!_isLock) {
