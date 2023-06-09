@@ -13,294 +13,294 @@ public partial class Player : MonoBehaviour {
    
     void StartAction() {
 
-        // 当たり判定のコンポーネント取得
-        _frontHitCheck = _frontColliderObj.GetComponent<RotObjHitCheck>();
-        _bottomHitCheck = _bottomColliderObj.GetComponent<RotObjHitCheck>();
+        //// 当たり判定のコンポーネント取得
+        //_frontHitCheck = _frontColliderObj.GetComponent<RotObjHitCheck>();
+        //_bottomHitCheck = _bottomColliderObj.GetComponent<RotObjHitCheck>();
      
-        // InputSystem取得
-        _playerInput = GetComponent<PlayerInput>();
-        _rotationButton = _playerInput.actions.FindAction("Rotation");
-        _rotationSpinButton = _playerInput.actions.FindAction("RotationSpin");
+        //// InputSystem取得
+        //_playerInput = GetComponent<PlayerInput>();
+        //_rotationButton = _playerInput.actions.FindAction("Rotation");
+        //_rotationSpinButton = _playerInput.actions.FindAction("RotationSpin");
 
-        // 右スティックの状態を取得
-        _stricRotAngle = GetComponent<RightStickRotAngle>();
+        //// 右スティックの状態を取得
+        //_stricRotAngle = GetComponent<RightStickRotAngle>();
     }
 
     void UpdateAction() {
 
         // 左スティックのベクトルを取得する
-        var stick = _playerInput.actions["AxisSelect"].ReadValue<Vector2>();
+        //var stick = _playerInput.actions["AxisSelect"].ReadValue<Vector2>();
 
-        // Front回転オブジェクトが切り替わった時
-        if (_frontHitCheck.GetIsChangeRotHit) {
-            _frontHitCheck.InitChangeRotHit();
+        //// Front回転オブジェクトが切り替わった時
+        //if (_frontHitCheck.GetIsChangeRotHit) {
+        //    _frontHitCheck.InitChangeRotHit();
 
-            // 切り替えタイミング
-            Debug.Log("フロント切り替えタイミング");
+        //    // 切り替えタイミング
+        //    Debug.Log("フロント切り替えタイミング");
 
-            //_stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
-        }
+        //    //_stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+        //}
 
-        // Bottom回転オブジェクトが切り替わった時
-        if (_bottomHitCheck.GetIsChangeRotHit) {
-            _bottomHitCheck.InitChangeRotHit();
+        //// Bottom回転オブジェクトが切り替わった時
+        //if (_bottomHitCheck.GetIsChangeRotHit) {
+        //    _bottomHitCheck.InitChangeRotHit();
 
-            // 切り替えタイミング
-            Debug.Log("ボトム切り替えタイミング");
+        //    // 切り替えタイミング
+        //    Debug.Log("ボトム切り替えタイミング");
 
-            //_stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
-        }
+        //    //_stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
+        //}
 
-       
-        // 前に回転オブジェクトがある時
-        if (_frontHitCheck.GetIsRotHit) {
 
-            // 左右に傾けたとき
-            if (-0.5 > stick.x || 0.5 < stick.x) {
+        //   // 前に回転オブジェクトがある時
+        //   if (_frontHitCheck.GetIsRotHit) {
 
-                var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
+        //       // 左右に傾けたとき
+        //       if (-0.5 > stick.x || 0.5 < stick.x) {
 
-                // 右スティックの更新
-                if (rotatbleComp._isRotateEndFream) {
-                    //_stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
-                }
+        //           var rotatbleComp = _frontHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
-                // _stricRotAngle.StickRotAngleX_Update();
-                //  rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX,this.transform);
-                //_startrotFreamX = _stricRotAngle.GetActivStick;
-                //Debug.Log(_stricRotAngle.GetStickDialAngleX);
+        //           // 右スティックの更新
+        //           if (rotatbleComp._isRotateEndFream) {
+        //               //_stricRotAngle.UDFB_Many_Jude(_frontHitCheck);
+        //           }
 
-                // 通常軸回転
-                if (_rotationButton.WasPressedThisFrame()) {
-                    rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,90);
-                }
-                // 高速回転
-                if (_rotationSpinButton.WasPressedThisFrame()) {
-                    if (rotatbleComp._isSpining){
-                        rotatbleComp.EndSpin();
-                    }
-					else{
-                        Debug.Log("終了");
-                        rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
-					}
+        //           // _stricRotAngle.StickRotAngleX_Update();
+        //           //  rotatbleComp.StartRotateX(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,_stricRotAngle.GetStickDialAngleX,this.transform);
+        //           //_startrotFreamX = _stricRotAngle.GetActivStick;
+        //           //Debug.Log(_stricRotAngle.GetStickDialAngleX);
 
-                }
-            }
-        }
+        //           // 通常軸回転
+        //           if (_rotationButton.WasPressedThisFrame()) {
+        //               rotatbleComp.StartRotate(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right,90);
+        //           }
+        //           // 高速回転
+        //           if (_rotationSpinButton.WasPressedThisFrame()) {
+        //               if (rotatbleComp._isSpining){
+        //                   rotatbleComp.EndSpin();
+        //               }
+        //else{
+        //                   Debug.Log("終了");
+        //                   rotatbleComp.StartSpin(CompensateRotationAxis(_frontColliderObj.transform.position), Vector3.right);
+        //}
+
+        //           }
+        //       }
+        //   }
 
         //// 移動中とジャンプ中は回転させない
         //if (0 < Mathf.Abs(_moveVelocity.x) || 0 < _moveVelocity.y) {
         //    return;
         //}
 
-        // 下に回転オブジェクトがある時
-        if (_bottomHitCheck.GetIsRotHit) {
-            var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
+        //    // 下に回転オブジェクトがある時
+        //    if (_bottomHitCheck.GetIsRotHit) {
+        //        var rotatbleComp = _bottomHitCheck.GetRotObj.GetComponent<RotatableObject>();
 
-            // 右スティックでの回転
-            if (rotatbleComp._isRotateEndFream) {
-                //_stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
-            }
+        //        // 右スティックでの回転
+        //        if (rotatbleComp._isRotateEndFream) {
+        //            //_stricRotAngle.LRFB_Many_Jude(_bottomHitCheck);
+        //        }
 
-            //_stricRotAngle.StickRotAngleY_Update();
-           // rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
-            //_startrotFreamY = rotatbleComp._isRotateStartFream;
+        //        //_stricRotAngle.StickRotAngleY_Update();
+        //       // rotatbleComp.StartRotateY(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, _stricRotAngle.GetStickDialAngleY,this.transform);
+        //        //_startrotFreamY = rotatbleComp._isRotateStartFream;
 
-            // 通常軸回転
-            if (_rotationButton.WasPressedThisFrame()) {
-                rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90);
-            }
+        //        // 通常軸回転
+        //        if (_rotationButton.WasPressedThisFrame()) {
+        //            rotatbleComp.StartRotate(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up, 90);
+        //        }
 
-            // 高速回転
-            if (_rotationSpinButton.WasPressedThisFrame()) {
-                rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
-            }
-        }
-    }
+        //        // 高速回転
+        //        if (_rotationSpinButton.WasPressedThisFrame()) {
+        //            rotatbleComp.StartSpin(CompensateRotationAxis(_bottomColliderObj.transform.position), Vector3.up);
+        //        }
+        //    }
+        //}
 
-    /*
-    private GameObject _touchColliderFront = null;
-    private GameObject _touchColliderBottom = null;
+        /*
+        private GameObject _touchColliderFront = null;
+        private GameObject _touchColliderBottom = null;
 
-    // Start is called before the first frame update
-    void StartAction()
-    {
-        _touchColliderFront = this.transform.Find("FrontTouchCollider").gameObject;
-        if (_touchColliderFront == null)
+        // Start is called before the first frame update
+        void StartAction()
         {
-            Debug.Log("Front Touch Collider object does not exist");
-        }
-
-        _touchColliderBottom = this.transform.Find("BottomTouchCollider").gameObject;
-        if (_touchColliderBottom == null)
-        {
-            Debug.Log("Bottom Touch Collider object does not exist");
-        }
-
-    }
-
-    // Update is called once per frame
-    void UpdateAction()
-    {
-
-        // 
-        if (Input.GetButtonDown("Rotate"))
-        {
-
-
-            // Get Input LeftStick Vertical
-            var inputVart = Input.GetAxis("Vertical");
-
-            // Rot AxisY Bottom
-            if (inputVart < -0.3)
+            _touchColliderFront = this.transform.Find("FrontTouchCollider").gameObject;
+            if (_touchColliderFront == null)
             {
-                if (_touchColliderBottom == null)
-                {
-                    Debug.Log("Bottom Touch Collider object does not exist");
-                }
-                else
-                {
-                    Debug.Log(_touchColliderBottom.name);
-                }
-
-
-                var touthObj = _touchColliderBottom.GetComponent<TouchCollider>();
-
-                // Get Target Object to Rotate
-                var targetRotObjVert = touthObj.GetTouchObject();
-
-                if (targetRotObjVert == null)
-                {
-                    Debug.Log("There is no object to rotateAxisY.");
-                    return;
-                }
-
-                targetRotObjVert.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_touchColliderBottom.transform.position), Vector3.up);
-                Debug.Log("Small rotation : axisY");
-
-                return;
-
+                Debug.Log("Front Touch Collider object does not exist");
             }
-            // Rot AxisX
-            else
+
+            _touchColliderBottom = this.transform.Find("BottomTouchCollider").gameObject;
+            if (_touchColliderBottom == null)
+            {
+                Debug.Log("Bottom Touch Collider object does not exist");
+            }
+
+        }
+
+        // Update is called once per frame
+        void UpdateAction()
+        {
+
+            // 
+            if (Input.GetButtonDown("Rotate"))
             {
 
-                if (_touchColliderFront == null)
+
+                // Get Input LeftStick Vertical
+                var inputVart = Input.GetAxis("Vertical");
+
+                // Rot AxisY Bottom
+                if (inputVart < -0.3)
                 {
-                    Debug.Log("Front Touch Collider object does not exist");
+                    if (_touchColliderBottom == null)
+                    {
+                        Debug.Log("Bottom Touch Collider object does not exist");
+                    }
+                    else
+                    {
+                        Debug.Log(_touchColliderBottom.name);
+                    }
+
+
+                    var touthObj = _touchColliderBottom.GetComponent<TouchCollider>();
+
+                    // Get Target Object to Rotate
+                    var targetRotObjVert = touthObj.GetTouchObject();
+
+                    if (targetRotObjVert == null)
+                    {
+                        Debug.Log("There is no object to rotateAxisY.");
+                        return;
+                    }
+
+                    targetRotObjVert.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_touchColliderBottom.transform.position), Vector3.up);
+                    Debug.Log("Small rotation : axisY");
+
+                    return;
+
                 }
+                // Rot AxisX
                 else
                 {
-                    Debug.Log(_touchColliderFront.name);
+
+                    if (_touchColliderFront == null)
+                    {
+                        Debug.Log("Front Touch Collider object does not exist");
+                    }
+                    else
+                    {
+                        Debug.Log(_touchColliderFront.name);
+                    }
+
+
+                    var a = _touchColliderFront.GetComponent<TouchCollider>();
+
+                    var targetRotObj = a.GetTouchObject();
+
+                    if (targetRotObj == null)
+                    {
+                        Debug.Log("There is no object to rotateAxisX.");
+                        return;
+                    }
+
+                    targetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_touchColliderFront.transform.position), Vector3.right);
+                    Debug.Log("Small rotation : axisX");
+
                 }
-
-
-                var a = _touchColliderFront.GetComponent<TouchCollider>();
-
-                var targetRotObj = a.GetTouchObject();
-
-                if (targetRotObj == null)
-                {
-                    Debug.Log("There is no object to rotateAxisX.");
-                    return;
-                }
-
-                targetRotObj.GetComponent<RotatableObject>().StartRotate(CompensateRotationAxis(_touchColliderFront.transform.position), Vector3.right);
-                Debug.Log("Small rotation : axisX");
-
             }
-        }
 
-        // Spim Call
-        if (Input.GetButtonDown("Spin"))
-        {
-            // Get Input LeftStick Vertical
-            var inputVart = Input.GetAxis("Vertical");
-
-            // Rot AxisY Bottom
-            if (inputVart < -0.5)
+            // Spim Call
+            if (Input.GetButtonDown("Spin"))
             {
-                if (_touchColliderBottom == null)
+                // Get Input LeftStick Vertical
+                var inputVart = Input.GetAxis("Vertical");
+
+                // Rot AxisY Bottom
+                if (inputVart < -0.5)
                 {
-                    Debug.Log("Bottom Touch Collider object does not exist");
+                    if (_touchColliderBottom == null)
+                    {
+                        Debug.Log("Bottom Touch Collider object does not exist");
+                    }
+                    else
+                    {
+                        Debug.Log(_touchColliderBottom.name);
+                    }
+
+
+                    var touthObj = _touchColliderBottom.GetComponent<TouchCollider>();
+
+                    var targetRotObjVert = touthObj.GetTouchObject();
+
+                    if (targetRotObjVert == null)
+                    {
+                        Debug.Log("There is no object to SpinAxisY.");
+                        return;
+                    }
+
+                    targetRotObjVert.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_touchColliderBottom.transform.position), Vector3.up);
+                    Debug.Log("Spin : axisY");
+
+                    return;
+
                 }
+                // Rot AxisX
                 else
                 {
-                    Debug.Log(_touchColliderBottom.name);
+
+                    if (_touchColliderFront == null)
+                    {
+                        Debug.Log("Front Touch Collider object does not exist");
+                    }
+                    else
+                    {
+                        Debug.Log(_touchColliderFront.name);
+                    }
+
+
+                    var a = _touchColliderFront.GetComponent<TouchCollider>();
+
+                    var targetRotObj = a.GetTouchObject();
+
+                    if (targetRotObj == null)
+                    {
+                        Debug.Log("There is no object to SpinAxisX.");
+                        return;
+                    }
+
+                    targetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_touchColliderFront.transform.position), Vector3.right);
+                    Debug.Log("Spin : axisX");
+
                 }
-
-
-                var touthObj = _touchColliderBottom.GetComponent<TouchCollider>();
-
-                var targetRotObjVert = touthObj.GetTouchObject();
-
-                if (targetRotObjVert == null)
-                {
-                    Debug.Log("There is no object to SpinAxisY.");
-                    return;
-                }
-
-                targetRotObjVert.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_touchColliderBottom.transform.position), Vector3.up);
-                Debug.Log("Spin : axisY");
-
-                return;
-
-            }
-            // Rot AxisX
-            else
-            {
-
-                if (_touchColliderFront == null)
-                {
-                    Debug.Log("Front Touch Collider object does not exist");
-                }
-                else
-                {
-                    Debug.Log(_touchColliderFront.name);
-                }
-
-
-                var a = _touchColliderFront.GetComponent<TouchCollider>();
-
-                var targetRotObj = a.GetTouchObject();
-
-                if (targetRotObj == null)
-                {
-                    Debug.Log("There is no object to SpinAxisX.");
-                    return;
-                }
-
-                targetRotObj.GetComponent<RotatableObject>().StartSpin(CompensateRotationAxis(_touchColliderFront.transform.position), Vector3.right);
-                Debug.Log("Spin : axisX");
 
             }
 
         }
+        */
 
+        //private Vector3 CompensateRotationAxis(in Vector3 AXIS)
+        //{
+        //    /*回転するオブジェクトの大きさが１で位置が整数の場合のみ有効。
+        //     * 
+        //     * 拡張する場合
+        //     * オブジェクトの基準位置（特別な理由がなければ原点でいい）とオブジェクトの大きさを定数定義して計算する。
+        //     */
+
+        //    return new Vector3(RoundOff(AXIS.x), RoundOff(AXIS.y));
+        //}
+
+        //private int RoundOff(float value)
+        //{
+        //    int valueInt = (int)value;
+
+        //    if (value - valueInt < 0.5f)
+        //    {
+        //        return valueInt;
+        //    }
+
+        //    return ++valueInt;
+        //}
     }
-    */
-
-    private Vector3 CompensateRotationAxis(in Vector3 AXIS)
-    {
-        /*回転するオブジェクトの大きさが１で位置が整数の場合のみ有効。
-         * 
-         * 拡張する場合
-         * オブジェクトの基準位置（特別な理由がなければ原点でいい）とオブジェクトの大きさを定数定義して計算する。
-         */
-
-        return new Vector3(RoundOff(AXIS.x), RoundOff(AXIS.y));
-    }
-
-    private int RoundOff(float value)
-    {
-        int valueInt = (int)value;
-
-        if (value - valueInt < 0.5f)
-        {
-            return valueInt;
-        }
-
-        return ++valueInt;
-    }
-
 }
