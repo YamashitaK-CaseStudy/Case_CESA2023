@@ -8,7 +8,7 @@ public partial class RotatableObject : MonoBehaviour
 {
 
 	protected Transform _playerTransform = null;// プレイヤーのトランスフォーム
-	protected float _oldAngle = 0.0f;
+	public float _oldAngle = 0.0f;
 	protected float _polatAngle = 0.0f;
 	protected bool _isSpin = false;
 	public bool _isUnion { get; set; }

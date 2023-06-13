@@ -8,7 +8,7 @@ public partial class RotatableObject : MonoBehaviour{
 	[SerializeField] public float _rotRequirdTime = 0.075f;      // 1回転に必要な時間(sec)
 
 
-	protected Vector3 _rotAxis;				// 自身の回転軸ベクトル
+	public Vector3 _rotAxis;				// 自身の回転軸ベクトル
 	public Vector3 _axisCenterWorldPos;     // 回転軸の中心のワールド座標
 	protected float _elapsedTime = 0.0f;        // 回転開始からの経過時間
 	protected int _angle;						// 回転角度

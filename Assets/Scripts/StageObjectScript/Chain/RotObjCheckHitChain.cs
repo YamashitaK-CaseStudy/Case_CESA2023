@@ -35,6 +35,7 @@ public class RotObjCheckHitChain : MonoBehaviour
 	{
 		if(_observer.GetComponent<HitStopController>()._isHitStop) return;
 		if(!_isCheckHit) return;
+		if(other.gameObject.layer == LayerMask.NameToLayer("EngineBlade")) return;
 		if (other.transform.root.gameObject.GetComponent<RotatableObject>()._isRotating) return;
 		// RotateObjectのみと当たり判定を取る
 		var comp = other.transform.root.GetComponent<RotatableObject>();
