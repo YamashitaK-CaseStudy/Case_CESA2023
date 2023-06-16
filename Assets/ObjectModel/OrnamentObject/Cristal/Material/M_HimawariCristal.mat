@@ -101,7 +101,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
-    - _BottomLine: 0.647
+    - _BottomLine: 0.718
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -114,28 +114,28 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 0.718
+    - _Metallic: 0.751
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.628
+    - _Smoothness: 0.711
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _TopLine: 0.673
+    - _TopLine: 0.698
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaceColor: {r: 0.116062775, g: 0.08915082, b: 0.17057739, a: 1}
+    - _BaceColor: {r: 1.3057059, g: 0, b: 2.2934186, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BottomColor: {r: 3.3071024, g: 0.3289788, b: 1.0712404, a: 1}
+    - _BottomColor: {r: 1.3660789, g: 0.6209449, b: 8.56904, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TopColor: {r: 1.3587958, g: 0.21753164, b: 2.1867652, a: 1}
+    - _TopColor: {r: 2.1867654, g: 0.85894066, b: 0.2289806, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &8566704633865810580
 MonoBehaviour:

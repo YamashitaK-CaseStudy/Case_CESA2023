@@ -86,6 +86,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 37efc6b1a546ad4419a611454916f660, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_7dc95b2b97f840d5b573c33f8b980532_Texture_1:
+        m_Texture: {fileID: 2800000, guid: e0e3d4019ad97cd4a9e56526f7fe1cec, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_97919bf3edf447a0bebb91edb7acd170_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 4cec6b96ebad3094785eb4165871ef49, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_d53f7a817ace432cbe42fd169cda75ba_Texture_1:
         m_Texture: {fileID: 2800000, guid: 4cec6b96ebad3094785eb4165871ef49, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -147,5 +155,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HoleColor: {r: 0, g: 0, b: 0, a: 0}
+    - _LineColor: {r: 7.5423975, g: 0.9959325, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
