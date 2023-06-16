@@ -14,6 +14,7 @@ public class RotObjkinds : MonoBehaviour{
         NomalRotObject,
         UnionRotObject,
         BoltRotObject,
-        SpinObject
+        SpinObject,
+        LiftObject
     }
 }

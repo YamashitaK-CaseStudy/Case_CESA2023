@@ -42,7 +42,7 @@ public partial class Player : MonoBehaviour{
         // ロックフレームの可視化
         LockFreamDisplay(_bottomHitCheck, _frontHitCheck);
 
-        if(Mathf.Abs(_speedx) > 0 || !_groundCheck.IsGround) {
+        if (Mathf.Abs(_speedx) > 0 || !_groundCheck.IsGround) {
             return;
         }
 
@@ -51,6 +51,9 @@ public partial class Player : MonoBehaviour{
             if (!_isLock) {
                 Debug.Log("ブロックロック");
                 _isLock = true;
+
+                // プレイヤーの速度を零にする
+                _speedx = 0.0f;
 
                 // ブロックの優先度確認
                 BlockPriority(_bottomHitCheck, _frontHitCheck);
@@ -136,6 +139,13 @@ public partial class Player : MonoBehaviour{
                             _rotComp.StartSpin(CompensateRotationAxis(_lockObjectParts.transform.position), Vector3.up);
                         }
                     }
+                }
+
+                else if(_rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.LiftObject) {
+
+                    Debug.Log("リフト操作");
+                    _rotComp.StickRotate(Vector3.zero, Vector3.zero, 0, null);
+
                 }
             }
             else if (_blockPriorty == BlockPriorty.Front) {

@@ -51,9 +51,11 @@ public partial class Player : MonoBehaviour{
             _animator.SetBool("StartRotUpper_Y", false);
         }
 
+        
         // ジャンプ中に頭にブロックが当たったらボール状態にする
         if (!_groundCheck.IsGround && _upperrayCheck.IsUpperHit) {
-            _animator.SetTrigger("UpperHit");
+            Debug.Log("キャンセル");
+            _animator.SetBool("UpperHit", true);
         }
 
         // 速度が0以上

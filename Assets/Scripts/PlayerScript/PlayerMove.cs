@@ -87,6 +87,7 @@ public partial class Player : MonoBehaviour {
 
         if (_groundCheck.IsGround) {
 
+            _animator.SetBool("UpperHit", false);
             _isJumpNowflg = false;
 
             //Debug.Log("•‚‚¢‚Ä‚é");
