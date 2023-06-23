@@ -6,13 +6,6 @@ using UnityEditor;
 [CustomEditor(typeof(Lift))]
 public class LiftInspector : Editor {
 
-
-    //  [SerializeField] private GameObject _liftDameobj;
-    //  [SerializeField] private GameObject _liftObjectobj;
-
-   // [SerializeField] private int _RightBlockLength;
-   // [SerializeField] private int _LeftBlockLength;
-
     SerializedProperty _liftDirection;
     SerializedProperty _liftStickobj;
     SerializedProperty _liftRideobj;
@@ -20,10 +13,7 @@ public class LiftInspector : Editor {
     SerializedProperty _liftObjectobj;
     SerializedProperty _lineLength;
     SerializedProperty _rideBlockIndex;
-    SerializedProperty _RightBlockLength;
-    SerializedProperty _LeftBlockLength;
-
-
+   
     void OnEnable() {
 
         _liftDirection = serializedObject.FindProperty("_liftDirection");
@@ -33,8 +23,6 @@ public class LiftInspector : Editor {
         _liftObjectobj = serializedObject.FindProperty("_liftObjectobj");
         _lineLength = serializedObject.FindProperty("_stickLength");
         _rideBlockIndex = serializedObject.FindProperty("_rideBlockIndex");
-        _RightBlockLength = serializedObject.FindProperty("_RightBlockLength");
-        _LeftBlockLength = serializedObject.FindProperty("_LeftBlockLength");
     }
 
     [System.Obsolete]
@@ -56,9 +44,7 @@ public class LiftInspector : Editor {
         }
 
         EditorGUILayout.PropertyField(_rideBlockIndex, new GUIContent("リフトの乗る位置(棒の要素数で指定)"));
-        EditorGUILayout.PropertyField(_RightBlockLength, new GUIContent("右側に追加するブロック数"));
-        EditorGUILayout.PropertyField(_LeftBlockLength, new GUIContent("左側に塚するブロック数"));
-
+      
         // 設定の確定
         serializedObject.ApplyModifiedProperties();
   
