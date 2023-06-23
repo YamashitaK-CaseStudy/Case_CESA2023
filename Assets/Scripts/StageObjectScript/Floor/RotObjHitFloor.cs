@@ -99,6 +99,8 @@ public partial class RotatableObject : MonoBehaviour
 
 	public void SetisHitFloor(){
 		_isHitFloor = true;
+
+		Debug.Log("確認");
 	}
 
 	protected void SetReflect(Vector3 center,Vector3 axis, int angle){

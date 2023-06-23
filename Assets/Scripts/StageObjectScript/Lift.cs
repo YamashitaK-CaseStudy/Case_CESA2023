@@ -14,12 +14,16 @@ public class Lift : RotatableObject {
     [SerializeField] private LiftDirection _liftDirection;
     [SerializeField] private GameObject _liftStickobj;
     [SerializeField] private GameObject _liftRideobj;
+    [SerializeField] private GameObject _liftDameobj;
+    [SerializeField] private GameObject _liftObjectobj;
     [SerializeField] private int _stickLength;
     public int _rideBlockIndex;
+    [SerializeField] private int _RightBlockLength;
+    [SerializeField] private int _LeftBlockLength;
 
     // リフトを構成してるパーツのオブジェクトの可変長配列
     private List<GameObject> _liftStickList = new List<GameObject>();
-    private GameObject _damiObj, _rideObj, playerObj;
+    private GameObject _rideObj, playerObj;
     private float _liftSpeed = 0.5f;
     private int _nowRideBlock = 0;
     private bool _isMove = false;
@@ -40,11 +44,15 @@ public class Lift : RotatableObject {
 
     private void CreateStick(in LiftDirection _dir, in int length, List<GameObject> _list) {
 
-        _damiObj.SetActive(false);
+        // 棒をまとめる
+        var liftSticks = new GameObject("LiftSticks");
+        liftSticks.transform.parent = this.transform;
+        liftSticks.transform.localPosition = Vector3.zero;
+        liftSticks.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
         for (int i = 0; i < length; i++) {
 
-            var stickobj = Instantiate(_liftStickobj, this.transform.GetChild(0));
+            var stickobj = Instantiate(_liftStickobj, liftSticks.transform);
 
             if (_dir == LiftDirection.縦) {
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -62,8 +70,14 @@ public class Lift : RotatableObject {
 
     private void CreateRide(int _stickIndex, List<GameObject> _list) {
 
+        // ブロックをまとめる
+        var liftBlocks = new GameObject("LiftBlocks");
+        liftBlocks.transform.parent = this.transform;
+        liftBlocks.transform.localPosition = Vector3.zero;
+        liftBlocks.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
         var fixIndex = _stickIndex - 1;
-        var rideObj = Instantiate(_liftRideobj, this.transform.GetChild(0));
+        var rideObj = Instantiate(_liftRideobj, liftBlocks.transform);
 
         if (fixIndex >= _list.Count || fixIndex < 0) {
             Debug.Log("リフトの乗る部分の位置指定が不正な値です。");
@@ -72,8 +86,20 @@ public class Lift : RotatableObject {
         }
 
         _nowRideBlock = fixIndex;
-        rideObj.transform.position = _list[fixIndex].transform.position;
-        rideObj.transform.localPosition += new Vector3(0, 0, -1);
+        liftBlocks.transform.position = _list[fixIndex].transform.position;
+        liftBlocks.transform.localPosition += new Vector3(0, 0, -1);
+
+        // 右追加
+        for(int i = 0; i < _RightBlockLength; i++) {
+            var r_rideObj = Instantiate(_liftRideobj, liftBlocks.transform);
+            r_rideObj.transform.localPosition = new Vector3(i + 1, 0, 0);
+        }
+
+        // 左追加
+        for (int i = 0; i < _LeftBlockLength; i++) {
+            var r_rideObj = Instantiate(_liftRideobj, liftBlocks.transform);
+            r_rideObj.transform.localPosition = new Vector3(i - 1, 0, 0);
+        }
     }
 
     //--------------------------------------------------------------
@@ -84,33 +110,30 @@ public class Lift : RotatableObject {
     [System.Obsolete]
     private void DestroyStickObject(List<GameObject> _list) {
 
-        foreach (var obj in _list) {
-            DestroyImmediate(obj.gameObject);
-        }
-
         _list.Clear();
+        _liftDameobj.SetActive(false);
 
-        // ダミーのオブジェクトを非アクティブにする
-        _damiObj = this.transform.GetChild(0).Find("DamiObj").gameObject;
+        var deleteList = new List<GameObject>();
 
-        // 実行したあとインスペクターから変更掛けた場合の削除処理
-        var _deleteList = new List<GameObject>();
-        for (int i = 0; i < this.transform.GetChild(0).childCount; i++) {
-            var obj = this.transform.GetChild(0).GetChild(i).gameObject;
-            if (_damiObj != obj) {
-                _deleteList.Add(obj);
+        for(int i = 0;i < this.transform.childCount; i++) {
+
+            var obj = this.transform.GetChild(i).gameObject;
+
+            if(obj != _liftObjectobj && obj != _liftDameobj) {
+                deleteList.Add(obj);
             }
         }
 
-        foreach (var obj in _deleteList) {
-            DestroyImmediate(obj.gameObject);
+        foreach(var obj in deleteList) {
+            DestroyImmediate(obj);
         }
     }
 
+    [Obsolete]
     private void OnEnable() {
 
         _nowRideBlock = _rideBlockIndex - 1;
-        _rideObj = this.transform.GetChild(0).Find("Pf_LiftRideBlock(Clone)").gameObject;
+        _rideObj = this.transform.FindChild("LiftBlocks").gameObject;
         playerObj = GameObject.FindGameObjectWithTag("Player").gameObject;
     }
 

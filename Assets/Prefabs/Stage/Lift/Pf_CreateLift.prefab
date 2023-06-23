@@ -27,8 +27,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 256139115613152630}
+  m_Children: []
   m_Father: {fileID: 4821963172629295826}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -62,8 +61,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7299858756321374730}
-  m_RootOrder: 0
+  m_Father: {fileID: 4821963172629295826}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8579724493680272605
 MeshFilter:
@@ -147,6 +146,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7299858756321374730}
+  - {fileID: 256139115613152630}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -193,11 +193,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _HitChainAngle: 180
   _rotRequirdTime: 0.075
+  _rotAxis: {x: 0, y: 0, z: 0}
   _axisCenterWorldPos: {x: 0, y: 0, z: 0}
   _isRotating: 0
   _isSpining: 0
   _isRotateStartFream: 0
   _isRotateEndFream: 0
+  _oldAngle: 0
   _hitDelaySpeed: 0
   _rotSpeed: 15
   offsetRotAxis: {x: 0, y: 0, z: 0}
@@ -207,5 +209,7 @@ MonoBehaviour:
     type: 3}
   _liftRideobj: {fileID: 7865728353036348745, guid: 63d6582298682084cb6e1d7d96588bf4,
     type: 3}
+  _liftDameobj: {fileID: 3962271780819210941}
+  _liftObjectobj: {fileID: 3889817291351025975}
   _stickLength: 0
   _rideBlockIndex: 0
