@@ -18,16 +18,22 @@ public class Lift : RotatableObject {
     [SerializeField] private GameObject _liftObjectobj;
     [SerializeField] private int _stickLength;
     public int _rideBlockIndex;
-    [SerializeField] private int _RightBlockLength;
-    [SerializeField] private int _LeftBlockLength;
-
+  
     // リフトを構成してるパーツのオブジェクトの可変長配列
     private List<GameObject> _liftStickList = new List<GameObject>();
-    private GameObject _rideObj, playerObj;
+    private GameObject _rideObjs, playerObj;
     private float _liftSpeed = 0.5f;
     private int _nowRideBlock = 0;
     private bool _isMove = false;
- 
+
+    public GameObject GetRideBlocks {
+        get { return _rideObjs; }
+    }
+
+    public GameObject GetCopyRideBlock {
+        get { return _liftRideobj; }
+    }
+
     // エディタによる更新
     [System.Obsolete]
     public void ApplyInspector() {
@@ -75,6 +81,7 @@ public class Lift : RotatableObject {
         liftBlocks.transform.parent = this.transform;
         liftBlocks.transform.localPosition = Vector3.zero;
         liftBlocks.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        _rideObjs = liftBlocks;
 
         var fixIndex = _stickIndex - 1;
         var rideObj = Instantiate(_liftRideobj, liftBlocks.transform);
@@ -88,18 +95,6 @@ public class Lift : RotatableObject {
         _nowRideBlock = fixIndex;
         liftBlocks.transform.position = _list[fixIndex].transform.position;
         liftBlocks.transform.localPosition += new Vector3(0, 0, -1);
-
-        // 右追加
-        for(int i = 0; i < _RightBlockLength; i++) {
-            var r_rideObj = Instantiate(_liftRideobj, liftBlocks.transform);
-            r_rideObj.transform.localPosition = new Vector3(i + 1, 0, 0);
-        }
-
-        // 左追加
-        for (int i = 0; i < _LeftBlockLength; i++) {
-            var r_rideObj = Instantiate(_liftRideobj, liftBlocks.transform);
-            r_rideObj.transform.localPosition = new Vector3(i - 1, 0, 0);
-        }
     }
 
     //--------------------------------------------------------------
@@ -133,7 +128,7 @@ public class Lift : RotatableObject {
     private void OnEnable() {
 
         _nowRideBlock = _rideBlockIndex - 1;
-        _rideObj = this.transform.FindChild("LiftBlocks").gameObject;
+        _rideObjs = this.transform.FindChild("LiftBlocks").gameObject;
         playerObj = GameObject.FindGameObjectWithTag("Player").gameObject;
     }
 
@@ -185,8 +180,8 @@ public class Lift : RotatableObject {
             }
         
             if (succuse) {
-                playerTransform.SetParent(_rideObj.transform);
-                _rideObj.transform.DOMove(offset, _liftSpeed).
+                playerTransform.SetParent(_rideObjs.transform);
+                _rideObjs.transform.DOMove(offset, _liftSpeed).
                     SetRelative(true).
                     OnUpdate(() => { _isMove = true; }).
                     OnComplete(() => { _isMove = false; playerTransform.SetParent(null);});
