@@ -9,8 +9,9 @@ public class SelectScene : MonoBehaviour
     public const int STAGE_NUM = 15;
 
     [SerializeField] private float _scrollAmount = 13.475f;
-    [SerializeField] private float _scrollSpeed = 3;
-    static private float _scrollTotalAmount = 0;
+    [SerializeField] private float _scrollBaseSpeed = 13;
+    [SerializeField] private float _scrollKeepSpeed = 26;
+    static private float _selectedLocalPosX = 0;
 
     //[Header("種スコア設定")]
     //[SerializeField] private Vector2 _seedIconOffset = new Vector2(-650, -30);
@@ -22,15 +23,34 @@ public class SelectScene : MonoBehaviour
     private InputAction _actionDecision = null;
     private InputAction _actionStageSelectL = null;
     private InputAction _actionStageSelectR = null;
-    private bool _stopInput = false;
-
+    private bool _scrolling = false;
+    private float _scrollSpeed = 1;
+    private float _lastReleased_IncStageNum = 0;
+    private float _lastReleased_DecStageNum = 0;
     private RectTransform _rectTransform;
+    private IEnumerator coroutine = null;
 
-	private void Awake()
-	{
-		_rectTransform = GetComponent<RectTransform>();
-        _scrollTotalAmount = -((SuzumuraTomoki.SceneManager._currentStageNum - 1) * _scrollAmount); 
-        _rectTransform.localPosition = new Vector3(_scrollTotalAmount, 0, 0);
+
+
+    public void StopInput()
+    {
+        _actionDecision.Disable();
+        _actionStageSelectL.Disable();
+        _actionStageSelectR.Disable();
+    }
+    public void EnableInput()
+    {
+        _actionDecision.Enable();
+        _actionStageSelectL.Enable();
+        _actionStageSelectR.Enable();
+    }
+
+    private void Awake()
+    {
+        _rectTransform = GetComponent<RectTransform>();
+        _selectedLocalPosX = -((SuzumuraTomoki.SceneManager._currentStageNum - 1) * _scrollAmount);
+        _rectTransform.localPosition = new Vector3(_selectedLocalPosX, 0, 0);
+        coroutine = ScrollRight();//null回避
 
         InitInputAction();
     }
@@ -38,13 +58,16 @@ public class SelectScene : MonoBehaviour
 
     private void OnDestroy()
     {
-        _actionStageSelectR.started -= IncreaseStageNum;
-        _actionStageSelectL.started -= DecreaseStageNum;
+        _actionStageSelectR.started -= CallBackStarted_IncStageNum;
+        _actionStageSelectR.canceled -= CallBackCanceled_IncStageNum;
+
+        _actionStageSelectL.started -= CallBackStarted_DecStageNum;
+        _actionStageSelectL.canceled -= CallBackCanceled_DecStageNum;
     }
 
     private void InitInputAction()
-	{
-       
+    {
+
         _actionDecision = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectEnter");
 
         if (_actionDecision == null)
@@ -65,7 +88,8 @@ public class SelectScene : MonoBehaviour
         }
         else
         {
-            _actionStageSelectL.started += DecreaseStageNum;
+            _actionStageSelectL.started += CallBackStarted_DecStageNum;
+            _actionStageSelectL.canceled += CallBackCanceled_DecStageNum;
         }
 
         _actionStageSelectR = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectR");
@@ -76,86 +100,128 @@ public class SelectScene : MonoBehaviour
         }
         else
         {
-            _actionStageSelectR.started += IncreaseStageNum;
+            _actionStageSelectR.started += CallBackStarted_IncStageNum;
+            _actionStageSelectR.canceled += CallBackCanceled_IncStageNum;
         }
     }
 
 
-    // 右にスクロール
     private IEnumerator ScrollRight()
     {
-        _stopInput = true;
-        // ステージ番号追加
+        _scrolling = true;
+        float startTime = Time.time;
+        _lastReleased_IncStageNum = startTime;//ScrollLeftの再帰を止める
 
         Vector3 oldPos = _rectTransform.localPosition;
 
-        while (Mathf.Abs(oldPos.x - _rectTransform.localPosition.x) < _scrollAmount)
+        float translationXPerSec = _scrollSpeed * (_selectedLocalPosX - oldPos.x) / _scrollAmount;
+        float deltaXThisFrame = translationXPerSec * Time.deltaTime;
+
+        while (Mathf.Abs(_selectedLocalPosX - _rectTransform.localPosition.x) > Mathf.Abs(deltaXThisFrame))
         {
+            _rectTransform.localPosition += new Vector3(deltaXThisFrame, 0, 0);
+
             yield return null;
-            _rectTransform.localPosition -= new Vector3(_scrollSpeed * Time.deltaTime, 0, 0);
+
+            deltaXThisFrame = translationXPerSec * Time.deltaTime;
         }
 
-        _rectTransform.localPosition = new Vector3(_scrollTotalAmount, 0, 0);
-        _stopInput = false;
+        _rectTransform.localPosition = new Vector3(_selectedLocalPosX, 0, 0);
+
+        _scrolling = false;
+
+        if (_lastReleased_DecStageNum < startTime)
+        {
+            _scrollSpeed = _scrollKeepSpeed;
+            DecreaseStageNum();
+        }
+
     }
 
-    // 左にスクロール
     private IEnumerator ScrollLeft()
     {
-        _stopInput = true;
-        // ステージ番号追加
+        _scrolling = true;
+        float startTime = Time.time;
+        _lastReleased_DecStageNum = startTime;//ScrollRightの再帰を止める
 
         Vector3 oldPos = _rectTransform.localPosition;
 
-        while (Mathf.Abs(oldPos.x - _rectTransform.localPosition.x) < _scrollAmount)
+        float translationXPerSec = _scrollSpeed * (_selectedLocalPosX - oldPos.x) / _scrollAmount;
+        float deltaXThisFrame = translationXPerSec * Time.deltaTime;
+
+        while (Mathf.Abs(_selectedLocalPosX - _rectTransform.localPosition.x) > Mathf.Abs(deltaXThisFrame))
         {
+            _rectTransform.localPosition += new Vector3(deltaXThisFrame, 0, 0);
+
             yield return null;
-            _rectTransform.localPosition += new Vector3(_scrollSpeed * Time.deltaTime, 0, 0);
+
+            deltaXThisFrame = translationXPerSec * Time.deltaTime;
         }
 
-        _rectTransform.localPosition = new Vector3(_scrollTotalAmount, 0, 0);
-        _stopInput = false;
+        _rectTransform.localPosition = new Vector3(_selectedLocalPosX, 0, 0);
+
+        _scrolling = false;
+
+        if (_lastReleased_IncStageNum < startTime)
+        {
+            _scrollSpeed = _scrollKeepSpeed;
+            IncreaseStageNum();
+        }
+
     }
 
-    // ステージ番号を減らす
-    private void DecreaseStageNum(InputAction.CallbackContext context){
-        if (_stopInput)
-        {
-            return;
-        }
-
-        if (SuzumuraTomoki.SceneManager._currentStageNum > 1)
-		{
-            SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
-            SuzumuraTomoki.SceneManager._currentStageNum--;
-            _scrollTotalAmount += _scrollAmount;
-            StartCoroutine(ScrollLeft());
-            
-        }
-	}
-
-    // ステージ番号を増やす
-    private void IncreaseStageNum(InputAction.CallbackContext context)
+    private void DecreaseStageNum()
     {
-        if (_stopInput)
+        if (SuzumuraTomoki.SceneManager._currentStageNum <= 1)
         {
             return;
         }
 
+        SuzumuraTomoki.SceneManager._currentStageNum--;
+        _selectedLocalPosX += _scrollAmount;
 
-        if (SuzumuraTomoki.SceneManager._currentStageNum < STAGE_NUM)
-		{
-            SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
-            SuzumuraTomoki.SceneManager._currentStageNum++;
-            _scrollTotalAmount -= _scrollAmount;
-            StartCoroutine(ScrollRight());
+        SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
 
-        }
+        var work = coroutine;//再帰に対応するため後でストップ。先にストップするとこのメソッドも終了してしまう？
+        coroutine = ScrollRight();
+        StartCoroutine(coroutine);
+        StopCoroutine(work);
     }
+
+    private void IncreaseStageNum()
+    {
+        if (SuzumuraTomoki.SceneManager._currentStageNum >= STAGE_NUM)
+        {
+            return;
+        }
+
+        SuzumuraTomoki.SceneManager._currentStageNum++;
+        _selectedLocalPosX -= _scrollAmount;
+
+        SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
+
+        var work = coroutine;//再帰に対応するため後でストップ。先にストップするとこのメソッドも終了してしまう？
+        coroutine = ScrollLeft();
+        StartCoroutine(coroutine);
+        StopCoroutine(work);
+    }
+
+    private void CallBackStarted_DecStageNum(InputAction.CallbackContext context)
+    {
+        _scrollSpeed = _scrollBaseSpeed;
+        DecreaseStageNum();
+    }
+
+    private void CallBackStarted_IncStageNum(InputAction.CallbackContext context)
+    {
+        _scrollSpeed = _scrollBaseSpeed;
+        IncreaseStageNum();
+    }
+
 
     private void GoToStage(InputAction.CallbackContext context)
     {
-        if (_stopInput)
+        if (_scrolling)
         {
             return;
         }
@@ -176,13 +242,26 @@ public class SelectScene : MonoBehaviour
         _actionDecision.Disable();
     }
 
-    public void StopInput()
-	{
-        _stopInput = true;
-	}
+    private void CallBackCanceled_DecStageNum(InputAction.CallbackContext context)
+    {
+        _lastReleased_DecStageNum = Time.time;//数百時間動かしていると有効桁数が足りなくなってバグる
+    }
 
-    public void EnableInput()
-	{
-        _stopInput = false;
-	}
+    private void CallBackCanceled_IncStageNum(InputAction.CallbackContext context)
+    {
+        _lastReleased_IncStageNum = Time.time;//数百時間動かしていると有効桁数が足りなくなってバグる
+    }
+
+    private void OnValidate()
+    {
+        if (_scrollBaseSpeed <= 0)
+        {
+            _scrollBaseSpeed = 0.01f;
+        }
+
+        if (_scrollKeepSpeed <= 0)
+        {
+            _scrollKeepSpeed = 0.01f;
+        }
+    }
 }

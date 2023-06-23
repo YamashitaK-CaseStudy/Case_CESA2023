@@ -12283,7 +12283,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scrollAmount: 13.475
-  _scrollSpeed: 15
+  _scrollBaseSpeed: 26
+  _scrollKeepSpeed: 60
 --- !u!1001 &1217533045
 PrefabInstance:
   m_ObjectHideFlags: 0
