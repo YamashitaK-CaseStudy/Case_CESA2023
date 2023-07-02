@@ -83,27 +83,19 @@ public partial class Player : MonoBehaviour{
 
         //Debug.Log("エフェクトの個数" + _MoveEffectList.Count);
 
+      
         // ジャンプ中エフェクト発生
         if (_animCallBack.GetIsJumpEffectPlay) {
-         
-            if (!_jumpEffectdoOnce) {
-                Debug.Log("発生中");
-                //_jumpEffect.SendEvent("StopEffect");
-                //_jumpEffect.SendEvent("PlayEffect");
 
-                var jumpEffectL = Instantiate(_jumpEffectLeft.gameObject,  _jumpEffectLeft.transform.position,  _jumpEffectLeft.transform.rotation);
+            if (_isJumpNowflg) {
+
+                var jumpEffectL = Instantiate(_jumpEffectLeft.gameObject, _jumpEffectLeft.transform.position, _jumpEffectLeft.transform.rotation);
                 var jumpEffectR = Instantiate(_jumpEffectRight.gameObject, _jumpEffectRight.transform.position, _jumpEffectRight.transform.rotation);
                 jumpEffectL.GetComponent<VisualEffect>().SendEvent("PlayEffect");
                 jumpEffectR.GetComponent<VisualEffect>().SendEvent("PlayEffect");
                 jumpEffectL.GetComponent<EffectEndDestroy>().EffctStopTimerStart();
                 jumpEffectR.GetComponent<EffectEndDestroy>().EffctStopTimerStart();
-
-                _jumpEffectdoOnce = true;
             }
-        }
-        else {
-            //_jumpEffect.SendEvent("StopEffect");
-            _jumpEffectdoOnce = false;
         }
     }
 }

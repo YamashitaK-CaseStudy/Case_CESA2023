@@ -12,7 +12,8 @@ public class Lift : RotatableObject {
     }
 
     [SerializeField] private LiftDirection _liftDirection;
-    [SerializeField] private GameObject _liftStickobj;
+    [SerializeField] private GameObject _liftStickVertickalobj;
+    [SerializeField] private GameObject _liftStickHorizontalobj;
     [SerializeField] private GameObject _liftRideobj;
     [SerializeField] private GameObject _liftDameobj;
     [SerializeField] private GameObject _liftObjectobj;
@@ -56,16 +57,32 @@ public class Lift : RotatableObject {
         liftSticks.transform.localPosition = Vector3.zero;
         liftSticks.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
+        if (_dir == LiftDirection.èc) {
+
+            // ñ_ÇÃê∂ê¨
+            var stickMesh = Instantiate(_liftStickVertickalobj, liftSticks.transform);
+            stickMesh.transform.localScale = new Vector3(1,_stickLength, 1);
+            stickMesh.transform.localPosition = new Vector3(0, 0 + (0.5f * (_stickLength - 1)), 0);
+        }
+        else if(_dir == LiftDirection.â°) {
+
+            // ñ_ÇÃê∂ê¨
+            var stickMesh = Instantiate(_liftStickHorizontalobj, liftSticks.transform);
+            stickMesh.transform.localScale = new Vector3(_stickLength, 1, 1);
+            stickMesh.transform.localPosition = new Vector3(0 + (0.5f * (_stickLength - 1)), 0 , 0);
+        }
+
         for (int i = 0; i < length; i++) {
 
-            var stickobj = Instantiate(_liftStickobj, liftSticks.transform);
+            var stickobj = new GameObject("stickobj");
+            stickobj.transform.parent = liftSticks.transform;
 
             if (_dir == LiftDirection.èc) {
                 this.transform.rotation = Quaternion.Euler(0, 0, 0);
                 stickobj.transform.localPosition = new Vector3(0, i, 0);
             }
             else if (_dir == LiftDirection.â°) {
-                this.transform.rotation = Quaternion.Euler(0, 0, 90);
+                this.transform.rotation = Quaternion.Euler(0, 0, 0);
                 stickobj.transform.rotation = Quaternion.Euler(0, 0, 90);
                 stickobj.transform.localPosition = new Vector3(0, -i, 0);
             }
