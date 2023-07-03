@@ -8,21 +8,17 @@ public class SelectScene : MonoBehaviour
 {
     public const int STAGE_NUM = 15;
 
+    static private float _selectedLocalPosX = 0;
+
     [SerializeField] private float _scrollAmount = 13.475f;
     [SerializeField] private float _scrollBaseSpeed = 13;
     [SerializeField] private float _scrollKeepSpeed = 26;
-    static private float _selectedLocalPosX = 0;
-
-    //[Header("種スコア設定")]
-    //[SerializeField] private Vector2 _seedIconOffset = new Vector2(-650, -30);
-    //[SerializeField] private float _seedIconScale = .05f;
-    //[SerializeField] private Vector2 _seedScoreOffset = new Vector2(-550, -30);
-    //[SerializeField] private float _seedScoreScale = .05f;
-
+    [SerializeField] private GameObject _storyArchive = null;
 
     private InputAction _actionDecision = null;
     private InputAction _actionStageSelectL = null;
     private InputAction _actionStageSelectR = null;
+    private InputAction _actionStorySelect = null;
     private bool _scrolling = false;
     private float _scrollSpeed = 1;
     private float _lastReleased_IncStageNum = 0;
@@ -63,6 +59,8 @@ public class SelectScene : MonoBehaviour
 
         _actionStageSelectL.started -= CallBackStarted_DecStageNum;
         _actionStageSelectL.canceled -= CallBackCanceled_DecStageNum;
+
+        _actionStorySelect.started -= CallBack_Started_SwitchStoryArchive;
     }
 
     private void InitInputAction()
@@ -103,6 +101,16 @@ public class SelectScene : MonoBehaviour
             _actionStageSelectR.started += CallBackStarted_IncStageNum;
             _actionStageSelectR.canceled += CallBackCanceled_IncStageNum;
         }
+
+        _actionStorySelect = SuzumuraTomoki.SceneManager.inputSheet.FindActionMap("StageSelect").FindAction("StoryArchive");
+
+        if (_actionStorySelect == null)
+        {
+            Debug.LogError("インプットアクション：StoryArchive　が見つかりませんでした");
+        }
+
+        _actionStorySelect.started += CallBack_Started_SwitchStoryArchive;
+
     }
 
 
@@ -110,11 +118,14 @@ public class SelectScene : MonoBehaviour
     {
         _scrolling = true;
         float startTime = Time.time;
-        _lastReleased_IncStageNum = startTime;//ScrollLeftの再帰を止める
+        //_lastReleased_IncStageNum = startTime;//ScrollLeftの再帰を止める
 
         Vector3 oldPos = _rectTransform.localPosition;
 
-        float translationXPerSec = _scrollSpeed * (_selectedLocalPosX - oldPos.x) / _scrollAmount;
+        float gainSpeed = (_selectedLocalPosX - oldPos.x) / _scrollAmount;
+        gainSpeed = Mathf.Abs(gainSpeed) > 1 ? gainSpeed : gainSpeed / Mathf.Abs(gainSpeed);
+
+        float translationXPerSec = _scrollSpeed * gainSpeed;
         float deltaXThisFrame = translationXPerSec * Time.deltaTime;
 
         while (Mathf.Abs(_selectedLocalPosX - _rectTransform.localPosition.x) > Mathf.Abs(deltaXThisFrame))
@@ -142,11 +153,14 @@ public class SelectScene : MonoBehaviour
     {
         _scrolling = true;
         float startTime = Time.time;
-        _lastReleased_DecStageNum = startTime;//ScrollRightの再帰を止める
+        //_lastReleased_DecStageNum = startTime;//ScrollRightの再帰を止める
 
         Vector3 oldPos = _rectTransform.localPosition;
 
-        float translationXPerSec = _scrollSpeed * (_selectedLocalPosX - oldPos.x) / _scrollAmount;
+        float gainSpeed = (_selectedLocalPosX - oldPos.x) / _scrollAmount;
+        gainSpeed = Mathf.Abs(gainSpeed) > 1 ? gainSpeed : gainSpeed / Mathf.Abs(gainSpeed);
+
+        float translationXPerSec = _scrollSpeed * gainSpeed;
         float deltaXThisFrame = translationXPerSec * Time.deltaTime;
 
         while (Mathf.Abs(_selectedLocalPosX - _rectTransform.localPosition.x) > Mathf.Abs(deltaXThisFrame))
@@ -250,6 +264,14 @@ public class SelectScene : MonoBehaviour
     private void CallBackCanceled_IncStageNum(InputAction.CallbackContext context)
     {
         _lastReleased_IncStageNum = Time.time;//数百時間動かしていると有効桁数が足りなくなってバグる
+    }
+
+    private void CallBack_Started_SwitchStoryArchive(InputAction.CallbackContext context)
+    {
+        //ステージセレクトをオフ
+        gameObject.SetActive(!gameObject.activeSelf);
+        //ストーリーアーカイブを有効にする
+        _storyArchive.SetActive(!_storyArchive.activeSelf);
     }
 
     private void OnValidate()

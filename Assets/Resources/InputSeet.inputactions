@@ -650,6 +650,82 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "StageSelect",
+            "id": "830e8ba0-a224-4527-a151-d9a543545ab6",
+            "actions": [
+                {
+                    "name": "StoryArchive",
+                    "type": "Button",
+                    "id": "b69ea1c1-2a77-4b2a-a56c-2856ec405030",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "61e0c39b-ef56-4743-9970-2f46999a06f3",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "StoryArchive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "StoryArchive",
+            "id": "6e7b224f-ce8d-422d-baad-25ac13389df6",
+            "actions": [
+                {
+                    "name": "MoveRight",
+                    "type": "Button",
+                    "id": "c8806f9a-3ed0-4ae9-8259-bffd1fe3da3b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveLeft",
+                    "type": "Button",
+                    "id": "36abbed6-0dc8-4d84-a7e1-1e1c1e015c47",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "132152e1-6401-44c9-9180-067fcbdcf3b1",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3cc3709-e9e4-4628-a97c-46dd383a2529",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
