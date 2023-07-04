@@ -81,7 +81,7 @@ public class UiSeedBehavior : MonoBehaviour
         _instance = this;
 
         //ŒÅ’è‚Ìê‡
-        SeedScore score = SelectFilmBehavior.seedScore;
+        SeedScore score = SelectFilmBehavior.SeedScoreCurrentStage;
         score.obtained = 0;
         _iconSeedScore.ChangeIcon(score);
         _totalSeeds = (int)score.total + SeedIconData.MIN_TOTAL;
@@ -107,7 +107,7 @@ public class UiSeedBehavior : MonoBehaviour
             return;
         }
 
-        SeedScore score = SelectFilmBehavior.seedScore;
+        SeedScore score = SelectFilmBehavior.SeedScoreCurrentStage;
 
         if (score.obtained >= _countObtained)
         {
@@ -117,7 +117,7 @@ public class UiSeedBehavior : MonoBehaviour
         //‘S‘Ì”‰Â•Ï’·
         //score.total = (SeedIconData.TotalCountType)(_totalSeeds - SeedIconData.MIN_TOTAL);
         score.obtained = _countObtained;
-        SelectFilmBehavior.seedScore = score;
+        SelectFilmBehavior.SeedScoreCurrentStage = score;
 
         //_totalSeeds = 0;//‘S‘Ì”‰Â•Ï’·
     }

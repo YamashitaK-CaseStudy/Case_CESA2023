@@ -23,6 +23,7 @@ namespace SuzumuraTomoki {
 
 		static private SceneManager _instance = null;
 		static private UnityEngine.InputSystem.InputActionMap _playerInput = null;
+		static private UnityEngine.InputSystem.InputActionAsset _inputSheet = null;
 		static private TitleInitState _titleInitStatet = TitleInitState.TITLE;
 
 		/*****静的インターフェイス（公開メンバ）*******/
@@ -46,10 +47,23 @@ namespace SuzumuraTomoki {
 			{
 				if (_playerInput == null)
 				{
-					_playerInput = Resources.Load<UnityEngine.InputSystem.InputActionAsset>("InputSeet").FindActionMap("Player");
+					_playerInput = inputSheet.FindActionMap("Player");
 				}
 
 				return _playerInput;
+			}
+		}
+
+		static public UnityEngine.InputSystem.InputActionAsset inputSheet
+		{
+			get
+			{
+				if (_inputSheet == null)
+				{
+					_inputSheet = Resources.Load<UnityEngine.InputSystem.InputActionAsset>("InputSeet");
+				}
+
+				return _inputSheet;
 			}
 		}
 
