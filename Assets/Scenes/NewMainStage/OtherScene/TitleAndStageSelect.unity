@@ -11636,6 +11636,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e871ac6190a5124abc41f4f076d39f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectPiecePrefab: {fileID: 2978625711227731765, guid: 1c03b140824f04044a7bbca6cc297f66,
+    type: 3}
+  _buttonUi_R_Prefab: {fileID: 3479997598742718156, guid: 36957a7394071044896f23a307fc6075,
+    type: 3}
+  _buttonUi_L_Prefab: {fileID: 1733813622134454179, guid: 08877a7a7c215f94ebd649db42fcf4cf,
+    type: 3}
+  _lockUi_Prefab: {fileID: 6340896892557963504, guid: 98b66ebc087a2e344be33b496cec431e,
+    type: 3}
+  _stageDataArray:
+  - thumbnail: {fileID: 21300000, guid: 857a8cfc9a2f7854296dbe0c3e14b0da, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: f19b361f0e0ca28478051c589ad5b290, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 949006422fbfe974abe6d6d52c588ef0, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 8f8e2fb851e05fa49a585516eaeed113, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 2b1590c54b4118c47bd16e06d411139c, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 0e069045eccc2be4aa113bda30d9e893, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 7c70505c16aa93a4599e3729ad786ca0, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 6a7966aa8f1249a4eb815a141c0d6425, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: bb7ea174ef58a4041969869656474ad0, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: a7da146c09105964ea94cd1498bde1a1, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 5fceb59efe9521e48956df425a44a477, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 03a1b58a95bd35f4f9c224e9bd4d9d81, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: aab460498aa0f3747abeff2f989f2ebc, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 11cc553ef25675a43acc0762ed19bb85, type: 3}
+    unlockNumber: 0
+  - thumbnail: {fileID: 21300000, guid: 03e193849c99bf04fb08913067cee2f3, type: 3}
+    unlockNumber: 0
   _scrollAmount: 13.475
   _scrollBaseSpeed: 26
   _scrollKeepSpeed: 60

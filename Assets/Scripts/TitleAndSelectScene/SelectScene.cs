@@ -3,13 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using SuzumuraTomoki;
 
 public class SelectScene : MonoBehaviour
 {
-    public const int STAGE_NUM = 15;
+    /*型定義*/
+
+    [System.Serializable]
+    private struct StageData
+    {
+        public Sprite thumbnail;
+        public int unlockNumber;
+    }
+
+    /*非公開変数*/
 
     static private float _selectedLocalPosX = 0;
 
+    [SerializeField] private GameObject _selectPiecePrefab;
+    [SerializeField] private GameObject _buttonUi_R_Prefab;
+    [SerializeField] private GameObject _buttonUi_L_Prefab;
+    [SerializeField] private GameObject _lockUi_Prefab;
+    [Header("ステージ画像と必要スコア\n途中挿入はElementを右クリック、Duplicate..で出来ます")]
+    [SerializeField] private StageData[] _stageDataArray;
     [SerializeField] private float _scrollAmount = 13.475f;
     [SerializeField] private float _scrollBaseSpeed = 13;
     [SerializeField] private float _scrollKeepSpeed = 26;
@@ -26,27 +42,49 @@ public class SelectScene : MonoBehaviour
     private RectTransform _rectTransform;
     private IEnumerator coroutine = null;
 
-
-
-    public void StopInput()
-    {
-        _actionDecision.Disable();
-        _actionStageSelectL.Disable();
-        _actionStageSelectR.Disable();
-    }
-    public void EnableInput()
-    {
-        _actionDecision.Enable();
-        _actionStageSelectL.Enable();
-        _actionStageSelectR.Enable();
-    }
+    /*Unity関数*/
 
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
-        _selectedLocalPosX = -((SuzumuraTomoki.SceneManager._currentStageNum - 1) * _scrollAmount);
+        _selectedLocalPosX = -((SceneManager._currentStageNum - 1) * _scrollAmount);
         _rectTransform.localPosition = new Vector3(_selectedLocalPosX, 0, 0);
         coroutine = ScrollRight();//null回避
+
+        /*選択肢生成*/
+        GameObject selectPieceInstance = null;
+        for (int i = 0, stageNum = 1; i < _stageDataArray.Length; ++i)
+        {
+            selectPieceInstance = Instantiate(_selectPiecePrefab, transform);
+            selectPieceInstance.transform.localPosition = new Vector3(i * _scrollAmount, 0, 0);
+
+            ref StageData stageData = ref _stageDataArray[i];
+            selectPieceInstance.transform.GetChild(1).GetComponent<UnityEngine.UI.Image>().sprite = stageData.thumbnail;
+            if (stageData.unlockNumber == 0)
+            {
+                selectPieceInstance.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = stageNum++.ToString();
+            }
+            else
+            {
+                selectPieceInstance.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = "EX";
+                Instantiate(_lockUi_Prefab, selectPieceInstance.transform);
+            }
+
+            /*ボタンUILR生成*/
+            if (i != 0 || i != _stageDataArray.Length - 1)
+            {
+                Instantiate(_buttonUi_L_Prefab, selectPieceInstance.transform);
+                Instantiate(_buttonUi_R_Prefab, selectPieceInstance.transform);
+            }
+            else if (i == 0)
+            {
+                Instantiate(_buttonUi_R_Prefab, selectPieceInstance.transform);
+            }
+            else
+            {
+                Instantiate(_buttonUi_L_Prefab, selectPieceInstance.transform);
+            }
+        }
 
         InitInputAction();
     }
@@ -63,10 +101,40 @@ public class SelectScene : MonoBehaviour
         _actionStorySelect.started -= CallBack_Started_SwitchStoryArchive;
     }
 
+    private void OnValidate()
+    {
+        if (_scrollBaseSpeed <= 0)
+        {
+            _scrollBaseSpeed = 0.01f;
+        }
+
+        if (_scrollKeepSpeed <= 0)
+        {
+            _scrollKeepSpeed = 0.01f;
+        }
+    }
+
+    /*公開*/
+
+    public void StopInput()
+    {
+        _actionDecision.Disable();
+        _actionStageSelectL.Disable();
+        _actionStageSelectR.Disable();
+    }
+    public void EnableInput()
+    {
+        _actionDecision.Enable();
+        _actionStageSelectL.Enable();
+        _actionStageSelectR.Enable();
+    }
+
+    /*内部*/
+
     private void InitInputAction()
     {
 
-        _actionDecision = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectEnter");
+        _actionDecision = SceneManager.playerInput.FindAction("StageSelectEnter");
 
         if (_actionDecision == null)
         {
@@ -78,7 +146,7 @@ public class SelectScene : MonoBehaviour
             _actionDecision.Enable();
         }
 
-        _actionStageSelectL = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectL");
+        _actionStageSelectL = SceneManager.playerInput.FindAction("StageSelectL");
 
         if (_actionStageSelectL == null)
         {
@@ -90,7 +158,7 @@ public class SelectScene : MonoBehaviour
             _actionStageSelectL.canceled += CallBackCanceled_DecStageNum;
         }
 
-        _actionStageSelectR = SuzumuraTomoki.SceneManager.playerInput.FindAction("StageSelectR");
+        _actionStageSelectR = SceneManager.playerInput.FindAction("StageSelectR");
 
         if (_actionStageSelectR == null)
         {
@@ -186,12 +254,12 @@ public class SelectScene : MonoBehaviour
 
     private void DecreaseStageNum()
     {
-        if (SuzumuraTomoki.SceneManager._currentStageNum <= 1)
+        if (SceneManager._currentStageNum <= 1)
         {
             return;
         }
 
-        SuzumuraTomoki.SceneManager._currentStageNum--;
+        SceneManager._currentStageNum--;
         _selectedLocalPosX += _scrollAmount;
 
         SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
@@ -204,12 +272,12 @@ public class SelectScene : MonoBehaviour
 
     private void IncreaseStageNum()
     {
-        if (SuzumuraTomoki.SceneManager._currentStageNum >= STAGE_NUM)
+        if (SceneManager._currentStageNum >= _stageDataArray.Length)
         {
             return;
         }
 
-        SuzumuraTomoki.SceneManager._currentStageNum++;
+        SceneManager._currentStageNum++;
         _selectedLocalPosX -= _scrollAmount;
 
         SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
@@ -240,7 +308,12 @@ public class SelectScene : MonoBehaviour
             return;
         }
 
-        bool success = SuzumuraTomoki.SceneManager.LoadStage(SuzumuraTomoki.SceneManager._currentStageNum);
+        if(SelectFilmBehavior.SeedScore < _stageDataArray[SceneManager._currentStageNum - 1].unlockNumber){
+            //TODO:無効な入力を伝えるSE
+            return;
+        }
+
+        bool success = SceneManager.LoadStage(SceneManager._currentStageNum);
 
         SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Decision3);
         SystemSoundManager.Instance.StopBGMWithFade(0.5f);
@@ -248,7 +321,7 @@ public class SelectScene : MonoBehaviour
         if (!success)
         {
             //TODO:無効な入力を伝えるSE
-            print("ステージセレクト「ステージが存在しません」");
+            print("ステージが存在しません。ビルド設定を確認してください。");
             return;
         }
 
@@ -274,16 +347,4 @@ public class SelectScene : MonoBehaviour
         _storyArchive.SetActive(!_storyArchive.activeSelf);
     }
 
-    private void OnValidate()
-    {
-        if (_scrollBaseSpeed <= 0)
-        {
-            _scrollBaseSpeed = 0.01f;
-        }
-
-        if (_scrollKeepSpeed <= 0)
-        {
-            _scrollKeepSpeed = 0.01f;
-        }
-    }
 }
