@@ -30,6 +30,7 @@ public class SelectScene : MonoBehaviour
     [SerializeField] private float _scrollBaseSpeed = 13;
     [SerializeField] private float _scrollKeepSpeed = 26;
     [SerializeField] private GameObject _storyArchive = null;
+    [SerializeField] private PlayerInput _playerInput = null;
 
     private InputAction _actionDecision = null;
     private InputAction _actionStageSelectL = null;
@@ -170,7 +171,7 @@ public class SelectScene : MonoBehaviour
             _actionStageSelectR.canceled += CallBackCanceled_IncStageNum;
         }
 
-        _actionStorySelect = SuzumuraTomoki.SceneManager.inputSheet.FindActionMap("StageSelect").FindAction("StoryArchive");
+        _actionStorySelect = SceneManager.playerInput.FindAction("StoryArchive");
 
         if (_actionStorySelect == null)
         {
@@ -341,10 +342,12 @@ public class SelectScene : MonoBehaviour
 
     private void CallBack_Started_SwitchStoryArchive(InputAction.CallbackContext context)
     {
+        _playerInput.SwitchCurrentActionMap("StoryArchive");
+
         //ステージセレクトをオフ
-        gameObject.SetActive(!gameObject.activeSelf);
+        gameObject.SetActive(false);
         //ストーリーアーカイブを有効にする
-        _storyArchive.SetActive(!_storyArchive.activeSelf);
+        _storyArchive.SetActive(true);
     }
 
 }

@@ -7,10 +7,17 @@ using UnityEngine.InputSystem;
 
 public class StoryArchive : MonoBehaviour
 {
+    /*目次
+     * クラス・構造体
+     * Unity関数
+     * 非公開関数
+     * 非公開変数
+     */
+
     /*クラス・構造体*/
 
     [System.Serializable]
-    private struct StoryMovie
+    private struct StoryData
     {
         public Sprite _image;
         public int _unlockNum;
@@ -24,15 +31,21 @@ public class StoryArchive : MonoBehaviour
         _selectedLocalPosX = -((_currentStoryNum - 1) * _distance);
         _rectTransform.localPosition = new Vector3(_selectedLocalPosX, 0, 0);
 
+        //生成
         for (int i = 0, length = _storyArray.Length; i < length; ++i)
         {
-            var instance = Instantiate(_pfStoryThumbnail, transform);
-            instance.transform.localPosition = new Vector3(_distance * i, 0, 0);
-            //instance.transform.parent = transform;
-            instance.GetComponent<UnityEngine.UI.Image>().sprite = _storyArray[i]._image;
+            var thumbnailInstance = Instantiate(_storyThumbnailPrefab, transform);
+            thumbnailInstance.transform.localPosition = new Vector3(_distance * i, 0, 0);
+            ref var storyData = ref _storyArray[i];
+            thumbnailInstance.GetComponent<UnityEngine.UI.Image>().sprite = storyData._image;
+
+            if(SelectFilmBehavior.SeedScore< storyData._unlockNum)
+            {
+                Instantiate(_lockUiPrefab, thumbnailInstance.transform);
+            }
         }
 
-        _actionMoveRight = SuzumuraTomoki.SceneManager.inputSheet.FindActionMap("StoryArchive").FindAction("MoveRight");
+        _actionMoveRight = _playerInput.currentActionMap.FindAction("MoveRight");
 
         if (_actionMoveRight == null)
         {
@@ -41,7 +54,7 @@ public class StoryArchive : MonoBehaviour
 
         _actionMoveRight.started += CallBack_Started_MoveRight;
 
-        _actionMoveLeft = SuzumuraTomoki.SceneManager.inputSheet.FindActionMap("StoryArchive").FindAction("MoveLeft");
+        _actionMoveLeft = _playerInput.currentActionMap.FindAction("MoveLeft");
 
         if (_actionMoveLeft == null)
         {
@@ -49,17 +62,28 @@ public class StoryArchive : MonoBehaviour
         }
 
         _actionMoveLeft.started += CallBack_Started_MoveLeft;
+
+
+        _actionStageSelect = _playerInput.currentActionMap.FindAction("StageSelect");
+
+        if (_actionStageSelect == null)
+        {
+            Debug.LogError("インプットアクション：StageSelect　が見つかりませんでした");
+        }
+
+        _actionStageSelect.started += CallBack_Started_SwitchStageSelect;
     }
 
     private void OnDestroy()
     {
         _actionMoveRight.started -= CallBack_Started_MoveRight;
         _actionMoveLeft.started -= CallBack_Started_MoveLeft;
+        _actionStageSelect.started -= CallBack_Started_SwitchStageSelect;
     }
 
     /*公開*/
 
-    /*非公開*/
+    /*非公開関数*/
 
     private void CallBack_Started_MoveLeft(InputAction.CallbackContext context)
     {
@@ -75,7 +99,7 @@ public class StoryArchive : MonoBehaviour
 
     private void BeginScrollRight()
     {
-        if (SuzumuraTomoki.SceneManager._currentStageNum <= 1)
+        if (_currentStoryNum <= 1)
         {
             return;
         }
@@ -85,10 +109,13 @@ public class StoryArchive : MonoBehaviour
 
         SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
 
-        var work = coroutine;//再帰に対応するため後でストップ。先にストップするとこのメソッドも終了してしまう？
+        var oldCoroutine = coroutine;//再帰に対応するため後でストップ。先にストップするとこのメソッドも終了してしまう？
         coroutine = ScrollRight();
         StartCoroutine(coroutine);
-        StopCoroutine(work);
+        if (oldCoroutine != null)
+        {
+            StopCoroutine(oldCoroutine);
+        }
     }
 
     private void BeginScrollLeft()
@@ -103,10 +130,13 @@ public class StoryArchive : MonoBehaviour
 
         SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
 
-        var work = coroutine;//再帰に対応するため後でストップ。先にストップするとこのメソッドも終了してしまう？
+        var oldCoroutine = coroutine;//再帰に対応するため後でストップ。先にストップするとこのメソッドも終了してしまう？
         coroutine = ScrollLeft();
         StartCoroutine(coroutine);
-        StopCoroutine(work);
+        if (oldCoroutine != null)
+        {
+            StopCoroutine(oldCoroutine);
+        }
     }
 
     private IEnumerator ScrollRight()
@@ -177,17 +207,33 @@ public class StoryArchive : MonoBehaviour
 
     }
 
+    private void CallBack_Started_SwitchStageSelect(InputAction.CallbackContext context)
+    {
+        //ストーリーアーカイブを無効にする
+        gameObject.SetActive(false);
+        //ステージセレクトを有効にする
+        _stageSelect.SetActive(true);
+
+        _playerInput.SwitchCurrentActionMap("Player");
+    }
+
+    /*非公開変数*/
+
     static private float _selectedLocalPosX = 0;
     static private int _currentStoryNum = 1;
 
-    [SerializeField] private StoryMovie[] _storyArray;
-    [SerializeField] private GameObject _pfStoryThumbnail;
+    [SerializeField] private StoryData[] _storyArray;
+    [SerializeField] private GameObject _storyThumbnailPrefab;
+    [SerializeField] private GameObject _lockUiPrefab;
     [SerializeField] private float _distance = 13.5f;
     [SerializeField] private float _scrollBaseSpeed = 13;
     [SerializeField] private float _scrollKeepSpeed = 26;
+    [SerializeField] private GameObject _stageSelect = null;
+    [SerializeField] private PlayerInput _playerInput = null;
 
     private InputAction _actionMoveRight = null;
     private InputAction _actionMoveLeft = null;
+    private InputAction _actionStageSelect = null;
     private bool _scrolling = false;
     private float _scrollSpeed = 1;
     private float _lastReleased_IncStageNum = 0;

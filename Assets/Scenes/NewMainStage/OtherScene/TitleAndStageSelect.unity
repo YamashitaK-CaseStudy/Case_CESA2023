@@ -8520,15 +8520,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _storyArray:
-  - _image: {fileID: 21300000, guid: 0e94c4f24068c6a40b9e4f28ced2e66a, type: 3}
+  - _image: {fileID: 21300000, guid: 857a8cfc9a2f7854296dbe0c3e14b0da, type: 3}
     _unlockNum: 0
-  - _image: {fileID: 21300000, guid: 9ff4a471f8328994b99f75c3a7bd33e1, type: 3}
-    _unlockNum: 0
-  _pfStoryThumbnail: {fileID: 7260056275340480434, guid: d5b7a086931c2fd48bd1e28731636659,
+  - _image: {fileID: 21300000, guid: 857a8cfc9a2f7854296dbe0c3e14b0da, type: 3}
+    _unlockNum: 1
+  _storyThumbnailPrefab: {fileID: 7260056275340480434, guid: d5b7a086931c2fd48bd1e28731636659,
+    type: 3}
+  _lockUiPrefab: {fileID: 6340896892557963504, guid: f339cd1bfae689c42854bf5bf2ea67e9,
     type: 3}
   _distance: 13.5
   _scrollBaseSpeed: 13
   _scrollKeepSpeed: 26
+  _stageSelect: {fileID: 1210941293}
+  _playerInput: {fileID: 286243061}
 --- !u!1 &967633162
 GameObject:
   m_ObjectHideFlags: 0
@@ -11679,6 +11683,7 @@ MonoBehaviour:
   _scrollBaseSpeed: 26
   _scrollKeepSpeed: 60
   _storyArchive: {fileID: 963019059}
+  _playerInput: {fileID: 286243061}
 --- !u!1001 &1217533045
 PrefabInstance:
   m_ObjectHideFlags: 0

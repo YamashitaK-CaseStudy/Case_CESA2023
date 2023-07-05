@@ -121,6 +121,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "StoryArchive",
+                    "type": "Button",
+                    "id": "b189b69b-aaca-4c66-8c30-0f8631dace65",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -431,6 +440,17 @@
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99025c6a-e3cd-4814-b042-6bf717eb38af",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "StoryArchive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -652,34 +672,6 @@
             ]
         },
         {
-            "name": "StageSelect",
-            "id": "830e8ba0-a224-4527-a151-d9a543545ab6",
-            "actions": [
-                {
-                    "name": "StoryArchive",
-                    "type": "Button",
-                    "id": "b69ea1c1-2a77-4b2a-a56c-2856ec405030",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "61e0c39b-ef56-4743-9970-2f46999a06f3",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "StoryArchive",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "StoryArchive",
             "id": "6e7b224f-ce8d-422d-baad-25ac13389df6",
             "actions": [
@@ -696,6 +688,15 @@
                     "name": "MoveLeft",
                     "type": "Button",
                     "id": "36abbed6-0dc8-4d84-a7e1-1e1c1e015c47",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StageSelect",
+                    "type": "Button",
+                    "id": "958d475f-6278-43a1-bbf6-e452622f829b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -722,6 +723,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bd992fd-3360-42fa-b4bb-29da479f939f",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "StageSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
