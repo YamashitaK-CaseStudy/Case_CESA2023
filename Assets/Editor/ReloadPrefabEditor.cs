@@ -111,6 +111,7 @@ public partial class CUpdatePrefab : EditorWindow
 	{
 		if (GUILayout.Button("置き換え開始"))
 		{
+			RESettingsRotObj();
 			ReplacePrefab();
 		}
 		// GUIDの検索
@@ -198,6 +199,16 @@ public partial class CUpdatePrefab : EditorWindow
 		childObj.name = childObj.name.Replace("(Clone)","");
 		Undo.RegisterCreatedObjectUndo(childObj, "Create New GameObject");
 	}
+
+	private void RESettingsRotObj() {
+        foreach(var rotobj in _rotObjects) {
+			Debug.Log(rotobj);
+			if(rotobj.GetComponent<LiftWithMoveInfo>() == null) {
+				Debug.Log("てすと");
+				rotobj.AddComponent<LiftWithMoveInfo>();
+            }
+        }
+    }
 	private void Line()
 	{
 		var splitterRect = EditorGUILayout.GetControlRect(false, GUILayout.Height(1));

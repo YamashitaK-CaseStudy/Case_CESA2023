@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7928803416276845940}
   - component: {fileID: 5158985593480134212}
+  - component: {fileID: 4440663719014093472}
   m_Layer: 0
   m_Name: Pf_Key
   m_TagString: Key
@@ -46,6 +47,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.47, y: 1.21, z: 0.45}
   m_Center: {x: 0.04, y: 0.12, z: -0.01}
+--- !u!114 &4440663719014093472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153348677418931105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901fabd0387f6fa4d867851c2476fdeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotSpeed: 1
+  _animOffsetMove: {x: 0, y: 1.5, z: 0}
 --- !u!1001 &6768410982206034127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,7 +142,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 39eae86f8c641a04cb576e85355c8762, type: 2}
+      objectReference: {fileID: 2100000, guid: bab636610f36e0e45867cb69d6a3c4d3, type: 2}
     - target: {fileID: 919132149155446097, guid: 2acf5467f5e23ec44995844323964e44,
         type: 3}
       propertyPath: m_Name

@@ -403,6 +403,8 @@ public partial class CStageEditor : EditorWindow
 		// 種類の設定
 		_parentObjectkind = _parentObject.AddComponent<RotObjkinds>();
 		_parentObjectkind._RotObjKind = _kinds;
+		// リフト用の生成
+		_parentObject.AddComponent<LiftWithMoveInfo>();
 
 		// AudioSourceの追加
 		_parentAudioSource = _parentObject.AddComponent<AudioSource>();

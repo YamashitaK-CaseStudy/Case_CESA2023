@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 3355522315799826888}
   m_Layer: 13
   m_Name: Pf_CreateLift
-  m_TagString: RotateObject
+  m_TagString: Lift
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,7 +205,9 @@ MonoBehaviour:
   offsetRotAxis: {x: 0, y: 0, z: 0}
   _oldAngleY: 0
   _liftDirection: 1
-  _liftStickobj: {fileID: 5229265492094066856, guid: 0e3e21dbe93c12b419753e7ae78a375b,
+  _liftStickVertickalobj: {fileID: 5229265492094066856, guid: 0e3e21dbe93c12b419753e7ae78a375b,
+    type: 3}
+  _liftStickHorizontalobj: {fileID: 5229265492094066856, guid: 63d5c4f2b785fc64093d068469eabf30,
     type: 3}
   _liftRideobj: {fileID: 7865728353036348745, guid: 63d6582298682084cb6e1d7d96588bf4,
     type: 3}

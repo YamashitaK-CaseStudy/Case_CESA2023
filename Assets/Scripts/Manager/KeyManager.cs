@@ -17,7 +17,8 @@ public class KeyManager : MonoBehaviour {
     // ƒvƒŒƒCƒ„[‚ªŒ®‚ğæ“¾‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éŠÖ”
     public void PlayerGetKey(GameObject _keyObject) {
 
-        Destroy(_keyObject);
+        // Œ®‘¤‚Éæ“¾‚³‚ê‚½‚±‚Æ‚ğ“`‚¦‚é
+        _keyObject.GetComponent<Key>().ToBeObtained();
         _playerKeyNum++;
     }
 

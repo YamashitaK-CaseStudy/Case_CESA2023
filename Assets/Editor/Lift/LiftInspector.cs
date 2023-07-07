@@ -7,7 +7,8 @@ using UnityEditor;
 public class LiftInspector : Editor {
 
     SerializedProperty _liftDirection;
-    SerializedProperty _liftStickobj;
+    SerializedProperty _liftStickVertickalobj;
+    SerializedProperty _liftStickHorizontalobj;
     SerializedProperty _liftRideobj;
     SerializedProperty _liftDameobj;
     SerializedProperty _liftObjectobj;
@@ -17,7 +18,8 @@ public class LiftInspector : Editor {
     void OnEnable() {
 
         _liftDirection = serializedObject.FindProperty("_liftDirection");
-        _liftStickobj = serializedObject.FindProperty("_liftStickobj");
+        _liftStickVertickalobj = serializedObject.FindProperty("_liftStickVertickalobj");
+        _liftStickHorizontalobj = serializedObject.FindProperty("_liftStickHorizontalobj");
         _liftRideobj = serializedObject.FindProperty("_liftRideobj");
         _liftDameobj = serializedObject.FindProperty("_liftDameobj");
         _liftObjectobj = serializedObject.FindProperty("_liftObjectobj");
@@ -31,7 +33,8 @@ public class LiftInspector : Editor {
         EditorGUI.BeginChangeCheck();
 
         EditorGUILayout.PropertyField(_liftDirection, new GUIContent("リフトを動かす向き"));
-        EditorGUILayout.PropertyField(_liftStickobj, new GUIContent("リフトを動かす棒のモデル"));
+        EditorGUILayout.PropertyField(_liftStickVertickalobj, new GUIContent("リフトを動かす棒のモデル縦"));
+        EditorGUILayout.PropertyField(_liftStickHorizontalobj, new GUIContent("リフトを動かす棒のモデル横"));
         EditorGUILayout.PropertyField(_liftRideobj, new GUIContent("リフトに乗るモデル"));
         EditorGUILayout.PropertyField(_liftDameobj, new GUIContent("ダミーオブジェクト"));
         EditorGUILayout.PropertyField(_liftObjectobj, new GUIContent("オブジェクト"));
