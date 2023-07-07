@@ -8,6 +8,15 @@ public class RotObjHitCheck : MonoBehaviour{
     private GameObject _rotObj = null;
     private GameObject _rotPartsObj = null;
 
+    public void ReloadObj(GameObject parts){
+        _rotObj = parts.transform.root.gameObject;
+        _rotPartsObj = parts;
+    }
+
+    public GameObject GetAxisParts(){
+        return _rotPartsObj;
+    }
+
     private void OnTriggerEnter(Collider other) {
 
         if (other.transform.parent == null || other.transform.parent.parent == null) {
@@ -32,8 +41,6 @@ public class RotObjHitCheck : MonoBehaviour{
     private void GetRotateObject(GameObject obj) {
 
         if (obj.transform.parent.parent.gameObject.tag == "RotateObject") {
-
-            Debug.Log("“–‚½‚è”»’è“ü‚è" + obj);
 
             _rotObj = obj.transform.parent.parent.gameObject;
             _rotPartsObj = obj;

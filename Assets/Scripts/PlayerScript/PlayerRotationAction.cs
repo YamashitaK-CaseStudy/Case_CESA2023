@@ -88,10 +88,10 @@ public partial class Player : MonoBehaviour{
                 // 通常ブロック操作
                 if (_rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.NomalRotObject ||
                     _rotatbleKind._RotObjKind == RotObjkinds.ObjectKind.UnionRotObject) {
-                    Debug.Log("通常回転操作");
+                    //Debug.Log("通常回転操作");
 
                     if (_rotComp._isRotateEndFream) {
-                        Debug.Log("回転終了");
+                        //Debug.Log("回転終了");
                         _stricRotAngle.yAxisManyObjJude(_bottomHitCheck);
                     }
 
@@ -185,12 +185,39 @@ public partial class Player : MonoBehaviour{
         }
     }
 
+    public void BlockLoad(GameObject parts){
+        Debug.Log("ブロックロック");
+        _isLock = true;
+
+        // プレイヤーの速度を零にする
+        _speedx = 0.0f;
+
+        _bottomHitCheck.ReloadObj(parts);
+        _frontHitCheck.ReloadObj(parts);
+
+        // ブロックの優先度確認
+        BlockPriority(_bottomHitCheck, _frontHitCheck);
+
+        // 各アニメーションの遷移
+        AnimatoinState(true);
+
+        // ブロック全部のフレーム可視化
+        LockFreamMassSetActive(_lockRootObject, true);
+
+        // 頭上の当たり判定rayを伸ばす(ボルト用に)
+        _upperrayCheck.SetDistacne(1.5f);
+    }
+
+    public GameObject GetAxisParts(){
+        return _bottomHitCheck.GetAxisParts();
+    }
+
     // ロック可能な回転オブジェクトを可視化する
     private void LockFreamDisplay(RotObjHitCheck _bottom, RotObjHitCheck _front) {
 
         if (_bottom.GetRotPartsObj != null) {
 
-            Debug.Log("可能判定下");
+            //Debug.Log("可能判定下");
             _LockFreamObj.transform.position = _bottom.GetRotPartsObj.transform.position;
             _LockFreamObj.active = true;
 
@@ -202,7 +229,7 @@ public partial class Player : MonoBehaviour{
         }
         else if (_front.GetRotPartsObj != null) {
 
-            Debug.Log("可能判定左右");
+            //Debug.Log("可能判定左右");
             _LockFreamObj.transform.position = _front.GetRotPartsObj.transform.position;
             _LockFreamObj.active = true;
 

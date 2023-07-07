@@ -196,7 +196,6 @@ public partial class RotatableObject : MonoBehaviour
 
 			if (_isUnion)
 			{
-				_isUnion = false;
 				finishAngle = (int)Math.Round(_elapsedTime * _polatAngle, 0, MidpointRounding.AwayFromZero) * 90;
 			}
 
@@ -227,18 +226,27 @@ public partial class RotatableObject : MonoBehaviour
 				_playerTransform = null;
 			}
 			StopPartical();
+			Debug.Log("終了");
+			_unionObserver.DeleteData();
 		}
 		else
 		{
+			if(_isUnion){
+				if(!_isHitFloor && !_isChainRot){
+					_isUnion = false;
+					_unionObserver.Union();
+				}
+			}
+
 			if (_isRotateEndFream)
 			{
+
 				// 普段は当たり判定の処理を切っておく
 				SetChildHitCheckFloorFlg(false);
 				SetChildHitCheckChainFlg(false);
 				// めり込み判定の確認
 				SetChildCheckIntoFloor(true);
 				SetChildCheckIntoChain(true);
-				//Debug.Log("回転終了");
 				// 止まってる状態のときは磁石オブジェクトの当たり判定を起動
 				SetUnionChildCollider(true);
 			}
@@ -247,6 +255,7 @@ public partial class RotatableObject : MonoBehaviour
 			{
 				SetReflect(_axisCenterWorldPos, _rotAxis, _angle);
 			}
+
 
 			_doOnce = false;
 			_isRotateEndFream = false;
