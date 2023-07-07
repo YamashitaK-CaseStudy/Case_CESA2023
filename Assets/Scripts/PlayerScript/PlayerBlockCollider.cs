@@ -25,7 +25,7 @@ public partial class Player : MonoBehaviour{
         // “–‚½‚è”»’è‚ÌŽæ“¾
         _frontHitCheck  = _frontColliderObj.GetComponent<RotObjHitCheck>();
         _bottomHitCheck = _bottomColliderObj.GetComponent<RotObjHitCheck>();
-        _backHItCheck = _backColliderObj.GetComponent<BackCheck>();
+        _backHItCheck   = _backColliderObj.GetComponent<BackCheck>();
         _groundCheck    = _groundColliderObj.GetComponent<GroundCheck>();
         _frontrayCheck  = _frontrayColliderObj.GetComponent<FrontRayCheck>();
         _upperrayCheck  = _upperrayColliderObj.GetComponent<UpperRayCheck>();

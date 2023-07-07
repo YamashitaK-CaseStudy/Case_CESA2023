@@ -24,6 +24,7 @@ public partial class SceneEditor : EditorWindow
 	GameObject _PlayerVCamPrefab;
 	GameObject _GoalobjectPrefab;
 	GameObject _EnvironmentFXPrefab;
+	GameObject _KeyManagerPrefab;
 	GameObject[] _SoundController;
 	TotalSeedData _totalSeedData;
 	bool _isMainStage = false;
@@ -54,6 +55,7 @@ public partial class SceneEditor : EditorWindow
 		_SeedObjectPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_SunflowerSeed.prefab");
 		_GoalobjectPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_Goal.prefab");
 		_EnvironmentFXPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_EnviFX.prefab");
+		_KeyManagerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Stage/Pf_KeyManager.prefab");
 	}
 	private void OnGUI()
 	{
@@ -303,5 +305,12 @@ public partial class SceneEditor : EditorWindow
 			tmpSoundMgr.name = tmpSoundMgr.name.Replace("Pf_", "");
 			Undo.RegisterCreatedObjectUndo(tmpSoundMgr, "Create New GameObject");
 		}
+
+		// Keyマネージャーの生成
+		tmpCheckObj = GameObject.Find("Pf_KeyManager");
+		if (tmpCheckObj != null) Undo.DestroyObjectImmediate(tmpCheckObj);
+		var tmpKeyManagerObj = Instantiate(_KeyManagerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+		tmpKeyManagerObj.name = "Pf_KeyManager";
+		Undo.RegisterCreatedObjectUndo(tmpKeyManagerObj, "Create New GameObject");
 	}
 }

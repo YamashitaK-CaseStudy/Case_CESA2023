@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using SuzumuraTomoki;
 using System;
+using UnityEngine.InputSystem;
 
 public class Lift : RotatableObject {
     // リフトを伸ばす向き
@@ -22,10 +23,12 @@ public class Lift : RotatableObject {
   
     // リフトを構成してるパーツのオブジェクトの可変長配列
     private List<GameObject> _liftStickList = new List<GameObject>();
-    private GameObject _rideObjs, playerObj;
-    private float _liftSpeed = 0.5f;
-    private int _nowRideBlock = 0;
-    private bool _isMove = false;
+    private List<GameObject> _moveRotObjList = new List<GameObject>(); 
+    private GameObject _rideObjs ,_stickObjs;
+    private int _nowRideIndex = 0;
+    private bool _isLiftUpdate = false;
+    LiftSwich.LiftMove _liftMove = LiftSwich.LiftMove.Up;
+    private PlayerInput _playerInput;
 
     public GameObject GetRideBlocks {
         get { return _rideObjs; }
@@ -33,6 +36,14 @@ public class Lift : RotatableObject {
 
     public GameObject GetCopyRideBlock {
         get { return _liftRideobj; }
+    }
+
+    public LiftSwich.LiftMove GetLiftMove {
+        get { return _liftMove; }
+    }
+
+    public bool GetIsLiftUpdate {
+        get { return _isLiftUpdate; }
     }
 
     // エディタによる更新
@@ -109,7 +120,7 @@ public class Lift : RotatableObject {
             fixIndex = _rideBlockIndex - 1;
         }
 
-        _nowRideBlock = fixIndex;
+        _nowRideIndex = fixIndex;
         liftBlocks.transform.position = _list[fixIndex].transform.position;
         liftBlocks.transform.localPosition += new Vector3(0, 0, -1);
     }
@@ -141,68 +152,128 @@ public class Lift : RotatableObject {
         }
     }
 
+    public void AddMoveRotObj(GameObject obj) {
+
+        if (!_moveRotObjList.Contains(obj)) {
+            _moveRotObjList.Add(obj);
+        }
+    }
+
+    public void ClearMoveRotObj() {
+
+        foreach (var obj in _moveRotObjList) {
+            var info = obj.GetComponent<LiftWithMoveInfo>();
+            info.IsStopMove = false;
+            info.LiftObj = null;
+        }
+
+        _moveRotObjList.Clear();
+    }
+
+    private void OnChildMoveRotObj() {
+        foreach (var obj in _moveRotObjList) {
+            obj.transform.parent = _rideObjs.transform;
+        }
+    }
+
+    private void OffChildMoveRotObj() {
+        foreach (var obj in _moveRotObjList) {
+            obj.transform.parent = null;
+        }
+    }
+
+    private bool IsStopMove() {
+
+        bool stop = false;
+
+        foreach (var obj in _moveRotObjList) {
+            var Info = obj.GetComponent<LiftWithMoveInfo>();
+
+            if (Info.IsStopMove) {
+                stop = true;
+                break;
+            }
+        }
+
+        return stop;
+    }
+
+    private void GetStickLift(List<GameObject> _list,GameObject _stickobjs,int _ridenum) {
+        
+        for(int i = 0;i < _stickObjs.transform.childCount; i++) {
+            var child = _stickObjs.transform.GetChild(i).gameObject;
+
+            if(child.name == "stickobj") {
+                _list.Add(child);
+            }
+
+            if(_rideObjs.transform.localPosition.y == child.transform.localPosition.y) {
+                _ridenum = i;
+            }
+        }
+    }
+
+    private void LiftUp() {
+
+        if (_nowRideIndex < _liftStickList.Count- 1 && !IsStopMove()) {
+
+            _isLiftUpdate = true;
+
+            _rideObjs.transform.DOMove(new Vector3(0, 1, 0), 1).SetRelative(true).OnComplete(LiftUp);
+
+            foreach(var obj in _moveRotObjList) {
+                obj.transform.DOMove(new Vector3(0, 1, 0), 1).SetRelative(true);
+            }
+           
+            _nowRideIndex++;
+        }
+       else  {
+            Debug.Log("上昇終了");
+            _liftMove = LiftSwich.LiftMove.Down;
+            _isLiftUpdate = false;
+        }
+    }
+
+    private void LiftDown() {
+
+        _isLiftUpdate = true;
+
+        if (_nowRideIndex > 0 && !IsStopMove()) {
+            _rideObjs.transform.DOMove(new Vector3(0, -1, 0), 1).SetRelative(true).OnComplete(LiftDown);
+
+            foreach (var obj in _moveRotObjList) {
+                obj.transform.DOMove(new Vector3(0, -1, 0), 1).SetRelative(true);
+            }
+
+            _nowRideIndex--;
+        }
+        else  {
+            Debug.Log("下降終了");
+            _liftMove = LiftSwich.LiftMove.Up;
+            _isLiftUpdate = false;
+        }
+    }
+
     [Obsolete]
     private void OnEnable() {
 
-        _nowRideBlock = _rideBlockIndex - 1;
+        _stickObjs = this.transform.FindChild("LiftSticks").gameObject;
         _rideObjs = this.transform.FindChild("LiftBlocks").gameObject;
-        playerObj = GameObject.FindGameObjectWithTag("Player").gameObject;
+        GetStickLift(_liftStickList, _stickObjs, _nowRideIndex);
+        _playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
     }
 
-    public override void StickRotate(Vector3 center, Vector3 axis, int angle, Transform playerTransform) {
+    public void LiftAction(LiftSwich.LiftMove move) {
 
-        var value = SceneManager.playerInput.FindAction("RotaionSelect").ReadValue<Vector2>();
-
-        if (_liftDirection == LiftDirection.縦) {
-
-            if (value.y > 0.5f) {
-                Debug.Log("上昇");
-                RideMove(Vector3.up, playerObj.transform);
-            }
-            else if (value.y < -0.8f) {
-                Debug.Log("下昇");
-                RideMove(Vector3.down, playerObj.transform);
-            }
+        if (move == LiftSwich.LiftMove.Up) {
+            LiftUp();
         }
-        else if (_liftDirection == LiftDirection.横) {
 
-            if (value.x > 0.5f) {
-                Debug.Log("右移動");
-                RideMove(Vector3.right, playerObj.transform);
-            }
-            else if (value.x < -0.8f) {
-                Debug.Log("左移動");
-                RideMove(Vector3.left, playerObj.transform);
-            }
+        else if (move == LiftSwich.LiftMove.Down) {
+            LiftDown();
         }
     }
 
-    private void RideMove(Vector3 offset, Transform playerTransform) {
-
-        if (!_isMove) {
-
-            bool succuse = false;
-
-            if (offset == Vector3.up || offset == Vector3.right) {
-                if (_nowRideBlock + 1 < _stickLength) {
-                    _nowRideBlock++;
-                    succuse = true;
-                }
-            }
-            else if (offset == Vector3.down || offset == Vector3.left) {
-                if (_nowRideBlock - 1 >= 0) {
-                    _nowRideBlock--;
-                    succuse = true;
-                }
-            }
-        
-            if (succuse) {
-                playerTransform.SetParent(_rideObjs.transform);
-                _rideObjs.transform.DOMove(offset, _liftSpeed).
-                    SetRelative(true).
-                    OnUpdate(() => { _isMove = true; }).
-                    OnComplete(() => { _isMove = false; playerTransform.SetParent(null);});
-            }
-        }
+    private void Update() {
     }
 }
