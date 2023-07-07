@@ -26,12 +26,9 @@ public class RotHitCheckFloor : MonoBehaviour
 	// オブジェクトが当たったとき
 	private void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("1check");
 		if (!_isCheckHit) return;
-		Debug.Log("2check");
 		// 回転オブジェクトに当たった場合は反射させない
 		if (other.transform.root.gameObject.tag == "RotateObject" && other.transform.root.gameObject.GetComponent<Lift>() == null ) return;
-		Debug.Log("3check");
 		// 自分の親に知らせる
 		_parentRotObj.SetisHitFloor();
 	}
@@ -44,7 +41,6 @@ public class RotHitCheckFloor : MonoBehaviour
 		if (other.transform.root.gameObject.tag == "RotateObject") return;
 		// めり込んだ場合を考慮する
 		_isCheckInto = false;
-		Debug.Log("Check");
 		// 自分の親に知らせる
 		_parentRotObj.SetisHitFloor();
 	}
