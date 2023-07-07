@@ -10,9 +10,7 @@ public partial class RotObjUnion : MonoBehaviour
 	[SerializeField] private string _StartEventName;	// 発生させるエフェクトのイベント名を入れる
 	private void EffectGenerate(GameObject contactObj){
 		if(_effect == null && _partical == null) return;
-		if(contactObj.transform.root.gameObject.tag != "RotateObject") return;
-		if(this.transform.root.gameObject == contactObj.transform.root.gameObject) return;
-		if(contactObj.name == "Pf_Parts") return;
+		Debug.Log("エフェクト起動するで");
 		SetGeneratePosition(contactObj);
 	}
 

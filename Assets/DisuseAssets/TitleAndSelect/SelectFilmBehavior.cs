@@ -11,6 +11,14 @@ public struct SeedScore
 
 public class SelectFilmBehavior : MonoBehaviour
 {
+    /*<目次>
+     *定数
+     *静的公開メンバ
+     *静的非公開メンバ
+     *公開メンバ
+     *非公開メンバ
+     */
+
     /*定数*/
     public const int MAX_STAGE = 5;
     public const int MAX_WORLD = 3;
@@ -28,21 +36,30 @@ public class SelectFilmBehavior : MonoBehaviour
 
     /*静的公開メンバ*/
 
-    static public SeedScore seedScore
+    static public int SeedScore
     {
         get
         {
-            return _seedScoreArray[currentStageIndex];
+            return _totalObtained;
+        }
+    }
+
+    static public SeedScore SeedScoreCurrentStage
+    {
+        get
+        {
+            return _seedScoreArray[CurrentStageIndex];
         }
         set
         {
-            _seedScoreArray[currentStageIndex] = value;
+            _totalObtained += value.obtained - _seedScoreArray[CurrentStageIndex].obtained;
+            _seedScoreArray[CurrentStageIndex] = value;
         }
     }
 
     /*静的非公開メンバ*/
 
-    static private int currentStageIndex
+    static private int CurrentStageIndex
     {
         get
         {
@@ -52,6 +69,7 @@ public class SelectFilmBehavior : MonoBehaviour
 
     static private int _worldNum = 1;
     static private int _stageNum = 1;
+    static private int _totalObtained = 0;
     static private SeedScore[] _seedScoreArray = new SeedScore[MAX_STAGE * MAX_WORLD];
 
 
