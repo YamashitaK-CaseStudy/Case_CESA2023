@@ -6,7 +6,7 @@ using DG.Tweening;
 public class EngineObject : MonoBehaviour
 {
 	bool _isActivat = false;
-	float _rotSpeed = 512f;
+	float _rotSpeed = 2f;
 	Vector3 _rotAxis;
 	[SerializeField] GameObject StartUpTargetObject;
 	void Update()
@@ -30,12 +30,16 @@ public class EngineObject : MonoBehaviour
 		tr.rotation = angleAxis * tr.rotation;
 
 		if(_rotSpeed < 4028){
-			_rotSpeed += 2;
+			_rotSpeed += _rotSpeed;
 		}
 	}
 
 	public void StartUpEngine(Vector3 axis){
 		_isActivat = true;
 		_rotAxis = axis;
+		Debug.Log(axis);
+
+		// 起動させる
+		StartUpTargetObject.GetComponent<RotatableObject>().StartSpin(this.transform.position,-_rotAxis);
 	}
 }
