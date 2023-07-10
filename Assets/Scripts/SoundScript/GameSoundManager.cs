@@ -107,6 +107,7 @@ public class GameSESoundData
         Shutter,
         Reflect,
         Projection,
+        Kidou,
      }
 
     public GameSE _gameSe;
