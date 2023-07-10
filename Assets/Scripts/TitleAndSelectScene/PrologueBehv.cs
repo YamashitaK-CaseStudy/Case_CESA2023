@@ -60,7 +60,7 @@ public class PrologueBehv : MonoBehaviour
                     _thumbnail2.sprite = _thumbnail.sprite;
                     _thumbnail2.color = Color.white;
                     _text2.text = _text.text;
-                    _text2.color = Color.white;
+                    _text2.color = Color.black;
 
                     ref var nextPage = ref storyArray[++_pageId];
                     _thumbnail.sprite = nextPage._image;
@@ -80,8 +80,8 @@ public class PrologueBehv : MonoBehaviour
                 float alpha = _countTime / _pageChangeTime;
 
                 _thumbnail2.color = new Color(1, 1, 1, 1.0f - alpha);
-                _text2.color = new Color(1, 1, 1, 1.0f - alpha);
-                _text.color = new Color(1, 1, 1, alpha);
+                _text2.color = new Color(0, 0, 0, 1.0f - alpha);
+                _text.color = new Color(0, 0, 0, alpha);
 
                 if (alpha >= 1)
                 {
@@ -114,6 +114,7 @@ public class PrologueBehv : MonoBehaviour
             yield return null;
         }
 
+        _doneFadeIn = true;
         _actionDecision = SuzumuraTomoki.SceneManager.playerInput.FindAction("Decision");
     }
 

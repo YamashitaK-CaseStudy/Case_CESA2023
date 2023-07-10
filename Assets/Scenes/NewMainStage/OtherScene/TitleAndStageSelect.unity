@@ -1546,7 +1546,7 @@ MonoBehaviour:
   _FadeUI: {fileID: 1071446769}
   _stageSelect: {fileID: 1052822382}
   _stageSelectUI: {fileID: 44381918}
-  _canvasPrologue: {fileID: 0}
+  _canvasPrologue: {fileID: 652966520}
 --- !u!4 &299377182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 59ae289bc7d71854fbccb5fd60800326,
@@ -3604,8 +3604,8 @@ MonoBehaviour:
   _text: {fileID: 6590487711640787577}
   _text2: {fileID: 361144001}
   _canvusGroup: {fileID: 652966525}
-  _pageWaitTime: 3
-  _pageChangeTime: 0.3
+  _pageWaitTime: 4
+  _pageChangeTime: 0.8
   _callback:
     m_PersistentCalls:
       m_Calls:

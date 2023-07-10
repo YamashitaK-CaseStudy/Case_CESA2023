@@ -28,17 +28,16 @@ public class StoryArchive : MonoBehaviour
     {
         public int _unlockNum;
         public StoryPage[] _storyArray;//story page array インスペクタがリセットされるためリネームを保留
-
     }
 
     /*Unity関数*/
 
     private void Awake()
     {
-        _pageIdArray = new
-        if (_lockArray == null)
+        _pageIdArray = new int[_storyData._storyArray.Length];
+        if (SelectFilmBehavior.SeedScore >= _storyData._storyArray[_nextUnlockStoryId]._unlockNum)
         {
-            _lockArray
+            ++_nextUnlockStoryId;
         }
         _rectTransform = GetComponent<RectTransform>();
         _selectedLocalPosX = -((_currentStoryId) * _distance);
@@ -55,7 +54,6 @@ public class StoryArchive : MonoBehaviour
             if (SelectFilmBehavior.SeedScore < storyData._unlockNum)
             {
                 Instantiate(_lockUiPrefab, piceInstance.transform);
-                storyData._lock = true;
             }
         }
 
@@ -248,28 +246,26 @@ public class StoryArchive : MonoBehaviour
             return;
         }
 
-        ref var storyData = ref _storyData._storyArray[_currentStoryId];
-
-        if (storyData._lock)
+        if (_currentStoryId >= _nextUnlockStoryId)
         {
             return;
         }
 
-        ref var pageId = ref storyData._pageId;
-        ref var storyPageArray = ref storyData._storyArray;
+        ref var pageId = ref _pageIdArray[_currentStoryId];
+        ref var storyPageArray = ref _storyData._storyArray[_currentStoryId]._storyArray;
 
         if (pageId + 1 >= storyPageArray.Length)
         {
             return;
         }
 
-        ref var storyPage = ref storyPageArray[++pageId];
+        ref var nextPage = ref storyPageArray[++pageId];
 
-        transform.GetChild(_currentStoryId).GetComponent<StorySelectPieceBehv>().Story = storyPage;
+        transform.GetChild(_currentStoryId).GetComponent<StorySelectPieceBehv>().Story = nextPage;
 
-        if (storyPage._soundArray.Length > 0)
+        if (nextPage._soundArray.Length > 0)
         {
-            GameSoundManager.Instance.PlayGameSE(storyPage._soundArray[0]);
+            GameSoundManager.Instance.PlayGameSE(nextPage._soundArray[0]);
         }
     }
 
@@ -282,23 +278,23 @@ public class StoryArchive : MonoBehaviour
 
         ref var storyData = ref _storyData._storyArray[_currentStoryId];
 
-        if (storyData._lock)
+        if (_currentStoryId >= _nextUnlockStoryId)
         {
             return;
         }
 
-        ref var pageId = ref storyData._pageId;
+        ref var pageId = ref _pageIdArray[_currentStoryId];
 
         if (pageId <= 0)
         {
             return;
         }
 
-        ref var storyPage = ref storyData._storyArray[--pageId];
-        transform.GetChild(_currentStoryId).GetComponent<StorySelectPieceBehv>().Story = storyPage;
-        if (storyPage._soundArray.Length > 0)
+        ref var forwardPage = ref storyData._storyArray[--pageId];
+        transform.GetChild(_currentStoryId).GetComponent<StorySelectPieceBehv>().Story = forwardPage;
+        if (forwardPage._soundArray.Length > 0)
         {
-            GameSoundManager.Instance.PlayGameSE(storyPage._soundArray[0]);
+            GameSoundManager.Instance.PlayGameSE(forwardPage._soundArray[0]);
         }
     }
 
@@ -306,7 +302,7 @@ public class StoryArchive : MonoBehaviour
 
     static private float _selectedLocalPosX = 0;
     static private int _currentStoryId = 0;
-    static private bool[] _lockArray = null;
+    static private int _nextUnlockStoryId = 1;
 
     [SerializeField] private Story.StoryData _storyData;
     [SerializeField] private GameObject _storySelectPiecePrefab;
