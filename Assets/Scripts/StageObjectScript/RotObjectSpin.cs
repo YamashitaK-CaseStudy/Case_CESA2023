@@ -139,7 +139,7 @@ public partial class RotatableObject : MonoBehaviour
 
 			// 回転量を加算
 			_totalSpinedAngle += _rotSpeed;
-			Debug.Log(_totalSpinedAngle);
+//			Debug.Log(_totalSpinedAngle);
 			if ( _totalSpinedAngle <= 270 ) {
 				// 前回の複製から90度回転していたら
 				if ( _totalSpinedAngle % 90 == 0 ) {
