@@ -275,5 +275,16 @@ public class Lift : RotatableObject {
     }
 
     private void Update() {
+
+        if (_isLiftUpdate) {
+
+            _playerInput.actions["Move"].Disable();
+            _playerInput.actions["Jump"].Disable();
+        }
+        else {
+
+            _playerInput.actions["Move"].Enable();
+            _playerInput.actions["Jump"].Enable();
+        }
     }
 }
