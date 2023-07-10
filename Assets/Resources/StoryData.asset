@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe107f75136e7c4393e1ee1969058b3, type: 3}
+  m_Name: StoryData
+  m_EditorClassIdentifier: 
+  _storyArray:
+  - _unlockNum: 0
+    _storyArray:
+    - _image: {fileID: 21300000, guid: bea56c3523b7c434bbbdea5960a8356e, type: 3}
+      _storyText: "\u8352\u5EC3\u3057\u305F\u5DE5\u5834\u306E\u4E00\u89D2\u3001\u7BA1\u7406\u3059\u308B\u3082\u306E\u304C\u3044\u306A\u304F\u306A\u3063\u305F\u5DE5\u5834\u306F\u8352\u308C\u25BC"
+      _soundArray: 
+    - _image: {fileID: 21300000, guid: 73f97203ae3179c459d64c2f199fb72c, type: 3}
+      _storyText: "\u5D29\u58CA\u3057\u305F\u58C1\u304B\u3089\u6708\u660E\u304B\u308A\u304C\u5C04\u3059\u3002\u529B\u5F37\u3044\u6708\u660E\u304B\u308A\u306B\u7167\u3089\u3055\u308C\u25BC"
+      _soundArray: 
+    - _image: {fileID: 21300000, guid: b9866e3e0718e0e4080ba5c6820525a7, type: 3}
+      _storyText: "\u9577\u3044\u7720\u308A\u304B\u3089\u76EE\u3092\u899A\u307E\u3059\u3002"
+      _soundArray: 0a000000
+    _pageId: 0
+    _lock: 0
+  - _unlockNum: 1
+    _storyArray:
+    - _image: {fileID: 21300000, guid: dd0789b4552e65f4abe8af58092cf654, type: 3}
+      _storyText: "\u5DE5\u5834\u306E\u81F3\u308B\u6240\u306B\u3001\u8F1D\u304F\u30B7\u30E5\u30B7\u3092\u898B\u304B\u3051\u308B\u3002\u25BC"
+      _soundArray: 
+    - _image: {fileID: 21300000, guid: dd0789b4552e65f4abe8af58092cf654, type: 3}
+      _storyText: "\u30A8\u30CD\u30EB\u30AE\u30FC\u304C\u6EA2\u308C\u308B\u305D\u308C\u306F\u3001\u96C6\u3081\u308C\u3070\u5927\u304D\u306A\u30A8\u30CD\u30EB\u30AE\u30FC\u306B\u306A\u308B\u3053\u3068\u3092\u8A18\u9332\u3057\u3066\u304A\u3053\u3046\u3002"
+      _soundArray: 
+    _pageId: 0
+    _lock: 0
+  - _unlockNum: 1
+    _storyArray:
+    - _image: {fileID: 21300000, guid: 85dbf1d22ba1b92479facbff5362ac3d, type: 3}
+      _storyText: "\u6708\u304B\u3089\u30B7\u30E5\u30B7\u3068\u540C\u3058\u30A8\u30CD\u30EB\u30AE\u30FC\u304C\u7570\u5E38\u306A\u5024\u691C\u51FA\u3055\u308C\u305F\u3002\u529B\u5F37\u3044\u6708\u660E\u304B\u308A\u306B\u7167\u3089\u3055\u308C\u308B\u3068\u3001\u529B\u304C\u6E67\u3044\u3066\u304F\u308B\u3002\u25BC"
+      _soundArray: 
+    - _image: {fileID: 21300000, guid: 85dbf1d22ba1b92479facbff5362ac3d, type: 3}
+      _storyText: "\u307E\u3060\u307E\u3060\u5148\u306F\u9577\u3044\u3002"
+      _soundArray: 
+    _pageId: 0
+    _lock: 0
+  - _unlockNum: 1
+    _storyArray:
+    - _image: {fileID: 21300000, guid: a847071e1073c404b833b33943507260, type: 3}
+      _storyText: "\u5DE5\u5834\u306E\u7247\u9685\u306B\u672A\u4F7F\u7528\u306E\u30BF\u30A4\u30E8\u30A6\u30DB\u304C\u767A\u898B\u3055\u308C\u305F\u3002\u3053\u308C\u3092\u4F7F\u3048\u3070\u5916\u306B\u51FA\u3089\u308C\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3002\u25BC"
+      _soundArray: 
+    - _image: {fileID: 21300000, guid: a847071e1073c404b833b33943507260, type: 3}
+      _storyText: "\u52D5\u304B\u3059\u306B\u306F\u30B7\u30E5\u30B7\u306E\u30A8\u30CD\u30EB\u30AE\u30FC\u304C\u307E\u3060\u8DB3\u308A\u306A\u3044\u3002\u5DE5\u5834\u5185\u306B\u307E\u3060\u3042\u3063\u305F\u306F\u305A\u3002"
+      _soundArray: 
+    _pageId: 0
+    _lock: 0
+  - _unlockNum: 1
+    _storyArray:
+    - _image: {fileID: 21300000, guid: 1b13ebc12fef37f42bab5126210e130a, type: 3}
+      _storyText: "\u30BF\u30A4\u30E8\u30A6\u30DB\u306F\u7121\u4E8B\u8D77\u52D5\u3059\u308B\u3053\u3068\u304C\u51FA\u6765\u305F\u3002\u5DE5\u5834\u304B\u3089\u98DB\u3073\u51FA\u3057\u3001\u7D42\u308F\u308A\u306E\u306A\u3044\u65C5\u304C\u59CB\u307E\u308B\u3002\u25BC"
+      _soundArray: 
+    - _image: {fileID: 21300000, guid: 1b13ebc12fef37f42bab5126210e130a, type: 3}
+      _storyText: "\u3082\u3063\u3068\u30B7\u30E5\u30B7\u3092\u96C6\u3081\u3066\u3001\u3082\u3063\u3068\u89B3\u6E2C\u3057\u3066\u30C7\u30FC\u30BF\u3092\u2026\u30FC\u30FC\u306E\u305F\u3081\u306B\u2026"
+      _soundArray: 
+    _pageId: 0
+    _lock: 0
+  - _unlockNum: 1
+    _storyArray:
+    - _image: {fileID: 21300000, guid: 54a0bca1bd3d44241bf5f2ac0087b05f, type: 3}
+      _storyText: "\u3042\u3041\u3001\u3084\u3063\u3068\u898B\u3064\u3051\u305F\u2026\u25BC"
+      _soundArray: 
+    - _image: {fileID: 21300000, guid: 17239cba33d3c7a49ae1a4c8ccf08c1d, type: 3}
+      _storyText: 
+      _soundArray: 
+    _pageId: 0
+    _lock: 0

@@ -24,7 +24,8 @@ public class SelectScene : MonoBehaviour
     [SerializeField] private GameObject _buttonUi_R_Prefab;
     [SerializeField] private GameObject _buttonUi_L_Prefab;
     [SerializeField] private GameObject _lockUi_Prefab;
-    [Header("ステージ画像と必要スコア\n途中挿入はElementを右クリック、Duplicate..で出来ます")]
+    [SerializeField] private Sprite _stageNumBoard_ExtraStage;
+    [Header("ステージ画像と必要スコア\n途中挿入はElementを右クリック、Duplicate..で出来ます\nビルド設定と並びを一致させて下さい")]
     [SerializeField] private StageData[] _stageDataArray;
     [SerializeField] private float _scrollAmount = 13.475f;
     [SerializeField] private float _scrollBaseSpeed = 13;
@@ -63,12 +64,16 @@ public class SelectScene : MonoBehaviour
             selectPieceInstance.transform.GetChild(1).GetComponent<UnityEngine.UI.Image>().sprite = stageData.thumbnail;
             if (stageData.unlockNumber == 0)
             {
-                selectPieceInstance.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = stageNum++.ToString();
+                selectPieceInstance.transform.GetChild(3).GetChild(0).GetComponent<UiNumberBehavior>().Number = stageNum++;
             }
             else
             {
-                selectPieceInstance.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = "EX";
-                Instantiate(_lockUi_Prefab, selectPieceInstance.transform);
+                selectPieceInstance.transform.GetChild(2).GetComponent<UnityEngine.UI.Image>().sprite = _stageNumBoard_ExtraStage;
+                Destroy(selectPieceInstance.transform.GetChild(3));
+                if (UiSeedBehavior.seedScore.obtained < stageData.unlockNumber)
+                {
+                    Instantiate(_lockUi_Prefab, selectPieceInstance.transform);
+                }
             }
 
             /*ボタンUILR生成*/
@@ -309,7 +314,8 @@ public class SelectScene : MonoBehaviour
             return;
         }
 
-        if(SelectFilmBehavior.SeedScore < _stageDataArray[SceneManager._currentStageNum - 1].unlockNumber){
+        if (SelectFilmBehavior.SeedScore < _stageDataArray[SceneManager._currentStageNum - 1].unlockNumber)
+        {
             //TODO:無効な入力を伝えるSE
             return;
         }
