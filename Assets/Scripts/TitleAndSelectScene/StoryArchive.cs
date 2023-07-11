@@ -16,6 +16,7 @@ public class StoryArchive : MonoBehaviour
 {
     /*目次
      * クラス・構造体
+     * 静的公開関数
      * Unity関数
      * 非公開関数
      * 非公開変数
@@ -28,6 +29,15 @@ public class StoryArchive : MonoBehaviour
     {
         public int _unlockNum;
         public StoryPage[] _storyArray;//story page array インスペクタがリセットされるためリネームを保留
+    }
+
+    /*静的公開関数*/
+    static public int NextUnlockStoryId
+    {
+        get
+        {
+            return _nextUnlockStoryId;
+        }
     }
 
     /*Unity関数*/
