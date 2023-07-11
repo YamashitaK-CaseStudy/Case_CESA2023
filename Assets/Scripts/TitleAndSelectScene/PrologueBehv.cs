@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PrologueBehv : MonoBehaviour
 {
+    /*
+     * 型定義
+     * Unity関数
+     * 関数・プロパティ
+     */
+
+    /*型定義*/
+    //公開
+
+    //非公開
     enum State
     {
         DISPLAY_PAGE,
@@ -11,7 +21,7 @@ public class PrologueBehv : MonoBehaviour
         FADE_OUT,
     }
 
-    private delegate void Callback();
+    /*Unity関数*/
 
     private void Awake()
     {
@@ -97,14 +107,23 @@ public class PrologueBehv : MonoBehaviour
                 if (_canvusGroup.alpha <= 0)
                 {
                     _callback.Invoke();
-                    transform.parent.gameObject.SetActive(false);//キャンバス
+                    transform.gameObject.SetActive(false);//キャンバス
                 }
                 break;
         }
 
     }
 
-    IEnumerator FadeIn_Coroutine()
+    /*関数・プロパティ*/
+    public StoryPage[] StoryPageArray
+    {
+        set
+        {
+            storyArray = value;
+        }
+    }
+
+    private IEnumerator FadeIn_Coroutine()
     {
         float countTime = 0;
         while (_canvusGroup.alpha < 1)
@@ -118,7 +137,7 @@ public class PrologueBehv : MonoBehaviour
         _actionDecision = SuzumuraTomoki.SceneManager.playerInput.FindAction("Decision");
     }
 
-    [SerializeField] private StoryPage[] storyArray;
+    [SerializeField] private StoryPage[] storyArray;//アンダーバー付け忘れ。インスペクタの情報が消えるのでそのまま。
     [SerializeField] private UnityEngine.UI.Image _thumbnail;
     [SerializeField] private UnityEngine.UI.Image _thumbnail2;
     [SerializeField] private UnityEngine.UI.Text _text;
