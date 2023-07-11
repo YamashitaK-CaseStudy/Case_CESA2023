@@ -55,7 +55,7 @@ public class SelectScene : MonoBehaviour
 
         /*選択肢生成*/
         GameObject selectPieceInstance = null;
-        for (int i = 0, stageNum = 1; i < _stageDataArray.Length; ++i)
+        for (int i = 0, stageNum = 1; i < _stageDataArray.Length; ++i, ++stageNum)
         {
             selectPieceInstance = Instantiate(_selectPiecePrefab, transform);
             selectPieceInstance.transform.localPosition = new Vector3(i * _scrollAmount, 0, 0);
@@ -64,7 +64,28 @@ public class SelectScene : MonoBehaviour
             selectPieceInstance.transform.GetChild(1).GetComponent<UnityEngine.UI.Image>().sprite = stageData.thumbnail;
             if (stageData.unlockNumber == 0)
             {
-                selectPieceInstance.transform.GetChild(3).GetChild(0).GetComponent<UiNumberBehavior>().Number = stageNum++;
+                if (stageNum < 10)
+                {
+                    selectPieceInstance.transform.GetChild(3).GetChild(0).GetComponent<UiNumberBehavior>().Number = stageNum;
+                }
+                else if (stageNum < 100)
+                {
+                    var numberUi = selectPieceInstance.transform.GetChild(3);
+                    var firstDigit = numberUi.GetChild(0);
+
+                    firstDigit.GetComponent<UiNumberBehavior>().Number = stageNum % 10;
+
+                    var secondDigit = Instantiate(firstDigit, numberUi);
+                    var localPos = secondDigit.localPosition;
+                    localPos.x -= secondDigit.GetComponent<RectTransform>().rect.width;
+                    secondDigit.localPosition = localPos;
+                    secondDigit.GetComponent<UiNumberBehavior>().Number = stageNum / 10;
+                }
+                else
+                {
+                    Debug.LogError("ステージ番号は３桁以上に対応していません");
+                    //必要であれば可変長桁に対応できるようにする
+                }
             }
             else
             {

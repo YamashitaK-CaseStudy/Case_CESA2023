@@ -75,7 +75,7 @@ public class TitleScene : MonoBehaviour
 
         _stageSelect.SetActive(true);
         var SelectCmp = _stageSelectUI.GetComponent<SelectScene>();
-        _canvasGroup.DOFade(0.0f, 1f).OnComplete(SelectCmp.EnableInput);
+        _canvasGroup.DOFade(0.0f, 0.5f).OnComplete(SelectCmp.EnableInput);
         SelectCmp.StopInput();
 	}
 
