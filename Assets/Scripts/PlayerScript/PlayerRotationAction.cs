@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public partial class Player : MonoBehaviour{
 
@@ -19,9 +20,43 @@ public partial class Player : MonoBehaviour{
     private RotatableObject _rotComp = null;
     private RotObjkinds _rotatbleKind = null;
 
+    // リフト
+    private List<Lift> _liftList = new List<Lift>();
+
     // ブロック優先
     enum BlockPriorty {
         Bottom,Front,None
+    }
+
+    public void AddLift(Lift _lift) {
+        _liftList.Add(_lift);
+    }
+
+    private void PlayerInputPossible(bool _flg) {
+
+        if (_flg) {
+            _playerInput.actions["Move"].Disable();
+            _playerInput.actions["Jump"].Disable();
+            _playerInput.actions["RotaionSelect"].Disable();
+        }
+        else {
+            _playerInput.actions["Move"].Enable();
+            _playerInput.actions["Jump"].Enable();
+            _playerInput.actions["RotaionSelect"].Enable();
+        }
+    }
+
+    private void LiftUpdateInputPossible() {
+
+        PlayerInputPossible(false);
+
+        foreach (var comp in _liftList) {
+
+            if (comp.GetIsLiftUpdate) {
+                PlayerInputPossible(true);
+                return;
+            }
+        }
     }
 
     private void PlayerRotationStart() {
@@ -38,6 +73,9 @@ public partial class Player : MonoBehaviour{
     }
 
     private void PlayerRotationUpdate() {
+
+        // リフト稼働中の操作を切る
+        LiftUpdateInputPossible();
 
         // ロックフレームの可視化
         LockFreamDisplay(_bottomHitCheck, _frontHitCheck);
@@ -288,7 +326,14 @@ public partial class Player : MonoBehaviour{
                     }
                     // 頭にブロックがある場合
                     else {
-                        _yBlockUpperLock = true;
+
+                        // アイドルからロックするときの例外処理
+                        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Normal_Idle")) {
+                            _yBlockLock = true;
+                        }
+                        else {
+                            _yBlockUpperLock = true;
+                        }
                     }
 
                     // 座標補正

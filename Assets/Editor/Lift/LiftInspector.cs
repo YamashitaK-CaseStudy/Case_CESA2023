@@ -14,6 +14,7 @@ public class LiftInspector : Editor {
     SerializedProperty _liftObjectobj;
     SerializedProperty _lineLength;
     SerializedProperty _rideBlockIndex;
+    SerializedProperty _liftMove;
    
     void OnEnable() {
 
@@ -25,6 +26,7 @@ public class LiftInspector : Editor {
         _liftObjectobj = serializedObject.FindProperty("_liftObjectobj");
         _lineLength = serializedObject.FindProperty("_stickLength");
         _rideBlockIndex = serializedObject.FindProperty("_rideBlockIndex");
+        _liftMove = serializedObject.FindProperty("_liftMove");
     }
 
     [System.Obsolete]
@@ -47,6 +49,7 @@ public class LiftInspector : Editor {
         }
 
         EditorGUILayout.PropertyField(_rideBlockIndex, new GUIContent("リフトの乗る位置(棒の要素数で指定)"));
+        EditorGUILayout.PropertyField(_liftMove, new GUIContent("リフトの昇降"));
       
         // 設定の確定
         serializedObject.ApplyModifiedProperties();

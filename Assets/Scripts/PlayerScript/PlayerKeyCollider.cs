@@ -23,10 +23,10 @@ public class PlayerKeyCollider : MonoBehaviour
             return;
         }
 
-        if(other.transform.root.tag == "Key") {
+        if(other.transform.tag == "Key") {
 
             Debug.Log("Œ®‚ÌŽæ“¾");
-            var keyObj = other.transform.root.gameObject;
+            var keyObj = other.transform.gameObject;
             _keyManager.PlayerGetKey(keyObj);
         }
     }
