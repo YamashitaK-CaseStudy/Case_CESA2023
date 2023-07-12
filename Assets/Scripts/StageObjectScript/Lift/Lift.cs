@@ -20,15 +20,15 @@ public class Lift : RotatableObject {
     [SerializeField] private GameObject _liftObjectobj;
     [SerializeField] private int _stickLength;
     public int _rideBlockIndex;
-  
+    public LiftSwich.LiftMove _liftMove;
+
     // リフトを構成してるパーツのオブジェクトの可変長配列
     private List<GameObject> _liftStickList = new List<GameObject>();
     private List<GameObject> _moveRotObjList = new List<GameObject>(); 
     private GameObject _rideObjs ,_stickObjs;
     private int _nowRideIndex = 0;
     private bool _isLiftUpdate = false;
-    LiftSwich.LiftMove _liftMove = LiftSwich.LiftMove.Up;
-    private PlayerInput _playerInput;
+    private Player _player;
 
     public GameObject GetRideBlocks {
         get { return _rideObjs; }
@@ -198,19 +198,28 @@ public class Lift : RotatableObject {
         return stop;
     }
 
-    private void GetStickLift(List<GameObject> _list,GameObject _stickobjs,int _ridenum) {
-        
+    private int GetStickLift(List<GameObject> _list,GameObject _stickobjs) {
+
+        int num = 0;
+
         for(int i = 0;i < _stickObjs.transform.childCount; i++) {
             var child = _stickObjs.transform.GetChild(i).gameObject;
 
             if(child.name == "stickobj") {
                 _list.Add(child);
             }
+        }
 
-            if(_rideObjs.transform.localPosition.y == child.transform.localPosition.y) {
-                _ridenum = i;
+        for (int i = 0; i < _stickObjs.transform.childCount; i++) {
+            var child = _stickObjs.transform.GetChild(i).gameObject;
+
+            if (_rideObjs.transform.localPosition.y == child.transform.localPosition.y) {
+                num = (int)child.transform.localPosition.y;
+                return num;
             }
         }
+
+        return num;
     }
 
     private void LiftUp() {
@@ -228,7 +237,7 @@ public class Lift : RotatableObject {
             _nowRideIndex++;
         }
        else  {
-            Debug.Log("上昇終了");
+            Debug.Log("上昇終了" + _liftStickList.Count);
             _liftMove = LiftSwich.LiftMove.Down;
             _isLiftUpdate = false;
         }
@@ -248,7 +257,7 @@ public class Lift : RotatableObject {
             _nowRideIndex--;
         }
         else  {
-            Debug.Log("下降終了");
+            Debug.Log("下降終了" + _nowRideIndex);
             _liftMove = LiftSwich.LiftMove.Up;
             _isLiftUpdate = false;
         }
@@ -259,8 +268,9 @@ public class Lift : RotatableObject {
 
         _stickObjs = this.transform.FindChild("LiftSticks").gameObject;
         _rideObjs = this.transform.FindChild("LiftBlocks").gameObject;
-        GetStickLift(_liftStickList, _stickObjs, _nowRideIndex);
-        _playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+        _nowRideIndex = GetStickLift(_liftStickList, _stickObjs);
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _player.AddLift(this);
     }
 
     public void LiftAction(LiftSwich.LiftMove move) {
@@ -274,6 +284,4 @@ public class Lift : RotatableObject {
         }
     }
 
-    private void Update() {
-    }
 }
