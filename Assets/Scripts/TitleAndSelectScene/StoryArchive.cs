@@ -4,11 +4,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
+[System.Serializable]
+public struct StoryPage
+{
+    public Sprite _image;
+    public string _storyText;
+    [Header("複数設定しても１つしか流しません")] public GameSESoundData.GameSE[] _soundArray;
+}
 
 public class StoryArchive : MonoBehaviour
 {
     /*目次
      * クラス・構造体
+     * 静的公開関数
      * Unity関数
      * 非公開関数
      * 非公開変数
@@ -17,68 +25,77 @@ public class StoryArchive : MonoBehaviour
     /*クラス・構造体*/
 
     [System.Serializable]
-    private struct StoryData
+    public struct StoryData
     {
-        public Sprite _image;
         public int _unlockNum;
+        public StoryPage[] _storyArray;//story page array インスペクタがリセットされるためリネームを保留
+    }
+
+    /*静的公開関数*/
+    static public int NextUnlockStoryId
+    {
+        get
+        {
+            return _nextUnlockStoryId;
+        }
     }
 
     /*Unity関数*/
 
     private void Awake()
     {
+        _pageIdArray = new int[_storyData._storyArray.Length];
+        if (SelectFilmBehavior.SeedScore >= _storyData._storyArray[_nextUnlockStoryId]._unlockNum)
+        {
+            ++_nextUnlockStoryId;
+        }
         _rectTransform = GetComponent<RectTransform>();
-        _selectedLocalPosX = -((_currentStoryNum - 1) * _distance);
+        _selectedLocalPosX = -((_currentStoryId) * _distance);
         _rectTransform.localPosition = new Vector3(_selectedLocalPosX, 0, 0);
 
         //生成
-        for (int i = 0, length = _storyArray.Length; i < length; ++i)
+        for (int i = 0, length = _storyData._storyArray.Length; i < length; ++i)
         {
-            var thumbnailInstance = Instantiate(_storyThumbnailPrefab, transform);
-            thumbnailInstance.transform.localPosition = new Vector3(_distance * i, 0, 0);
-            ref var storyData = ref _storyArray[i];
-            thumbnailInstance.GetComponent<UnityEngine.UI.Image>().sprite = storyData._image;
+            var piceInstance = Instantiate(_storySelectPiecePrefab, transform);
+            piceInstance.transform.localPosition = new Vector3(_distance * i, 0, 0);
+            ref var storyData = ref _storyData._storyArray[i];
+            piceInstance.GetComponent<StorySelectPieceBehv>().Story = storyData._storyArray[0];
 
-            if(SelectFilmBehavior.SeedScore< storyData._unlockNum)
+            if (SelectFilmBehavior.SeedScore < storyData._unlockNum)
             {
-                Instantiate(_lockUiPrefab, thumbnailInstance.transform);
+                Instantiate(_lockUiPrefab, piceInstance.transform);
             }
         }
 
         _actionMoveRight = _playerInput.currentActionMap.FindAction("MoveRight");
-
-        if (_actionMoveRight == null)
-        {
-            Debug.LogError("インプットアクション：MoveRight　が見つかりませんでした");
-        }
-
         _actionMoveRight.started += CallBack_Started_MoveRight;
+        _actionMoveRight.canceled += CallBack_Canceled_MoveRight;
 
         _actionMoveLeft = _playerInput.currentActionMap.FindAction("MoveLeft");
-
-        if (_actionMoveLeft == null)
-        {
-            Debug.LogError("インプットアクション：MoveLeft　が見つかりませんでした");
-        }
-
         _actionMoveLeft.started += CallBack_Started_MoveLeft;
-
+        _actionMoveLeft.canceled += CallBack_Canceled_MoveLeft;
 
         _actionStageSelect = _playerInput.currentActionMap.FindAction("StageSelect");
-
-        if (_actionStageSelect == null)
-        {
-            Debug.LogError("インプットアクション：StageSelect　が見つかりませんでした");
-        }
-
         _actionStageSelect.started += CallBack_Started_SwitchStageSelect;
+
+
+        _actionTextDown = _playerInput.currentActionMap.FindAction("TextDown");
+        _actionTextDown.started += CallBack_Started_TextDown;
+
+
+        _actionTextUp = _playerInput.currentActionMap.FindAction("TextUp");
+        _actionTextUp.started += CallBack_Started_TextUp;
     }
 
     private void OnDestroy()
     {
         _actionMoveRight.started -= CallBack_Started_MoveRight;
+        _actionMoveRight.canceled -= CallBack_Canceled_MoveRight;
         _actionMoveLeft.started -= CallBack_Started_MoveLeft;
+        _actionMoveLeft.canceled -= CallBack_Canceled_MoveLeft;
         _actionStageSelect.started -= CallBack_Started_SwitchStageSelect;
+        _actionTextDown.started -= CallBack_Started_TextDown;
+        _actionTextUp.started -= CallBack_Started_TextUp;
     }
 
     /*公開*/
@@ -99,12 +116,12 @@ public class StoryArchive : MonoBehaviour
 
     private void BeginScrollRight()
     {
-        if (_currentStoryNum <= 1)
+        if (_currentStoryId <= 0)
         {
             return;
         }
 
-        --_currentStoryNum;
+        --_currentStoryId;
         _selectedLocalPosX += _distance;
 
         SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
@@ -120,12 +137,12 @@ public class StoryArchive : MonoBehaviour
 
     private void BeginScrollLeft()
     {
-        if (_currentStoryNum >= _storyArray.Length)
+        if (_currentStoryId + 1 >= _storyData._storyArray.Length)
         {
             return;
         }
 
-        ++_currentStoryNum;
+        ++_currentStoryId;
         _selectedLocalPosX -= _distance;
 
         SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Slide);
@@ -165,7 +182,7 @@ public class StoryArchive : MonoBehaviour
 
         _scrolling = false;
 
-        if (_lastReleased_DecStageNum < startTime)
+        if (_lastReleased_MoveLeft < startTime)
         {
             _scrollSpeed = _scrollKeepSpeed;
             BeginScrollRight();
@@ -199,7 +216,7 @@ public class StoryArchive : MonoBehaviour
 
         _scrolling = false;
 
-        if (_lastReleased_IncStageNum < startTime)
+        if (_lastReleased_MoveRight < startTime)
         {
             _scrollSpeed = _scrollKeepSpeed;
             BeginScrollLeft();
@@ -209,6 +226,11 @@ public class StoryArchive : MonoBehaviour
 
     private void CallBack_Started_SwitchStageSelect(InputAction.CallbackContext context)
     {
+        if (_scrolling)
+        {
+            return;
+        }
+
         //ストーリーアーカイブを無効にする
         gameObject.SetActive(false);
         //ステージセレクトを有効にする
@@ -217,27 +239,100 @@ public class StoryArchive : MonoBehaviour
         _playerInput.SwitchCurrentActionMap("Player");
     }
 
+    private void CallBack_Canceled_MoveLeft(InputAction.CallbackContext context)
+    {
+        _lastReleased_MoveLeft = Time.time;//数百時間動かしていると有効桁数が足りなくなってバグる
+    }
+
+    private void CallBack_Canceled_MoveRight(InputAction.CallbackContext context)
+    {
+        _lastReleased_MoveRight = Time.time;//数百時間動かしていると有効桁数が足りなくなってバグる
+    }
+
+    private void CallBack_Started_TextDown(InputAction.CallbackContext context)
+    {
+        if (_scrolling)
+        {
+            return;
+        }
+
+        if (_currentStoryId >= _nextUnlockStoryId)
+        {
+            return;
+        }
+
+        ref var pageId = ref _pageIdArray[_currentStoryId];
+        ref var storyPageArray = ref _storyData._storyArray[_currentStoryId]._storyArray;
+
+        if (pageId + 1 >= storyPageArray.Length)
+        {
+            return;
+        }
+
+        ref var nextPage = ref storyPageArray[++pageId];
+
+        transform.GetChild(_currentStoryId).GetComponent<StorySelectPieceBehv>().Story = nextPage;
+
+        if (nextPage._soundArray.Length > 0)
+        {
+            GameSoundManager.Instance.PlayGameSE(nextPage._soundArray[0]);
+        }
+    }
+
+    private void CallBack_Started_TextUp(InputAction.CallbackContext context)
+    {
+        if (_scrolling)
+        {
+            return;
+        }
+
+        ref var storyData = ref _storyData._storyArray[_currentStoryId];
+
+        if (_currentStoryId >= _nextUnlockStoryId)
+        {
+            return;
+        }
+
+        ref var pageId = ref _pageIdArray[_currentStoryId];
+
+        if (pageId <= 0)
+        {
+            return;
+        }
+
+        ref var forwardPage = ref storyData._storyArray[--pageId];
+        transform.GetChild(_currentStoryId).GetComponent<StorySelectPieceBehv>().Story = forwardPage;
+        if (forwardPage._soundArray.Length > 0)
+        {
+            GameSoundManager.Instance.PlayGameSE(forwardPage._soundArray[0]);
+        }
+    }
+
     /*非公開変数*/
 
     static private float _selectedLocalPosX = 0;
-    static private int _currentStoryNum = 1;
+    static private int _currentStoryId = 0;
+    static private int _nextUnlockStoryId = 1;
 
-    [SerializeField] private StoryData[] _storyArray;
-    [SerializeField] private GameObject _storyThumbnailPrefab;
+    [SerializeField] private Story.StoryData _storyData;
+    [SerializeField] private GameObject _storySelectPiecePrefab;
     [SerializeField] private GameObject _lockUiPrefab;
     [SerializeField] private float _distance = 13.5f;
     [SerializeField] private float _scrollBaseSpeed = 13;
     [SerializeField] private float _scrollKeepSpeed = 26;
     [SerializeField] private GameObject _stageSelect = null;
     [SerializeField] private PlayerInput _playerInput = null;
+    private int[] _pageIdArray;
 
     private InputAction _actionMoveRight = null;
     private InputAction _actionMoveLeft = null;
     private InputAction _actionStageSelect = null;
+    private InputAction _actionTextDown = null;
+    private InputAction _actionTextUp = null;
     private bool _scrolling = false;
     private float _scrollSpeed = 1;
-    private float _lastReleased_IncStageNum = 0;
-    private float _lastReleased_DecStageNum = 0;
+    private float _lastReleased_MoveRight = 0;
+    private float _lastReleased_MoveLeft = 0;
     private IEnumerator coroutine = null;
     private RectTransform _rectTransform;
 

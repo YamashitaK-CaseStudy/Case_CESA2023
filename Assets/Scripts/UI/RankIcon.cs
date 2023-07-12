@@ -51,11 +51,11 @@ public class RankIcon : MonoBehaviour
                 // 終了しているかどうか確認
                 if(_nowDispNum == _seedObtained){
                     _isFinish = true;
-                    DOVirtual.DelayedCall(1.1f, ()=> this.transform.root.gameObject.GetComponent<ResultEffect>().FinishEvaluation());
+                    DOVirtual.DelayedCall(0.5f, CheckUnlockStory);
                     return;
                 }else if(_seedObtained == 0){
                     _isFinish = true;
-                    DOVirtual.DelayedCall(1.1f, ()=> this.transform.root.gameObject.GetComponent<ResultEffect>().FinishEvaluation());
+                    DOVirtual.DelayedCall(0.5f, CheckUnlockStory);
                     return;
                 }
                 // タイミング考慮してChangeに移行
@@ -66,6 +66,11 @@ public class RankIcon : MonoBehaviour
 
     }
 
+    public void TurnUpBGM()
+    {
+        SystemSoundManager.Instance.BGMFade(0.1f, 0.5f);
+    }
+
     private void ChangeIcon(int score){
         if(score == 5){
             score = 4;
@@ -74,7 +79,24 @@ public class RankIcon : MonoBehaviour
         _image.transform.localScale = new Vector3(2.0f,2.0f,2.0f);
     }
 
+    private void CheckUnlockStory()
+    {
+        ref var storyData = ref _storyData._storyArray[StoryArchive.NextUnlockStoryId];
+        if (SelectFilmBehavior.SeedScore >= storyData._unlockNum)
+        {
+            _storyCanvas.GetComponent<PrologueBehv>().StoryPageArray = storyData._storyArray;
+            _storyCanvas.SetActive(true);
+            SystemSoundManager.Instance.BGMFade(0, 0.5f);
+            transform.root.GetComponent<UnityEngine.InputSystem.PlayerInput>().SwitchCurrentActionMap("Player");
+            return;
+        }
+
+        transform.root.gameObject.GetComponent<ResultEffect>().FinishEvaluation();
+    }
+
     [SerializeField] private Sprite[] _rankIconResourseArray = new Sprite[5];
     [SerializeField] private UnityEngine.UI.Image _image;
     [SerializeField] private SeedScoreIcon _seedScoreIcon;
+    [SerializeField] private GameObject _storyCanvas;
+    [SerializeField] private Story.StoryData _storyData;
 }
