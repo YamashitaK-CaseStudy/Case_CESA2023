@@ -5,6 +5,7 @@ using DG.Tweening;
 using SuzumuraTomoki;
 using System;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class Lift : RotatableObject {
     // リフトを伸ばす向き
@@ -29,6 +30,7 @@ public class Lift : RotatableObject {
     private int _nowRideIndex = 0;
     private bool _isLiftUpdate = false;
     private Player _player;
+    private CinemachineVirtualCamera _vCam;
 
     public GameObject GetRideBlocks {
         get { return _rideObjs; }
@@ -235,11 +237,14 @@ public class Lift : RotatableObject {
             }
            
             _nowRideIndex++;
+
+            GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Lift);
         }
        else  {
             Debug.Log("上昇終了" + _liftStickList.Count);
             _liftMove = LiftSwich.LiftMove.Down;
             _isLiftUpdate = false;
+            _vCam.Priority = 0;
         }
     }
 
@@ -255,11 +260,14 @@ public class Lift : RotatableObject {
             }
 
             _nowRideIndex--;
+
+            GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.Lift);
         }
         else  {
             Debug.Log("下降終了" + _nowRideIndex);
             _liftMove = LiftSwich.LiftMove.Up;
             _isLiftUpdate = false;
+            _vCam.Priority = 0;
         }
     }
 
@@ -271,6 +279,7 @@ public class Lift : RotatableObject {
         _nowRideIndex = GetStickLift(_liftStickList, _stickObjs);
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _player.AddLift(this);
+        _vCam = this.gameObject.GetComponent<LIftCamera>().GetVirtualCamera;
     }
 
     public void LiftAction(LiftSwich.LiftMove move) {
@@ -283,5 +292,4 @@ public class Lift : RotatableObject {
             LiftDown();
         }
     }
-
 }

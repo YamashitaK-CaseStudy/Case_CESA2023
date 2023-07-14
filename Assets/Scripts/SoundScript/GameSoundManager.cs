@@ -108,6 +108,7 @@ public class GameSESoundData
         Reflect,
         Projection,
         Kidou,
+        Lift
      }
 
     public GameSE _gameSe;
