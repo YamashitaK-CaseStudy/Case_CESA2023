@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 9215387321356694431}
   - component: {fileID: 2177446538314710121}
   - component: {fileID: 3355522315799826888}
+  - component: {fileID: 7905271672209742927}
   m_Layer: 13
   m_Name: Pf_CreateLift
   m_TagString: Lift
@@ -215,3 +216,16 @@ MonoBehaviour:
   _liftObjectobj: {fileID: 3889817291351025975}
   _stickLength: 0
   _rideBlockIndex: 0
+  _liftMove: 0
+--- !u!114 &7905271672209742927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5229265492094066856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd33a109e69440844b30c620b0257d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

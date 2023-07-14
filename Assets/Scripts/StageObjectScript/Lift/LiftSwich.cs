@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Cinemachine;
 
 public class LiftSwich : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class LiftSwich : MonoBehaviour {
 
     private bool IsLiftUpdate = false;
     private LiftMove _liftMove;
+    private CinemachineVirtualCamera _vCam;
 
     public Lift GetLift {
         get {return _lift; }
@@ -20,12 +22,13 @@ public class LiftSwich : MonoBehaviour {
     }
 
     private void Start() {
-      
+
+        _vCam = _lift.gameObject.GetComponent<LIftCamera>().GetVirtualCamera;
     }
 
- 
-        // 当たり判定の有効化・無効化
-        [System.Obsolete]
+
+    // 当たり判定の有効化・無効化
+    [System.Obsolete]
     public void AllRotObjColliderChnage(LiftMove move) {
 
         // 全回転オブジェクト取得
@@ -92,6 +95,10 @@ public class LiftSwich : MonoBehaviour {
 
         // 1フレーム処理を待ちます。
         yield return null;
+        _vCam.Priority = 100;
+
+        // 1フレーム処理を待ちます。
+        yield return new WaitForSeconds(1.0f);
 
         _lift.LiftAction(_lift.GetLiftMove);
     }
