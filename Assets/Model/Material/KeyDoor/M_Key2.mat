@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Key2
-  m_Shader: {fileID: -6465566751694194690, guid: 69415693570393141a710a2a5927c5ae,
+  m_Shader: {fileID: -6465566751694194690, guid: 6e9fa459bb1a87c45871394c864d2ac3,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -62,19 +62,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_0210d10e144b429b9323d5cc067d31e8_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 10b5002aaeeb51642ba44b646d6a7082, type: 3}
+        m_Texture: {fileID: 2800000, guid: 425f3b344d98731489858582f418abb6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_11d2c6c282bd45e69dafdd655c8ce5bc_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 771c476f07d49e645a5e2a646f1f5b90, type: 3}
+        m_Texture: {fileID: 2800000, guid: f37f32fa231baa04aa65130da197c80b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_354214172dab443b90f02b00536bf7b3_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 772f912c2f75dc243aa53df4df5bd1e8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9e008c8806dfa6743b40decd5d060fa0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_48e223a7c7ca415eaa038fe66a1e549c_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 0e59774d616cd38428e539aee15f7f33, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_8143b5eb567c48f7a11a393e842556c3_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 55dfadb031f337d438a60a437fb48021, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4ceee3205d8474243a970eb2ad4fdf65, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
