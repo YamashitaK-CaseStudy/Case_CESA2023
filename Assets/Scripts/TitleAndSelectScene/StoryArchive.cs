@@ -38,6 +38,10 @@ public class StoryArchive : MonoBehaviour
         {
             return _nextUnlockStoryId;
         }
+        set
+        {
+            _nextUnlockStoryId = value;
+        }
     }
 
     /*Unityä÷êî*/

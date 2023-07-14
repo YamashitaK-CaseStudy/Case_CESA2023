@@ -86,6 +86,9 @@ public class RankIcon : MonoBehaviour
         {
             _storyCanvas.GetComponent<PrologueBehv>().StoryPageArray = storyData._storyArray;
             _storyCanvas.SetActive(true);
+
+            StoryArchive.NextUnlockStoryId = StoryArchive.NextUnlockStoryId + 1;
+
             SystemSoundManager.Instance.BGMFade(0, 0.5f);
             transform.root.GetComponent<UnityEngine.InputSystem.PlayerInput>().SwitchCurrentActionMap("Player");
             return;
