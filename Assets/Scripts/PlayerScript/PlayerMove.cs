@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public partial class Player : MonoBehaviour {
 
@@ -16,7 +17,11 @@ public partial class Player : MonoBehaviour {
     private bool _isJumpflg,_isJumpNowflg;
 
     private float _jumpCurveSpeed = 0.0f;
-    
+
+    // リフト
+    private List<Lift> _liftList = new List<Lift>();
+    private bool _liftUpdateOnce = false;
+
     public float GetSpeedx {
         get { return _speedx; }
     }
@@ -28,8 +33,67 @@ public partial class Player : MonoBehaviour {
         _jumpButton = _playerInput.actions.FindAction("Jump");
     }
 
+    public void AddLift(Lift _lift) {
+        _liftList.Add(_lift);
+    }
+
+    private void PlayerInputPossible(bool _flg) {
+
+        if (_flg) {
+            _playerInput.actions["Move"].Disable();
+            _playerInput.actions["Jump"].Disable();
+            _playerInput.actions["RotaionSelect"].Disable();
+
+
+            Debug.Log("操作権限停止");
+
+        }
+        else {
+            _playerInput.actions["Move"].Enable();
+            _playerInput.actions["Jump"].Enable();
+            _playerInput.actions["RotaionSelect"].Enable();
+
+
+            Debug.Log("操作権限開始");
+
+        }
+    }
+
+    private void LiftUpdateInputPossible() {
+
+        if (!_liftUpdateOnce) {
+            foreach (var comp in _liftList) {
+
+                // 一つでもリフトの更新がある場合
+                if (comp.GetIsLiftUpdate) {
+                    PlayerInputPossible(true);
+                    _liftUpdateOnce = true;
+                    return;
+                }
+            }
+        }
+
+        bool allLiftStop = false;
+
+        foreach (var comp in _liftList) {
+
+            // 一つでもリフトの更新がある場合
+            if (comp.GetIsLiftUpdate) {
+                allLiftStop = true;
+            }
+        }
+
+        if (!allLiftStop && _liftUpdateOnce) {
+            PlayerInputPossible(false);
+            _liftUpdateOnce = false;
+        }
+    }
+
     // Update is called once per frame
     void UpdateMove() {
+
+        // リフト稼働中の操作を切る
+        LiftUpdateInputPossible();
 
         // スティック入力入れてるかつ回転アニメーションが再生されてる間は動けない
         if (_xBlockLock || _yBlockLock || _yBlockUpperLock || _animCallBack.GetIsRotationAnimPlay) {
