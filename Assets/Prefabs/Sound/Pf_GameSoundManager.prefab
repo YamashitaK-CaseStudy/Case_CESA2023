@@ -86,6 +86,9 @@ MonoBehaviour:
   - _gameSe: 13
     _gameSeAudioClip: {fileID: 8300000, guid: 50e155a41340dda40ac13c9df7c755cb, type: 3}
     _gameSeVolume: 0.1
+  - _gameSe: 11
+    _gameSeAudioClip: {fileID: 8300000, guid: 31ba029ec0cb58447b1855b778b41a68, type: 3}
+    _gameSeVolume: 0.1
   _masterVolume: 1
   _seMasterVolume: 1
   _bgmMasterVolume: 1
