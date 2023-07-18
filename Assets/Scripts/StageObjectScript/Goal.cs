@@ -32,7 +32,6 @@ public class Goal : MonoBehaviour
 			}
 
 			if(_rotRequirdTime > 2){
-        		SuzumuraTomoki.SceneManager.playerInput.Enable();
 				SuzumuraTomoki.SceneManager.LoadResult();
 			}
 		}
