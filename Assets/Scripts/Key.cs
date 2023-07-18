@@ -7,6 +7,7 @@ public class Key : MonoBehaviour
 {
     [SerializeField] private float _rotSpeed;
     [SerializeField] private Vector3 _animOffsetMove;
+    public GameObject _getEffect;
     private bool isAnimation = false;
 
     void Update() {
