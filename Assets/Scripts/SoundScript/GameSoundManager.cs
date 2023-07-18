@@ -108,7 +108,9 @@ public class GameSESoundData
         Reflect,
         Projection,
         Kidou,
-        Lift
+        Lift,
+        GetKey,
+        OpenDoor
      }
 
     public GameSE _gameSe;
