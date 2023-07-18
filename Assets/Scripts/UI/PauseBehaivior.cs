@@ -25,6 +25,7 @@ public class PauseBehaivior : MonoBehaviour
         Time.timeScale = 1;
         _uiUnit.SetActive(false);
         _playerInput.currentActionMap = SuzumuraTomoki.SceneManager.playerInput;
+        SuzumuraTomoki.SceneManager.playerInput.FindAction("Jump").Reset();
     }
     public void BackToGame()
     {
@@ -82,6 +83,7 @@ public class PauseBehaivior : MonoBehaviour
                 ExitPause();
                 break;
             case false:
+                //EnterPause
                 SystemSoundManager.Instance.PlaySE(SystemSESoundData.SystemSE.Cancel);
 
                 _enable = true;
