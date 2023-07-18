@@ -26,7 +26,7 @@ public class PlayerKeyCollider : MonoBehaviour
 
         if(other.transform.tag == "Key") {
 
-            PlayerSoundManager.Instance.PlayPlayerSE(PlayerSESoundData.PlayerSE.GetKey);
+            GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.GetKey);
            
             Debug.Log("Œ®‚ÌŽæ“¾");
             var keyObj = other.transform.gameObject;
