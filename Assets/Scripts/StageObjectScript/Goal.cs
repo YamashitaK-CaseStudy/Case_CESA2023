@@ -11,8 +11,7 @@ public class Goal : MonoBehaviour
 	private void OnTriggerEnter(Collider other) {
 		if(other.gameObject.layer == LayerMask.NameToLayer("PlayerRotCollider")) return;
 		if(other.transform.root.gameObject.tag != "Player") return;
-
-    SuzumuraTomoki.SceneManager.missionClear = true;
+    	SuzumuraTomoki.SceneManager.missionClear = true;
 
 		_isGoalEffect = true;
 		SuzumuraTomoki.SceneManager.playerInput.Disable();
@@ -32,8 +31,8 @@ public class Goal : MonoBehaviour
 				_shatter[i].transform.position = pos;
 			}
 
-			if(_rotRequirdTime > 3){
-        SuzumuraTomoki.SceneManager.playerInput.Enable();
+			if(_rotRequirdTime > 2){
+        		SuzumuraTomoki.SceneManager.playerInput.Enable();
 				SuzumuraTomoki.SceneManager.LoadResult();
 			}
 		}
