@@ -49,6 +49,8 @@ public class KeyDoor : MonoBehaviour
                 _doOnce = true;
                 _doorCollider.enabled = false;
                 OpenDoorAnimation();
+
+                GameSoundManager.Instance.PlayGameSE(GameSESoundData.GameSE.OpenDoor);
             }
         }
     }
