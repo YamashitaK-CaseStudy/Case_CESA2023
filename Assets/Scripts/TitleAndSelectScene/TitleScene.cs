@@ -12,6 +12,7 @@ public class TitleScene : MonoBehaviour
     private InputAction _MoveToSelect;
     [SerializeField] private GameObject _titleUI = null;
     [SerializeField] private GameObject _FadeUI = null;
+    [SerializeField] private GameObject _stageSelectCanvus = null;
     [SerializeField] private GameObject _stageSelect = null;
     [SerializeField] private GameObject _stageSelectUI = null;
     [SerializeField] private GameObject _canvasPrologue = null;
@@ -31,6 +32,7 @@ public class TitleScene : MonoBehaviour
         {
             SystemSoundManager.Instance.PlayBGMWithFade(BGMSoundData.BGM.Title,0.01f,1f);
             _titleUI.SetActive(false);
+            _stageSelectCanvus.SetActive(true);
             _stageSelect.SetActive(true);
             _stageSelectUI.SetActive(true);
             return;
@@ -38,7 +40,7 @@ public class TitleScene : MonoBehaviour
 
         //else
         SceneManager.playerInput.FindAction("StageSelectEnter").Disable();
-        _stageSelect.SetActive(false);
+        _stageSelectCanvus.SetActive(false);
         _stageSelectUI.SetActive(false);
 
         _MoveToSelect = SceneManager.playerInput.FindAction("TitleEnter");
@@ -71,10 +73,11 @@ public class TitleScene : MonoBehaviour
 	{
         _MoveToSelect.Disable();
         _titleUI.SetActive(false);
+        _stageSelectCanvus.SetActive(true);
         _stageSelectUI.SetActive(true);
 
         _stageSelect.SetActive(true);
-        var SelectCmp = _stageSelectUI.GetComponent<SelectScene>();
+        var SelectCmp = _stageSelect.GetComponent<SelectScene>();
         _canvasGroup.DOFade(0.0f, 0.5f).OnComplete(SelectCmp.EnableInput);
         SelectCmp.StopInput();
 	}
