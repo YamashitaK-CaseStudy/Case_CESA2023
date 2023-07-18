@@ -48,6 +48,7 @@ public class PlayerSESoundData
         Rotation,
         Moter,
         GetSeed,
+        GetKey
     }
 
     public PlayerSE _playerSe;

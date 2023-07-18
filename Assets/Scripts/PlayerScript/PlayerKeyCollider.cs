@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerKeyCollider : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class PlayerKeyCollider : MonoBehaviour
 
         if(other.transform.tag == "Key") {
 
+            PlayerSoundManager.Instance.PlayPlayerSE(PlayerSESoundData.PlayerSE.GetKey);
+           
             Debug.Log("Œ®‚ÌŽæ“¾");
             var keyObj = other.transform.gameObject;
             _keyManager.PlayerGetKey(keyObj);
